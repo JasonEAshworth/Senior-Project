@@ -16,6 +16,8 @@ public class PlayerBase : MonoBehaviour
 	private int health = 100;
 	private int maxHealth;
 
+	public int playerNum = -1;
+
 	private float moveSpeed = 6.0f;
 	private float rotationSpeed = 250.0f;
 	private float visibility = 1.0f;
@@ -76,5 +78,14 @@ public class PlayerBase : MonoBehaviour
 		}
 
 		// ATTACKS (coming soon)
+	}
+
+	public void takeDamage(int amount)
+	{
+		health -= amount;
+		if (health <= 0)
+		{
+			// call FINAL SOLUTION
+		}
 	}
 }
