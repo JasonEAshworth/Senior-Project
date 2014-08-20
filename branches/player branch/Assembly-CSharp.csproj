@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\Gun.cs" />
      <Compile Include="Assets\Scripts\PlayerBase.cs" />
+     <Compile Include="Assets\Scripts\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Rogue.cs" />
      <Compile Include="Assets\Scripts\Sorcerer.cs" />
      <Compile Include="Assets\Scripts\Warrior.cs" />
