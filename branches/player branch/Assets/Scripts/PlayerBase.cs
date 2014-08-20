@@ -17,7 +17,7 @@ public class PlayerBase : MonoBehaviour
 	private int maxHealth;
 
 	private float moveSpeed = 6.0f;
-	private float rotationSpeed = 200.0f;
+	private float rotationSpeed = 250.0f;
 	private float visibility = 1.0f;
 
 	private bool canJump = true;
