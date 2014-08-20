@@ -17,6 +17,7 @@ public class PlayerBase : MonoBehaviour
 	private int maxHealth;
 
 	private float moveSpeed = 6.0f;
+	private float rotationSpeed = 200.0f;
 	private float visibility = 1.0f;
 
 	private bool canJump = true;
@@ -71,7 +72,7 @@ public class PlayerBase : MonoBehaviour
 		// Rotate the character to face in the direction that they will move
 		if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
 		{
-			transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), 180.0f * Time.deltaTime);
+			transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
 		}
 
 		// ATTACKS (coming soon)
