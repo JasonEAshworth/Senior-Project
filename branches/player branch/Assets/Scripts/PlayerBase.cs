@@ -27,6 +27,9 @@ public class PlayerBase : MonoBehaviour
 	public string moveAxisX;
 	public string moveAxisZ;
 	public KeyCode jumpKey;
+	public KeyCode basicAttackKey;
+	public KeyCode specialAttackKey;
+	public KeyCode classAbilityKey;
 
 	private GameObject item;
 
@@ -40,6 +43,7 @@ public class PlayerBase : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		// MOVEMENT
 		// Get the horizontal movement from the joystick input and scale it with moveSpeed
 		Vector3 moveVec = new Vector3(Input.GetAxis(moveAxisX), 0.0f, Input.GetAxis(moveAxisZ));
 		moveVec *= moveSpeed * Time.deltaTime;
@@ -63,5 +67,13 @@ public class PlayerBase : MonoBehaviour
 		moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
 
 		charControl.Move(moveVec);
+
+		// Rotate the character to face in the direction that they will move
+		if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
+		{
+			transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), 180.0f * Time.deltaTime);
+		}
+
+		// ATTACKS (coming soon)
 	}
 }
