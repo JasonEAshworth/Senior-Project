@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour 
 {
+	// init variables
 	public int numPlayers;
 	private GameObject[] spawns;
 	public List<GameObject> players;
@@ -11,14 +12,20 @@ public class PlayerManager : MonoBehaviour
 
 	void Awake() 
 	{
+		// instantiate players list
 		players = new List<GameObject>();
+
+		// instantiate selectedClasses and populate it
 		selectedClasses = new List<playerClass>(4);
 		selectedClasses.Add(playerClass.ADVENTURER);
 		selectedClasses.Add(playerClass.ROGUE);
 		selectedClasses.Add(playerClass.SORCERER);
 		selectedClasses.Add(playerClass.WARRIOR);
 
+		// set players to 4 at start
 		numPlayers = 4;
+
+		// acquire all spawn points for players 
 		spawns = GameObject.FindGameObjectsWithTag("Respawn");
 
 		for (int i=0; i<numPlayers; i++) 
@@ -32,6 +39,7 @@ public class PlayerManager : MonoBehaviour
 				adv.moveAxisX = "Horizontal1";
 				adv.moveAxisZ = "Vertical1";
 				adv.jumpKey = KeyCode.C;
+				adv.playerNum = i;
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
@@ -41,6 +49,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.moveAxisX = "Horizontal2";
 				sorc.moveAxisZ = "Vertical2";
 				sorc.jumpKey = KeyCode.N;
+				sorc.playerNum = i;
 				players.Add (player2);
 				break;
 
@@ -51,6 +60,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.moveAxisX = "Horizontal1";
 				rogue.moveAxisZ = "Vertical1";
 				rogue.jumpKey = KeyCode.C;
+				rogue.playerNum = i;
 				players.Add (player3);
 				break;
 			
@@ -61,9 +71,16 @@ public class PlayerManager : MonoBehaviour
 				war.moveAxisX = "Horizontal2";
 				war.moveAxisZ = "Vertical2";
 				war.jumpKey = KeyCode.N;
+				war.playerNum = i;
 				players.Add (player4);
 				break;
 			}
 		}
+	}
+
+	public Vector3 getRespawnPoint()
+	{
+		int randSpawn = Random.Range (0,4);
+		return spawns[randSpawn].transform.position;
 	}
 }
