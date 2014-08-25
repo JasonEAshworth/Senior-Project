@@ -6,21 +6,24 @@ public class Player : MonoBehaviour
 	public float speed;
 
 	private GameObject item;
-	private float health;
-	public Potion p;
+	private float health = 100;
 
 	void Update()
 	{
-		Debug.Log ("Health: " + health.ToString());
-		if (Input.GetKeyDown ("space")) 
+		if (item) 
 		{
-			if(item)
+			if (Input.GetKeyDown("space"))
 			{
-				p = item.GetComponent("Potion") as Potion;
-				health += p.potionValue;
-				Destroy(item);
+				health += item.GetComponent<Potion>().potionValue;
+				Debug.Log(health);
+				item = null;
 			}
 		}
+	}
+
+	void addItem(GameObject p)
+	{
+		item = p;
 	}
 
 	void FixedUpdate()
@@ -32,17 +35,5 @@ public class Player : MonoBehaviour
 
 		rigidbody.AddForce(move * speed * Time.deltaTime);
 	}
-
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.tag == "Potion") 
-		{
-			item = other.gameObject;
-			p = item.GetComponent("Potion") as Potion;
-			other.gameObject.SetActive (false);
-			Debug.Log ("Item attached: " + item.name);
-		} 
-	}
-
 
 }
