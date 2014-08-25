@@ -9,11 +9,15 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] spawns;
 	public List<GameObject> players;
 	public List<playerClass> selectedClasses;
+	public List<GameObject> teamInventory;
 
 	void Awake() 
 	{
 		// instantiate players list
 		players = new List<GameObject>();
+
+		// instantiate inventory list
+		teamInventory = new List<GameObject>();
 
 		// instantiate selectedClasses and populate it
 		selectedClasses = new List<playerClass>(4);
@@ -82,5 +86,23 @@ public class PlayerManager : MonoBehaviour
 	{
 		int randSpawn = Random.Range (0,4);
 		return spawns[randSpawn].transform.position;
+	}
+
+	public void addItem(GameObject item)
+	{
+		if (teamInventory.Count > 4) 
+		{
+			return;
+		}
+		teamInventory.Add(item);
+	}
+
+	public void delItem(GameObject item)
+	{
+		if (teamInventory.Count == 0) 
+		{
+			return;
+		}
+		teamInventory.Remove(item);
 	}
 }
