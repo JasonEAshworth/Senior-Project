@@ -9,25 +9,18 @@ public enum playerClass
 	ADVENTURER
 };
 
-public class PlayerBase : MonoBehaviour 
+public class PlayerBase : CharacterBase 
 {
-	public PlayerManager manager;
-
-	public int health = 100;
-	public int maxHealth;
-	public bool dead = false;
 	public float respawnTimer = 0.0f;
 	public float timeToRespawn = 3.0f;
 
 	public int playerNum = -1;
 
-	public float moveSpeed = 6.0f;
-	public float rotationSpeed = 250.0f;
-	public float visibility = 1.0f;
-
 	public bool canJump = true;
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
+
+	public GameObject item;
 
 	// controls
 	public string moveAxisX;
@@ -37,24 +30,18 @@ public class PlayerBase : MonoBehaviour
 	public KeyCode specialAttackKey;
 	public KeyCode classAbilityKey;
 
-	public GameObject item;
-
+	public PlayerManager manager;
 	public CharacterController charControl;
 
 	void Start()
 	{
-		maxHealth = health;
+		health = maxHealth;
 		charControl = GetComponent<CharacterController>();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 	}
 
 	void FixedUpdate()
 	{
-		if (Input.GetKeyDown(KeyCode.H))
-		{
-			killPlayer();
-		}
-
 		if (!dead)
 		{
 			// MOVEMENT
@@ -112,16 +99,7 @@ public class PlayerBase : MonoBehaviour
 		}
 	}
 
-	public void takeDamage(int amount)
-	{
-		health -= amount;
-		if (health <= 0)
-		{
-			killPlayer();
-		}
-	}
-
-	public void killPlayer()
+	public override void kill()
 	{
 		dead = true;
 		respawnTimer = timeToRespawn;

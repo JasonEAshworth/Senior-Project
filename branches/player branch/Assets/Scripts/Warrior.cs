@@ -3,13 +3,6 @@ using System.Collections;
 
 public class Warrior : PlayerBase
 {
-	void Start()
-	{
-		maxHealth = 120;
-		health = maxHealth;
-		moveSpeed = 4.0f;
-	}
-
 	public override void basicAttack()
 	{
 		Debug.Log ("warrior basic attack");
