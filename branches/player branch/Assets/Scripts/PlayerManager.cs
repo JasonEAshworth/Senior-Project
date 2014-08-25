@@ -53,6 +53,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.moveAxisX = "Horizontal2";
 				sorc.moveAxisZ = "Vertical2";
 				sorc.jumpKey = KeyCode.N;
+				sorc.basicAttackKey = KeyCode.U;
 				sorc.playerNum = i;
 				players.Add (player2);
 				break;
@@ -75,6 +76,7 @@ public class PlayerManager : MonoBehaviour
 				war.moveAxisX = "Horizontal2";
 				war.moveAxisZ = "Vertical2";
 				war.jumpKey = KeyCode.N;
+				war.basicAttackKey = KeyCode.E;
 				war.playerNum = i;
 				players.Add (player4);
 				break;
