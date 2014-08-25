@@ -19,6 +19,7 @@ public class PlayerBase : CharacterBase
 	public bool canJump = true;
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
+	public bool attacking = false;
 
 	public GameObject item;
 
@@ -75,19 +76,9 @@ public class PlayerBase : CharacterBase
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
 			}
 
-			// ATTACKS
-			if (Input.GetKeyDown(basicAttackKey))
-			{
-				basicAttack();
-			}
-			else if (Input.GetKeyDown(specialAttackKey))
-			{
-				specialAttack();
-			}
-			else if (Input.GetKeyDown(classAbilityKey))
-			{
-				classAbility();
-			}
+			basicAttack();
+			specialAttack();
+			classAbility();
 		}
 		else
 		{
