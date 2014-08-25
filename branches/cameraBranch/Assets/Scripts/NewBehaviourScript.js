@@ -14,9 +14,7 @@ var offset : float;
 //========================================
  
 function Start(){
- 
-    targets = GameObject.FindGameObjectsWithTag("Player"); 
- 
+	targets = GameObject.FindGameObjectsWithTag("Player"); 
     if(theCamera) 
     {
     	isOrthographic = theCamera.orthographic;
@@ -62,41 +60,40 @@ function LateUpdate ()
       distance = Mathf.Lerp(height,largestDifference,.5);
      // height = largestDifference;
 
-		if (largestDifference < 7.5)
+		if (largestDifference < 8)
 		{
-			distance = 7.5;
-			//distance = -2;
+			distance = 8;
+			theCamera.transform.position.y = 10;
+			
 		}
 		
-		if (largestDifference > 10)
+		if (largestDifference > 8)
 		{
-			
-			distance = 10;
+			distance = 8;	
+			//theCamera.transform.position.y = 20;
 		}
-		if(isOrthographic)
-		{
+//		if(isOrthographic)
+//		{
+//
+//			theCamera.transform.position.x = avgDistance.x;
+//
+//			theCamera.orthographicSize =  5; //largestDifference;
+//
+//			theCamera.transform.position.y = 10;
+//
+//			theCamera.transform.LookAt(avgDistance);
+//
+//		} 
+		
+			theCamera.transform.position.x = avgDistance.x - 2;
 
-			theCamera.transform.position.x = avgDistance.x;
-
-			theCamera.orthographicSize =  5; //largestDifference;
-
-			theCamera.transform.position.y = 10;
-
-			theCamera.transform.LookAt(avgDistance);
-
-		} 
-		else 
-		{
-
-			theCamera.transform.position.x = avgDistance.x;
-
-			theCamera.transform.position.z = avgDistance.z + distance + largestDifference;
+			theCamera.transform.position.z = avgDistance.z + distance+ .5*(largestDifference);
 
 			theCamera.transform.position.y = distance;
 
 			theCamera.transform.LookAt(avgDistance);
 
-		}
+		
 		
 		//if (avgDistance < 2)
 		//	a
