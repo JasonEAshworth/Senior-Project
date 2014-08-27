@@ -8,11 +8,11 @@ public class Basic1Controller : MonoBehaviour
 		Debug.Log("Basic1 controller!");
 		if(on)
 		{
-			transform.Translate(new Vector3(0.0f, 5.0f, 0.0f));
+			transform.Translate(new Vector3(0.0f, -5.0f, 0.0f));
 		}
 		else
 		{
-			transform.Translate(new Vector3(0.0f, -5.0f, 0.0f));
+			transform.Translate(new Vector3(0.0f, 5.0f, 0.0f));
 		}
 	}
 }
