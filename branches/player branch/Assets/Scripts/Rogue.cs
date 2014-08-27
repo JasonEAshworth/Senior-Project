@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Rogue : PlayerBase
 {
+	private float timeStarted = Time.time - 10.0f;
 	void start()
 	{
 		int health = 100;
@@ -21,7 +22,7 @@ public class Rogue : PlayerBase
 	
 	public override void specialAttack()
 	{
-		if(Input.GetKeyDown (specialAttackKey))
+		if(Input.GetKeyDown(specialAttackKey))
 		{
 			//Envenom
 			Debug.Log ("warrior special attack");
@@ -30,10 +31,26 @@ public class Rogue : PlayerBase
 	
 	public override void classAbility()
 	{
-		if(Input.GetKeyDown (classAbilityKey))
+		if(Input.GetKeyDown(classAbilityKey))
+		{
+			timeStarted = Time.time;
+		}
+		//Remove GetKeyUp if you want the ability to last 10 seconds even if the user releases the key
+		if(Input.GetKeyUp(classAbilityKey))
+		{
+			visibility = 1.0f;
+			timeStarted -= 10.0f;
+		}
+		float currentTime = Time.time;
+		float timeSinceStart = currentTime - timeStarted;
+		if(timeSinceStart < 10.0f)
 		{
 			visibility = 0.0f;
 			Debug.Log ("warrior class ability");
+		}
+		else
+		{
+			visibility = 1.0f;
 		}
 	}
 }
