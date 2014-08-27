@@ -46,9 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BallController.cs" />
      <Compile Include="Assets\Scripts\Basic1Controller.cs" />
      <Compile Include="Assets\Scripts\Basic2Controller.cs" />
+     <Compile Include="Assets\Scripts\GoalController.cs" />
+     <Compile Include="Assets\Scripts\HandleController.cs" />
      <Compile Include="Assets\Scripts\LeverController.cs" />
+     <Compile Include="Assets\Scripts\Move1.cs" />
+     <Compile Include="Assets\Scripts\Move2.cs" />
+     <Compile Include="Assets\Scripts\Move3.cs" />
+     <Compile Include="Assets\Scripts\Move4.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

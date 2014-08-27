@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class BallController : MonoBehaviour
 {
 	void FixedUpdate ()
 	{
@@ -10,15 +10,10 @@ public class PlayerController : MonoBehaviour
 		Vector3 movement = new Vector3(x, 0.0f, z);
 		rigidbody.AddForce(movement * 500 * Time.deltaTime);
 	}
-
-	void OnTriggerStay(Collider other)
+	
+	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Lever")
-		{
-			if(Input.GetKeyDown("space"))
-			{
-				other.SendMessage("MoveLever");
-			}
-		}
+		Debug.Log ("trigger");
+		other.SendMessage("MoveLever");
 	}
 }
