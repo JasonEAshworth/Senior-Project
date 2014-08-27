@@ -7,7 +7,7 @@ using System;
 public class cameraControl : MonoBehaviour
 {
 		private bool isOrthographic;
-		private GameObject[] targets;
+		public GameObject[] targets;
 		public float currentDistance;
 		public float largestDistance;
 		public Camera theCamera;
@@ -17,11 +17,9 @@ public class cameraControl : MonoBehaviour
 		public float speed = 1;
 		public float offset;
 
-
-
-		void Start ()
+		public void Start ()
 		{
-			Debug.Log ("START");
+			Console.WriteLine ("START");
 			targets = GameObject.FindGameObjectsWithTag ("Player");
 			if (theCamera) {
 				isOrthographic = theCamera.orthographic;
@@ -35,10 +33,9 @@ public class cameraControl : MonoBehaviour
 				GUILayout.Label ("number of players = " + targets.Length.ToString ());
 		}
 
-		public void LastUpdate ()
+		public void LateUpdate ()
 		{
 				targets = GameObject.FindGameObjectsWithTag ("Player");
-				Console.WriteLine ("I am targets: ", targets);
 				if (!GameObject.FindWithTag ("Player")) {
 						return;
 				}
