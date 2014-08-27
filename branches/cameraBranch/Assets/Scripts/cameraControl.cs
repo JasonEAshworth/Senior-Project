@@ -1,86 +1,84 @@
 using UnityEngine;
 using System.Collections;
-[RequireComponent (typeof (CharacterController))]
+using System;
 
-public class cameraControl : MonoBehaviour {
-	private bool isOrthographic;
-	GameObject[] targets;
-	float currentDistance;
-	float largestDistance;
-	Camera theCamera;
-	float height = 5.0;
-	float avgDistance;
-	float distance = 5.0;                    // Default Distance 
-	float speed = 1;
-	float offset;
+[RequireComponent (typeof(CharacterController))]
 
-	public void  Start() 
-	{
-		targets = GameObject.FindGameObjectsWithTag("Player");
-		if (theCamera) 
+public class cameraControl : MonoBehaviour
+{
+		private bool isOrthographic;
+		public GameObject[] targets;
+		public float currentDistance;
+		public float largestDistance;
+		public Camera theCamera;
+		public float height = 5.0f;
+		public float avgDistance;
+		public float distance = 5.0f;                    // Default Distance 
+		public float speed = 1;
+		public float offset;
+
+		public void Start ()
 		{
-			isOrthographic = theCamera.orthographic;
-		}
-	}
-
-	public void OnGUI() 
-	{
-	    GUILayout.Label("largest distance is = " + largestDistance.ToString());
-	    GUILayout.Label("height = " + height.ToString());
-	    GUILayout.Label("number of players = " + targets.length.ToString());
-	}
-
-	public void LastUpdate() 
-	{
-		targets = GameObject.FindGameObjectsWithTag("Player");
-		if (!GameObject.FindWithTag("Player"))
-		{
-			return;
-		}
-		Vector3 sum = new Vector3(0,0,0);
-		for (int i = 0; i < targets.length; i++) 
-		{
-			sum += targets[i].transform.position;
-		}
-
-		float avgDistance = sum / targets.length;
-
-		float largestDifference = returnLargestDifference();
-
-		distance = Mathf.Lerp(height,largestDifference,.5);
-
-		if (largestDifference < 8)
-		{
-			distance = 8;
-			theCamera.transform.position.y = 10;
-		}
-
-		if (largestDifference > 8)
-		{
-			distance = 8;
-		}
-
-		theCamera.transform.position.x = avgDistance.x - 2;
-		theCamera.transform.position.z = avgDistance.z + distance+ .5*(largestDifference);
-		theCamera.transform.position.y = distance;
-		theCamera.transform.LookAt(avgDistance);
-	}
-
-	public float returnLargestDifference() 
-	{
-		currentDistance = 0.0;
-		largestDistance = 0.0;
-		for (int i = 0; i < targest.length; i++) 
-		{
-			for(int j = 0; j < targets.length; j++) 
-			{
-				currentDistance = Vector3.Distance(targets[i].transform.position, targets[j].transform.position);
-				if (currentDistance > largestDistance) 
-				{
-					largestDistance = currentDistance;
-				}
+			Console.WriteLine ("START");
+			targets = GameObject.FindGameObjectsWithTag ("Player");
+			if (theCamera) {
+				isOrthographic = theCamera.orthographic;
 			}
 		}
-		return largestDistance;
-	}
+
+		public void OnGUI ()
+		{
+				GUILayout.Label ("largest distance is = " + largestDistance.ToString ());
+				GUILayout.Label ("height = " + height.ToString ());
+				GUILayout.Label ("number of players = " + targets.Length.ToString ());
+		}
+
+		public void LastUpdate ()
+		{
+				targets = GameObject.FindGameObjectsWithTag ("Player");
+				if (!GameObject.FindWithTag ("Player")) {
+						return;
+				}
+				Vector3 sum = new Vector3 (0, 0, 0);
+				for (int i = 0; i < targets.Length; i++) {
+						sum += targets [i].transform.position;
+				}
+
+				Vector3 avgDistance = sum / targets.Length;
+
+				float largestDifference = returnLargestDifference ();
+
+				distance = Mathf.Lerp (height, largestDifference, 0.5f);
+
+				if (largestDifference < 8) {
+						distance = 8;
+						Vector3 temp = new Vector3 (theCamera.transform.position.x, 10, theCamera.transform.position.z);
+						theCamera.transform.position = temp;
+				}
+
+				if (largestDifference > 8) {
+						distance = 8;
+				}
+
+				float tempX = avgDistance.x - 2;
+				float tempZ = avgDistance.z + distance + 0.5f * (largestDifference);
+				float tempY = distance;
+				theCamera.transform.position = new Vector3 (tempX, tempY, tempZ);
+				theCamera.transform.LookAt (avgDistance);
+		}
+
+		public float returnLargestDifference ()
+		{
+				currentDistance = 0.0f;
+				largestDistance = 0.0f;
+				for (int i = 0; i < targets.Length; i++) {
+						for (int j = 0; j < targets.Length; j++) {
+								currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
+								if (currentDistance > largestDistance) {
+										largestDistance = currentDistance;
+								}
+						}
+				}
+				return largestDistance;
+		}
 }
