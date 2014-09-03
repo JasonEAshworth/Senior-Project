@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
 
 	private GameObject item;
 	private float health = 100;
-	private bool pFlag = false;
 
 	void Update()
 	{
@@ -15,8 +14,21 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetKeyDown("space"))
 			{
-				health += item.GetComponent<Potion>().potionValue;
-				item = null;
+				switch(item.tag)
+				{
+					case "Potion":
+						//Debug.Log (item.tag);
+						health += item.GetComponent<Potion>().potionValue;
+						item = null;
+						break;
+					case "AttackPotion":
+						item = null;
+						break;
+					case "DefensePotion":
+						item = null;
+						break;
+				}
+
 			}
 		}
 	}
