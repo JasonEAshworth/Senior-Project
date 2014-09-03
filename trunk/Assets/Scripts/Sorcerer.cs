@@ -30,7 +30,7 @@ public class Sorcerer : PlayerBase
 	
 	public override void specialAttack()
 	{
-		if(Input.GetKeyDown(specialAttackKey))
+		if(Input.GetKeyDown(basicAttackKey))
 		{
 			if(attackType == 1)
 			{

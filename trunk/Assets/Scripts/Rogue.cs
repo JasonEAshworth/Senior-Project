@@ -21,7 +21,7 @@ public class Rogue : PlayerBase
 	
 	public override void specialAttack()
 	{
-		if(Input.GetKeyDown (specialAttackKey))
+		if(Input.GetKeyDown (basicAttackKey))
 		{
 			//Envenom
 			Debug.Log ("warrior special attack");

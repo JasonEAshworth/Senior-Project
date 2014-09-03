@@ -7,6 +7,7 @@ public class Warrior : PlayerBase
 	private bool blockProjectiles = false;
 	private int count = 0;
 	private float lastTimeAttack = 0.0f;
+	private float specialAttackTimer
 	public void init()
 	{
 		maxHealth = 120;
@@ -48,7 +49,7 @@ public class Warrior : PlayerBase
 	public override void specialAttack()
 	{
 		//Debug.Log ("warrior special attack");
-		if (Input.GetKeyDown (specialAttackKey) && !attacking) 
+		if (Input.GetKeyDown (basicAttackKey) && !attacking) 
 		{
 			attacking = true;
 			/*

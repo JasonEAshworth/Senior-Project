@@ -30,8 +30,9 @@ public class PlayerBase : CharacterBase
 	public string moveAxisZ;
 	public KeyCode jumpKey;
 	public KeyCode basicAttackKey;
-	public KeyCode specialAttackKey;
+	public KeyCode useItemKey;
 	public KeyCode classAbilityKey;
+	public KeyCode specialAttackKey;
 
 	public PlayerManager manager;
 	public CharacterController charControl;
@@ -46,28 +47,10 @@ public class PlayerBase : CharacterBase
 	void FixedUpdate()
 	{
 
-		if (item) 
-		{
-			if (Input.GetKeyDown("space"))
-			{
-				switch(item.tag)
-				{
-					case "Potion":
-						//Debug.Log (item.tag);
-						health += item.GetComponent<Potion>().potionValue;
-						item = null;
-						break;
-					case "AttackPotion":
-						item = null;
-						break;
-					case "DefensePotion":
-						item = null;
-						break;
-				}
-			}
-		}
 
-		if (!dead && controllable)
+
+
+		if (!dead)
 		{
 			// MOVEMENT
 			// Get the horizontal movement from the joystick input and scale it with moveSpeed
@@ -106,6 +89,7 @@ public class PlayerBase : CharacterBase
 			basicAttack();
 			specialAttack();
 			classAbility();
+			itemAbility();
 		}
 		else
 		{
@@ -138,6 +122,31 @@ public class PlayerBase : CharacterBase
 	void addItem(GameObject p)
 	{
 		item = p;
+	}
+
+	public void itemAbility()
+	{
+		if (item) 
+		{
+			if (Input.GetKeyDown(useItemKey))
+			{
+				switch(item.tag)
+				{
+				case "Potion":
+					//Debug.Log (item.tag);
+					health += item.GetComponent<Potion>().potionValue;
+					item = null;
+					break;
+				case "AttackPotion":
+					item = null;
+					break;
+				case "DefensePotion":
+					item = null;
+					break;
+				}
+				
+			}
+		}
 	}
 	
 	public virtual void basicAttack(){}
