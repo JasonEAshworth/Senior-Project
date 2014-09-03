@@ -4,6 +4,7 @@ using System.Collections;
 public class Rogue : PlayerBase
 {
 	private float timeStarted = Time.time - 10.0f;
+	private float attackStarted = Time.time - 10.0f;
 	void start()
 	{
 		int health = 100;
@@ -14,20 +15,37 @@ public class Rogue : PlayerBase
 
 	public override void basicAttack()
 	{
-		if(Input.GetKeyDown (basicAttackKey)){
+		if(Input.GetKeyDown (basicAttackKey))
+		{
 			//Check enemy facing
-			Debug.Log ("warrior basic attack");
+			Debug.Log ("rogue attack");
+			attackStarted = Time.time;
+		}
+		float currentTime = Time.time;
+		float timeSinceAttack = currentTime - attackStarted;
+		if (Input.GetKeyUp (basicAttackKey))
+		{
+			if(timeSinceAttack < 1.0f)
+			{
+				Debug.Log ("rogue basic attack");
+				//Basic Attack
+			}
+			else
+			{
+				Debug.Log ("rogue special attack");
+				//Envenom
+			}
 		}
 	}
 	
-	public override void specialAttack()
+	/*public override void Item()
 	{
-		if(Input.GetKeyDown(specialAttackKey))
+		if(Input.GetKeyDown(itemKey))
 		{
-			//Envenom
-			Debug.Log ("warrior special attack");
+			//Use Item
+			Debug.Log ("rogue special attack");
 		}
-	}
+	}*/
 	
 	public override void classAbility()
 	{
@@ -46,7 +64,7 @@ public class Rogue : PlayerBase
 		if(timeSinceStart < 10.0f)
 		{
 			visibility = 0.0f;
-			Debug.Log ("warrior class ability");
+			Debug.Log ("rogue class ability");
 		}
 		else
 		{

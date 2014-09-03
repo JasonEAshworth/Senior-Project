@@ -4,10 +4,10 @@
     <Files>
       <File FileName="Assets\Scripts\PlayerBase.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\PlayerManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Rogue.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Sorcerer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Adventurer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Warrior.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Rogue.cs" Line="31" Column="2" />
+      <File FileName="Assets\Scripts\Sorcerer.cs" Line="21" Column="20" />
+      <File FileName="Assets\Scripts\Adventurer.cs" Line="10" Column="20" />
+      <File FileName="Assets\Scripts\Warrior.cs" Line="9" Column="2" />
       <File FileName="Assets\Scripts\CharacterBase.cs" Line="1" Column="1" />
       <File FileName="z:\profiledata\Desktop\Senior Project\branches\player branch\Assets\Scripts\GameCamera.cs" Line="1" Column="1" />
     </Files>

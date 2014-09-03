@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Sorcerer : PlayerBase
 {
-	int attackType = 1;
+	private int attackType = 1;
+	private float attackStarted = Time.time - 10.0f;
 
 	void start()
 	{
@@ -14,35 +15,50 @@ public class Sorcerer : PlayerBase
 	
 	public override void basicAttack()
 	{
-		if(Input.GetKeyDown(basicAttackKey))
+		if(Input.GetKeyDown (basicAttackKey))
 		{
-			if(attackType == 1)
+			//Check enemy facing
+			Debug.Log ("sorceress attack");
+			attackStarted = Time.time;
+		}
+		float currentTime = Time.time;
+		float timeSinceAttack = currentTime - attackStarted;
+		if (Input.GetKeyUp (basicAttackKey))
+		{
+			if(timeSinceAttack < 1.0f)
 			{
-				//Cast Fireball
+				if(attackType == 1)
+				{
+					//Cast Fireball
+				}
+				else
+				{
+					//Cast Ice Bolt
+				}
+				Debug.Log ("sorceress basic attack");
 			}
 			else
 			{
-				//Cast Ice Bolt
+				if(attackType == 1)
+				{
+					//Cast Firestorm
+				}
+				else
+				{
+					//Cast Blizzard
+				}
+				Debug.Log ("sorceress special attack");
 			}
-			Debug.Log ("warrior basic attack");
 		}
 	}
 	
-	public override void specialAttack()
+	/*public override void item()
 	{
-		if(Input.GetKeyDown(specialAttackKey))
+		if(Input.GetKeyDown(itemKey))
 		{
-			if(attackType == 1)
-			{
-				//Cast Firestorm
-			}
-			else
-			{
-				//Cast Blizzard
-			}
-			Debug.Log ("warrior special attack");
+			//Use Item
 		}
-	}
+	}*/
 	
 	public override void classAbility()
 	{
@@ -56,7 +72,7 @@ public class Sorcerer : PlayerBase
 			{
 				attackType = 1;
 			}
-			Debug.Log ("warrior class ability");
+			Debug.Log ("sorceress class ability");
 		}
 	}
 }
