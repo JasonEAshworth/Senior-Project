@@ -51,12 +51,12 @@
      <Compile Include="Assets\Scripts\Basic2Controller.cs" />
      <Compile Include="Assets\Scripts\GoalController.cs" />
      <Compile Include="Assets\Scripts\HandleController.cs" />
-     <Compile Include="Assets\Scripts\LeverController.cs" />
      <Compile Include="Assets\Scripts\Move1.cs" />
      <Compile Include="Assets\Scripts\Move2.cs" />
      <Compile Include="Assets\Scripts\Move3.cs" />
      <Compile Include="Assets\Scripts\Move4.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\TriggerController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
