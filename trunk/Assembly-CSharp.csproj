@@ -47,29 +47,20 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Adventurer.cs" />
-     <Compile Include="Assets\Scripts\BallController.cs" />
-     <Compile Include="Assets\Scripts\Basic1Controller.cs" />
-     <Compile Include="Assets\Scripts\Basic2Controller.cs" />
      <Compile Include="Assets\Scripts\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
-     <Compile Include="Assets\Scripts\Doorway.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GoalController.cs" />
-     <Compile Include="Assets\Scripts\HandleController.cs" />
-     <Compile Include="Assets\Scripts\LeverController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
-     <Compile Include="Assets\Scripts\Move1.cs" />
-     <Compile Include="Assets\Scripts\Move2.cs" />
-     <Compile Include="Assets\Scripts\Move3.cs" />
-     <Compile Include="Assets\Scripts\Move4.cs" />
      <Compile Include="Assets\Scripts\PickUps.cs" />
      <Compile Include="Assets\Scripts\PlayerBase.cs" />
      <Compile Include="Assets\Scripts\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Potion.cs" />
      <Compile Include="Assets\Scripts\Rogue.cs" />
      <Compile Include="Assets\Scripts\Sorcerer.cs" />
+     <Compile Include="Assets\Scripts\TriggerController.cs" />
      <Compile Include="Assets\Scripts\Warrior.cs" />
      <Compile Include="Assets\Scripts\cameraControl.cs" />
   </ItemGroup>
