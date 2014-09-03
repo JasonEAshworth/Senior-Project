@@ -54,6 +54,8 @@ public class PlayerManager : MonoBehaviour
 				sorc.moveAxisZ = "Vertical2";
 				sorc.jumpKey = KeyCode.N;
 				sorc.basicAttackKey = KeyCode.U;
+				sorc.specialAttackKey = KeyCode.O;
+				sorc.classAbilityKey = KeyCode.P;
 				sorc.playerNum = i;
 				players.Add (player2);
 				break;
