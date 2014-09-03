@@ -16,6 +16,7 @@ public class cameraControl : MonoBehaviour
 		public float distance = 5.0f;                    // Default Distance 
 		public float speed = 1;
 		public float offset;
+		public float roomLength = 48f;
 
 		public void Start ()
 		{
@@ -60,11 +61,22 @@ public class cameraControl : MonoBehaviour
 						distance = 8;
 				}
 
-				float tempX = avgDistance.x - 2;
+				//float tempX = avgDistance.x - 2;
 				float tempZ = avgDistance.z + distance + 0.5f * (largestDifference);
 				float tempY = distance;
+			
+	
+		
+				// New code work area
+				
+				float xRatio = avgDistance.x / roomLength;
+				float tempX = avgDistance.x + Mathf.Lerp (4, -4, xRatio);
+				
+				// Old code
+		
 				theCamera.transform.position = new Vector3 (tempX, tempY, tempZ);
 				theCamera.transform.LookAt (avgDistance);
+				
 		}
 
 		public float returnLargestDifference ()
