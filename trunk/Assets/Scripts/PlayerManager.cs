@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
 				Adventurer adv = player1.GetComponent<Adventurer>();
 				adv.moveAxisX = "Horizontal1";
 				adv.moveAxisZ = "Vertical1";
-				adv.jumpKey = KeyCode.C;
+				//adv.jumpKey = KeyCode.C;
 				adv.playerNum = i;
 				players.Add (player1);
 				break;
@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
 				Sorcerer sorc = player2.GetComponent<Sorcerer>();
 				sorc.moveAxisX = "Horizontal2";
 				sorc.moveAxisZ = "Vertical2";
-				sorc.jumpKey = KeyCode.N;
+				//sorc.jumpKey = KeyCode.N;
 				sorc.basicAttackKey = KeyCode.U;
 				sorc.specialAttackKey = KeyCode.O;
 				sorc.classAbilityKey = KeyCode.P;
@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
 				Rogue rogue = player3.GetComponent<Rogue>();
 				rogue.moveAxisX = "Horizontal1";
 				rogue.moveAxisZ = "Vertical1";
-				rogue.jumpKey = KeyCode.C;
+				//rogue.jumpKey = KeyCode.C;
 				rogue.playerNum = i;
 				players.Add (player3);
 				break;
@@ -77,7 +77,7 @@ public class PlayerManager : MonoBehaviour
 				Warrior war = player4.GetComponent<Warrior>();
 				war.moveAxisX = "Horizontal2";
 				war.moveAxisZ = "Vertical2";
-				war.jumpKey = KeyCode.N;
+				//war.jumpKey = KeyCode.N;
 				war.basicAttackKey = KeyCode.E;
 				war.playerNum = i;
 				players.Add (player4);
@@ -90,23 +90,5 @@ public class PlayerManager : MonoBehaviour
 	{
 		int randSpawn = Random.Range (0,4);
 		return spawns[randSpawn].transform.position;
-	}
-
-	public void addItem(GameObject item)
-	{
-		if (teamInventory.Count > 4) 
-		{
-			return;
-		}
-		teamInventory.Add(item);
-	}
-
-	public void delItem(GameObject item)
-	{
-		if (teamInventory.Count == 0) 
-		{
-			return;
-		}
-		teamInventory.Remove(item);
 	}
 }
