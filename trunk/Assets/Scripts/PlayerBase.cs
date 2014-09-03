@@ -16,6 +16,8 @@ public class PlayerBase : CharacterBase
 
 	public int playerNum = -1;
 
+	private bool controllable = true;
+
 	public bool canJump = true;
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
@@ -50,23 +52,22 @@ public class PlayerBase : CharacterBase
 			{
 				switch(item.tag)
 				{
-				case "Potion":
-					//Debug.Log (item.tag);
-					health += item.GetComponent<Potion>().potionValue;
-					item = null;
-					break;
-				case "AttackPotion":
-					item = null;
-					break;
-				case "DefensePotion":
-					item = null;
-					break;
+					case "Potion":
+						//Debug.Log (item.tag);
+						health += item.GetComponent<Potion>().potionValue;
+						item = null;
+						break;
+					case "AttackPotion":
+						item = null;
+						break;
+					case "DefensePotion":
+						item = null;
+						break;
 				}
-				
 			}
 		}
 
-		if (!dead)
+		if (!dead && controllable)
 		{
 			// MOVEMENT
 			// Get the horizontal movement from the joystick input and scale it with moveSpeed
@@ -142,4 +143,14 @@ public class PlayerBase : CharacterBase
 	public virtual void basicAttack(){}
 	public virtual void specialAttack(){}
 	public virtual void classAbility(){}
+
+	public void disableControl()
+	{
+		controllable = false;
+	}
+
+	public void enableControl()
+	{
+		controllable = true;
+	}
 }

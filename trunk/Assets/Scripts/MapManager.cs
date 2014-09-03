@@ -11,6 +11,14 @@ public enum RoomType
 	SQUIRREL
 }
 
+public enum Direction
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}
+
 public class RoomGraph
 {
 	public List<RoomNode> rooms;
@@ -23,6 +31,8 @@ public class RoomGraph
 	public void addRoom(string name)
 	{
 		RoomNode room = new RoomNode(name);
+		// set up more room info here
+		rooms.Add(room);
 	}
 }
 
@@ -67,6 +77,8 @@ public class MapManager : MonoBehaviour
 	private RoomGraph map;
 	public string[] roomsToLoad = new string[3];
 
+	private RoomNode currentRoom;
+
 	void Start()
 	{
 		map = new RoomGraph();
@@ -74,10 +86,11 @@ public class MapManager : MonoBehaviour
 		{
 			map.addRoom(roomsToLoad[i]);
 		}
+		currentRoom = map.rooms[0];
 	}
 
-	void moveToNewRoom()
+	public void moveToNewRoom(Direction doorDir)
 	{
-
+		Debug.Log ("move");
 	}
 }

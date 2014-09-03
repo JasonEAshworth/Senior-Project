@@ -1,8 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerBase.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerManager.cs" Line="75" Column="73" />
+      <File FileName="Assets\Scripts\MapManager.cs" Line="80" Column="31" />
+      <File FileName="Assets\Scripts\Doorway.cs" Line="33" Column="1" />
+      <File FileName="Assets\Scripts\PlayerBase.cs" Line="154" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

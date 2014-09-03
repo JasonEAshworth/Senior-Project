@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Basic2Controller.cs" />
      <Compile Include="Assets\Scripts\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
+     <Compile Include="Assets\Scripts\Doorway.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\GoalController.cs" />
