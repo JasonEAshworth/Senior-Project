@@ -43,6 +43,29 @@ public class PlayerBase : CharacterBase
 
 	void FixedUpdate()
 	{
+
+		if (item) 
+		{
+			if (Input.GetKeyDown("space"))
+			{
+				switch(item.tag)
+				{
+				case "Potion":
+					//Debug.Log (item.tag);
+					health += item.GetComponent<Potion>().potionValue;
+					item = null;
+					break;
+				case "AttackPotion":
+					item = null;
+					break;
+				case "DefensePotion":
+					item = null;
+					break;
+				}
+				
+			}
+		}
+
 		if (!dead)
 		{
 			// MOVEMENT
@@ -109,6 +132,11 @@ public class PlayerBase : CharacterBase
 		verticalVelocity = 0.0f;
 
 		dead = false;
+	}
+
+	void addItem(GameObject p)
+	{
+		item = p;
 	}
 	
 	public virtual void basicAttack(){}
