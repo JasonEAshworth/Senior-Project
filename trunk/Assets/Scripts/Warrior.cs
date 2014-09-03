@@ -7,7 +7,7 @@ public class Warrior : PlayerBase
 	private bool blockProjectiles = false;
 	private int count = 0;
 	private float lastTimeAttack = 0.0f;
-	private float specialAttackTimer
+	private float specialAttackTimer;
 	public void init()
 	{
 		maxHealth = 120;
