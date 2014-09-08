@@ -1,0 +1,16 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Checkpoint.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Respawn.cs" Line="6" Column="2" />
+      <File FileName="Assets\Scripts\p1Control.cs" Line="21" Column="51" />
+      <File FileName="Assets\Scripts\Gun.cs" Line="10" Column="2" />
+      <File FileName="Assets\Scripts\GameCamera.cs" Line="118" Column="65" />
+      <File FileName="Assets\Checkpoint.cs" Line="11" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
