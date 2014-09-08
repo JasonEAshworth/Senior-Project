@@ -23,7 +23,7 @@ public class PlayerBase : CharacterBase
 	public float verticalVelocity = 0.0f;
 	public bool attacking = false;
 
-	public GameObject item;
+	protected GameObject item;
 
 	// controls
 	public string moveAxisX;
@@ -122,6 +122,11 @@ public class PlayerBase : CharacterBase
 	void addItem(GameObject p)
 	{
 		item = p;
+	}
+
+	void addKey()
+	{
+		manager.haveKey = true;
 	}
 
 	public void itemAbility()

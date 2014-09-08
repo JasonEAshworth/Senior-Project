@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\PickUps.cs" />
@@ -62,6 +63,7 @@
      <Compile Include="Assets\Scripts\TriggerController.cs" />
      <Compile Include="Assets\Scripts\Warrior.cs" />
      <Compile Include="Assets\Scripts\cameraControl.cs" />
+     <Compile Include="Assets\Scripts\doorTrigger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] spawns;
 	public List<GameObject> players;
 	public List<playerClass> selectedClasses;
-	public List<GameObject> teamInventory;
+	public bool haveKey = false;
 
 	void Awake() 
 	{
@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
 		players = new List<GameObject>();
 
 		// instantiate inventory list
-		teamInventory = new List<GameObject>();
+		//teamInventory = new List<GameObject>();
 
 		// instantiate selectedClasses and populate it
 		selectedClasses = new List<playerClass>();
