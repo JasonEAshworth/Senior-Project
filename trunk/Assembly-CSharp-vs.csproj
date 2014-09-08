@@ -51,7 +51,6 @@
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
-     <Compile Include="Assets\Scripts\GoalController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\PickUps.cs" />

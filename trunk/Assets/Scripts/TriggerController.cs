@@ -4,34 +4,53 @@ using System.Collections;
 public class TriggerController : MonoBehaviour
 {
 	public GameObject[] obj;
-	private bool on = false;
+	public bool active;
+	public bool multi;
+	public bool state;
 	private int playersIn = 0;
 	public int playersNeeded;
-	
-	void Trigger()
+	private float cooldown = 1.5f;
+	private float elapsed = 0;
+	private bool inCD = false;
+
+	void Update()
 	{
-		Debug.Log("trigger controller!");
-		for(int i = 0; i < obj.Length; i++)
+		if(inCD)
 		{
-			obj[i].SendMessage("move", on);
+			elapsed += Time.deltaTime;
 		}
-		on = !on;
+		if(elapsed >= cooldown)
+		{
+			inCD = false;
+			elapsed = 0;
+		}
 	}
 
-	void TriggerOnQuota(bool enter)
+	void Trigger(bool enter)
 	{
-		if(enter)
+		if(active && !inCD)
 		{
-			playersIn++;
-		}
-		else
-		{
-			playersIn--;
-		}
+			if(enter)
+			{
+				playersIn++;
+			}
+			else
+			{
+				playersIn--;
+			}
 
-		if(playersIn >= playersNeeded)
-		{
-			Trigger();
+			if(playersIn >= playersNeeded && elapsed < 0)
+			{
+				for(int i = 0; i < obj.Length; i++)
+				{
+					obj[i].SendMessage("move", state);
+				}
+				state = !state;
+				if(!multi)
+				{
+					active = false;
+				}
+			}
 		}
 	}
 }
