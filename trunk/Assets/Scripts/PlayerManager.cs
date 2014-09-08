@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
 	public List<playerClass> selectedClasses;
 	public bool haveKey = false;
 
-	void Awake() 
+	void Start() 
 	{
 		// instantiate players list
 		players = new List<GameObject>();
@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
 		numPlayers = 4;
 
 		// acquire all spawn points for players 
-		spawns = GameObject.FindGameObjectsWithTag("Respawn");
+		getNewSpawnPoints();
 
 		for (int i=0; i<numPlayers; i++) 
 		{
@@ -90,5 +90,18 @@ public class PlayerManager : MonoBehaviour
 	{
 		int randSpawn = Random.Range (0,4);
 		return spawns[randSpawn].transform.position;
+	}
+
+	public void getNewSpawnPoints()
+	{
+		spawns = GameObject.FindGameObjectsWithTag("Respawn");
+	}
+
+	public void respawnAllPlayers()
+	{
+		for (int i = 0; i < players.Count; i++)
+		{
+			players[i].transform.position = spawns[i].transform.position;
+		}
 	}
 }

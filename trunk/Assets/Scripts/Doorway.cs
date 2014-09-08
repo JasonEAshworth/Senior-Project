@@ -6,7 +6,7 @@ public class Doorway : MonoBehaviour
 	private MapManager mapMan;
 
 	public Direction doorwayDirection;
-	private bool transitioning = false;
+	public bool transitioning = false;
 	private float transitionTimer = 1.5f;
 
 	void Start()
@@ -23,15 +23,6 @@ public class Doorway : MonoBehaviour
 			{
 				mapMan.moveToNewRoom(doorwayDirection);
 			}
-		}
-	}
-
-	void OnCollisionEnter(Collision c)
-	{
-		if (!transitioning && c.gameObject.tag == "Player")
-		{
-			transitioning = true;
-			c.gameObject.SendMessage("disableControl");
 		}
 	}
 }

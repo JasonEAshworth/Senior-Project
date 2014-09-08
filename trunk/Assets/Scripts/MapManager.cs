@@ -31,8 +31,34 @@ public class RoomGraph
 	public void addRoom(string name)
 	{
 		RoomNode room = new RoomNode(name);
-		// set up more room info here
 		rooms.Add(room);
+	}
+
+	public void connectRooms(int roomOneIdx, int roomTwoIdx, Direction roomOneExit)
+	{
+		if (roomOneIdx >= rooms.Count || roomTwoIdx >= rooms.Count)
+		{
+			return;
+		}
+		switch(roomOneExit)
+		{
+		case Direction.NORTH:
+			rooms[roomOneIdx].north = rooms[roomTwoIdx];
+			rooms[roomTwoIdx].south = rooms[roomOneIdx];
+			break;
+		case Direction.SOUTH:
+			rooms[roomOneIdx].south = rooms[roomTwoIdx];
+			rooms[roomTwoIdx].north = rooms[roomOneIdx];
+			break;
+		case Direction.EAST:
+			rooms[roomOneIdx].east = rooms[roomTwoIdx];
+			rooms[roomTwoIdx].west = rooms[roomOneIdx];
+			break;
+		case Direction.WEST:
+			rooms[roomOneIdx].west = rooms[roomTwoIdx];
+			rooms[roomTwoIdx].east = rooms[roomOneIdx];
+			break;
+		}
 	}
 }
 
@@ -77,20 +103,50 @@ public class MapManager : MonoBehaviour
 	private RoomGraph map;
 	public string[] roomsToLoad = new string[3];
 
-	private RoomNode currentRoom;
+	private GameObject currentRoomObj;
+	private RoomNode currentRoomNode;
 
-	void Start()
+	void Awake()
 	{
 		map = new RoomGraph();
 		for (int i = 0; i < roomsToLoad.Length; i++)
 		{
 			map.addRoom(roomsToLoad[i]);
 		}
-		currentRoom = map.rooms[0];
+		currentRoomNode = map.rooms[0];
+		currentRoomObj = Instantiate(Resources.Load(map.rooms[0].name)) as GameObject;
+
+		//hardcoded for now
+		map.connectRooms(0, 1, Direction.NORTH);
+		map.connectRooms(1, 2, Direction.WEST);
 	}
 
 	public void moveToNewRoom(Direction doorDir)
 	{
-		Debug.Log ("move");
+		RoomNode newRoom = null;
+		switch(doorDir)
+		{
+		case Direction.NORTH:
+			newRoom = currentRoomNode.north;
+			break;
+		case Direction.SOUTH:
+			newRoom = currentRoomNode.south;
+			break;
+		case Direction.EAST:
+			newRoom = currentRoomNode.east;
+			break;
+		case Direction.WEST:
+			newRoom = currentRoomNode.west;
+			break;
+		}
+
+		if (newRoom != null)
+		{
+			currentRoomNode = newRoom;
+			DestroyImmediate(currentRoomObj);
+			currentRoomObj = Instantiate(Resources.Load(newRoom.name)) as GameObject;
+			GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getNewSpawnPoints();
+			GameObject.Find("PlayerManager").GetComponent<PlayerManager>().respawnAllPlayers();
+		}
 	}
 }
