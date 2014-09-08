@@ -30,7 +30,7 @@ public class PlayerBase : CharacterBase
 	public string moveAxisZ;
 	public KeyCode jumpKey;
 	public KeyCode basicAttackKey;
-	public KeyCode useItemKey;
+	public KeyCode useItemKey = KeyCode.Space;
 	public KeyCode classAbilityKey;
 	public KeyCode specialAttackKey;
 
@@ -151,8 +151,8 @@ public class PlayerBase : CharacterBase
 				switch(item.tag)
 				{
 				case "Potion":
-					//Debug.Log (item.tag);
 					health += item.GetComponent<Potion>().potionValue;
+					Debug.Log(health);
 					item = null;
 					break;
 				case "AttackPotion":
