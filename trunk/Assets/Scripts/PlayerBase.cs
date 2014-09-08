@@ -16,7 +16,7 @@ public class PlayerBase : CharacterBase
 
 	public int playerNum = -1;
 
-	private bool controllable = true;
+	public bool controllable = true;
 
 	public bool canJump = true;
 	public float jumpForce = 0.25f;

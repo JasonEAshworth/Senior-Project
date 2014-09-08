@@ -102,6 +102,7 @@ public class PlayerManager : MonoBehaviour
 		for (int i = 0; i < players.Count; i++)
 		{
 			players[i].transform.position = spawns[i].transform.position;
+			players[i].GetComponent<PlayerBase>().controllable = true;
 		}
 	}
 }
