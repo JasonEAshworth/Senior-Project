@@ -51,7 +51,7 @@ public class Warrior : PlayerBase
 		//Debug.Log ("warrior special attack");
 		if (Input.GetKeyDown (basicAttackKey) && !attacking) 
 		{
-			attacking = true;
+			//attacking = true;
 			/*
 			if(!animation.isPlaying)
 			{

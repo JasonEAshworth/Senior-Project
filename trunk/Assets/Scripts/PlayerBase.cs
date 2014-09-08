@@ -6,7 +6,7 @@ public enum playerClass
 	WARRIOR, 
 	SORCERER, 
 	ROGUE, 
-	ADVENTURER
+	WOODSMAN
 };
 
 public class PlayerBase : CharacterBase 
@@ -22,6 +22,7 @@ public class PlayerBase : CharacterBase
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
 	public bool attacking = false;
+	public playerClass classType;
 
 	protected GameObject item;
 
@@ -46,10 +47,6 @@ public class PlayerBase : CharacterBase
 
 	void FixedUpdate()
 	{
-
-
-
-
 		if (!dead)
 		{
 			if (controllable)
@@ -89,7 +86,6 @@ public class PlayerBase : CharacterBase
 				}
 
 				basicAttack();
-				specialAttack();
 				classAbility();
 				itemAbility();
 			}

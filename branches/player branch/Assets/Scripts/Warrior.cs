@@ -66,32 +66,31 @@ public class Warrior : PlayerBase
 			float timeSinceLastAttack = curTimeAttack - lastTimeAttack;
 			lastTimeAttack = curTimeAttack;
 			Debug.Log (timeSinceLastAttack);
+			if(timeSinceLastAttack < 1.0f)
+			{
+				count++;
+			}
+			else
+			{
+				count = 0;
+			}
 			if(count < 3  && !attacking)
 			{
 				//animator.Play("WarriorBasicAttack");
 				Debug.Log ("Basic Warrior Attack");
-				if(timeSinceLastAttack < 1.0f)
-				{
-					count++;
-				}
-				else
-				{
-					count = 0;
-				}
 			}
-			else if(count == 3 && !attacking)
+			else if(count == 3)
 			{
 				//animator.Play("WarriorCleaveAttack");
 				Debug.Log ("Cleave Warrior Attack");
 				count = 0;
 			}
-
 		}*/
 	}
 
 	/*public override void item()
 	{
-		Debug.Log ("warrior item");
+		//Debug.Log ("warrior special attack");
 		if (Input.GetKeyDown (specialAttackKey) && !attacking) 
 		{
 			//Use Item
@@ -102,7 +101,7 @@ public class Warrior : PlayerBase
 	{
 		if (Input.GetKeyDown (classAbilityKey) && !attacking) 
 		{
-			Debug.Log ("warrior class ability");
+			//Debug.Log ("warrior class ability");
 			// animator.Play("WarriorClassAbility");
 			moveSpeed = moveSpeed / 2;
 			blockProjectiles = true;

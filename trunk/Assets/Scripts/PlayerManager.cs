@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
 
 		// instantiate selectedClasses and populate it
 		selectedClasses = new List<playerClass>();
-		selectedClasses.Add(playerClass.ADVENTURER);
+		selectedClasses.Add(playerClass.WOODSMAN);
 		selectedClasses.Add(playerClass.ROGUE);
 		selectedClasses.Add(playerClass.SORCERER);
 		selectedClasses.Add(playerClass.WARRIOR);
@@ -36,14 +36,18 @@ public class PlayerManager : MonoBehaviour
 		{
 			switch (selectedClasses[i])
 			{
-			case playerClass.ADVENTURER:
-				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Adventurer"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+			case playerClass.WOODSMAN:
+				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player1.tag = "Player";
-				Adventurer adv = player1.GetComponent<Adventurer>();
-				adv.moveAxisX = "Horizontal1";
-				adv.moveAxisZ = "Vertical1";
+				Woodsman woods = player1.GetComponent<Woodsman>();
+				woods.moveAxisX = "Horizontal1";
+				woods.moveAxisZ = "Vertical1";
+				woods.classType = playerClass.WOODSMAN;
+				//woods.basicAttackKey = KeyCode.R;
+				woods.basicAttackKey = "Xbox_A";
+				woods.init();
 				//adv.jumpKey = KeyCode.C;
-				adv.playerNum = i;
+				woods.playerNum = i;
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
@@ -52,6 +56,7 @@ public class PlayerManager : MonoBehaviour
 				Sorcerer sorc = player2.GetComponent<Sorcerer>();
 				sorc.moveAxisX = "Horizontal2";
 				sorc.moveAxisZ = "Vertical2";
+				sorc.classType = playerClass.SORCERER;
 				//sorc.jumpKey = KeyCode.N;
 				sorc.basicAttackKey = KeyCode.U;
 				sorc.specialAttackKey = KeyCode.O;
@@ -66,6 +71,7 @@ public class PlayerManager : MonoBehaviour
 				Rogue rogue = player3.GetComponent<Rogue>();
 				rogue.moveAxisX = "Horizontal1";
 				rogue.moveAxisZ = "Vertical1";
+				rogue.classType = playerClass.ROGUE;
 				//rogue.jumpKey = KeyCode.C;
 				rogue.playerNum = i;
 				players.Add (player3);
@@ -77,6 +83,7 @@ public class PlayerManager : MonoBehaviour
 				Warrior war = player4.GetComponent<Warrior>();
 				war.moveAxisX = "Horizontal2";
 				war.moveAxisZ = "Vertical2";
+				war.classType = playerClass.WARRIOR;
 				//war.jumpKey = KeyCode.N;
 				war.basicAttackKey = KeyCode.E;
 				war.playerNum = i;
