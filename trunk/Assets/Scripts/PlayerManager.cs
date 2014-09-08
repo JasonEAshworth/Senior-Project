@@ -43,8 +43,7 @@ public class PlayerManager : MonoBehaviour
 				woods.moveAxisX = "Horizontal1";
 				woods.moveAxisZ = "Vertical1";
 				woods.classType = playerClass.WOODSMAN;
-				//woods.basicAttackKey = KeyCode.R;
-				woods.basicAttackKey = "Xbox_A";
+				woods.basicAttackKey = KeyCode.R;
 				woods.init();
 				//adv.jumpKey = KeyCode.C;
 				woods.playerNum = i;
