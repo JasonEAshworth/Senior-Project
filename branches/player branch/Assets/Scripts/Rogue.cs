@@ -29,11 +29,13 @@ public class Rogue : PlayerBase
 			{
 				Debug.Log ("rogue basic attack");
 				//Basic Attack
+				//animator.Play("RogueBasicAttack");
 			}
 			else
 			{
 				Debug.Log ("rogue special attack");
 				//Envenom
+				//animator.Play("RogueSpecialAttack");
 			}
 		}
 	}

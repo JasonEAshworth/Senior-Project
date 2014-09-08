@@ -30,10 +30,12 @@ public class Sorcerer : PlayerBase
 				if(attackType == 1)
 				{
 					//Cast Fireball
+					//animator.Play("SorceressFireball");
 				}
 				else
 				{
 					//Cast Ice Bolt
+					//animator.Play("SorceressIceBolt");
 				}
 				Debug.Log ("sorceress basic attack");
 			}
@@ -42,10 +44,12 @@ public class Sorcerer : PlayerBase
 				if(attackType == 1)
 				{
 					//Cast Firestorm
+					//animator.Play("SorceressFirestorm");
 				}
 				else
 				{
 					//Cast Blizzard
+					//animator.Play("SorceressBlizzard");
 				}
 				Debug.Log ("sorceress special attack");
 			}
