@@ -18,6 +18,8 @@ public class PlayerBase : CharacterBase
 
 	public bool controllable = true;
 
+	//public string roomIn = "";
+
 	public bool canJump = true;
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
@@ -103,11 +105,17 @@ public class PlayerBase : CharacterBase
 	void OnControllerColliderHit(ControllerColliderHit hit)
 	{
 		// Check for contact with doorway transition
-		if (hit.gameObject.tag == "Transition")
+		/*if (hit.gameObject.tag == "Transition")
 		{
 			controllable = false;
 			hit.gameObject.GetComponent<Doorway>().transitioning = true;
-		}
+		}*/
+		/*
+		// Check for contact with room floor
+		if (hit.gameObject.tag == "Floor")
+		{
+			roomIn = hit.transform.parent.name;
+		}*/
 	}
 
 	public override void kill()

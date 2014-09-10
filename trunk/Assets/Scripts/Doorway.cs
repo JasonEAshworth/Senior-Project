@@ -6,8 +6,9 @@ public class Doorway : MonoBehaviour
 	private MapManager mapMan;
 
 	public Direction doorwayDirection;
-	public bool transitioning = false;
-	private float transitionTimer = 1.5f;
+
+	public RoomNode sideA;
+	public RoomNode sideB;
 
 	void Start()
 	{
@@ -20,10 +21,14 @@ public class Doorway : MonoBehaviour
 		{
 			Vector3 playerToDoorway = (transform.position - c.transform.position).normalized;
 
-			// If player is leaving room
+			// If player is leaving towards side B
 			if (Vector3.Dot(playerToDoorway, c.transform.forward) > 0)
 			{
-				mapMan.playerLeaveRoom(transform.parent.name);
+				mapMan.playerSwitchRoom(sideB, sideA);
+			}
+			else // side A
+			{
+				mapMan.playerSwitchRoom(sideA, sideB);
 			}
 		}
 	}
