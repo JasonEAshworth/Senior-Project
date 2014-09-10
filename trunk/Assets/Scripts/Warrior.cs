@@ -8,6 +8,7 @@ public class Warrior : PlayerBase
 	private int count = 0;
 	private float lastTimeAttack = 0.0f;
 	private float specialAttackTimer;
+	private float timeSinceLastAttack;
 	public void init()
 	{
 		maxHealth = 120;
@@ -21,30 +22,42 @@ public class Warrior : PlayerBase
 		if (Input.GetKeyDown (basicAttackKey) && !attacking) 
 		{
 			float curTimeAttack = Time.time;
-			float timeSinceLastAttack = curTimeAttack - lastTimeAttack;
+			timeSinceLastAttack = curTimeAttack - lastTimeAttack;
 			lastTimeAttack = curTimeAttack;
-			Debug.Log (timeSinceLastAttack);
-			if(timeSinceLastAttack < 1.0f)
-			{
-				count++;
-			}
-			else
-			{
-				count = 0;
-			}
-			if(count < 3  && !attacking)
-			{
-				//animator.Play("WarriorBasicAttack");
-				Debug.Log ("Basic Warrior Attack");
-			}
-			else if(count == 3)
-			{
-				//animator.Play("WarriorCleaveAttack");
-				Debug.Log ("Cleave Warrior Attack");
-				count = 0;
-			}
 		}
+		if (Input.GetKeyUp (basicAttackKey)) 
+		{
+			float temp = Time.time - lastTimeAttack;
+			if (temp > 0.6f)
+			{
+				Debug.Log("Special ATACKKKK");
+				specialAttack();
+			} 
+			else 
+			{
+				if (timeSinceLastAttack < 0.5f) 
+				{
+					count++;
+				} 
+				else 
+				{
+					count = 0;
+				}
+				if (count < 3 && !attacking) 
+				{
+					//animator.Play("WarriorBasicAttack");
+					Debug.Log ("Basic Warrior Attack");
+				} 
+				else if (count == 3)
+				{
+					//animator.Play("WarriorCleaveAttack");
+					Debug.Log ("Cleave Warrior Attack");
+					count = 0;
+				}
+			}
+		}			
 	}
+
 
 	public override void specialAttack()
 	{

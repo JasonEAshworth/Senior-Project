@@ -4,7 +4,7 @@ using System.Collections;
 public class Sorcerer : PlayerBase
 {
 	int attackType = 1;
-
+	private float timeButtonHeld;
 	void start()
 	{
 		int health = 100;
@@ -16,32 +16,40 @@ public class Sorcerer : PlayerBase
 	{
 		if(Input.GetKeyDown(basicAttackKey))
 		{
-			if(attackType == 1)
+			timeButtonHeld = Time.time;
+		}
+		if (Input.GetKeyUp (basicAttackKey)) 
+		{
+			float temp = Time.time - timeButtonHeld;
+			if(temp > 0.6f)
 			{
-				//Cast Fireball
+				specialAttack();
 			}
 			else
 			{
-				//Cast Ice Bolt
+				if(attackType == 1)
+				{
+					Debug.Log ("FireBall");
+				}
+				else
+				{
+					Debug.Log ("ICE");
+				}
 			}
-			Debug.Log ("sorceress basic attack");
 		}
 	}
 	
 	public override void specialAttack()
 	{
-		if(Input.GetKeyDown(basicAttackKey))
+		if(attackType == 1)
 		{
-			if(attackType == 1)
-			{
-				//Cast Firestorm
-			}
-			else
-			{
-				//Cast Blizzard
-			}
-			Debug.Log ("sorceress special attack");
+			Debug.Log("FIRESTORMMMM");
 		}
+		else
+		{
+			Debug.Log("BLIZZARD");
+		}
+	
 	}
 	
 	public override void classAbility()
@@ -56,7 +64,6 @@ public class Sorcerer : PlayerBase
 			{
 				attackType = 1;
 			}
-			Debug.Log ("sorceress class ability");
 		}
 	}
 }
