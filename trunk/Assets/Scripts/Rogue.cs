@@ -49,4 +49,15 @@ public class Rogue : PlayerBase
 			Debug.Log ("rogue class ability");
 		}
 	}
+
+	public void onCollisionEnter(Collision collision)
+	{
+		Debug.Log("collision");
+		Vector3 temp = collision.gameObject.GetComponent<MeshRenderer>().bounds.size;
+		Debug.Log(temp);
+		if(collision.gameObject.tag == "Enemy")
+		{
+			Debug.Log("collided with an enemy");
+		}
+	}
 }

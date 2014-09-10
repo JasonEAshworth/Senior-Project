@@ -5,8 +5,13 @@ public class InteractTrigger : TriggerController
 {
 	//these can be used for things like levers that require more than one player to activate
 	//NOT to be confused with the coolDown variables in the TriggerController
+
+	//these only matter if playersNeeded > 1
+	//# of seconds since the first player pressed the interact button
 	private float timeOut = 0.0f;
+	//timeframe within playersIn needs to reach playersNeeded
 	private float timeOutMax = 1.0f;
+	//whether the trigger is waiting for additional players to press the interact button
 	private bool inTO = false;
 
 	public void onTriggerStay(Collider other)
@@ -23,9 +28,9 @@ public class InteractTrigger : TriggerController
 					inTO = true;
 				}
 				playersIn++;
-				Trigger();
 				if(playersIn >= playersNeeded)
 				{
+					Trigger();
 					timeOut = 0.0f;
 					inTO = false;
 				}
