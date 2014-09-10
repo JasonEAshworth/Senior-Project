@@ -27,12 +27,12 @@ public class cameraControl : MonoBehaviour
     public float[] yClamp = {2,37};
     public float[] zClamp = {0,26};
     public float[] offsetClamp = {0, 7, 0, 0};
+	public bool dubugText = false;
 
     public void Start ()
     {
         Console.WriteLine ("START");
         targets = GameObject.FindGameObjectsWithTag ("Player");
-        avgBox = GameObject.FindGameObjectWithTag ("avgBox");
         // Square diagonal = Sqrt(2) * Length 
         roomDiagonal = 1.414f * roomLength;
         if (theCamera) {
@@ -42,15 +42,18 @@ public class cameraControl : MonoBehaviour
 
     public void OnGUI ()
     {
-        GUILayout.Label ("largest distance is = " + largestDistance.ToString ());
-        GUILayout.Label ("height = " + height.ToString ());
-        GUILayout.Label ("number of players = " + targets.Length.ToString ());
-        GUILayout.Label ("xRatio = " + xRatio.ToString ());
-        GUILayout.Label ("yzRatio = " + yzRatio.ToString ());
-        GUILayout.Label ("offRatio = " + offZRatio.ToString ());
-        GUILayout.Label ("offRatio = " + offXRatio.ToString ());
-        GUILayout.Label ("Average Distance = " + avgDistance.x.ToString () + ", " + avgDistance.y.ToString () + ", " + avgDistance.z.ToString ());
-    }
+		if (dubugText) 
+		{
+	        GUILayout.Label ("largest distance is = " + largestDistance.ToString ());
+	        GUILayout.Label ("height = " + height.ToString ());
+	        GUILayout.Label ("number of players = " + targets.Length.ToString ());
+	        GUILayout.Label ("xRatio = " + xRatio.ToString ());
+	        GUILayout.Label ("yzRatio = " + yzRatio.ToString ());
+	        GUILayout.Label ("offRatio = " + offZRatio.ToString ());
+	        GUILayout.Label ("offRatio = " + offXRatio.ToString ());
+			GUILayout.Label ("Average Distance = " + avgDistance.x.ToString () + ", " + avgDistance.y.ToString () + ", " + avgDistance.z.ToString ());
+		}
+	}
 
     public void LateUpdate ()
     {
@@ -82,9 +85,7 @@ public class cameraControl : MonoBehaviour
         // Old code
         
         theCamera.transform.position = new Vector3 (tempX, tempY, tempZ);
-        theCamera.transform.LookAt (new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset)));
-        avgBox.transform.position = new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset));
-                
+        theCamera.transform.LookAt (new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset)));        
     }
 
     public float returnLargestDifference ()
