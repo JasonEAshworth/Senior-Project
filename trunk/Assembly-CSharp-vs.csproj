@@ -47,10 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Adventurer.cs" />
+     <Compile Include="Assets\Scripts\AutoTrigger.cs" />
      <Compile Include="Assets\Scripts\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
+     <Compile Include="Assets\Scripts\Doorway.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
@@ -62,8 +65,12 @@
      <Compile Include="Assets\Scripts\Sorcerer.cs" />
      <Compile Include="Assets\Scripts\TriggerController.cs" />
      <Compile Include="Assets\Scripts\Warrior.cs" />
+     <Compile Include="Assets\Scripts\Woodsman.cs" />
      <Compile Include="Assets\Scripts\cameraControl.cs" />
      <Compile Include="Assets\Scripts\doorTrigger.cs" />
+     <Compile Include="Assets\Scripts\woodsBullet.cs" />
+     <Compile Include="Assets\Scripts\woodsSpecialBulletScript.cs" />
+     <Compile Include="Assets\woodsSpecialBulletScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

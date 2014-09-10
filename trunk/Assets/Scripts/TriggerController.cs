@@ -4,42 +4,33 @@ using System.Collections;
 public class TriggerController : MonoBehaviour
 {
 	public GameObject[] obj;
-	public bool active;
+	public bool on;
 	public bool multi;
 	public bool state;
-	private int playersIn = 0;
+	protected int playersIn = 0;
 	public int playersNeeded;
-	private float cooldown = 1.5f;
-	private float elapsed = 0;
-	private bool inCD = false;
+	protected float coolDownMax = 1.5f;
+	protected float coolDown = 0.0f;
+	protected bool inCD = false;
 
-	void Update()
+	public void UpdateCoolDown()
 	{
 		if(inCD)
 		{
-			elapsed += Time.deltaTime;
-		}
-		if(elapsed >= cooldown)
-		{
-			inCD = false;
-			elapsed = 0;
+			coolDown += Time.deltaTime;
+			if(coolDown >= coolDownMax)
+			{
+				inCD = false;
+				coolDown = 0;
+			}
 		}
 	}
 
-	void Trigger(bool enter)
+	public void Trigger()
 	{
-		if(active && !inCD)
+		if(on && !inCD)
 		{
-			if(enter)
-			{
-				playersIn++;
-			}
-			else
-			{
-				playersIn--;
-			}
-
-			if(playersIn >= playersNeeded && elapsed < 0)
+			if(playersIn >= playersNeeded && coolDown < 0)
 			{
 				for(int i = 0; i < obj.Length; i++)
 				{
@@ -48,7 +39,7 @@ public class TriggerController : MonoBehaviour
 				state = !state;
 				if(!multi)
 				{
-					active = false;
+					on = false;
 				}
 			}
 		}

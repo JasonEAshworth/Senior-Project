@@ -72,6 +72,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.moveAxisZ = "Vertical1";
 				rogue.classType = playerClass.ROGUE;
 				//rogue.jumpKey = KeyCode.C;
+				rogue.basicAttackKey = KeyCode.RightBracket;
 				rogue.playerNum = i;
 				players.Add (player3);
 				break;

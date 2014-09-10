@@ -24,7 +24,7 @@ public class Sorcerer : PlayerBase
 			{
 				//Cast Ice Bolt
 			}
-			Debug.Log ("warrior basic attack");
+			Debug.Log ("sorceress basic attack");
 		}
 	}
 	
@@ -40,7 +40,7 @@ public class Sorcerer : PlayerBase
 			{
 				//Cast Blizzard
 			}
-			Debug.Log ("warrior special attack");
+			Debug.Log ("sorceress special attack");
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class Sorcerer : PlayerBase
 			{
 				attackType = 1;
 			}
-			Debug.Log ("warrior class ability");
+			Debug.Log ("sorceress class ability");
 		}
 	}
 }
