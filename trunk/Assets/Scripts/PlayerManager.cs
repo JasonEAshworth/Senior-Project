@@ -45,7 +45,6 @@ public class PlayerManager : MonoBehaviour
 				woods.classType = playerClass.WOODSMAN;
 				woods.basicAttackKey = KeyCode.R;
 				woods.init();
-				//adv.jumpKey = KeyCode.C;
 				woods.playerNum = i;
 				players.Add (player1);
 				break;
@@ -72,7 +71,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.moveAxisZ = "Vertical1";
 				rogue.classType = playerClass.ROGUE;
 				//rogue.jumpKey = KeyCode.C;
-				rogue.basicAttackKey = KeyCode.RightBracket;
+				rogue.basicAttackKey = KeyCode.G;
 				rogue.playerNum = i;
 				players.Add (player3);
 				break;
