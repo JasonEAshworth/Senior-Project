@@ -22,10 +22,12 @@ public enum Direction
 public class RoomGraph
 {
 	public List<RoomNode> rooms;
+	public List<RoomNode> playersIn;
 
 	public RoomGraph()
 	{
 		rooms = new List<RoomNode>();
+		playersIn = new List<RoomNode>();
 	}
 
 	public void addRoom(string name)
@@ -115,12 +117,19 @@ public class MapManager : MonoBehaviour
 		}
 		currentRoomNode = map.rooms[0];
 		currentRoomObj = Instantiate(Resources.Load(map.rooms[0].name)) as GameObject;
-		GameObject room2 = Instantiate (Resources.Load (map.rooms[1].name), currentRoomObj.transform.Find ("N_transition").position, Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f))) as GameObject;
-		room2.transform.position -= room2.transform.Find ("S_transition").position - room2.transform.position;
+		map.playersIn.Add(currentRoomNode);
+
+		/*GameObject room2 = Instantiate (Resources.Load (map.rooms[1].name), currentRoomObj.transform.Find ("N_transition").position, Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f))) as GameObject;
+		room2.transform.position -= room2.transform.Find ("S_transition").position - room2.transform.position;*/
 
 		//hardcoded for now
 		map.connectRooms(0, 1, Direction.NORTH);
 		map.connectRooms(1, 2, Direction.WEST);
+	}
+
+	public void playerLeaveRoom(string roomName)
+	{
+
 	}
 
 	public void moveToNewRoom(Direction doorDir)
