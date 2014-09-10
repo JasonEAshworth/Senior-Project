@@ -40,7 +40,7 @@ public class RoomGraph
 		{
 			return;
 		}
-		switch(roomOneExit)
+		switch (roomOneExit)
 		{
 		case Direction.NORTH:
 			rooms[roomOneIdx].north = rooms[roomTwoIdx];
