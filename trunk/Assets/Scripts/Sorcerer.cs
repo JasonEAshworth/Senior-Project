@@ -3,7 +3,9 @@ using System.Collections;
 
 public class Sorcerer : PlayerBase
 {
-	int attackType = 1;
+	private int attackType = 1;
+	private float attackStarted = Time.time - 10.0f;
+	private float mana = 100.0f;
 	private float timeButtonHeld;
 	void start()
 	{
@@ -14,46 +16,64 @@ public class Sorcerer : PlayerBase
 	
 	public override void basicAttack()
 	{
-		if(Input.GetKeyDown(basicAttackKey))
+		if(Input.GetKeyDown (basicAttackKey))
 		{
-			timeButtonHeld = Time.time;
+			//Check enemy facing
+			Debug.Log ("sorceress attack");
+			attackStarted = Time.time;
 		}
-		if (Input.GetKeyUp (basicAttackKey)) 
+		float currentTime = Time.time;
+		float timeSinceAttack = currentTime - attackStarted;
+		if (Input.GetKeyUp (basicAttackKey))
 		{
-			float temp = Time.time - timeButtonHeld;
-			if(temp > 0.6f)
+			//When the attack key is released, check to see how long it was
+			//held to determin what attack to do.
+			if(timeSinceAttack < 1.0f || mana < 25.0f)
 			{
-				specialAttack();
-			}
-			else
-			{
+				//Check with attackType to see which basic attack to use
 				if(attackType == 1)
 				{
-					Debug.Log ("FireBall");
+					//Cast Fireball
+					//animator.Play("SorceressFireball");
 				}
 				else
 				{
-					Debug.Log ("ICE");
+					//Cast Ice Bolt
+					//animator.Play("SorceressIceBolt");
 				}
+				Debug.Log ("sorceress basic attack");
+			}
+			else
+			{
+				//Check with attackType to see which basic attack to use
+				mana -= 25.0f;
+				if(attackType == 1)
+				{
+					//Cast Firestorm
+					//animator.Play("SorceressFirestorm");
+				}
+				else
+				{
+					//Cast Blizzard
+					//animator.Play("SorceressBlizzard");
+				}
+				Debug.Log("sorceress special attack");
 			}
 		}
 	}
 	
-	public override void specialAttack()
+	/*public override void itemAbility()
 	{
-		if(attackType == 1)
+		if(Input.GetKeyDown(itemAbilityKey))
 		{
-			Debug.Log("FIRESTORMMMM");
+			Debug.Log ("sorceress item");
+			//Use Item
 		}
-		else
-		{
-			Debug.Log("BLIZZARD");
-		}
-	
-	}
+	}*/
 	
 	public override void classAbility()
 	{
+		//When the key is pushed, switch the attack type
 		if(Input.GetKeyDown(classAbilityKey))
 		{
 			if(attackType == 1)
@@ -64,6 +84,7 @@ public class Sorcerer : PlayerBase
 			{
 				attackType = 1;
 			}
+			Debug.Log ("sorceress class ability");
 		}
 	}
 }
