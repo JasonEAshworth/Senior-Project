@@ -22,13 +22,12 @@ public enum Direction
 public class RoomGraph
 {
 	public List<RoomNode> rooms;
-	public List<RoomNode> playersIn;
 	public List<RoomNode> roomsLoaded;
 
 	public RoomGraph()
 	{
 		rooms = new List<RoomNode>();
-		playersIn = new List<RoomNode>();
+		roomsLoaded = new List<RoomNode>();
 	}
 
 	public void addRoom(string name)
@@ -78,7 +77,18 @@ public class RoomNode
 	public string name;
 	public GameObject obj;
 	public RoomType type;
+	public RoomNode[] neighbors;
 	public RoomNode north;
+	/*{
+		get
+		{
+			return neighbors[0];
+		}
+		set
+		{
+			neighbors[0] = value;
+		}
+	}*/
 	public RoomNode east;
 	public RoomNode south;
 	public RoomNode west;
@@ -86,6 +96,7 @@ public class RoomNode
 	public RoomNode(string n)
 	{
 		name = n;
+		neighbors = new RoomNode[4] {null, null, null, null};
 		// room type
 		if (n.Contains("_H_"))
 		{
@@ -127,49 +138,91 @@ public class MapManager : MonoBehaviour
 		}
 		// Set up the first room of the dungeon
 		loadRoom(map.rooms[0]);
-		for (int i = 0; i < GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players.Count; i++)
-		{
-			map.playersIn.Add(map.rooms[0]);
-		}
 		// TEMP: hardcoded room neighbors, will be set up by file read or randomization or something later
 		map.connectRooms(map.rooms[0], map.rooms[1], Direction.NORTH);
 		map.connectRooms(map.rooms[1], map.rooms[2], Direction.WEST);
 		// Look at the first room's neighbors and set them up
 		loadNeighbors(map.rooms[0]);
-
-		//GameObject room2 = Instantiate (Resources.Load (map.rooms[1].name), currentRoomObj.transform.Find ("N_transition").position, Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f))) as GameObject;
-		//room2.transform.position -= room2.transform.Find ("S_transition").position - room2.transform.position;
 	}
 
 	void Start()
 	{
-		pMan = GameObject.Find ("PlayerManager").GetComponent<PlayerManager> ();
+		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+
+		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
+		{
+			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
+		}
 	}
 
 	private void loadRoom(RoomNode roomNode)
 	{
-		GameObject room = Instantiate(Resources.Load(roomNode.name)) as GameObject;
+		GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
 		roomNode.obj = room;
 		map.roomsLoaded.Add(roomNode);
 	}
 
-	private void loadNeighbors(RoomNode roomNode)
+	public void loadNeighbors(RoomNode roomNode)
 	{
 		if (roomNode.north != null && !map.roomsLoaded.Contains(roomNode.north))
 		{
 			loadRoom(roomNode.north);
+			// align positions of doorways properly
+			GameObject rNorthObj = roomNode.north.obj;
+			rNorthObj.transform.position = roomNode.obj.transform.Find("N_transition").position;
+			rNorthObj.transform.position -= rNorthObj.transform.Find("S_transition").position - rNorthObj.transform.position;
+			// set up doorway triggers
+			GameObject trigger = roomNode.obj.transform.Find("N_transition").FindChild("trigger").gameObject;
+			trigger.SetActive(true);
+			trigger.GetComponent<Doorway>().sideA = roomNode;
+			trigger.GetComponent<Doorway>().sideB = roomNode.north;
 		}
 		if (roomNode.south != null && !map.roomsLoaded.Contains(roomNode.south))
 		{
-			
+			loadRoom(roomNode.south);
+			// align positions of doorways properly
+			GameObject rSouthObj = roomNode.south.obj;
+			rSouthObj.transform.position = roomNode.obj.transform.Find("S_transition").position;
+			rSouthObj.transform.position -= rSouthObj.transform.Find("N_transition").position - rSouthObj.transform.position;
+			// set up doorway triggers
+			GameObject trigger = roomNode.obj.transform.Find("S_transition").FindChild("trigger").gameObject;
+			trigger.SetActive(true);
+			trigger.GetComponent<Doorway>().sideA = roomNode;
+			trigger.GetComponent<Doorway>().sideB = roomNode.south;
 		}
 		if (roomNode.east != null && !map.roomsLoaded.Contains(roomNode.east))
 		{
-			
+			loadRoom(roomNode.east);
+			// align positions of doorways properly
+			GameObject rEastObj = roomNode.east.obj;
+			rEastObj.transform.position = roomNode.obj.transform.Find("E_transition").position;
+			rEastObj.transform.position -= rEastObj.transform.Find("W_transition").position - rEastObj.transform.position;
+			// set up doorway triggers
+			GameObject trigger = roomNode.obj.transform.Find("E_transition").FindChild("trigger").gameObject;
+			trigger.SetActive(true);
+			trigger.GetComponent<Doorway>().sideA = roomNode;
+			trigger.GetComponent<Doorway>().sideB = roomNode.east;
 		}
 		if (roomNode.west != null && !map.roomsLoaded.Contains(roomNode.west))
 		{
-			
+			loadRoom(roomNode.west);
+			// align positions of doorways properly
+			GameObject rWestObj = roomNode.west.obj;
+			rWestObj.transform.position = roomNode.obj.transform.Find("W_transition").position;
+			rWestObj.transform.position -= rWestObj.transform.Find("E_transition").position - rWestObj.transform.position;
+			// set up doorway triggers
+			GameObject trigger = roomNode.obj.transform.Find("W_transition").FindChild("trigger").gameObject;
+			trigger.SetActive(true);
+			trigger.GetComponent<Doorway>().sideA = roomNode;
+			trigger.GetComponent<Doorway>().sideB = roomNode.west;
+		}
+	}
+
+	public void unloadEmptyRooms()
+	{
+		foreach (RoomNode node in getRoomsPlayersIn())
+		{
+
 		}
 	}
 
@@ -179,55 +232,17 @@ public class MapManager : MonoBehaviour
 		map.roomsLoaded.Remove(roomNode);
 	}
 
-	/*
-	public List<string> getRoomsPlayersIn()
+	private List<RoomNode> getRoomsPlayersIn()
 	{
-		List<string> roomList = new List<string> ();
-		for (int i = 0; i < pMan.players.Count; i++)
+		List<RoomNode> roomsIn = new List<RoomNode>();
+		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
 		{
-			string playerRoom = pMan.players[i].GetComponent<PlayerBase>().roomIn;
-			if (!roomList.Contains(playerRoom))
+			RoomNode location = player.GetComponent<PlayerBase>().roomIn;
+			if (!roomsIn.Contains(location))
 			{
-				roomList.Add(playerRoom);
+				roomsIn.Add(location);
 			}
 		}
-		return roomList;
-	}*/
-	
-	public void playerSwitchRoom(RoomNode roomEnter, RoomNode roomLeave)
-	{
-		map.playersIn.Add(roomEnter);
-		map.playersIn.Remove(roomLeave);
+		return roomsIn;
 	}
-
-	/*
-	public void moveToNewRoom(Direction doorDir)
-	{
-		RoomNode newRoom = null;
-		switch(doorDir)
-		{
-		case Direction.NORTH:
-			newRoom = currentRoomNode.north;
-			break;
-		case Direction.SOUTH:
-			newRoom = currentRoomNode.south;
-			break;
-		case Direction.EAST:
-			newRoom = currentRoomNode.east;
-			break;
-		case Direction.WEST:
-			newRoom = currentRoomNode.west;
-			break;
-		}
-
-		if (newRoom != null)
-		{
-			currentRoomNode = newRoom;
-			DestroyImmediate(currentRoomObj);
-			currentRoomObj = Instantiate(Resources.Load(newRoom.name), Vector3.zero, Quaternion.Euler(new Vector3(0.0f, 180.0f, 0.0f))) as GameObject;
-			GameObject.Find("PlayerManager").GetComponent<PlayerManager>().getNewSpawnPoints();
-			GameObject.Find("PlayerManager").GetComponent<PlayerManager>().respawnAllPlayers();
-		}
-	}
-	*/
 }

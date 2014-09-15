@@ -18,8 +18,6 @@ public class PlayerBase : CharacterBase
 
 	public bool controllable = true;
 
-	//public string roomIn = "";
-
 	public bool canJump = true;
 	public float jumpForce = 0.25f;
 	public float verticalVelocity = 0.0f;
@@ -27,6 +25,8 @@ public class PlayerBase : CharacterBase
 	public playerClass classType;
 
 	protected GameObject item;
+
+	public RoomNode roomIn;
 
 	// controls
 	public string moveAxisX;
@@ -38,6 +38,7 @@ public class PlayerBase : CharacterBase
 	public KeyCode specialAttackKey;
 
 	public PlayerManager manager;
+	private MapManager mapMan;
 	public CharacterController charControl;
 
 	void Start()
@@ -45,6 +46,7 @@ public class PlayerBase : CharacterBase
 		health = maxHealth;
 		charControl = GetComponent<CharacterController>();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
 	void FixedUpdate()
@@ -102,22 +104,6 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	void OnControllerColliderHit(ControllerColliderHit hit)
-	{
-		// Check for contact with doorway transition
-		/*if (hit.gameObject.tag == "Transition")
-		{
-			controllable = false;
-			hit.gameObject.GetComponent<Doorway>().transitioning = true;
-		}*/
-		/*
-		// Check for contact with room floor
-		if (hit.gameObject.tag == "Floor")
-		{
-			roomIn = hit.transform.parent.name;
-		}*/
-	}
-
 	public override void kill()
 	{
 		dead = true;
@@ -136,12 +122,19 @@ public class PlayerBase : CharacterBase
 		dead = false;
 	}
 
-	void addItem(GameObject p)
+	public void enterRoom(RoomNode room)
+	{
+		roomIn = room;
+		mapMan.loadNeighbors(room);
+		mapMan.unloadEmptyRooms();
+	}
+
+	private void addItem(GameObject p)
 	{
 		item = p;
 	}
 
-	void addKey()
+	private void addKey()
 	{
 		manager.haveKey = true;
 	}
@@ -170,7 +163,7 @@ public class PlayerBase : CharacterBase
 			}
 		}
 	}
-	
+
 	public virtual void basicAttack(){}
 	public virtual void specialAttack(){}
 	public virtual void classAbility(){}
