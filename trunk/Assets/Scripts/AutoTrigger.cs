@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AutoTrigger : TriggerController
 {
-	public void onTriggerEnter(Collider other)
+	public void OnTriggerEnter(Collider other)
 	{
 		//add if statements to restrict what objects can affect this trigger
 		playersIn++;
@@ -13,7 +13,7 @@ public class AutoTrigger : TriggerController
 		}
 	}
 
-	public void onTriggerExit(Collider other)
+	public void OnTriggerExit(Collider other)
 	{
 		//add if statements to restrict what objects can affect this trigger
 		playersIn--;

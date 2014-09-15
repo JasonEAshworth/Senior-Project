@@ -14,7 +14,7 @@ public class InteractTrigger : TriggerController
 	//whether the trigger is waiting for additional players to press the interact button
 	private bool inTO = false;
 
-	public void onTriggerStay(Collider other)
+	public void OnTriggerStay(Collider other)
 	{
 		//add if statements to restrict what objects can affect this trigger
 		if(other.tag == "Player")

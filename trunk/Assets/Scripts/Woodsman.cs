@@ -54,7 +54,7 @@ public class Woodsman : PlayerBase
 		{
 			float temp = Time.time - firstButtonPressTime;
 			Debug.Log (temp);
-			if(temp > 0.6f && canSpecial)
+			if(temp > 0.4f && canSpecial)
 			{
 				Debug.Log("SPECIAL ATTACKKKKKK");
 				specialAttackWoods(temp);
