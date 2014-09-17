@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
 		selectedClasses.Add(playerClass.WARRIOR);
 
 		// set players to 4 at start
-		numPlayers = 4;
+		//numPlayers = 4;
 
 		// acquire all spawn points for players 
 		getNewSpawnPoints();

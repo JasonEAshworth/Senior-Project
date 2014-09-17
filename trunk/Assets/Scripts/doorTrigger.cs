@@ -11,7 +11,7 @@ public class doorTrigger : MonoBehaviour {
 
 			if(pManager)
 			{
-				GameObject door = GameObject.Find ("door");
+				GameObject door = GameObject.FindGameObjectWithTag("door");
 				Destroy(door);
 				pManager = false;
 			}
