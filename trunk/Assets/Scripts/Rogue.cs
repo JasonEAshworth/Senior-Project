@@ -90,8 +90,9 @@ public class Rogue : PlayerBase
 		}
 	}
 	
-	public void FixedUpdate()
+	void FixedUpdate()
 	{
+		base.FixedUpdate();
 		if (!dead)
 		{
 			if (controllable)
@@ -109,54 +110,6 @@ public class Rogue : PlayerBase
 						elapsed = 0.0f;
 					}
 				}
-				else
-				{
-					// MOVEMENT
-					// Get the horizontal movement from the joystick input and scale it with moveSpeed
-					Vector3 xMovement = Input.GetAxis(moveAxisX) * new Vector3(Camera.main.transform.right.x, 0.0f, Camera.main.transform.right.z);
-					Vector3 zMovement = Input.GetAxis(moveAxisZ) * new Vector3(Camera.main.transform.forward.x, 0.0f, Camera.main.transform.forward.z);
-					Vector3 moveVec = Vector3.ClampMagnitude(xMovement + zMovement, 1.0f);
-					
-					moveVec *= moveSpeed * Time.deltaTime;
-					
-					// Handle jumping and add it to the movement vector
-					if (canJump && Input.GetKeyDown(jumpKey))
-					{
-						verticalVelocity = jumpForce;
-						canJump = false;
-					}
-					else if (charControl.isGrounded)
-					{
-						verticalVelocity = 0.0f;
-						canJump = true;
-					}
-					else
-					{
-						verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;
-					}
-					
-					moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-					
-					charControl.Move(moveVec);
-					
-					// Rotate the character to face in the direction that they will move
-					if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
-					{
-						transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
-					}
-					
-					basicAttack();
-					classAbility();
-					itemAbility();
-				}
-			}
-		}
-		else
-		{
-			respawnTimer -= Time.deltaTime;
-			if (respawnTimer <= 0.0f)
-			{
-				respawn();
 			}
 		}
 	}
@@ -189,6 +142,11 @@ public class Rogue : PlayerBase
 				moveTo.y = 0.0f;
 
 				this.transform.Translate(moveTo, Space.World);
+
+				Ray r = new Ray(c, -1 * f);
+				RaycastHit rc;
+				Vector3 en = 0.5f * go.GetComponent<MeshRenderer>().bounds.size + this.GetComponent<MeshRenderer>().bounds.size;
+				this.collider.Raycast(r, out rc, 100.0f);
 			}
 			else
 			{

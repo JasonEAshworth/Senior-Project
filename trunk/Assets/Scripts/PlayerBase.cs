@@ -49,7 +49,7 @@ public class PlayerBase : CharacterBase
 		//mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-	void FixedUpdate()
+	protected new void FixedUpdate()
 	{
 		if (!dead)
 		{
