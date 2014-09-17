@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 	private GameObject[] spawns;
 	public List<GameObject> players;
 	public List<playerClass> selectedClasses;
+
 	public bool haveKey = false;
 
 	void Start() 
