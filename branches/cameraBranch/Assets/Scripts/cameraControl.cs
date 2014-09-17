@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 
 [RequireComponent (typeof(CharacterController))]
+[RequireComponent (typeof (PlayerBase))]
 
 public class cameraControl : MonoBehaviour
 {
@@ -33,7 +34,8 @@ public class cameraControl : MonoBehaviour
     public void Start ()
     {
         Console.WriteLine ("START");
-        targets = GameObject.FindGameObjectsWithTag ("Player");
+		//targets = PlayerManager.FindObjectOfType (playerClass); 
+		targets = GameObject.FindGameObjectsWithTag ("Player");
         //avgBox = GameObject.FindGameObjectWithTag ("avgBox");
         // Square diagonal = Sqrt(2) * Length 
         roomDiagonal = 1.414f * roomLength;
@@ -56,7 +58,10 @@ public class cameraControl : MonoBehaviour
 	}
 
     public void LateUpdate ()
-    {
+	{
+		int count = 0;
+		targets = GameObject.FindGameObjectsWithTag ("Player");
+
         // If we can't find a player, we return without altering the camera's position
         if (!GameObject.FindWithTag ("Player")) {
             return;
@@ -64,10 +69,18 @@ public class cameraControl : MonoBehaviour
 
         // We sum the positions of all of the players, and from there we find the mid point between all of them
         Vector3 sum = new Vector3 (0, 0, 0);
-        for (int i = 0; i < targets.Length; i++) {
-            sum += targets [i].transform.position;
+        for (int i = 0; i < targets.Length; i++)
+		{
+			PlayerBase z = targets[i].GetComponent<PlayerBase>();
+			if(!z.dead)
+			{
+				count++;
+				sum += targets[i].transform.position;
+			}
+			else if(z.dead)
+				count--;
         }
-        avgDistance = sum / targets.Length;
+		avgDistance = sum / count;
 
         // Next, we find what the biggest difference in distance between any two characters is
         float largestDifference = returnLargestDifference ();
@@ -95,6 +108,7 @@ public class cameraControl : MonoBehaviour
 
         // The camera is set to its new position, pointed to the point to look at. 
         theCamera.transform.position = new Vector3 (tempX, tempY, tempZ);
+		theCamera.transform.LookAt(new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset)));     
         avgBox.transform.position = new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset));
 
 
@@ -116,13 +130,20 @@ public class cameraControl : MonoBehaviour
     {
         currentDistance = 0.0f;
         largestDistance = 0.0f;
-        for (int i = 0; i < targets.Length; i++) {
-            for (int j = 0; j < targets.Length; j++) {
-                currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
-                if (currentDistance > largestDistance) {
-                    largestDistance = currentDistance;
-                }
-            }
+        for (int i = 0; i < targets.Length; i++) 
+		{
+            for (int j = 0; j < targets.Length; j++)
+			{
+				PlayerBase z = targets[i].GetComponent<PlayerBase>();
+				PlayerBase k = targets[j].GetComponent<PlayerBase>();
+				if(!z.dead && !k.dead)
+				{
+	                currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
+	                if (currentDistance > largestDistance) 
+					    largestDistance = currentDistance;
+				}
+			}
+            
         }
         return largestDistance;
     }
