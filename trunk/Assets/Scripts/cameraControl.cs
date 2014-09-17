@@ -23,10 +23,10 @@ public class cameraControl : MonoBehaviour
     public float yzRatio = 0f;
     public float offZRatio = 0f;
     public float offXRatio = 0f;
-    public float[] xClamp = {4,-4};
-    public float[] yClamp = {2,37};
-    public float[] zClamp = {0,26};
-    public float[] offsetClamp = {0, 7, 0, 0};
+    public float[] xClamp = {-8,8};
+    public float[] yClamp = {10,30};
+    public float[] zClamp = {7,27};
+    public float[] offsetClamp = {10, -10, 10, -10};
 	public bool dubugText = false;
 
     // Starts the camera, gets the player targest, and gets the diagonal distance of the room
