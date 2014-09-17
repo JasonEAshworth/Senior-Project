@@ -46,7 +46,7 @@ public class PlayerBase : CharacterBase
 		health = maxHealth;
 		charControl = GetComponent<CharacterController>();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
+		//mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
 	void FixedUpdate()

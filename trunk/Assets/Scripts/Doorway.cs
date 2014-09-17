@@ -3,11 +3,12 @@ using System.Collections;
 
 public class Doorway : MonoBehaviour 
 {
-	public RoomNode sideA;
-	public RoomNode sideB;
+	public RoomNode sideA;	// points away from the forward direction of the doorway trigger
+	public RoomNode sideB;	// points towards the forward direction of the doorway trigger
 
 	void OnTriggerExit(Collider c)
 	{
+		// When a player walks through the doorway, determine which side they are leaving from and notify the player accordingly
 		if (c.gameObject.tag == "Player")
 		{
 			Vector3 toPlayer = (c.transform.position - transform.position).normalized;

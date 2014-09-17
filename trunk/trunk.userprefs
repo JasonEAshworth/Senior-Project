@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Rogue.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerBase.cs">
     <Files>
-      <File FileName="Assets\Scripts\Rogue.cs" Line="123" Column="5" />
+      <File FileName="..\..\..\..\Created Games and Projects\Wolf Game\Wolf Game Unity Project\Assets\Scripts\player_controller.cs" Line="64" Column="97" />
+      <File FileName="Assets\Scripts\PlayerBase.cs" Line="49" Column="5" />
+      <File FileName="Assets\Scripts\MapManager.cs" Line="295" Column="87" />
+      <File FileName="Assets\Scripts\Doorway.cs" Line="11" Column="123" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

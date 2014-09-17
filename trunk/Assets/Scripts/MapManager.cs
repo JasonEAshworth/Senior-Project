@@ -2,15 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Used to label the main room types
 public enum RoomType
 {
 	HORDE,
 	PUZZLE,
 	BOSS,
 	TREASURE,
-	SQUIRREL
+	REACTION
 }
 
+// Used to label the four main cardinal directions
 public enum Direction
 {
 	NORTH,
@@ -19,6 +21,7 @@ public enum Direction
 	WEST
 }
 
+// This graph makes up all of the connected rooms in a dungeon
 public class RoomGraph
 {
 	public List<RoomNode> rooms;
@@ -48,6 +51,7 @@ public class RoomGraph
 		return null;
 	}
 
+	// Creates a neighboring connection in the graph structure between the two given rooms
 	public void connectRooms(RoomNode roomOne, RoomNode roomTwo, Direction roomOneExit)
 	{
 		switch (roomOneExit)
@@ -72,14 +76,15 @@ public class RoomGraph
 	}
 }
 
+// These nodes make up the contents of the RoomGraph. Each RoomNode represents a room in the graph
 public class RoomNode
 {
 	public string name;
 	public GameObject obj;
 	public RoomType type;
 	public RoomNode[] neighbors;
-	public RoomNode north;
-	/*{
+	public RoomNode north
+	{
 		get
 		{
 			return neighbors[0];
@@ -88,16 +93,46 @@ public class RoomNode
 		{
 			neighbors[0] = value;
 		}
-	}*/
-	public RoomNode east;
-	public RoomNode south;
-	public RoomNode west;
+	}
+	public RoomNode east
+	{
+		get
+		{
+			return neighbors[1];
+		}
+		set
+		{
+			neighbors[1] = value;
+		}
+	}
+	public RoomNode south
+	{
+		get
+		{
+			return neighbors[2];
+		}
+		set
+		{
+			neighbors[2] = value;
+		}
+	}
+	public RoomNode west
+	{
+		get
+		{
+			return neighbors[3];
+		}
+		set
+		{
+			neighbors[3] = value;
+		}
+	}
 
 	public RoomNode(string n)
 	{
 		name = n;
 		neighbors = new RoomNode[4] {null, null, null, null};
-		// room type
+		// set up room type
 		if (n.Contains("_H_"))
 		{
 			type = RoomType.HORDE;
@@ -114,9 +149,9 @@ public class RoomNode
 		{
 			type = RoomType.TREASURE;
 		}
-		else
+		else if (n.Contains("_R_"))
 		{
-			type = RoomType.SQUIRREL;
+			type = RoomType.REACTION;
 		}
 	}
 }
@@ -154,7 +189,7 @@ public class MapManager : MonoBehaviour
 			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
 		}
 	}
-
+	
 	private void loadRoom(RoomNode roomNode)
 	{
 		GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
@@ -162,6 +197,7 @@ public class MapManager : MonoBehaviour
 		map.roomsLoaded.Add(roomNode);
 	}
 
+	// Looks at all of the neighbors of the given RoomNode and loads them up if they aren't already loaded. Also performs any extra room setup needed
 	public void loadNeighbors(RoomNode roomNode)
 	{
 		if (roomNode.north != null && !map.roomsLoaded.Contains(roomNode.north))
@@ -218,11 +254,35 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
+	// Called every time a player walks into a new room. Looks at all currently loaded rooms and unloads the ones that players aren't in or adjacent to
 	public void unloadEmptyRooms()
 	{
-		foreach (RoomNode node in getRoomsPlayersIn())
+		List<RoomNode> roomsToUnload = new List<RoomNode>();
+		foreach (RoomNode loadedRoom in map.roomsLoaded)
 		{
-
+			bool keep = false;
+			foreach (RoomNode playerRoom in getRoomsPlayersIn())
+			{
+				if (playerRoom == loadedRoom)
+				{
+					keep = true;
+				}
+				foreach (RoomNode neighbor in playerRoom.neighbors)
+				{
+					if (neighbor == loadedRoom)
+					{
+						keep = true;
+					}
+				}
+			}
+			if (!keep)
+			{
+				roomsToUnload.Add(loadedRoom);
+			}
+		}
+		foreach (RoomNode n in roomsToUnload)
+		{
+			unloadRoom(n);
 		}
 	}
 
@@ -232,6 +292,7 @@ public class MapManager : MonoBehaviour
 		map.roomsLoaded.Remove(roomNode);
 	}
 
+	// Returns a list of RoomNodes of the rooms that the players are currently located in
 	private List<RoomNode> getRoomsPlayersIn()
 	{
 		List<RoomNode> roomsIn = new List<RoomNode>();
