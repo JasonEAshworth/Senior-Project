@@ -6,17 +6,18 @@ public class HealthScaling : MonoBehaviour {
 	
 	public RawImage healthBar;
 
-	private Vector2 pos;
-
-	// Use this for initialization
-	void Start () {
-		pos = healthBar.rectTransform.sizeDelta;
+	void Start() {
+		Debug.Log (healthBar.rectTransform.sizeDelta);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		//pos = new Vector2 (pos.x - 10.0f, pos.y - 36.0f);
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (2.0f, 0.0f));
+
+		if (healthBar.rectTransform.sizeDelta.x > -322) {
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (2.0f, 0.0f));
+			Debug.Log(healthBar.rectTransform.sizeDelta);
+		}
+
 
 	}
 }

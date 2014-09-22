@@ -3,22 +3,13 @@ using System.Collections;
 
 public class CharacterBase : MonoBehaviour 
 {
-	public int health = 100;
-	public int maxHealth;
+	public float health = 100.0f;
+	public float maxHealth = 100.0f;
 	public bool dead = false;
 
 	public float moveSpeed = 6.0f;
 	public float rotationSpeed = 250.0f;
 	public float visibility = 1.0f;
-
-	public void takeDamage(int amount)
-	{
-		health -= amount;
-		if (health <= 0)
-		{
-			kill();
-		}
-	}
 
 	public virtual void kill()
 	{

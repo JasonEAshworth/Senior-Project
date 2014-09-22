@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum playerClass
 {
@@ -36,6 +37,8 @@ public class PlayerBase : CharacterBase
 	public KeyCode useItemKey = KeyCode.Space;
 	public KeyCode classAbilityKey;
 	public KeyCode specialAttackKey;
+
+	public RawImage healthBar;
 
 	public PlayerManager manager;
 	private MapManager mapMan;
@@ -92,7 +95,14 @@ public class PlayerBase : CharacterBase
 				basicAttack();
 				classAbility();
 				itemAbility();
+
+				if (Input.GetKeyDown(KeyCode.F1)){
+					Debug.Log("Here");
+					takeDamage(0.1f);
+				}
 			}
+
+
 		}
 		else
 		{
@@ -161,6 +171,18 @@ public class PlayerBase : CharacterBase
 				}
 				
 			}
+		}
+	}
+
+	public void takeDamage(float amount)
+	{
+		Debug.Log (health);
+		health -= (health * amount);
+		Debug.Log (health);
+		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322 * amount, 0.0f)); //hardcoded for now
+		if (health <= 0)
+		{
+			kill();
 		}
 	}
 
