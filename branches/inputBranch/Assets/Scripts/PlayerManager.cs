@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using Microsoft.Win32;
+
 
 public class PlayerManager : MonoBehaviour 
 {
@@ -22,10 +25,20 @@ public class PlayerManager : MonoBehaviour
 
 
 		// setup the strings for each controller
-		string xbox1 = "XAxis1 Yaxis1 A1 B1 X1 Y1 Start1 Select1";
-		string xbox2 = "XAxis2 Yaxis2 A2 B2 X2 Y2 Start2 Select2";
-		string xbox3 = "XAxis3 Yaxis3 A3 B3 X3 Y3 Start3 Select3";
-		string xbox4 = "XAxis4 Yaxis4 A4 B4 X4 Y4 Start4 Select4";
+		string xbox1 = "XAxis1 YAxis1 A1 B1 X1 Y1 Start1 Select1";
+		string xbox2 = "XAxis2 YAxis2 A2 B2 X2 Y2 Start2 Select2";
+		string xbox3 = "XAxis3 YAxis3 A3 B3 X3 Y3 Start3 Select3";
+		string xbox4 = "XAxis4 YAxis4 A4 B4 X4 Y4 Start4 Select4";
+		string[] input = Input.GetJoystickNames ();
+		for (int i=0; i<input.Length; i++) 
+		{
+			Debug.Log (input[i] + i);
+		}
+		Debug.Log (input);
+
+
+
+
 		xboxInputs.Add (xbox1);
 		xboxInputs.Add (xbox2);
 		xboxInputs.Add (xbox3);
@@ -37,16 +50,15 @@ public class PlayerManager : MonoBehaviour
 		// instantiate selectedClasses and populate it
 		selectedClasses = new List<playerClass>();
 		selectedClasses.Add(playerClass.WOODSMAN);
-		//selectedClasses.Add(playerClass.ROGUE);
+		selectedClasses.Add(playerClass.ROGUE);
 		selectedClasses.Add(playerClass.SORCERER);
-		//selectedClasses.Add(playerClass.WARRIOR);
+		selectedClasses.Add(playerClass.WARRIOR);
 
 		// set players to 4 at start
 		numPlayers = 2;
 
 		// acquire all spawn points for players 
 		getNewSpawnPoints();
-		Debug.Log (selectedClasses.Count);
 		for (int i=0; i<selectedClasses.Count; i++) 
 		{
 			switch (selectedClasses[i])
@@ -117,7 +129,7 @@ public class PlayerManager : MonoBehaviour
 
 	public Vector3 getRespawnPoint()
 	{
-		int randSpawn = Random.Range (0,4);
+		int randSpawn = UnityEngine.Random.Range (0,4);
 		return spawns[randSpawn].transform.position;
 	}
 
@@ -143,44 +155,49 @@ public class PlayerManager : MonoBehaviour
 			{
 				case 1:
 					Woodsman scr = go.GetComponent<Woodsman>();
-					string[] buttons = xboxInputs[scr.playerNum].Split(" ");
+					string[] buttons = xboxInputs[scr.playerNum].Split(' ');
 					scr.moveAxisX = buttons[0];
 					scr.moveAxisZ = buttons[1];
 					scr.jumpKey = buttons[2];
 					scr.classAbilityButton = buttons[3];
 					scr.basicAttackButton = buttons[4];
-					Debug.Log (scr.basicAttackButton);
+					Debug.Log (scr.moveAxisZ + "Woodsman");
 					scr.useItemKey = buttons[5];
 					break;
 			case 2:
 					Sorcerer scr2 = go.GetComponent<Sorcerer>();
-					string[] buttons2 = xboxInputs[scr.playerNum].Split(" ");
+					string[] buttons2 = xboxInputs[scr2.playerNum].Split(' ');
 					scr2.moveAxisX = buttons2[0];
 					scr2.moveAxisZ = buttons2[1];
 					scr2.jumpKey = buttons2[2];
 					scr2.classAbilityButton = buttons2[3];
 					scr2.basicAttackButton = buttons2[4];
 					scr2.useItemKey = buttons2[5];
+					Debug.Log (scr2.moveAxisZ + "Sorcerer");
 					break;
 			case 3:
 					Rogue scr3 = go.GetComponent<Rogue>();
-					string[] buttons3 = xboxInputs[scr.playerNum].Split(" ");
+					string[] buttons3 = xboxInputs[scr3.playerNum].Split(' ');
 					scr3.moveAxisX = buttons3[0];
 					scr3.moveAxisZ = buttons3[1];
 					scr3.jumpKey = buttons3[2];
 					scr3.classAbilityButton = buttons3[3];
 					scr3.basicAttackButton = buttons3[4];
 					scr3.useItemKey = buttons3[5];
+					//Debug.Log (scr3.moveAxisZ);
+					Debug.Log (scr3.moveAxisZ + "Rogue");
 					break;
 			case 4:
 					Warrior scr4 = go.GetComponent<Warrior>();
-					string[] buttons4 = xboxInputs[scr.playerNum].Split(" ");
+					string[] buttons4 = xboxInputs[scr4.playerNum].Split(' ');
 					scr4.moveAxisX = buttons4[0];
 					scr4.moveAxisZ = buttons4[1];
 					scr4.jumpKey = buttons4[2];
 					scr4.classAbilityButton = buttons4[3];
 					scr4.basicAttackButton = buttons4[4];
 					scr4.useItemKey = buttons4[5];
+					//Debug.Log (scr4.moveAxisZ);
+					Debug.Log (scr4.moveAxisZ + "Warrior");
 					break;
 			}
 			
