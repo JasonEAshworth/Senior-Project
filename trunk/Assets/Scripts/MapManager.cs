@@ -82,6 +82,9 @@ public class RoomNode
 	public string name;
 	public GameObject obj;
 	public RoomType type;
+	public bool hasBeenLoaded = false; // used to keep track of the first time a room is loaded for item management
+	public List<GameObject> doors;
+	public List<GameObject> items;
 	public RoomNode[] neighbors;
 	public RoomNode north
 	{
@@ -132,6 +135,8 @@ public class RoomNode
 	{
 		name = n;
 		neighbors = new RoomNode[4] {null, null, null, null};
+		doors = new List<GameObject>();
+		items = new List<GameObject>();
 		// set up room type
 		if (n.Contains("_H_"))
 		{
@@ -195,6 +200,22 @@ public class MapManager : MonoBehaviour
 		GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
 		roomNode.obj = room;
 		map.roomsLoaded.Add(roomNode);
+
+		if (!roomNode.hasBeenLoaded)
+		{
+			getRoomObjects(roomNode);
+			roomNode.hasBeenLoaded = true;
+		}
+		else
+		{
+			foreach (GameObject door in roomNode.obj.GetComponent<RoomObjectManager>().doors)
+			{
+				if (!roomNode.doors.Contains(door))
+				{
+					door.SetActive(false);
+				}
+			}
+		}
 	}
 
 	// Looks at all of the neighbors of the given RoomNode and loads them up if they aren't already loaded. Also performs any extra room setup needed
@@ -305,5 +326,35 @@ public class MapManager : MonoBehaviour
 			}
 		}
 		return roomsIn;
+	}
+
+	private void getRoomObjects(RoomNode room)
+	{
+		// Find all of the doors, keys, and other items in this room
+		GameObject[] allDoors = GameObject.FindGameObjectsWithTag("door");
+		GameObject[] allKeys = GameObject.FindGameObjectsWithTag("Key");
+		GameObject[] allPotions = GameObject.FindGameObjectsWithTag("Potion");
+		
+		foreach (GameObject door in allDoors)
+		{
+			if (door.transform.root == room.obj.transform)
+			{
+				room.doors.Add(door);
+			}
+		}
+		foreach (GameObject key in allKeys)
+		{
+			if (key.transform.root == room.obj.transform)
+			{
+				room.items.Add(key);
+			}
+		}
+		foreach (GameObject potion in allPotions)
+		{
+			if (potion.transform.root == room.obj.transform)
+			{
+				room.items.Add(potion);
+			}
+		}
 	}
 }
