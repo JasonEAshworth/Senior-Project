@@ -48,6 +48,8 @@ public class PlayerManager : MonoBehaviour
 				woods.basicAttackKey = KeyCode.R;
 				woods.init();
 				woods.playerNum = i;
+				woods.health = 100.0f;
+				woods.maxHealth = 100.0f;
 				woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
 				players.Add (player1);
 				break;
@@ -63,6 +65,8 @@ public class PlayerManager : MonoBehaviour
 				sorc.specialAttackKey = KeyCode.O;
 				sorc.classAbilityKey = KeyCode.P;
 				sorc.playerNum = i;
+				sorc.health = 100.0f;
+				sorc.maxHealth = 100.0f;
 				sorc.healthBar = GameObject.Find("SorcererHealth").GetComponent<RawImage>();
 				players.Add (player2);
 				break;
@@ -77,6 +81,8 @@ public class PlayerManager : MonoBehaviour
 				//rogue.jumpKey = KeyCode.C;
 				rogue.basicAttackKey = KeyCode.G;
 				rogue.playerNum = i;
+				rogue.health = 100.0f;
+				rogue.maxHealth = 100.0f;
 				rogue.healthBar = GameObject.Find("RogueHealth").GetComponent<RawImage>();
 				players.Add (player3);
 				break;
@@ -91,6 +97,8 @@ public class PlayerManager : MonoBehaviour
 				//war.jumpKey = KeyCode.N;
 				war.basicAttackKey = KeyCode.E;
 				war.playerNum = i;
+				war.health = 100.0f;
+				war.maxHealth = 100.0f;
 				war.healthBar = GameObject.Find("WarriorHealth").GetComponent<RawImage>();
 				players.Add (player4);
 				break;
