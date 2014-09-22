@@ -28,7 +28,7 @@ public class Rogue : PlayerBase
 		float currentTime = Time.time;
 		float timeSinceAttack = currentTime - attackStarted;
 		//When the attack key is released, check to see how long it was
-		//held to determin what attack to do.
+		//held to determine what attack to do.
 		if (Input.GetKeyUp (basicAttackKey))
 		{
 			if(timeSinceAttack < 1.0f)
@@ -90,7 +90,7 @@ public class Rogue : PlayerBase
 		}
 	}
 	
-	void FixedUpdate()
+	new void FixedUpdate()
 	{
 		base.FixedUpdate();
 		if (!dead)
@@ -114,44 +114,113 @@ public class Rogue : PlayerBase
 		}
 	}
 
-	void OnTriggerEnter(Collider collision)
+	void OnTriggerEnter(Collider collider)
 	{
 		Debug.Log("collision1");
-		GameObject go = collision.gameObject;
-		if(collision.gameObject.tag == "Enemy")
+		GameObject go = collider.gameObject;
+		if(go.tag == "Enemy")
 		{
 			if(dash)
 			{
-				//still need to make sure that this doesn't put the player in a wall
+				//if the player is cannot go behind the enemy, attempt to go to the right then left
 				Debug.Log("hurt enemy");
 				dash = false;
 				elapsed = 0.0f;
 
-				Vector3 c = go.GetComponent<Transform>().position;
-				c.y = this.transform.position.y;
-				this.transform.position = c;
+				//center the enemy's collider
+				Vector3 colCenter = go.GetComponent<Transform>().position;
+				colCenter.y = this.transform.position.y;
 
-				Vector3 f = go.transform.forward;
-				f.y = this.transform.forward.y;
-				this.transform.forward = f;
+				//behind facing
+				Vector3 colBehind = go.transform.forward;
+				colBehind.y = this.transform.forward.y;
+				//right facing
+				Vector3 colRight = go.transform.right;
+				colRight.y = this.transform.forward.y;
+				//left facing
+				Vector3 colLeft = -1 * colRight;
+				colLeft.y = this.transform.forward.y;
 
-				Vector3 m = go.GetComponent<MeshRenderer>().bounds.size;
-				m += this.GetComponent<MeshRenderer>().bounds.size;
+				//size of the enemy's mesh
+				Vector3 colMesh = go.GetComponent<MeshRenderer>().bounds.size;
+				//size of the player's mesh
+				Vector3 plMesh = this.GetComponent<MeshRenderer>().bounds.size;
+				colMesh += plMesh;
 
-				Vector3 moveTo = -0.5f * Vector3.Scale(m, f);
-				moveTo.y = 0.0f;
+				//coordinates to move behind the enemy
+				Vector3 moveBehind = -0.5f * Vector3.Scale(colMesh, colBehind);
+				moveBehind.y = this.transform.position.y;
+				//coordinates to move to the left side of the enemy
+				Vector3 moveRight = -0.5f * Vector3.Scale(colMesh, colRight);
+				moveRight.y = this.transform.position.y;
+				//coordinates to move to the right side of the enemy
+				Vector3 moveLeft = -0.5f * Vector3.Scale(colMesh, colLeft);
+				moveLeft.y = this.transform.position.y;
 
-				this.transform.Translate(moveTo, Space.World);
 
-				Ray r = new Ray(c, -1 * f);
-				RaycastHit rc;
-				Vector3 en = 0.5f * go.GetComponent<MeshRenderer>().bounds.size + this.GetComponent<MeshRenderer>().bounds.size;
-				this.collider.Raycast(r, out rc, 100.0f);
+				//plMesh sizes change with rotation
+				float temp = (plMesh.x + plMesh.z) / 2;
+				Debug.Log(plMesh.x);
+				Debug.Log(plMesh.z);
+				Debug.Log(temp);
+				Collider[][] colList = {Physics.OverlapSphere(colCenter + moveBehind, temp),
+										Physics.OverlapSphere(colCenter + moveRight, temp),
+										Physics.OverlapSphere(colCenter + moveLeft, temp)};
+
+
+				bool move = true;
+				int i = 0;
+				for(i = 0; i < colList.Length; i++)
+				{
+					move = true;
+					for(int j = 0; j < colList[i].Length; j++)
+					{
+						if(colList[i][j].name == "wall_2" || colList[i][j].name == "wall_4")
+						{
+							move = false;
+							Debug.Log("something is in the way");
+							break;
+						}
+					}
+					if(move)
+					{
+						break;
+					}
+				}
+
+				if(move)
+				{
+					if(i == 0)
+					{
+						Debug.Log("behind");
+						this.transform.forward = colBehind;
+						this.transform.position = colCenter;
+						this.transform.Translate(moveBehind, Space.World);
+					}
+					else if(i == 1)
+					{
+						Debug.Log("right");
+						this.transform.forward = colRight;
+						this.transform.position = colCenter;
+						this.transform.Translate(moveRight, Space.World);
+					}
+					else if(i == 2)
+					{
+						Debug.Log("left");
+						this.transform.forward = colLeft;
+						this.transform.position = colCenter;
+						this.transform.Translate(moveLeft, Space.World);
+					}
+				}
 			}
 			else
 			{
 				Debug.Log("collided with an enemy");
 			}
+		}
+		else if(go.tag == "Untagged")
+		{
+			Debug.Log("hit the wall?");
 		}
 	}
 }
