@@ -42,7 +42,7 @@ public class TriggerController : MonoBehaviour
 		{
 			for(int i = 0; i < obj.Length; i++)
 			{
-				obj[i].SendMessage("move", state);
+				obj[i].SendMessage("activateTrigger", state);
 			}
 			state = !state;
 			if(!multi)
