@@ -11,12 +11,19 @@ public class Woodsman : PlayerBase
 	private float basicTimer = 0.5f;
 	private float specialTimer = 10.0f;
 	private float firstButtonPressTime = 0.0f;
+	private GameObject hawk;
+	private Transform hawkPos;
 
 	public void init()
 	{
 		int health = 100;
 		int maxHealth = health;
 		moveSpeed = 4.0f;
+
+		hawkPos = transform.Find("hawkSpawn");
+		Debug.Log (hawkPos.position);
+		hawk = Instantiate(Resources.Load("Prefabs/Character/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
+
 
 		shootPosition = transform.Find("shootPos");
 
@@ -25,6 +32,7 @@ public class Woodsman : PlayerBase
 	public override void basicAttack()
 	{
 
+		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
 		{
 			basicTimer -= Time.deltaTime;
@@ -53,15 +61,12 @@ public class Woodsman : PlayerBase
 		if (Input.GetKeyUp (basicAttackKey))
 		{
 			float temp = Time.time - firstButtonPressTime;
-			Debug.Log (temp);
 			if(temp > 0.4f && canSpecial)
 			{
-				Debug.Log("SPECIAL ATTACKKKKKK");
 				specialAttackWoods(temp);
 			}
 			else if(canFire)
 			{
-				Debug.Log ("WE got in here..bad news");
 				GameObject bullet = Instantiate (Resources.Load ("Prefabs/items/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 				bullet.transform.up = transform.forward;
 				canFire = false;
@@ -73,10 +78,19 @@ public class Woodsman : PlayerBase
 	public void specialAttackWoods(float time)
 	{
 		//Debug.Log ("warrior special attack");
+
 	}
 	
 	public override void classAbility()
 	{
 		//Debug.Log ("warrior class ability");
+		if (Input.GetKeyDown (classAbilityKey)) 
+		{
+			HawkAI hawkScripts = hawk.GetComponent<HawkAI> ();
+			if (hawkScripts.mode != 2) 
+			{
+				hawkScripts.mode = 2;
+			}
+		}
 	}
 }

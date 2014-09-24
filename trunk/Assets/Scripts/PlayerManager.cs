@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
 		selectedClasses.Add(playerClass.WARRIOR);
 
 		// set players to 4 at start
-		//numPlayers = 4;
+		numPlayers = 4;
 
 		// acquire all spawn points for players 
 		getNewSpawnPoints();
@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
 				woods.moveAxisZ = "Vertical1";
 				woods.classType = playerClass.WOODSMAN;
 				woods.basicAttackKey = KeyCode.R;
+				woods.classAbilityKey = KeyCode.T;
 				woods.init();
 				woods.playerNum = i;
 				woods.health = 100.0f;
