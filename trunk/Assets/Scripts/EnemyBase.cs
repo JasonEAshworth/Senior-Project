@@ -22,13 +22,13 @@ public class EnemyBase : CharacterBase
 
 	// Manager Code
 	public EnemyManager manager;
-	//private MapManager mapManager;
+	private MapManager mapManager;
 
 	void Start()
 	{
 		health = maxHealth;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
-		//mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
+		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 		renderer.material.color = Color.blue;
 	}
 
