@@ -5,14 +5,10 @@ public class LightFlicker : MonoBehaviour {
 	
 	public float minIntensity = 0.25f;
 	public float maxIntensity = 0.75f;
-
-	private float lerpMul;
-	private float random = Random.Range(0.0f, 65535.0f);
-
-
+	private float random;
 	void Start()
 	{
-		lerpMul = Random.Range (2.0f, 2.5f);
+		random = Random.Range(0.0f, 65535.0f);
 	}
 		
 	void Update()

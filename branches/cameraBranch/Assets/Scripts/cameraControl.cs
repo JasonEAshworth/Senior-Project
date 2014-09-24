@@ -3,13 +3,12 @@ using System.Collections;
 using System;
 
 [RequireComponent (typeof(CharacterController))]
-[RequireComponent (typeof (PlayerBase))]
 
 public class cameraControl : MonoBehaviour
 {
     private bool isOrthographic;
     public GameObject[] targets;
-    public GameObject avgBox;
+    //public GameObject avgBox;
     public float currentDistance;
     public float largestDistance;
     public Camera theCamera;
@@ -24,18 +23,17 @@ public class cameraControl : MonoBehaviour
     public float yzRatio = 0f;
     public float offZRatio = 0f;
     public float offXRatio = 0f;
-    public float[] xClamp = {4,-4};
-    public float[] yClamp = {2,37};
-    public float[] zClamp = {0,26};
-    public float[] offsetClamp = {0, 7, 0, 0};
+    public float[] xClamp = {-8,8};
+    public float[] yClamp = {10,30};
+    public float[] zClamp = {7,27};
+    public float[] offsetClamp = {10, -10, 10, -10};
 	public bool dubugText = false;
 
     // Starts the camera, gets the player targest, and gets the diagonal distance of the room
     public void Start ()
     {
         Console.WriteLine ("START");
-		//targets = PlayerManager.FindObjectOfType (playerClass); 
-		targets = GameObject.FindGameObjectsWithTag ("Player");
+        targets = GameObject.FindGameObjectsWithTag ("Player");
         //avgBox = GameObject.FindGameObjectWithTag ("avgBox");
         // Square diagonal = Sqrt(2) * Length 
         roomDiagonal = 1.414f * roomLength;
@@ -47,40 +45,46 @@ public class cameraControl : MonoBehaviour
     // All the GUI debug info
     public void OnGUI ()
     {
-        GUILayout.Label ("largest distance is = " + largestDistance.ToString ());
-        GUILayout.Label ("height = " + height.ToString ());
-        GUILayout.Label ("number of players = " + targets.Length.ToString ());
-        GUILayout.Label ("xRatio = " + xRatio.ToString ());
-        GUILayout.Label ("yzRatio = " + yzRatio.ToString ());
-        GUILayout.Label ("offRatio = " + offZRatio.ToString ());
-        GUILayout.Label ("offRatio = " + offXRatio.ToString ());
-		GUILayout.Label ("Average Distance = " + avgDistance.x.ToString () + ", " + avgDistance.y.ToString () + ", " + avgDistance.z.ToString ());
-	}
+        // Run debug code, if its 
+        if (dubugText) 
+        {
+            GUILayout.Label ("largest distance is = " + largestDistance.ToString ());
+            GUILayout.Label ("height = " + height.ToString ());
+            GUILayout.Label ("number of players = " + targets.Length.ToString ());
+            GUILayout.Label ("xRatio = " + xRatio.ToString ());
+            GUILayout.Label ("yzRatio = " + yzRatio.ToString ());
+            GUILayout.Label ("offRatio = " + offZRatio.ToString ());
+            GUILayout.Label ("offRatio = " + offXRatio.ToString ());
+    		GUILayout.Label ("Average Distance = " + avgDistance.x.ToString () + ", " + avgDistance.y.ToString () + ", " + avgDistance.z.ToString ());
+        }
+    }
 
     public void LateUpdate ()
-	{
-		int count = 0;
-		targets = GameObject.FindGameObjectsWithTag ("Player");
-
+    {
         // If we can't find a player, we return without altering the camera's position
         if (!GameObject.FindWithTag ("Player")) {
             return;
         }
 
         // We sum the positions of all of the players, and from there we find the mid point between all of them
+        // The 'Camera Track' bool is used to determin who should be tracked
         Vector3 sum = new Vector3 (0, 0, 0);
-        for (int i = 0; i < targets.Length; i++)
-		{
-			PlayerBase z = targets[i].GetComponent<PlayerBase>();
-			if(!z.dead)
-			{
-				count++;
-				sum += targets[i].transform.position;
-			}
-			else if(z.dead)
-				count--;
+        int count = 0;
+        for (int i = 0; i < targets.Length; i++) {
+            if (targets[i].GetComponent<PlayerBase>().cameraTrack) 
+            {
+                count++;
+                sum += targets [i].transform.position;
+            }
         }
-		avgDistance = sum / count;
+
+        // If count is 0, then we have no one to track, and we should keep the camera at its position
+        if (count == 0) {
+            return;
+        }
+        // Otherwise we finish getting the average
+        avgDistance = sum / count;
+
 
         // Next, we find what the biggest difference in distance between any two characters is
         float largestDifference = returnLargestDifference ();
@@ -108,20 +112,12 @@ public class cameraControl : MonoBehaviour
 
         // The camera is set to its new position, pointed to the point to look at. 
         theCamera.transform.position = new Vector3 (tempX, tempY, tempZ);
-		theCamera.transform.LookAt(new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset)));     
-        avgBox.transform.position = new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset));
+        theCamera.transform.LookAt(new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset)));
 
 
         // 'AVG BOX' code is simply debug code that's useful when trying to figure out how the camera is working. It 
         // is set to be where ever the camera is looking at. 
-        avgBox.transform.position = new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset));
-
-        // Run debug code, if its needed
-        
-        if (dubugText) 
-        {
-            OnGUI();
-        }
+        //avgBox.transform.position = new Vector3 ((avgDistance.x + lookXOffset), avgDistance.y, (avgDistance.z + lookZOffset));
                 
     }
 
@@ -130,20 +126,21 @@ public class cameraControl : MonoBehaviour
     {
         currentDistance = 0.0f;
         largestDistance = 0.0f;
-        for (int i = 0; i < targets.Length; i++) 
-		{
-            for (int j = 0; j < targets.Length; j++)
-			{
-				PlayerBase z = targets[i].GetComponent<PlayerBase>();
-				PlayerBase k = targets[j].GetComponent<PlayerBase>();
-				if(!z.dead && !k.dead)
-				{
-	                currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
-	                if (currentDistance > largestDistance) 
-					    largestDistance = currentDistance;
-				}
-			}
-            
+        for (int i = 0; i < targets.Length; i++) {
+            if (!targets[i].GetComponent<PlayerBase>().cameraTrack) 
+            {
+                continue;
+            }
+            for (int j = 0; j < targets.Length; j++) {
+                if (!targets[j].GetComponent<PlayerBase>().cameraTrack) 
+                {
+                    continue;
+                }
+                currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
+                if (currentDistance > largestDistance) {
+                    largestDistance = currentDistance;
+                }
+            }
         }
         return largestDistance;
     }
