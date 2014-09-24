@@ -25,12 +25,12 @@ public enum Direction
 public class RoomGraph
 {
 	public List<RoomNode> rooms;
-	public List<RoomNode> roomsLoaded;
+	public List<RoomNode> roomsActive;
 
 	public RoomGraph()
 	{
 		rooms = new List<RoomNode>();
-		roomsLoaded = new List<RoomNode>();
+		roomsActive = new List<RoomNode>();
 	}
 
 	public void addRoom(string name)
@@ -194,84 +194,87 @@ public class MapManager : MonoBehaviour
 			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
 		}
 	}
-	
-	private void loadRoom(RoomNode roomNode)
-	{
-		GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
-		roomNode.obj = room;
-		map.roomsLoaded.Add(roomNode);
 
+	// Loads room and returns true if loading for first time
+	private bool loadRoom(RoomNode roomNode)
+	{
 		if (!roomNode.hasBeenLoaded)
 		{
-			getRoomObjects(roomNode);
+			GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
+			roomNode.obj = room;
+			map.roomsActive.Add(roomNode);
 			roomNode.hasBeenLoaded = true;
+			return true;
 		}
 		else
 		{
-			foreach (GameObject door in roomNode.obj.GetComponent<RoomObjectManager>().doors)
-			{
-				if (!roomNode.doors.Contains(door))
-				{
-					door.SetActive(false);
-				}
-			}
+			roomNode.obj.SetActive(true);
+			return false;
 		}
 	}
 
 	// Looks at all of the neighbors of the given RoomNode and loads them up if they aren't already loaded. Also performs any extra room setup needed
 	public void loadNeighbors(RoomNode roomNode)
 	{
-		if (roomNode.north != null && !map.roomsLoaded.Contains(roomNode.north))
+		if (roomNode.north != null && !map.roomsActive.Contains(roomNode.north))
 		{
-			loadRoom(roomNode.north);
-			// align positions of doorways properly
-			GameObject rNorthObj = roomNode.north.obj;
-			rNorthObj.transform.position = roomNode.obj.transform.Find("N_transition").position;
-			rNorthObj.transform.position -= rNorthObj.transform.Find("S_transition").position - rNorthObj.transform.position;
-			// set up doorway triggers
-			GameObject trigger = roomNode.obj.transform.Find("N_transition").FindChild("trigger").gameObject;
-			trigger.SetActive(true);
-			trigger.GetComponent<Doorway>().sideA = roomNode;
-			trigger.GetComponent<Doorway>().sideB = roomNode.north;
+			if (loadRoom(roomNode.north))
+			{
+				// align positions of doorways properly
+				GameObject rNorthObj = roomNode.north.obj;
+				rNorthObj.transform.position = roomNode.obj.transform.Find("N_transition").position;
+				rNorthObj.transform.position -= rNorthObj.transform.Find("S_transition").position - rNorthObj.transform.position;
+				// set up doorway triggers
+				GameObject trigger = roomNode.obj.transform.Find("N_transition").FindChild("trigger").gameObject;
+				trigger.SetActive(true);
+				trigger.GetComponent<Doorway>().sideA = roomNode;
+				trigger.GetComponent<Doorway>().sideB = roomNode.north;
+			}
 		}
-		if (roomNode.south != null && !map.roomsLoaded.Contains(roomNode.south))
+		if (roomNode.south != null && !map.roomsActive.Contains(roomNode.south))
 		{
-			loadRoom(roomNode.south);
-			// align positions of doorways properly
-			GameObject rSouthObj = roomNode.south.obj;
-			rSouthObj.transform.position = roomNode.obj.transform.Find("S_transition").position;
-			rSouthObj.transform.position -= rSouthObj.transform.Find("N_transition").position - rSouthObj.transform.position;
-			// set up doorway triggers
-			GameObject trigger = roomNode.obj.transform.Find("S_transition").FindChild("trigger").gameObject;
-			trigger.SetActive(true);
-			trigger.GetComponent<Doorway>().sideA = roomNode;
-			trigger.GetComponent<Doorway>().sideB = roomNode.south;
+			if (loadRoom(roomNode.south))
+			{
+				// align positions of doorways properly
+				GameObject rSouthObj = roomNode.south.obj;
+				rSouthObj.transform.position = roomNode.obj.transform.Find("S_transition").position;
+				rSouthObj.transform.position -= rSouthObj.transform.Find("N_transition").position - rSouthObj.transform.position;
+				// set up doorway triggers
+				GameObject trigger = roomNode.obj.transform.Find("S_transition").FindChild("trigger").gameObject;
+				trigger.SetActive(true);
+				trigger.GetComponent<Doorway>().sideA = roomNode;
+				trigger.GetComponent<Doorway>().sideB = roomNode.south;
+			}
 		}
-		if (roomNode.east != null && !map.roomsLoaded.Contains(roomNode.east))
+		if (roomNode.east != null && !map.roomsActive.Contains(roomNode.east))
 		{
-			loadRoom(roomNode.east);
-			// align positions of doorways properly
-			GameObject rEastObj = roomNode.east.obj;
-			rEastObj.transform.position = roomNode.obj.transform.Find("E_transition").position;
-			rEastObj.transform.position -= rEastObj.transform.Find("W_transition").position - rEastObj.transform.position;
-			// set up doorway triggers
-			GameObject trigger = roomNode.obj.transform.Find("E_transition").FindChild("trigger").gameObject;
-			trigger.SetActive(true);
-			trigger.GetComponent<Doorway>().sideA = roomNode;
-			trigger.GetComponent<Doorway>().sideB = roomNode.east;
+			if (loadRoom(roomNode.east))
+			{
+				// align positions of doorways properly
+				GameObject rEastObj = roomNode.east.obj;
+				rEastObj.transform.position = roomNode.obj.transform.Find("E_transition").position;
+				rEastObj.transform.position -= rEastObj.transform.Find("W_transition").position - rEastObj.transform.position;
+				// set up doorway triggers
+				GameObject trigger = roomNode.obj.transform.Find("E_transition").FindChild("trigger").gameObject;
+				trigger.SetActive(true);
+				trigger.GetComponent<Doorway>().sideA = roomNode;
+				trigger.GetComponent<Doorway>().sideB = roomNode.east;
+			}
 		}
-		if (roomNode.west != null && !map.roomsLoaded.Contains(roomNode.west))
+		if (roomNode.west != null && !map.roomsActive.Contains(roomNode.west))
 		{
-			loadRoom(roomNode.west);
-			// align positions of doorways properly
-			GameObject rWestObj = roomNode.west.obj;
-			rWestObj.transform.position = roomNode.obj.transform.Find("W_transition").position;
-			rWestObj.transform.position -= rWestObj.transform.Find("E_transition").position - rWestObj.transform.position;
-			// set up doorway triggers
-			GameObject trigger = roomNode.obj.transform.Find("W_transition").FindChild("trigger").gameObject;
-			trigger.SetActive(true);
-			trigger.GetComponent<Doorway>().sideA = roomNode;
-			trigger.GetComponent<Doorway>().sideB = roomNode.west;
+			if (loadRoom(roomNode.west))
+			{
+				// align positions of doorways properly
+				GameObject rWestObj = roomNode.west.obj;
+				rWestObj.transform.position = roomNode.obj.transform.Find("W_transition").position;
+				rWestObj.transform.position -= rWestObj.transform.Find("E_transition").position - rWestObj.transform.position;
+				// set up doorway triggers
+				GameObject trigger = roomNode.obj.transform.Find("W_transition").FindChild("trigger").gameObject;
+				trigger.SetActive(true);
+				trigger.GetComponent<Doorway>().sideA = roomNode;
+				trigger.GetComponent<Doorway>().sideB = roomNode.west;
+			}
 		}
 	}
 
@@ -279,7 +282,7 @@ public class MapManager : MonoBehaviour
 	public void unloadEmptyRooms()
 	{
 		List<RoomNode> roomsToUnload = new List<RoomNode>();
-		foreach (RoomNode loadedRoom in map.roomsLoaded)
+		foreach (RoomNode loadedRoom in map.roomsActive)
 		{
 			bool keep = false;
 			foreach (RoomNode playerRoom in getRoomsPlayersIn())
@@ -309,8 +312,8 @@ public class MapManager : MonoBehaviour
 
 	private void unloadRoom(RoomNode roomNode)
 	{
-		Destroy(roomNode.obj);
-		map.roomsLoaded.Remove(roomNode);
+		roomNode.obj.SetActive (false);
+		map.roomsActive.Remove(roomNode);
 	}
 
 	// Returns a list of RoomNodes of the rooms that the players are currently located in
@@ -326,35 +329,5 @@ public class MapManager : MonoBehaviour
 			}
 		}
 		return roomsIn;
-	}
-
-	private void getRoomObjects(RoomNode room)
-	{
-		// Find all of the doors, keys, and other items in this room
-		GameObject[] allDoors = GameObject.FindGameObjectsWithTag("door");
-		GameObject[] allKeys = GameObject.FindGameObjectsWithTag("Key");
-		GameObject[] allPotions = GameObject.FindGameObjectsWithTag("Potion");
-		
-		foreach (GameObject door in allDoors)
-		{
-			if (door.transform.root == room.obj.transform)
-			{
-				room.doors.Add(door);
-			}
-		}
-		foreach (GameObject key in allKeys)
-		{
-			if (key.transform.root == room.obj.transform)
-			{
-				room.items.Add(key);
-			}
-		}
-		foreach (GameObject potion in allPotions)
-		{
-			if (potion.transform.root == room.obj.transform)
-			{
-				room.items.Add(potion);
-			}
-		}
 	}
 }

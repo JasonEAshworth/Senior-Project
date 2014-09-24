@@ -51,6 +51,7 @@ public class PlayerBase : CharacterBase
 
 	protected void FixedUpdate()
 	{
+		base.FixedUpdate();
 		if (!dead)
 		{
 			if (controllable)
