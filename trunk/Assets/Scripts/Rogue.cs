@@ -6,7 +6,7 @@ public class Rogue : PlayerBase
 	private float attackStarted = Time.time - 10.0f;
 	private float energy = 100.0f;
 	private bool dash = false;
-	private float dashDur = 0.4f;
+	public float dashDur = 0.4f;
 	private float elapsed = 0.0f;
 	
 	void start()
@@ -42,6 +42,7 @@ public class Rogue : PlayerBase
 				Debug.Log ("rogue special attack");
 				//Dash Attack
 				dash = true;
+				controllable = false;
 				//animator.Play("RogueSpecialAttack");
 			}
 		}
@@ -95,28 +96,37 @@ public class Rogue : PlayerBase
 		base.FixedUpdate();
 		if (!dead)
 		{
-			if (controllable)
+			if(dash)
 			{
-				if(dash)
+				elapsed += Time.deltaTime;
+				Vector3 moveVec = transform.forward * moveSpeed * 4 * Time.deltaTime;
+				moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
+				charControl.Move(moveVec);
+				
+				if(elapsed >= dashDur)
 				{
-					elapsed += Time.deltaTime;
-					Vector3 moveVec = transform.forward * moveSpeed * 4 * Time.deltaTime;
-					moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-					charControl.Move(moveVec);
-					
-					if(elapsed >= dashDur)
-					{
-						dash = false;
-						elapsed = 0.0f;
-					}
+					dash = false;
+					controllable = true;
+					elapsed = 0.0f;
 				}
 			}
 		}
 	}
 
+	/*void OnCollisionEnter(Collision collision)
+	{
+		Debug.Log("collision");
+	}
+
+	void OnControllerColliderHit(ControllerColliderHit hit)
+	{
+		Debug.Log("hit");
+		Debug.Log (hit.gameObject.name);
+	}*/
+
 	void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log("collision1");
+		Debug.Log("trigger");
 		GameObject go = collider.gameObject;
 		if(go.tag == "Enemy")
 		{
@@ -125,6 +135,7 @@ public class Rogue : PlayerBase
 				//if the player is cannot go behind the enemy, attempt to go to the right then left
 				Debug.Log("hurt enemy");
 				dash = false;
+				controllable = true;
 				elapsed = 0.0f;
 
 				//center the enemy's collider
@@ -141,32 +152,28 @@ public class Rogue : PlayerBase
 				Vector3 colLeft = -1 * colRight;
 				colLeft.y = this.transform.forward.y;
 
-				//size of the enemy's mesh
-				Vector3 colMesh = go.GetComponent<MeshRenderer>().bounds.size;
-				//size of the player's mesh
-				Vector3 plMesh = this.GetComponent<MeshRenderer>().bounds.size;
-				colMesh += plMesh;
+				//scales the radius of the enemy's bounding volume
+				float largest = LargestComponent(go.transform.localScale);
+				float colRad = go.GetComponent<CharacterController>().radius * largest;
+				//scales the radius of the player's bounding volume
+				largest = LargestComponent(this.transform.localScale);
+				float plRad = this.GetComponent<CharacterController>().radius * largest;
+				colRad += plRad;
 
 				//coordinates to move behind the enemy
-				Vector3 moveBehind = -0.5f * Vector3.Scale(colMesh, colBehind);
+				Vector3 moveBehind = -1 * colRad * colBehind;
 				moveBehind.y = this.transform.position.y;
 				//coordinates to move to the left side of the enemy
-				Vector3 moveRight = -0.5f * Vector3.Scale(colMesh, colRight);
+				Vector3 moveRight = -1 * colRad * colRight;
 				moveRight.y = this.transform.position.y;
 				//coordinates to move to the right side of the enemy
-				Vector3 moveLeft = -0.5f * Vector3.Scale(colMesh, colLeft);
+				Vector3 moveLeft = -1 * colRad * colLeft;
 				moveLeft.y = this.transform.position.y;
 
-
-				//plMesh sizes change with rotation
-				float temp = (plMesh.x + plMesh.z) / 2;
-				Debug.Log(plMesh.x);
-				Debug.Log(plMesh.z);
-				Debug.Log(temp);
-				Collider[][] colList = {Physics.OverlapSphere(colCenter + moveBehind, temp),
-										Physics.OverlapSphere(colCenter + moveRight, temp),
-										Physics.OverlapSphere(colCenter + moveLeft, temp)};
-
+				//list of collisions for the potential positions of the player
+				Collider[][] colList = {Physics.OverlapSphere(colCenter + moveBehind, plRad),
+										Physics.OverlapSphere(colCenter + moveRight, plRad),
+										Physics.OverlapSphere(colCenter + moveLeft, plRad)};
 
 				bool move = true;
 				int i = 0;
@@ -175,7 +182,7 @@ public class Rogue : PlayerBase
 					move = true;
 					for(int j = 0; j < colList[i].Length; j++)
 					{
-						if(colList[i][j].name == "wall_2" || colList[i][j].name == "wall_4")
+						if(colList[i][j].name.Contains("wall_") || colList[i][j].tag == "Enemy")
 						{
 							move = false;
 							Debug.Log("something is in the way");
@@ -218,9 +225,25 @@ public class Rogue : PlayerBase
 				Debug.Log("collided with an enemy");
 			}
 		}
-		else if(go.tag == "Untagged")
+		else
 		{
-			Debug.Log("hit the wall?");
+			Debug.Log("collided with " + go.name);
+		}
+	}
+
+	float LargestComponent(Vector3 vec)
+	{
+		if(vec.x >= vec.y && vec.x >= vec.z)
+		{
+			return vec.x;
+		}
+		else if(vec.y >= vec.z)
+		{
+			return vec.y;
+		}
+		else
+		{
+			return vec.z;
 		}
 	}
 }

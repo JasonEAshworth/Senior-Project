@@ -32,7 +32,7 @@ public class EnemyBase : CharacterBase
 		renderer.material.color = Color.blue;
 	}
 
-	protected new void FixedUpdate()
+	protected void FixedUpdate()
 	{
 		if (!dead)
 		{
