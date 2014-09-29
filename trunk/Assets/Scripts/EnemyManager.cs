@@ -38,12 +38,14 @@ public class EnemyManager : MonoBehaviour
 					// load zombie model here
 					GameObject m = Instantiate (Resources.Load("Prefabs/Character/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 					//Melee m = mel.GetComponent<MELEE>();
-					m.init();
-					m.health = 100.f;
-					m.maxHealth = 100.0f;
-					enemies.Add(mel);
+					//m.init();
+					//m.health = 100.f;
+					//m.maxHealth = 100.0f;
+					//enemies.Add(mel);
+					break;
 			}
 		}
+		return enemyArchtype.MELEE;
 	}
 	public Vector3 getRespawnPoint()
 	{
