@@ -12,17 +12,30 @@ public class MovingPlatform : MonoBehaviour
 
 	public bool freeMove = true;			// if false, the platform must be triggered to move from destination to destination
 	private bool canMove = false;			// used only when freeMove is false
+	public bool looping = true;				// set to true if you want the platform to loop through its destinations, false if it shouldn't move after reaching the final one
+	private bool doneMoving = false;		// used only if not looping, set to true when the platform reaches its final destination
 
 	void FixedUpdate()
 	{
-		// Move the platform to the next destination if not current delaying
-		if (delayTimer <= 0.0f)
+		if (Input.GetKeyDown (KeyCode.G))
 		{
-			transform.position = Vector3.MoveTowards(transform.position, destinations[curDest].position, moveSpeed * Time.deltaTime);
+			activateTrigger ();
 		}
-		else
+
+		if (freeMove || (!freeMove && canMove))
 		{
-			delayTimer -= Time.deltaTime;
+			if (looping || (!looping && !doneMoving))
+			{
+				// Move the platform to the next destination if not currently delaying
+				if (delayTimer <= 0.0f)
+				{
+					transform.position = Vector3.MoveTowards(transform.position, destinations[curDest].position, moveSpeed * Time.deltaTime);
+				}
+				else
+				{
+					delayTimer -= Time.deltaTime;
+				}
+			}
 		}
 
 		// Check to see if we've reached that destination
@@ -30,6 +43,17 @@ public class MovingPlatform : MonoBehaviour
 		{
 			delayTimer = destinationDelay;
 			curDest = (curDest + 1) % destinations.Length;
+			if (!looping && curDest == 0)
+			{
+				doneMoving = true;
+			}
+			canMove = false; // only affects platforms without freeMove
 		}
+	}
+
+	// If the platform is not set to freeMove, calling this function will allow the platform to move to its next destination. Should be called by triggers
+	public void activateTrigger()
+	{
+		canMove = true;
 	}
 }
