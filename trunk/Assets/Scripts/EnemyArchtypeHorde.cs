@@ -5,21 +5,9 @@ using System.Collections.Generic;
 public class EnemyArchtypeHorde : MonoBehaviour
 {
 	private Transform enemyTransform;
-	private Vector3[] playerPositions;
-	private float attackRange;
-	private bool canFly;
+	public float attackRange = 5;
+	public bool canFly = true;
 	private Vector3 center;
-
-	// AI constructor. Takes the enemy's transform for movement reasons.
-	// An array of Vectors for player positions. A float for the range of attack.
-	public void EnemyArchtypeHord(Transform eT, Vector3[] pP, float aR)
-	{
-		enemyTransform = eT;
-		playerPositions = pP;
-		attackRange = aR;
-		canFly = false;
-	
-	}
 
 	// Sets the fly status of an enemy. Flying enemies can fly over pits.
 	public void setFly(bool flyStatus) 
@@ -42,8 +30,38 @@ public class EnemyArchtypeHorde : MonoBehaviour
 	 *   7. Confirm that moving to that space is legal (No moving though objects, or over pits if canFly is false)
 	 *   8. If the space isn't legal, slowly decreese the distance until a legal spot is found. 
 	 */
-	public void update()
+	void FixedUpdate()
 	{
-
+		// Find the closest player and see if they are in range
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		float shortestRange = float.PositiveInfinity;
+		int closestPlayerIdx = 0;
+		for (int i = 0; i < players.Length; i++)
+		{
+			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
+			shortestRange = Mathf.Min(sqrRange, shortestRange);
+			closestPlayerIdx = i;
+		}
+		// If within range, attack
+		if (shortestRange < attackRange * attackRange) // squaring attack range is faster than square rooting every distance
+		{
+			// attack that player
+		}
+		// Otherwise, move towards closest player
+		else
+		{
+			Vector3 toPlayer = Vector3.Normalize(players[closestPlayerIdx].transform.position - transform.position);
+			Vector3 toCenter = Vector3.Normalize(center - transform.position);
+			Vector3 dodgeVector = toPlayer; // temporary value if dodge is needed
+			// check for obstacles
+			if (Physics.Raycast(transform.position, transform.forward, 3.0f))
+			{
+				dodgeVector = transform.right;
+			}
+			// calculate movement vector and destination
+			Vector3 moveVector = toPlayer * 0.4f + toCenter * 0.2f + dodgeVector * 0.4f; 
+			Vector3 destination = transform.position + moveVector * Time.deltaTime;
+			// unity navmesh stuff here
+		}
 	}
 }

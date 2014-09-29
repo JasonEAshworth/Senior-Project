@@ -41,7 +41,7 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	public virtual void Attakck()
+	public virtual void Attack()
 	{
 		// do calculations based on atk power and player def
 
