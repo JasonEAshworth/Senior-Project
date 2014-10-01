@@ -46,16 +46,18 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Adventurer.cs" />
      <Compile Include="Assets\Scripts\AutoTrigger.cs" />
      <Compile Include="Assets\Scripts\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\Doorway.cs" />
      <Compile Include="Assets\Scripts\DurationTrapObj.cs" />
+     <Compile Include="Assets\Scripts\EnemyArchtypeHorde.cs" />
+     <Compile Include="Assets\Scripts\EnemyArchtypeMelee.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
+     <Compile Include="Assets\Scripts\HawkAI.cs" />
      <Compile Include="Assets\Scripts\InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />
@@ -77,6 +79,7 @@
      <Compile Include="Assets\Scripts\enemyControl.cs" />
      <Compile Include="Assets\Scripts\woodsBullet.cs" />
      <Compile Include="Assets\Scripts\woodsSpecialBulletScript.cs" />
+     <None Include="Assets\Scripts\Shaders\MultiTexture.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -20,16 +20,26 @@ public class EnemyBase : CharacterBase
 
 	public bool attacking = false;
 
+	protected CharacterController cc;
+	public bool partOfHorde = false;
+	
 	// Manager Code
 	public EnemyManager manager;
 	private MapManager mapManager;
+	protected EnemyArchtypeHorde hordeManager;
 
-	void Start()
+	protected void Start()
 	{
 		health = maxHealth;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 		renderer.material.color = Color.blue;
+		cc = GetComponent<CharacterController>();
+		if (transform.parent != null)
+		{
+			hordeManager = transform.parent.GetComponent<EnemyArchtypeHorde>();
+			partOfHorde = true;
+		}
 	}
 
 	protected void FixedUpdate()
@@ -47,4 +57,65 @@ public class EnemyBase : CharacterBase
 
 	}
 
+	protected void moveTowardsPlayer(GameObject player)
+	{
+		Vector3 toPlayer = Vector3.Normalize(player.transform.position - transform.position);
+		Vector3 toCenter = Vector3.zero;
+		if (partOfHorde)
+		{
+			toCenter = Vector3.Normalize(hordeManager.centerPoint - transform.position)
+		}
+		else
+		{
+			toCenter = toPlayer;
+		}
+		// check for obstacles
+		Vector3 moveVector = toPlayer * 0.7f + toCenter * 0.3f;
+		Vector3 dodgeVector = Vector3.zero;
+		if (Physics.Raycast(transform.position, moveVector, Time.deltaTime * moveSpeed))
+		{
+			dodgeVector = transform.right;
+		}
+		else
+		{
+			dodgeVector = toPlayer;
+		}
+		moveVector = moveVector * 0.4f + dodgeVector * 0.6f;
+		// move towards destination
+		cc.Move(moveVector);
+	}
+
+	protected GameObject findClosestPlayer()
+	{
+		// Find the closest player and see if they are in range
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		float shortestRange = float.PositiveInfinity;
+		int closestPlayerIdx = 0;
+		for (int i = 0; i < players.Length; i++)
+		{
+			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
+			shortestRange = Mathf.Min(sqrRange, shortestRange);
+			closestPlayerIdx = i;
+		}
+		return players[closestPlayerIdx];
+	}
+
+	protected GameObject findClosestPlayerInRange(float range)
+	{
+		// Find the closest player and see if they are in range
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		float shortestRange = float.PositiveInfinity;
+		int closestPlayerIdx = 0;
+		for (int i = 0; i < players.Length; i++)
+		{
+			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
+			shortestRange = Mathf.Min(sqrRange, shortestRange);
+			closestPlayerIdx = i;
+		}
+		if (shortestRange <= range * range) // squaring range is faster than square rooting every distance
+		{
+			return players[closestPlayerIdx];
+		}
+		return null;
+	}
 }
