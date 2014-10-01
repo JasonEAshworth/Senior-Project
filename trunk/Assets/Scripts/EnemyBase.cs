@@ -63,7 +63,7 @@ public class EnemyBase : CharacterBase
 		Vector3 toCenter = Vector3.zero;
 		if (partOfHorde)
 		{
-			toCenter = Vector3.Normalize(hordeManager.centerPoint - transform.position)
+			toCenter = Vector3.Normalize(hordeManager.centerPoint - transform.position);
 		}
 		else
 		{
