@@ -21,7 +21,6 @@ public class Woodsman : PlayerBase
 		moveSpeed = 4.0f;
 
 		hawkPos = transform.Find("hawkSpawn");
-		Debug.Log (hawkPos.position);
 		hawk = Instantiate(Resources.Load("Prefabs/Character/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
 
 
@@ -86,7 +85,7 @@ public class Woodsman : PlayerBase
 		//Debug.Log ("warrior class ability");
 		if (Input.GetKeyDown (classAbilityKey)) 
 		{
-			HawkAI hawkScripts = hawk.GetComponent<HawkAI> ();
+			HawkAI2 hawkScripts = hawk.GetComponent<HawkAI2> ();
 			if (hawkScripts.mode != 2) 
 			{
 				hawkScripts.mode = 2;

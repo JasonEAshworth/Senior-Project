@@ -33,8 +33,10 @@ public class HawkAI : MonoBehaviour {
 
 		if (mode == 2) 
 		{
+
 			Vector3 hawkXZ = new Vector3(transform.position.x,0,transform.position.z);
 			Vector3 woodsXZ = new Vector3(woodsman.transform.position.x,0,woodsman.transform.position.z);
+			Vector3 initalPoint = Vector3.zero;
 			Vector3 initialPoint = transform.position + (woodsman.transform.forward * 12.0f) + (woodsXZ-hawkXZ);
 			Debug.Log(initialPoint);
 			Vector3 moveVec = (initialPoint-transform.position);
