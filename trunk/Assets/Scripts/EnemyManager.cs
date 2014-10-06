@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
-public class EnemyManager : MonoBehaviour 
-{
+public class EnemyManager : MonoBehaviour{
 	// init variables
 	public int numEnemies;
 
@@ -26,26 +26,22 @@ public class EnemyManager : MonoBehaviour
 		enemyList.Add(enemyArchtype.MINDLESS);
 		// set players to 4 at start
 		//numPlayers = 4;
-		numEnemies = 0;
-	}
-	public enemyArchtype create(int type)
-	{
+		numEnemies = 4;
+		getNewSpawnPoints();
+	
+
 		for (int i=0; i<numEnemies; i++)
 		{
 			switch (enemyList[i])
 			{
 				case(enemyArchtype.MELEE):
 					// load zombie model here
-					GameObject m = Instantiate (Resources.Load("Prefabs/Character/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
-					//Melee m = mel.GetComponent<MELEE>();
-					//m.init();
-					//m.health = 100.f;
-					//m.maxHealth = 100.0f;
-					//enemies.Add(mel);
+					GameObject go = Instantiate (Resources.Load("Prefabs/Enemies/Restless_Melee"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+					EnemyArchtypeMelee mel = go.GetComponent<EnemyArchtypeMelee>();
 					break;
+
 			}
 		}
-		return enemyArchtype.MELEE;
 	}
 	public Vector3 getRespawnPoint()
 	{
@@ -56,6 +52,16 @@ public class EnemyManager : MonoBehaviour
 	public void getNewSpawnPoints()
 	{
 		spawns = GameObject.FindGameObjectsWithTag("Respawn");
-	}
 
+	}
+	public void respawnAllEnemies()
+	{
+		for (int i = 0; i < enemies.Count; i++)
+		{
+			enemies[i].transform.position = spawns[i].transform.position;
+			enemies[i].GetComponent<PlayerBase>().controllable = true;
+		}
+	}
 }
+
+
