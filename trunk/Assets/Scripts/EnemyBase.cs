@@ -12,14 +12,23 @@ public enum enemyArchtype
 
 public class EnemyBase : CharacterBase 
 {
+	// Init Enemy Variables
 	public float respawnTimer = 0.0f;
-
 	public int enemyNumber = -1;
-
 	public enemyArchtype enemyType;
 
+	// Attack Variables
 	public bool attacking = false;
+	public float attackDistance = 0f;
+	public float giveUpThreshold = 0f;
+	public float attackRate = 0f;
+	public float attackDamage = 0f;
 
+	// Move Variables
+	public float moveSpeed = 1;
+	public float rotationSpeed = 3f;
+
+	// Enemy Control Variables
 	protected CharacterController cc;
 	public bool partOfHorde = false;
 	

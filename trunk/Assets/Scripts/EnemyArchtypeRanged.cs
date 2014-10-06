@@ -10,14 +10,9 @@ public class EnemyArchtypeRanged : EnemyBase {
 	public Transform target;
 	private Transform mTransform;
 
-	public float rotationSpeed = 3f;
 	public float eRange = 10f;
 	public float pDistance;
-	public float attackDistance = 5f;
-	public float giveUpThreshold = 15f;
-	public float attackRate = 1.5f;
 	public GameObject player;
-	public float moveSpeed = 1;
 
 	// Behavior / Rates
 	private bool chasing = false;
