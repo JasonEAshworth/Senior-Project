@@ -51,13 +51,17 @@
      <Compile Include="Assets\Scripts\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\Doorway.cs" />
      <Compile Include="Assets\Scripts\DurationTrapObj.cs" />
+     <Compile Include="Assets\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\EnemyArchtypeHorde.cs" />
      <Compile Include="Assets\Scripts\EnemyArchtypeMelee.cs" />
+     <Compile Include="Assets\Scripts\EnemyArchtypeRanged.cs" />
      <Compile Include="Assets\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\Scripts\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Scripts\GameCamera.cs" />
      <Compile Include="Assets\Scripts\HawkAI.cs" />
+     <Compile Include="Assets\Scripts\HawkAI2.cs" />
      <Compile Include="Assets\Scripts\InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\KeyController.cs" />
      <Compile Include="Assets\Scripts\LightFlicker.cs" />

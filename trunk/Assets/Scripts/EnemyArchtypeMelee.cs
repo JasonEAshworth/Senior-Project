@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class EnemyArchtypeMelee : EnemyBase
 {
 	private Transform enemyTransform;
-	public float moveSpeed = 3.0f;
 	public float attackRange = 5.0f;
 	public bool canFly = true;
 
@@ -42,7 +41,7 @@ public class EnemyArchtypeMelee : EnemyBase
 		else
 		{
 			targetPlayer = findClosestPlayer();
-			moveTowardsPlayer(targetPlayer);
+			moveTowardsPlayer(targetPlayer, Time.deltaTime);
 		}
 	}
 }

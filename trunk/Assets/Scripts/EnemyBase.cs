@@ -25,8 +25,8 @@ public class EnemyBase : CharacterBase
 	public float attackDamage = 0f;
 
 	// Move Variables
-	public float moveSpeed = 1;
-	public float rotationSpeed = 3f;
+	//public float moveSpeed = 1;
+	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
 	protected CharacterController cc;
@@ -42,7 +42,7 @@ public class EnemyBase : CharacterBase
 		health = maxHealth;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
-		renderer.material.color = Color.blue;
+		//renderer.material.color = Color.blue;
 		cc = GetComponent<CharacterController>();
 		if (transform.parent != null)
 		{
@@ -66,7 +66,7 @@ public class EnemyBase : CharacterBase
 
 	}
 
-	protected void moveTowardsPlayer(GameObject player)
+	protected void moveTowardsPlayer(GameObject player, float dt)
 	{
 		Vector3 toPlayer = Vector3.Normalize(player.transform.position - transform.position);
 		Vector3 toCenter = Vector3.zero;
@@ -83,7 +83,7 @@ public class EnemyBase : CharacterBase
 		Vector3 dodgeVector = Vector3.zero;
 		if (Physics.Raycast(transform.position, moveVector, Time.deltaTime * moveSpeed))
 		{
-			dodgeVector = transform.right;
+			dodgeVector = transform.right * moveSpeed;
 		}
 		else
 		{
@@ -91,7 +91,7 @@ public class EnemyBase : CharacterBase
 		}
 		moveVector = moveVector * 0.4f + dodgeVector * 0.6f;
 		// move towards destination
-		cc.Move(moveVector);
+		cc.Move(moveVector * dt);
 	}
 
 	protected GameObject findClosestPlayer()

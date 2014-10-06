@@ -8,7 +8,7 @@ public class CharacterBase : MonoBehaviour
 	public float maxHealth = 100.0f;
 	public bool dead = false;
 
-	public float moveSpeed = 6.0f;
+	public float moveSpeed = 10.0f;
 	public float rotationSpeed = 250.0f;
 	public float visibility = 1.0f;
 

@@ -36,8 +36,8 @@ public class EnemyManager : MonoBehaviour{
 			{
 				case(enemyArchtype.MELEE):
 					// load zombie model here
-					GameObject go = Instantiate (Resources.Load("Prefabs/Enemies/Restless_Melee"),spawns[i].transform.position,Quaternion.identity) as GameObject;
-					EnemyArchtypeMelee mel = go.GetComponent<EnemyArchtypeMelee>();
+					//GameObject go = Instantiate (Resources.Load("Prefabs/Enemies/Restless_Melee"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+					//EnemyArchtypeMelee mel = go.GetComponent<EnemyArchtypeMelee>();
 					break;
 
 			}

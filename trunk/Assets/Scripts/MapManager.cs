@@ -317,7 +317,7 @@ public class MapManager : MonoBehaviour
 	}
 
 	// Returns a list of RoomNodes of the rooms that the players are currently located in
-	private List<RoomNode> getRoomsPlayersIn()
+	public List<RoomNode> getRoomsPlayersIn()
 	{
 		List<RoomNode> roomsIn = new List<RoomNode>();
 		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
