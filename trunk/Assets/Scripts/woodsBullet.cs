@@ -3,8 +3,7 @@ using System.Collections;
 
 public class woodsBullet : MonoBehaviour {
 
-
-	public Vector3 playerForward;
+	
 	private float speed = 15.0f;
 	private GameObject woodsPlayer;
 	// Use this for initialization
@@ -26,11 +25,15 @@ public class woodsBullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		Debug.Log (transform.up);
 		transform.position = transform.position + (transform.up * speed * Time.deltaTime);
 	}
 
 	void OnCollisionEnter(Collision c)
 	{
-		Destroy (gameObject);
+		if (c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("wall"))
+		{
+			Destroy (gameObject);
+		}
 	}
 }

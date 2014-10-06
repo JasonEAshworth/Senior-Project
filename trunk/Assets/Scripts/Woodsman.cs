@@ -21,7 +21,7 @@ public class Woodsman : PlayerBase
 		moveSpeed = 4.0f;
 
 		hawkPos = transform.Find("hawkSpawn");
-		hawk = Instantiate(Resources.Load("Prefabs/Character/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
+		hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
 
 
 		shootPosition = transform.Find("shootPos");
@@ -66,18 +66,20 @@ public class Woodsman : PlayerBase
 			}
 			else if(canFire)
 			{
-				GameObject bullet = Instantiate (Resources.Load ("Prefabs/items/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
+				GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 				bullet.transform.up = transform.forward;
 				canFire = false;
 			}
 		}
-
 	}
 	
 	public void specialAttackWoods(float time)
 	{
-		//Debug.Log ("warrior special attack");
-
+		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
+		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
+		scr.heldTime = time;
+		specialBullet.transform.up = transform.forward;
+		canSpecial = false;
 	}
 	
 	public override void classAbility()
@@ -86,7 +88,7 @@ public class Woodsman : PlayerBase
 		if (Input.GetKeyDown (classAbilityKey)) 
 		{
 			HawkAI2 hawkScripts = hawk.GetComponent<HawkAI2> ();
-			if (hawkScripts.mode != 2) 
+			if (hawkScripts.mode != 2 | hawkScripts.mode != 3) 
 			{
 				hawkScripts.mode = 2;
 			}

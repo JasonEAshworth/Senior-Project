@@ -28,7 +28,7 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 		} 
 		else 
 		{
-
+			numPiercing = Mathf.FloorToInt(heldTime);
 		}
 	}
 	
@@ -40,7 +40,24 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision c)
 	{
-		Destroy (gameObject);
+		if(c.gameObject.CompareTag("wall"))
+		{
+			Destroy (gameObject);
+		}
+		if(c.gameObject.CompareTag("Enemy"))
+		{
+			if(infinitePierce == false)
+			{
+				if(numPiercing >0)
+				{
+					numPiercing = numPiercing -1;
+				}
+				else
+				{
+					Destroy(gameObject);
+				}
+			}
+		}
 	}
 }
 

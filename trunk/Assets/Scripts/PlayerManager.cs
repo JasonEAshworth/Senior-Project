@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour
 			switch (selectedClasses[i])
 			{
 			case playerClass.WOODSMAN:
-				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/WoodsMan/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player1.tag = "Player";
 				Woodsman woods = player1.GetComponent<Woodsman>();
 				woods.moveAxisX = "Horizontal1";

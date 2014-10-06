@@ -147,4 +147,19 @@ public class HawkAI2 : MonoBehaviour {
 		}
 
 	}
+
+	void OnCollisionEnter(Collision c)
+	{
+		if(c.gameObject.CompareTag("wall") || c.gameObject.CompareTag("door"))
+		{
+			Debug.Log ("We hit");
+			if(mode == 2)
+			{
+				mode = 3;
+				timer = 0.0f;
+				initialPoint = Vector3.zero;
+				arrived = false;
+			}
+		}
+	}
 }
