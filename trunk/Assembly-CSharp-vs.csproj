@@ -70,8 +70,10 @@
      <Compile Include="Assets\Scripts\PlayerBase.cs" />
      <Compile Include="Assets\Scripts\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Potion.cs" />
+     <Compile Include="Assets\Scripts\Proj.cs" />
      <Compile Include="Assets\Scripts\ProjectileTrapObj.cs" />
      <Compile Include="Assets\Scripts\Rogue.cs" />
+     <Compile Include="Assets\Scripts\ShooterController.cs" />
      <Compile Include="Assets\Scripts\Sorcerer.cs" />
      <Compile Include="Assets\Scripts\TimedTrap.cs" />
      <Compile Include="Assets\Scripts\TriggerController.cs" />

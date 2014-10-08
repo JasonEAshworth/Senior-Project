@@ -113,17 +113,6 @@ public class Rogue : PlayerBase
 		}
 	}
 
-	/*void OnCollisionEnter(Collision collision)
-	{
-		Debug.Log("collision");
-	}
-
-	void OnControllerColliderHit(ControllerColliderHit hit)
-	{
-		Debug.Log("hit");
-		Debug.Log (hit.gameObject.name);
-	}*/
-
 	void OnTriggerEnter(Collider collider)
 	{
 		Debug.Log("trigger");
@@ -152,11 +141,13 @@ public class Rogue : PlayerBase
 				Vector3 colLeft = -1 * colRight;
 				colLeft.y = this.transform.forward.y;
 
-				//scales the radius of the enemy's bounding volume
-				float largest = LargestComponent(go.transform.localScale);
-				float colRad = go.GetComponent<CharacterController>().radius * largest;
+				//scales the radius of the enemy's bounding volume3
+				Vector3 sc = go.transform.localScale;
+				float largest = Mathf.Max(sc.x, sc.y, sc.z);
+				float colRad = (go.GetComponent<CharacterController>().radius + 0.1f) * largest;
 				//scales the radius of the player's bounding volume
-				largest = LargestComponent(this.transform.localScale);
+				sc = this.transform.localScale;
+				largest = Mathf.Max(sc.x, sc.y, sc.z);
 				float plRad = this.GetComponent<CharacterController>().radius * largest;
 				colRad += plRad;
 
@@ -228,22 +219,6 @@ public class Rogue : PlayerBase
 		else
 		{
 			Debug.Log("collided with " + go.name);
-		}
-	}
-
-	float LargestComponent(Vector3 vec)
-	{
-		if(vec.x >= vec.y && vec.x >= vec.z)
-		{
-			return vec.x;
-		}
-		else if(vec.y >= vec.z)
-		{
-			return vec.y;
-		}
-		else
-		{
-			return vec.z;
 		}
 	}
 }

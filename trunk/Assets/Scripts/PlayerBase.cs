@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public enum playerClass
 {
@@ -49,7 +49,7 @@ public class PlayerBase : CharacterBase
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-	protected void FixedUpdate()
+	new protected void FixedUpdate()
 	{
 		base.FixedUpdate();
 		if (!dead)

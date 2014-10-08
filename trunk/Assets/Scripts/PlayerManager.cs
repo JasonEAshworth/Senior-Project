@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour 
 {
@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
 				woods.playerNum = i;
 				woods.health = 100.0f;
 				woods.maxHealth = 100.0f;
-				woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
+				//woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.playerNum = i;
 				sorc.health = 100.0f;
 				sorc.maxHealth = 100.0f;
-				sorc.healthBar = GameObject.Find("SorcererHealth").GetComponent<RawImage>();
+				//sorc.healthBar = GameObject.Find("SorcererHealth").GetComponent<RawImage>();
 				players.Add (player2);
 				break;
 
@@ -84,7 +84,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.playerNum = i;
 				rogue.health = 100.0f;
 				rogue.maxHealth = 100.0f;
-				rogue.healthBar = GameObject.Find("RogueHealth").GetComponent<RawImage>();
+				//rogue.healthBar = GameObject.Find("RogueHealth").GetComponent<RawImage>();
 				players.Add (player3);
 				break;
 			
@@ -100,7 +100,7 @@ public class PlayerManager : MonoBehaviour
 				war.playerNum = i;
 				war.health = 100.0f;
 				war.maxHealth = 100.0f;
-				war.healthBar = GameObject.Find("WarriorHealth").GetComponent<RawImage>();
+				//war.healthBar = GameObject.Find("WarriorHealth").GetComponent<RawImage>();
 				players.Add (player4);
 				break;
 			}

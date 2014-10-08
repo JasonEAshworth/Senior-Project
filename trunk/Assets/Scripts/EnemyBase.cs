@@ -51,7 +51,7 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	protected void FixedUpdate()
+	new protected void FixedUpdate()
 	{
 		if (!dead)
 		{
