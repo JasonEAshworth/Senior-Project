@@ -7,6 +7,7 @@ public class Sorcerer : PlayerBase
 	private float attackStarted = Time.time - 10.0f;
 	private float mana = 100.0f;
 	private float timeButtonHeld;
+
 	void start()
 	{
 		int health = 100;
@@ -51,11 +52,16 @@ public class Sorcerer : PlayerBase
 				{
 					//Cast Firestorm
 					//animator.Play("SorceressFirestorm");
+					Firestorm();
+					Debug.Log ("Firestorm");
 				}
 				else
 				{
 					//Cast Blizzard
 					//animator.Play("SorceressBlizzard");
+					Blizzard();
+					Debug.Log("Blizzard");
+
 				}
 				Debug.Log("sorceress special attack");
 			}
@@ -70,7 +76,7 @@ public class Sorcerer : PlayerBase
 			//Use Item
 		}
 	}*/
-	
+
 	public override void classAbility()
 	{
 		//When the key is pushed, switch the attack type
@@ -86,5 +92,32 @@ public class Sorcerer : PlayerBase
 			}
 			Debug.Log ("sorceress class ability");
 		}
+	}
+
+	private void Blizzard(){
+		Quaternion startAngle = Quaternion.AngleAxis (-30, Vector3.up);
+		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
+
+		Quaternion angle = transform.rotation * startAngle;
+		Vector3 direction = angle * Vector3.forward * 5;
+		Vector3 pos = transform.position;
+
+		//Creates an angle of 90 degrees of Raycasting
+		for (int i = 0; i < 13; i++) {
+			Debug.DrawRay(pos, direction, Color.red, 5.0f);
+
+			direction = stepAngle * direction;
+		}
+
+		//This is where we create the animation for the Blizzard
+		//attack with ice coming out of the ground
+		GameObject Bliz = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/Blizzard"), pos, transform.rotation) as GameObject;
+		Destroy (Bliz, 5.0f);
+	}
+
+	private void Firestorm(){
+		Transform pos = transform.Find("shootPos");
+
+		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/Fireball"), pos.position, transform.rotation) as GameObject;
 	}
 }
