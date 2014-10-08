@@ -22,7 +22,7 @@ public class Woodsman : PlayerBase
 
 	}
 
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
 		if (!canFire) 
 		{
@@ -45,25 +45,24 @@ public class Woodsman : PlayerBase
 				
 		}
 		//Debug.Log ("warrior basic attack");
-		if (Input.GetButtonDown (basicAttackButton) && canFire) 
+		if (dir == "down" && canFire) 
 		{
 			firstButtonPressTime = Time.time;
+
 		}
-		if (Input.GetButtonUp (basicAttackButton))
-		{
+		if (dir == "up" && canSpecial) {
 			float temp = Time.time - firstButtonPressTime;
-			Debug.Log (temp);
-			if(temp > 0.4f && canSpecial)
-			{
-				Debug.Log("SPECIAL ATTACKKKKKK");
-				specialAttackWoods(temp);
-			}
-			else if(canFire)
-			{
-				Debug.Log ("WE got in here..bad news");
-				GameObject bullet = Instantiate (Resources.Load ("Prefabs/items/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
-				bullet.transform.up = transform.forward;
-				canSpecial = false;
+			//Debug.Log (temp);
+			if (temp > 0.4f && canSpecial) {
+					Debug.Log ("SPECIAL ATTACK");
+					specialAttackWoods (temp);
+					//canSpecial = false;
+			} 
+			else if (canFire) {
+					//Debug.Log ("WE got in here..bad news");
+					GameObject bullet = Instantiate (Resources.Load ("Prefabs/items/woodsManBullet"), shootPosition.position, Quaternion.LookRotation (transform.forward)) as GameObject;
+					bullet.transform.up = transform.forward;
+					//canFire = false;
 			}
 		}
 
@@ -78,8 +77,8 @@ public class Woodsman : PlayerBase
 		bullet.transform.up = transform.forward;
 	}
 	
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
-		//Debug.Log ("warrior class ability");
+		Debug.Log ("woodsman class ability");
 	}
 }

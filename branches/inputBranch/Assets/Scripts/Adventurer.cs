@@ -10,7 +10,7 @@ public class Adventurer : PlayerBase
 		moveSpeed = 4.0f;
 	}
 	
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
 		//Debug.Log ("warrior basic attack");
 	}
@@ -20,7 +20,7 @@ public class Adventurer : PlayerBase
 		//Debug.Log ("warrior special attack");
 	}
 	
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
 		//Debug.Log ("warrior class ability");
 	}

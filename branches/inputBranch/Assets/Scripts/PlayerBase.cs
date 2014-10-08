@@ -15,6 +15,7 @@ public class PlayerBase : CharacterBase
 	public float timeToRespawn = 3.0f;
 
 	public int playerNum = -1;
+	public int playerId = -1;
 
 	public bool controllable = true;
 
@@ -48,60 +49,69 @@ public class PlayerBase : CharacterBase
 		//mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-	protected new void FixedUpdate()
-	{
-		if (!dead)
-		{
-			if (controllable)
-			{
-				// MOVEMENT
-				// Get the horizontal movement from the joystick input and scale it with moveSpeed
-				Vector3 xMovement = Input.GetAxis(moveAxisX) * new Vector3(Camera.main.transform.right.x, 0.0f, Camera.main.transform.right.z);
-				Vector3 zMovement = Input.GetAxis(moveAxisZ) * new Vector3(Camera.main.transform.forward.x, 0.0f, Camera.main.transform.forward.z);
-				Vector3 moveVec = Vector3.ClampMagnitude(xMovement + zMovement, 1.0f);
 
-				moveVec *= moveSpeed * Time.deltaTime;
 
-				// Handle jumping and add it to the movement vector
-				if (canJump && Input.GetButtonDown(jumpKey))
-				{
-					verticalVelocity = jumpForce;
-					canJump = false;
-				}
-				else if (charControl.isGrounded)
-				{
-					verticalVelocity = 0.0f;
-					canJump = true;
-				}
-				else
-				{
-					verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;
-				}
-
-				moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-
-				charControl.Move(moveVec);
-
-				// Rotate the character to face in the direction that they will move
-				if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
-				{
-					transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
-				}
-
-				basicAttack();
-				classAbility();
-				itemAbility();
-			}
-		}
-		else
-		{
-			respawnTimer -= Time.deltaTime;
-			if (respawnTimer <= 0.0f)
-			{
-				respawn();
-			}
-		}
-	}
+	//protected new void FixedUpdate()
+	//{
+	//	if (!charControl.isGrounded) {
+	//
+	//		verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;	
+	//	
+	//	}
+	//
+	//}
+	//	if (!dead)
+	//	{
+	//		if (controllable)
+	//		{
+	//			// MOVEMENT
+	//			// Get the horizontal movement from the joystick input and scale it with moveSpeed
+	//			//Vector3 xMovement = Input.GetAxis(moveAxisX) * new Vector3(Camera.main.transform.right.x, 0.0f, Camera.main.transform.right.z);
+	//			//Vector3 zMovement = Input.GetAxis(moveAxisZ) * new Vector3(Camera.main.transform.forward.x, 0.0f, Camera.main.transform.forward.z);
+	//			//Vector3 moveVec = Vector3.ClampMagnitude(xMovement + zMovement, 1.0f);
+	//
+	//			//moveVec *= moveSpeed * Time.deltaTime;
+	//
+	//			// Handle jumping and add it to the movement vector
+	//			//if (canJump && Input.GetButtonDown(jumpKey))
+	//			//{
+	//			//	verticalVelocity = jumpForce;
+	//			//	canJump = false;
+	//			//}
+	//			//else if (charControl.isGrounded)
+	//			//{
+	//			//	verticalVelocity = 0.0f;
+	//			//	canJump = true;
+	//			//}
+	//			//else
+	//			//{
+	//			//	verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;
+	//			//}
+	//			//
+	//			////moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
+	//			//
+	//			////charControl.Move(moveVec);
+	//			//
+	//			//// Rotate the character to face in the direction that they will move
+	//			//if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
+	//			//{
+	//			//	transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
+	//			//}
+	//			//
+	//			//basicAttack();
+	//			//classAbility();
+	//			//itemAbility();
+	//		}
+	//	}
+	//	else
+	//	{
+	//		respawnTimer -= Time.deltaTime;
+	//		if (respawnTimer <= 0.0f)
+	//		{
+	//			respawn();
+	//		}
+	//	}
+	//}
 
 	public override void kill()
 	{
@@ -163,9 +173,9 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	public virtual void basicAttack(){}
+	public virtual void basicAttack(string dir){}
 	public virtual void specialAttack(){}
-	public virtual void classAbility(){}
+	public virtual void classAbility(string dir){}
 
 
 

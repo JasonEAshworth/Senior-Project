@@ -17,20 +17,20 @@ public class Warrior : PlayerBase
 		blockProjectiles = false;
 	}
 
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
-		if (Input.GetButtonDown (basicAttackButton) && !attacking) 
+		if (dir == "down" && !attacking) 
 		{
 			float curTimeAttack = Time.time;
 			timeSinceLastAttack = curTimeAttack - lastTimeAttack;
 			lastTimeAttack = curTimeAttack;
 		}
-		if (Input.GetButtonUp (basicAttackButton)) 
+		if (dir == "up") 
 		{
 			float temp = Time.time - lastTimeAttack;
 			if (temp > 0.6f)
 			{
-				Debug.Log("Special ATACKKKK");
+				//Debug.Log("Special ATACKKKK");
 				specialAttack();
 			} 
 			else 
@@ -61,28 +61,30 @@ public class Warrior : PlayerBase
 
 	public override void specialAttack()
 	{
+
+		Debug.Log ("Warrior Special Attack Activated");
 		//Debug.Log ("warrior special attack");
-		if (Input.GetButtonDown (basicAttackButton) && !attacking) 
-		{
+		//if (Input.GetButtonDown (basicAttackButton) && !attacking) 
+		//{
 			//attacking = true;
 			/*
 			if(!animation.isPlaying)
 			{
 				animation.Play("WarriorCleaveAttack");
 			}*/
-		}
+		//}
 	}
 
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
-		if (Input.GetButtonDown (classAbilityButton) && !attacking) 
+		if (dir == "down" && !attacking) 
 		{
 			//Debug.Log ("warrior class ability");
 			// animator.Play("WarriorClassAbility");
 			moveSpeed = moveSpeed / 2;
 			blockProjectiles = true;
 		} 
-		else if (Input.GetButtonUp (classAbilityButton)) 
+		else if (dir == "up") 
 		{
 			// animator.Play("NormalWalkingWarrior");
 			moveSpeed = moveSpeed *2;
