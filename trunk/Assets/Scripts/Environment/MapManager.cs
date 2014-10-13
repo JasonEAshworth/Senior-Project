@@ -85,6 +85,7 @@ public class RoomNode
 	public bool hasBeenLoaded = false; // used to keep track of the first time a room is loaded for item management
 	public List<GameObject> doors;
 	public List<GameObject> items;
+	public List<EnemySpawner> enemySpawners;
 	public RoomNode[] neighbors;
 	public RoomNode north
 	{
@@ -137,6 +138,7 @@ public class RoomNode
 		neighbors = new RoomNode[4] {null, null, null, null};
 		doors = new List<GameObject>();
 		items = new List<GameObject>();
+		enemySpawners = new List<EnemySpawner>();
 		// set up room type
 		if (n.Contains("_H_"))
 		{
@@ -203,6 +205,11 @@ public class MapManager : MonoBehaviour
 			GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
 			roomNode.obj = room;
 			map.roomsActive.Add(roomNode);
+			EnemySpawner[] es = room.GetComponentsInChildren<EnemySpawner>();
+			for (int i = 0; i < es.Length; i++)
+			{
+				roomNode.enemySpawners.Add(es[i]);
+			}
 			roomNode.hasBeenLoaded = true;
 			return true;
 		}
@@ -314,6 +321,19 @@ public class MapManager : MonoBehaviour
 	{
 		roomNode.obj.SetActive (false);
 		map.roomsActive.Remove(roomNode);
+	}
+
+	// Called whenever a player enters a room. Activates the spawners for that room if a player is entering it for the first time
+	public void notifySpawners(RoomNode roomEntered)
+	{
+		foreach (EnemySpawner es in map.rooms[map.rooms.IndexOf(roomEntered)].enemySpawners)
+		{
+			if (!es.ableToSpawn)
+			{
+				es.enableSpawning();
+				es.parentRoom = roomEntered.obj.transform;
+			}
+		}
 	}
 
 	// Returns a list of RoomNodes of the rooms that the players are currently located in
