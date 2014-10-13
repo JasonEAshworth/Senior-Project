@@ -28,7 +28,7 @@ public class Woodsman : PlayerBase
 
 	}
 
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
 
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
@@ -53,11 +53,11 @@ public class Woodsman : PlayerBase
 				
 		}
 		//Debug.Log ("warrior basic attack");
-		if (Input.GetKeyDown (basicAttackKey) && canFire) 
+		if (dir == "down" && canFire)  
 		{
 			firstButtonPressTime = Time.time;
 		}
-		if (Input.GetKeyUp (basicAttackKey))
+		if (dir == "up")
 		{
 			float temp = Time.time - firstButtonPressTime;
 			if(temp > 0.4f && canSpecial)
@@ -82,10 +82,10 @@ public class Woodsman : PlayerBase
 		canSpecial = false;
 	}
 	
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
 		//Debug.Log ("warrior class ability");
-		if (Input.GetKeyDown (classAbilityKey)) 
+		if (dir == "down") 
 		{
 			HawkAI2 hawkScripts = hawk.GetComponent<HawkAI2> ();
 			if (hawkScripts.mode != 2 | hawkScripts.mode != 3) 

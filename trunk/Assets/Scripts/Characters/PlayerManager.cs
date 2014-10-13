@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Rewired;
 
 public class PlayerManager : MonoBehaviour 
 {
@@ -12,6 +13,11 @@ public class PlayerManager : MonoBehaviour
 	public List<playerClass> selectedClasses;
 
 	public bool haveKey = false;
+
+	public Woodsman woods;
+	public Sorcerer sorc;
+	public Warrior war;
+	public Rogue rogue;
 
 	void Start() 
 	{
@@ -41,13 +47,12 @@ public class PlayerManager : MonoBehaviour
 			case playerClass.WOODSMAN:
 				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Woodsman/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player1.tag = "Player";
-				Woodsman woods = player1.GetComponent<Woodsman>();
-				woods.moveAxisX = "Horizontal1";
-				woods.moveAxisZ = "Vertical1";
+				woods = player1.GetComponent<Woodsman>();
 				woods.classType = playerClass.WOODSMAN;
-				woods.basicAttackKey = KeyCode.R;
-				woods.classAbilityKey = KeyCode.T;
 				woods.init();
+				player1.AddComponent("rewiredControl");
+				rewiredControl ctrl = player1.GetComponent<rewiredControl>();
+				ctrl.playerId = i;
 				woods.playerNum = i;
 				woods.health = 100.0f;
 				woods.maxHealth = 100.0f;
@@ -57,14 +62,11 @@ public class PlayerManager : MonoBehaviour
 			case playerClass.SORCERER:
 				GameObject player2 = Instantiate (Resources.Load("Prefabs/Character/Sorceress/Sorceress"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player2.tag = "Player";
-				Sorcerer sorc = player2.GetComponent<Sorcerer>();
-				sorc.moveAxisX = "Horizontal2";
-				sorc.moveAxisZ = "Vertical2";
+				sorc = player2.GetComponent<Sorcerer>();
 				sorc.classType = playerClass.SORCERER;
-				//sorc.jumpKey = KeyCode.N;
-				sorc.basicAttackKey = KeyCode.U;
-				sorc.specialAttackKey = KeyCode.O;
-				sorc.classAbilityKey = KeyCode.P;
+				player2.AddComponent<rewiredControl>();
+				rewiredControl ctrl2 = player2.GetComponent<rewiredControl>();
+				ctrl2.playerId = i;
 				sorc.playerNum = i;
 				sorc.health = 100.0f;
 				sorc.maxHealth = 100.0f;
@@ -75,12 +77,11 @@ public class PlayerManager : MonoBehaviour
 			case playerClass.ROGUE:
 				GameObject player3 = Instantiate (Resources.Load("Prefabs/Character/Rogue/Rogue"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player3.tag = "Player";
-				Rogue rogue = player3.GetComponent<Rogue>();
-				rogue.moveAxisX = "Horizontal1";
-				rogue.moveAxisZ = "Vertical1";
+				rogue = player3.GetComponent<Rogue>();
 				rogue.classType = playerClass.ROGUE;
-				//rogue.jumpKey = KeyCode.C;
-				rogue.basicAttackKey = KeyCode.G;
+				player3.AddComponent<rewiredControl>();
+				rewiredControl ctrl3 = player3.GetComponent<rewiredControl>();
+				ctrl3.playerId = i;
 				rogue.playerNum = i;
 				rogue.health = 100.0f;
 				rogue.maxHealth = 100.0f;
@@ -91,12 +92,11 @@ public class PlayerManager : MonoBehaviour
 			case playerClass.WARRIOR:
 				GameObject player4 = Instantiate (Resources.Load("Prefabs/Character/Warrior/Warrior"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player4.tag = "Player";
-				Warrior war = player4.GetComponent<Warrior>();
-				war.moveAxisX = "Horizontal2";
-				war.moveAxisZ = "Vertical2";
+				war = player4.GetComponent<Warrior>();
 				war.classType = playerClass.WARRIOR;
-				//war.jumpKey = KeyCode.N;
-				war.basicAttackKey = KeyCode.E;
+				player4.AddComponent<rewiredControl>();
+				rewiredControl ctrl4 = player4.GetComponent<rewiredControl>();
+				ctrl4.playerId = i;
 				war.playerNum = i;
 				war.health = 100.0f;
 				war.maxHealth = 100.0f;

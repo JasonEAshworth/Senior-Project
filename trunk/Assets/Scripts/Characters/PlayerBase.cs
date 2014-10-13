@@ -16,6 +16,7 @@ public class PlayerBase : CharacterBase
 	public float timeToRespawn = 3.0f;
 
 	public int playerNum = -1;
+	public int playerId = -1;
 
 	public bool controllable = true;
 
@@ -49,7 +50,7 @@ public class PlayerBase : CharacterBase
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-	new protected void FixedUpdate()
+/*	new protected void FixedUpdate()
 	{
 		base.FixedUpdate();
 		if (!dead)
@@ -111,6 +112,7 @@ public class PlayerBase : CharacterBase
 			}
 		}
 	}
+*/
 
 	public override void kill()
 	{
@@ -172,9 +174,9 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	public virtual void basicAttack(){}
+	public virtual void basicAttack(string dir){}
 	public virtual void specialAttack(){}
-	public virtual void classAbility(){}
+	public virtual void classAbility(string dir){}
 
 
 

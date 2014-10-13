@@ -19,9 +19,9 @@ public class Warrior : PlayerBase
 		blockProjectiles = false;
 	}
 	
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
-		if(Input.GetKeyDown (basicAttackKey))
+		if (dir == "down")
 		{
 			//Check enemy facing
 			Debug.Log ("warrior attack");
@@ -34,7 +34,7 @@ public class Warrior : PlayerBase
 		float currentTime = Time.time;
 		float timeSinceAttack = currentTime - attackStarted;
 		float timeSinceCombo = currentTime - comboStarted;
-		if (Input.GetKeyUp (basicAttackKey))
+		if (dir == "up") 
 		{
 			//If there is too long of time between basic attacks, the combo is reset
 			if (timeSinceCombo > 3.0f)
@@ -126,16 +126,16 @@ public class Warrior : PlayerBase
 			}
 		}*/
 		
-		public override void classAbility()
+		public override void classAbility(string dir)
 		{
-			if (Input.GetKeyDown (classAbilityKey) && !attacking) 
+			if (dir == "down" && !attacking) 
 			{
 				Debug.Log ("warrior class ability");
 				// animator.Play("WarriorClassAbility");
 				moveSpeed = moveSpeed / 2;
 				blockProjectiles = true;
 			} 
-			else if (Input.GetKeyUp (classAbilityKey)) 
+			else if (dir == "up") 
 			{
 				// animator.Play("NormalWalkingWarrior");
 				moveSpeed = moveSpeed *2;

@@ -17,9 +17,9 @@ public class Rogue : PlayerBase
 		float moveSpeed = 6.0f;
 	}
 
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
-		if(Input.GetKeyDown (basicAttackKey))
+		if(dir == "down")
 		{
 			//Check enemy facing
 			Debug.Log ("rogue attack");
@@ -29,7 +29,7 @@ public class Rogue : PlayerBase
 		float timeSinceAttack = currentTime - attackStarted;
 		//When the attack key is released, check to see how long it was
 		//held to determine what attack to do.
-		if (Input.GetKeyUp (basicAttackKey))
+		if (dir == "up")
 		{
 			if(timeSinceAttack < 1.0f)
 			{
@@ -57,7 +57,7 @@ public class Rogue : PlayerBase
 		}
 	}*/
 	
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
 		//Increase the rogue's energy if it is not full and he is visible
 		if(visibility == 1.0f && energy < 100.0f)
@@ -69,12 +69,12 @@ public class Rogue : PlayerBase
 			}
 		}
 		//Make the rogue invisible
-		if(Input.GetKeyDown(classAbilityKey))
+		if(dir == "down")
 		{
 			visibility = 0.0f;
 		}
 		//Remove GetKeyUp if you want the ability to continue even if the user releases the key
-		if(Input.GetKeyUp(classAbilityKey))
+		if(dir == "up")
 		{
 			visibility = 1.0f;
 		}

@@ -15,9 +15,9 @@ public class Sorcerer : PlayerBase
 		moveSpeed = 4.0f;
 	}
 	
-	public override void basicAttack()
+	public override void basicAttack(string dir)
 	{
-		if(Input.GetKeyDown (basicAttackKey))
+		if(dir == "down")
 		{
 			//Check enemy facing
 			Debug.Log ("sorceress attack");
@@ -25,7 +25,7 @@ public class Sorcerer : PlayerBase
 		}
 		float currentTime = Time.time;
 		float timeSinceAttack = currentTime - attackStarted;
-		if (Input.GetKeyUp (basicAttackKey))
+		if (dir == "up")
 		{
 			//When the attack key is released, check to see how long it was
 			//held to determin what attack to do.
@@ -77,10 +77,10 @@ public class Sorcerer : PlayerBase
 		}
 	}*/
 
-	public override void classAbility()
+	public override void classAbility(string dir)
 	{
 		//When the key is pushed, switch the attack type
-		if(Input.GetKeyDown(classAbilityKey))
+		if (dir == "down")
 		{
 			if(attackType == 1)
 			{
