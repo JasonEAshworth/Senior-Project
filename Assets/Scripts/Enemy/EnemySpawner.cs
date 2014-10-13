@@ -10,11 +10,12 @@ public enum spawnerType
 public class EnemySpawner : MonoBehaviour 
 {
 	public spawnerType spawnType;			// determines if the spawner is timer based or trigger based
+	public Transform parentRoom;			// the transform of the room this spawner is located in
 	public bool infiniteSpawn = false;		// if set to true, enemies will continue to spawn until spawner is shut down
-	private bool ableToSpawn = true;		// set to false if the enemies should not spawn immediately
+	public bool ableToSpawn = true;			// set to false if the enemies should not spawn immediately
 	private bool enemiesRemaining = true;	// becomes false when spawner is spent
 	public float spawnTimer = 3.0f;			// enemy will spawn every spawnTimer seconds
-	private float timeTilSpawn;				// remaining time until next spawn
+	private float timeTilSpawn = 0.0f;		// remaining time until next spawn
 	public int[] numberToSpawn;   			// array of ints that correspond with array of enemy prefabs
 	public GameObject[] enemiesToSpawn;		// array of enemy prefabs that will be spawned
 											// spawner will spawn numberToSpawn[i] of enemiesToSpawn[i] enemy prefabs
@@ -23,7 +24,6 @@ public class EnemySpawner : MonoBehaviour
 											// 	   spawner will spawn 4 zombies
 	void Start()
 	{
-		timeTilSpawn = spawnTimer;
 		if (numberToSpawn.Length != enemiesToSpawn.Length)
 		{
 			Debug.Log ("numberToSpawn and enemiesToSpawn on " + gameObject.name + "'s EnemySpawner must be the same length");
@@ -43,11 +43,6 @@ public class EnemySpawner : MonoBehaviour
 					timeTilSpawn += spawnTimer;
 				}
 			}
-			else if (spawnType == spawnerType.TRIGGER)
-			{
-				spawnEnemy();
-				ableToSpawn = false;
-			}
 		}
 	}
 
@@ -62,7 +57,8 @@ public class EnemySpawner : MonoBehaviour
 				index = (index + 1) % numberToSpawn.Length;
 			}
 		}
-		Instantiate(enemiesToSpawn[index], transform.position, transform.rotation);
+		GameObject newEnemy = Instantiate(enemiesToSpawn[index], transform.position, transform.rotation) as GameObject;
+		newEnemy.transform.parent = parentRoom;
 
 		// Check to see if we have any enemies left to spawn
 		if (!infiniteSpawn)
@@ -83,14 +79,21 @@ public class EnemySpawner : MonoBehaviour
 		}
 	}
 
-	// Call this to enable spawning. Can be used to allow the timer-based spawning to start or trigger a single enemy spawn
+	// Call this to instantly spawn an enemy. The only way to spawn an enemy on trigger mode
 	public void triggerSpawn()
+	{
+		if (ableToSpawn)
+		{
+			spawnEnemy();
+		}
+	}
+
+	public void enableSpawning()
 	{
 		ableToSpawn = true;
 	}
 
-	// Call this to pause a timer-based spawn
-	public void disableSpawn()
+	public void disableSpawning()
 	{
 		ableToSpawn = false;
 	}

@@ -135,6 +135,7 @@ public class PlayerBase : CharacterBase
 	public void enterRoom(RoomNode room)
 	{
 		roomIn = room;
+		mapMan.notifySpawners(room);
 		mapMan.loadNeighbors(room);
 		mapMan.unloadEmptyRooms();
 	}

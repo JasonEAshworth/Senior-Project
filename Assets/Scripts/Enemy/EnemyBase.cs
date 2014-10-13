@@ -47,7 +47,7 @@ public class EnemyBase : CharacterBase
 		if (transform.parent != null)
 		{
 			hordeManager = transform.parent.GetComponent<EnemyArchtypeHorde>();
-			partOfHorde = true;
+			//partOfHorde = true;
 		}
 	}
 
