@@ -5,11 +5,12 @@ public class woodsBullet : MonoBehaviour {
 
 	
 	private float speed = 15.0f;
-	private GameObject woodsPlayer;
+	public Vector3 playerForward;
+	public GameObject woodsPlayer;
 	// Use this for initialization
 	void Start () 
 	{
-		/*GameObject playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
+		GameObject playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
 		PlayerManager playerManagerScript = playerManager.GetComponent<PlayerManager> ();
 		for (int i=0; i<playerManagerScript.numPlayers; i++)
 		{
@@ -19,7 +20,7 @@ public class woodsBullet : MonoBehaviour {
 			}
 		}
 		playerForward = woodsPlayer.transform.forward;
-		transform.forward = playerForward;*/
+		transform.up = playerForward;
 	}
 	
 	// Update is called once per frame

@@ -123,26 +123,30 @@ public class HawkAI2 : MonoBehaviour {
 
 		if (mode == 0) 
 		{
-
-			if(Vector3.Distance(perchPos.position,transform.position) < 0.1f)
+			if(Vector3.Distance(perchPos.position,transform.position) < 0.3f)
 			{
-				transform.position = perchPos.position;
 				arrivedPerch = true;
-				transform.forward = woodsman.transform.forward;
 			}
-			else
+			if(!arrivedPerch)
 			{
 				Vector3 movement = perchPos.position - transform.position;
 				movement.Normalize();
 				transform.up = movement;
 				transform.position = transform.position + (movement * speed * Time.deltaTime);
 			}
-
+			if (arrivedPerch)
+			{
+				transform.position = perchPos.position;
+				transform.forward = woodsman.transform.forward;
+				transform.parent = woodsman.transform;
+			}
 			timerIdle = timerIdle - Time.deltaTime;
 			if(timerIdle <= 0.0f)
 			{
 				mode = 1;
 				timerIdle = Random.Range(15.0f,22.0f);
+				transform.parent = null;
+				arrivedPerch = false;
 			}
 		}
 
