@@ -121,6 +121,7 @@ public class rewiredControl : MonoBehaviour {
 		
 		// Process fire button down
 		if (fire) {
+			Debug.Log("FIRE");
 			character.basicAttack ("down");	
 		}
 		
