@@ -94,13 +94,28 @@
      <Compile Include="Assets\Scripts\Environment\Triggers\TimedTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TriggerController.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TriggerTrap.cs" />
-     <Compile Include="Assets\Scripts\Environment\Triggers\doorTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\cameraControl.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
+     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
+     <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\LightCone.shader" />
+     <None Include="Assets\ShaderForge\Readme.txt" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
      <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\Vegetation.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\Refraction.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\Parallax.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\LightWrapping.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\TessellationDisplacement.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\Tiles.shader" />
      <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
      <None Include="Assets\Scripts\Shaders\MultiTexture.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
+     <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

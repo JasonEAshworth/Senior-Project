@@ -20,7 +20,7 @@ public class TriggerController : MonoBehaviour
 	//# of seconds since the trigger was used
 	protected float coolDown = 0.0f;
 	//whether the trigger is in cool down
-	protected bool inCD = false;
+	public bool inCD;
 
 	public void Trigger()
 	{
@@ -65,9 +65,9 @@ public class TriggerController : MonoBehaviour
 			if(coolDown >= coolDownMax)
 			{
 				inCD = false;
-				coolDown = 0;
+				coolDown -= coolDownMax;
 
-				if(tag == "timedTrigger")
+				if(tag == "TimedTrigger")
 				{
 					if(!state)
 					{
