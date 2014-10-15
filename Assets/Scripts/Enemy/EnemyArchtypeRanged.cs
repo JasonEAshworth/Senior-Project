@@ -13,18 +13,19 @@ public class EnemyArchtypeRanged : EnemyBase {
 	public float eRange = 10f;
 	public float pDistance;
 	public GameObject player;
+	public float attackRate = 2f;
 
 	// Behavior / Rates
 	private bool chasing = false;
 	private float attackTime = Time.time;
-
+	
 	// Use this for initialization
 	void Awake() 
 	{
 		mTransform = transform;
 	}
 	// Update is called once per frame
-	void Update() 
+	void FixedUpdate() 
 	{
 		player = findClosestPlayerInRange (eRange);
 		target = player.transform;
@@ -32,18 +33,38 @@ public class EnemyArchtypeRanged : EnemyBase {
 	
 		if (chasing) 
 		{
-			mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
-			mTransform.position += mTransform.forward * moveSpeed * Time.deltaTime;
-
+			Debug.Log("Should be Chasing");
 			if(pDistance > giveUpThreshold)
 			{
 				chasing = false;
+
 			}
 
-			if(pDistance < eRange && Time.time > attackTime)
+			else if(pDistance <= eRange && pDistance >= attackDistance)
 			{
+				Debug.Log ("Should be Attacking");
+				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+				mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
 				attackTime = Time.time + attackRate;
+				if(attackTime >= attackRate)
+				{
+					Debug.Log ("Firing Arrows!");
+					Attack(attackRate);
+				}
+				moveSpeed = 0.2f;
 			}
+
+			else if(pDistance <= attackDistance)
+			{
+				// rotate 180 degrees and go to 1/2 the distance of the attack 'sphere'
+				//mTransform.position += mTransform.forward*-1 * moveSpeed * Time.deltaTime;
+				mTransform.rotation = Quaternion.Slerp(mTransform.rotation, target.rotation, Time.deltaTime * rotationSpeed);
+				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+				moveSpeed = 3;
+				Debug.Log("Should be running");
+			}
+
+
 		}
 		else
 		{

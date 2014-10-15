@@ -2,46 +2,70 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyArchtypeMelee : EnemyBase
-{
-	private Transform enemyTransform;
-	public float attackRange = 5.0f;
-	public bool canFly = true;
+public class EnemyArchtypeMelee : EnemyBase {
+	/* The Ranged AI Class Follows the following rule Set
+	 * 1. Get in Range to call Fire() Based on Distance to the player
+	 * 2. If Enemy is in Your "Radius" Then you Move Away.
+	 * 3. Otherwise Fire() until Dead
+	 */	
+	public Transform target;
+	private Transform mTransform;
 
-	void Start()
+	public float eRange = 10f;
+	public float pDistance;
+	public GameObject player;
+	public float attackRate = 2f;
+
+	public float weaponReach = 1.5f;
+
+	// Behavior / Rates
+	private bool chasing = false;
+	private float attackTime = Time.time;
+	
+	// Use this for initialization
+	void Awake() 
 	{
-		base.Start();
+		mTransform = transform;
 	}
-
-	// Sets the fly status of an enemy. Flying enemies can fly over pits.
-	public void setFly(bool flyStatus) 
+	// Update is called once per frame
+	void FixedUpdate() 
 	{
-		canFly = flyStatus;
-	}
-
-	/* The update for the AI. Horde AI follows these rules
-	 *   1. Attack a player within attack range
-	 *   2. If Player not in range, find closest player
-	 *   3. Create a vector to the player and a vector to center point
-	 *   4. If there is something blocking the enemy, create vector pointing to the left or right of it. 
-	 *   5. Factor the player vector, center vector, and the dodge vector to get the enemy's direction to move
-	 *   6. Use the dT and enemy speed combined with the direction to get the location to move to
-	 *   7. Confirm that moving to that space is legal (No moving though objects, or over pits if canFly is false)
-	 *   8. If the space isn't legal, slowly decreese the distance until a legal spot is found. 
-	 */
-	void FixedUpdate()
-	{
-		// If within range, attack
-		GameObject targetPlayer = findClosestPlayerInRange(attackRange);
-		if (targetPlayer != null)
+		player = findClosestPlayerInRange (eRange);
+		target = player.transform;
+		pDistance = (target.position - mTransform.position).magnitude;				
+	
+		if (chasing) 
 		{
-			// attack that player
+			Debug.Log("Should be Chasing");
+			if(pDistance > giveUpThreshold)
+			{
+				chasing = false;
+
+			}
+
+			else if(pDistance <= eRange && pDistance >= attackDistance)
+			{
+				Debug.Log ("Should be Attacking");
+				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+				mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
+				attackTime = Time.time + attackRate;
+				if(attackTime >= attackRate && pDistance <= weaponReach)
+				{
+					Debug.Log ("SWING SWORD!");
+					moveSpeed = 0f;
+					Attack(attackRate);
+
+				}
+				moveSpeed = 2f;
+			}
+
 		}
-		// Otherwise, move towards closest player
 		else
 		{
-			targetPlayer = findClosestPlayer();
-			moveTowardsPlayer(targetPlayer, Time.deltaTime);
+			if(pDistance < eRange)
+			{
+				chasing = true;
+			}
 		}
 	}
 }

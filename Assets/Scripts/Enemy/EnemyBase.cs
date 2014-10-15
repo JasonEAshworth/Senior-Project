@@ -60,8 +60,9 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	public virtual void Attack()
+	public virtual void Attack(float attackRate)
 	{
+		Debug.Log ("We have called attack!");
 		// do calculations based on atk power and player def
 
 	}
