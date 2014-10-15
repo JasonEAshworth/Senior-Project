@@ -30,7 +30,7 @@ public class Woodsman : PlayerBase
 
 	void Update()
 	{
-		Debug.Log (transform.forward);
+		//Debug.Log (transform.forward);
 	}
 
 	public override void basicAttack(string dir)

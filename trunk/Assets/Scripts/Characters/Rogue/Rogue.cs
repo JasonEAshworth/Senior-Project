@@ -101,7 +101,7 @@ public class Rogue : PlayerBase
 				elapsed += Time.deltaTime;
 				Vector3 moveVec = transform.forward * moveSpeed * 4 * Time.deltaTime;
 				moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-				charControl.Move(moveVec);
+				cc.Move(moveVec);
 				
 				if(elapsed >= dashDur)
 				{

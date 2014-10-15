@@ -12,17 +12,36 @@ public class CharacterBase : MonoBehaviour
 	public float rotationSpeed = 250.0f;
 	public float visibility = 1.0f;
 
+	protected CharacterController cc;
+	private Vector3 forces = Vector3.zero;			// used to apply outside forces on the character (since the character controller won't allow us to use a rigidbody)
+	private float forceFriction = 5.0f;
+	private float maxForce = 25.0f;
+
 	protected float damageInvulnTime = 0.5f; 		// after taking damage, the character is invulnerable for this many seconds
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
 	public RawImage healthBar;
 
+	protected void Start()
+	{
+		cc = GetComponent<CharacterController>();
+	}
+
 	public void FixedUpdate()
 	{
+		cc.Move(forces * Time.deltaTime);
+		forces = Vector3.Lerp(forces, Vector3.zero, forceFriction * Time.deltaTime);
+		Vector3.ClampMagnitude(forces, maxForce);
+
 		if (currentDamageCooldown > 0.0f)
 		{
 			currentDamageCooldown -= Time.deltaTime;
 		}
+	}
+
+	public void addForce(Vector3 force)
+	{
+		forces += force;
 	}
 
 	public virtual void kill()
