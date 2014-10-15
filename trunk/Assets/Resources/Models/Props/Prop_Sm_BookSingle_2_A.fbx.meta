@@ -1,13 +1,17 @@
 fileFormatVersion: 2
-guid: 334795819e93aa946bba02f1cd669b09
+guid: 736d0a53e0e5208408ce21fa80f9adec
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Tomb_2_low_1:polySurface27
+    100004: Tomb_2_low_1:transform12
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Prop_AM_Door_B
+    400002: Tomb_2_low_1:polySurface27
+    400004: Tomb_2_low_1:transform12
+    2300000: Tomb_2_low_1:polySurface27
+    3300000: Tomb_2_low_1:polySurface27
+    4300000: Tomb_2_low_1:polySurface27
     9500000: //RootNode
   materials:
     importMaterials: 1

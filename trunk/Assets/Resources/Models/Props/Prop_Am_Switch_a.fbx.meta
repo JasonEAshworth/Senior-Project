@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 334795819e93aa946bba02f1cd669b09
+guid: 3720e4c88228ec845851d6e2290febf8
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Prop_AM_Door_B
+    100000: Prop_Am_Switch_a
+    100002: //RootNode
+    400000: Prop_Am_Switch_a
+    400002: //RootNode
+    2300000: Prop_Am_Switch_a
+    2300002: //RootNode
+    3300000: Prop_Am_Switch_a
+    3300002: //RootNode
+    4300000: Prop_Am_LeverBase_a
+    4300002: Prop_Am_Switch_a
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -28,7 +34,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
