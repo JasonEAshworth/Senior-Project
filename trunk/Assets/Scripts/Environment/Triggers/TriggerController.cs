@@ -11,8 +11,7 @@ public class TriggerController : MonoBehaviour
 	public bool multi;
 	//two positions for the trigger to allow two different actions
 	public bool state;
-	//interact: # of players that need to hit the interact button
-	//auto: # of players that need to be within the trigger's collider
+	//# of players that need to be within the trigger's collider
 	protected int playersIn = 0;
 	//# of players (or objects) to activate the trigger
 	public int playersNeeded;
@@ -23,6 +22,41 @@ public class TriggerController : MonoBehaviour
 	//whether the trigger is in cool down
 	protected bool inCD = false;
 
+	public void Trigger()
+	{
+		if(on && !inCD)
+		{
+			for(int i = 0; i < obj.Length; i++)
+			{
+				//"activateTrigger" can be changed and is simply the
+				//name of the function that will be called on obj[i]
+				obj[i].SendMessage("ActivateTrigger", state);
+			}
+			state = !state;
+			if(!multi)
+			{
+				on = false;
+			}
+			inCD = true;
+		}
+	}
+
+	public bool CanTrigger(Collider other)
+	{
+		bool ok = false;
+
+		//follow this format
+		if(other.gameObject.CompareTag("Player"))
+		{
+			if(gameObject.CompareTag("DoorTrigger"))
+			{
+				ok = true;
+			}
+		}
+
+		return ok;
+	}
+
 	public void UpdateCoolDown()
 	{
 		if(inCD)
@@ -32,22 +66,14 @@ public class TriggerController : MonoBehaviour
 			{
 				inCD = false;
 				coolDown = 0;
-			}
-		}
-	}
 
-	public void Trigger()
-	{
-		if(on && !inCD)
-		{
-			for(int i = 0; i < obj.Length; i++)
-			{
-				obj[i].SendMessage("activateTrigger", state);
-			}
-			state = !state;
-			if(!multi)
-			{
-				on = false;
+				if(tag == "timedTrigger")
+				{
+					if(!state)
+					{
+						Trigger();
+					}
+				}
 			}
 		}
 	}
