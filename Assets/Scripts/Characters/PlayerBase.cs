@@ -41,11 +41,10 @@ public class PlayerBase : CharacterBase
 
 	public PlayerManager manager;
 	private MapManager mapMan;
-	public CharacterController charControl;
 
 	void Start()
 	{
-		charControl = GetComponent<CharacterController>();
+		base.Start();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
@@ -71,7 +70,7 @@ public class PlayerBase : CharacterBase
 					verticalVelocity = jumpForce;
 					canJump = false;
 				}
-				else if (charControl.isGrounded)
+				else if (cc.isGrounded)
 				{
 					verticalVelocity = 0.0f;
 					canJump = true;
@@ -83,7 +82,7 @@ public class PlayerBase : CharacterBase
 
 				moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
 
-				charControl.Move(moveVec);
+				cc.Move(moveVec);
 
 				// Rotate the character to face in the direction that they will move
 				if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)

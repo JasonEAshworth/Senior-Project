@@ -7,7 +7,8 @@ public enum enemyArchtype
 	RANGED,
 	HORDE,
 	INTELLIGENT,
-	MINDLESS
+	MINDLESS,
+	BOSS
 }
 
 public class EnemyBase : CharacterBase 
@@ -29,7 +30,6 @@ public class EnemyBase : CharacterBase
 	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
-	protected CharacterController cc;
 	public bool partOfHorde = false;
 	
 	// Manager Code
@@ -39,11 +39,11 @@ public class EnemyBase : CharacterBase
 
 	protected void Start()
 	{
+		base.Start();
 		health = maxHealth;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 		//renderer.material.color = Color.blue;
-		cc = GetComponent<CharacterController>();
 		if (transform.parent != null)
 		{
 			hordeManager = transform.parent.GetComponent<EnemyArchtypeHorde>();
@@ -93,6 +93,11 @@ public class EnemyBase : CharacterBase
 		moveVector = moveVector * 0.4f + dodgeVector * 0.6f;
 		// move towards destination
 		cc.Move(moveVector * dt);
+	}
+
+	protected void rotateTowardsPlayer(GameObject player, float dt)
+	{
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), rotationSpeed*Time.deltaTime);
 	}
 
 	protected GameObject findClosestPlayer()
