@@ -30,13 +30,13 @@ public class Woodsman : PlayerBase
 
 	void Update()
 	{
-		//Debug.Log (transform.forward);
+		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 	}
 
 	public override void basicAttack(string dir)
 	{
 
-		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
+
 		if (!canFire) 
 		{
 			basicTimer -= Time.deltaTime;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class HawkAI2 : MonoBehaviour {
 	
@@ -14,9 +15,15 @@ public class HawkAI2 : MonoBehaviour {
 	private Vector3 initialPoint;
 	private bool arrived = false;
 	private bool arrivedPerch = false;
+	private bool arrivedEnemy = false;
+	private bool attacking = false;
 	private Transform perchPos;
 	private float timerPerch;
 	private float timerIdle;
+	private float timerEnemy;
+	private float damageTimer;
+	public GameObject enemyToAttack;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -35,20 +42,62 @@ public class HawkAI2 : MonoBehaviour {
 		perchPos = woodsman.transform.Find ("perchPos");
 		timerPerch = Random.Range(15.0f,22.0f);
 		timerIdle = Random.Range (15.0f,22.0f);
+		timerEnemy = 5.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-
 		if (mode == 2) 
 		{
-			if (Vector3.Distance(transform.position,initialPoint) <= 0.1 && !arrived)
+			transform.parent = null;
+			if(enemyToAttack)
+			{
+				attacking = true;
+				timerEnemy = timerEnemy - Time.deltaTime;
+				if(timerEnemy <= 0.0f)
+				{
+					attacking = false;
+					arrivedEnemy = false;
+					enemyToAttack = null;
+					timerEnemy = 5.0f;
+					mode = 3;
+				}
+				damageTimer = damageTimer + Time.deltaTime;
+				if(damageTimer >= 1.0f)
+				{
+					EnemyBase scr = enemyToAttack.GetComponent<EnemyBase>();
+					if(scr)
+					{
+						scr.takeDamage (5.0f);
+					}
+					damageTimer = 0.0f;
+				}
+				Vector3 paddingEnemy = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
+				paddingEnemy.Normalize();
+				
+				Vector3 facingEnemy = Vector3.Cross (paddingEnemy, Vector3.up);
+				transform.up = facingEnemy;
+				float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
+				
+				if(dist < 0.5f)
+				{
+					transform.position += paddingEnemy * 1.5f * Time.deltaTime;
+				}
+				else if(dist  > 0.7f)
+				{
+					transform.position += -paddingEnemy * 1.5f * Time.deltaTime;
+				}
+				transform.RotateAround(enemyToAttack.transform.position,Vector3.up,120 * Time.deltaTime);
+
+			}
+
+			if (Vector3.Distance(transform.position,initialPoint) <= 0.1 && !arrived && !attacking)
 			{
 				transform.position = initialPoint;
 				arrived = true;
 			}
-			else
+			else if(!attacking)
 			{
 				Vector3 hawkXZ = new Vector3(transform.position.x,0,transform.position.z);
 				Vector3 woodsXZ = new Vector3(woodsman.transform.position.x,0,woodsman.transform.position.z);
@@ -63,7 +112,7 @@ public class HawkAI2 : MonoBehaviour {
 				timer = timer + Time.deltaTime;
 				transform.position = transform.position + (moveVec * speed * Time.deltaTime);
 			}
-			if (arrived)
+			if (arrived && !attacking)
 			{
 				if(Vector3.Distance(woodsman.transform.position,transform.position) > 2.4f)
 				{
@@ -81,7 +130,7 @@ public class HawkAI2 : MonoBehaviour {
 		}
 		if (mode == 1) 
 		{
-
+			transform.parent = null;
 			timerPerch = timerPerch - Time.deltaTime;
 			if(timerPerch <= 0.0f)
 			{
@@ -98,7 +147,7 @@ public class HawkAI2 : MonoBehaviour {
 			
 			if(dist < 2.0f)
 			{
-				transform.position += paddingVector * Time.deltaTime;
+				transform.position += paddingVector * 1.5f * Time.deltaTime;
 			}
 			else if(dist  > 2.2f)
 			{
@@ -111,8 +160,8 @@ public class HawkAI2 : MonoBehaviour {
 		if (mode == 3) 
 		{
 			
-			Vector3 movement = woodsman.transform.position - transform.position;
-			if(Vector3.Distance(woodsman.transform.position,transform.position) < 2.4f)
+			Vector3 movement = new Vector3(woodsman.transform.position.x,0.0f,woodsman.transform.position.z) - new Vector3(transform.position.x,0.0f,transform.position.z);
+			if(Vector3.Distance(new Vector3(woodsman.transform.position.x,0.0f,woodsman.transform.position.z),new Vector3(transform.position.x,0.0f,transform.position.z)) < 2.4f)
 			{
 				mode = 1;
 			}
@@ -166,4 +215,13 @@ public class HawkAI2 : MonoBehaviour {
 			}
 		}
 	}
+
+	void setEnemy(GameObject c)
+	{
+		if(enemyToAttack == null)
+		{
+			enemyToAttack = c;
+		}
+	}
+	
 }
