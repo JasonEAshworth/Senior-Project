@@ -6,12 +6,17 @@ ModelImporter:
     100000: //RootNode
     100002: Tomb_2_low_1:polySurface27
     100004: Tomb_2_low_1:transform12
+    100006: polySurface58
     400000: //RootNode
     400002: Tomb_2_low_1:polySurface27
     400004: Tomb_2_low_1:transform12
+    400006: polySurface58
     2300000: Tomb_2_low_1:polySurface27
+    2300002: polySurface58
     3300000: Tomb_2_low_1:polySurface27
+    3300002: polySurface58
     4300000: Tomb_2_low_1:polySurface27
+    4300002: polySurface58
     9500000: //RootNode
   materials:
     importMaterials: 1
