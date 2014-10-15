@@ -46,6 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
+     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
+     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
+     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchButtonExample.cs" />
+     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchControllerExample.cs" />
+     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchJoystickExample.cs" />
+     <Compile Include="Assets\Rewired\Examples\EightPlayers\Scripts\EightPlayersExample_Player.cs" />
+     <Compile Include="Assets\Rewired\Examples\FallbackJoystickIdentification\Scripts\FallbackJoystickIdentificationDemo.cs" />
+     <Compile Include="Assets\Rewired\Examples\Shared\Scripts\Bullet.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\InputManager.cs" />
      <Compile Include="Assets\Scripts\Characters\CharacterBase.cs" />
      <Compile Include="Assets\Scripts\Characters\PlayerBase.cs" />
      <Compile Include="Assets\Scripts\Characters\PlayerManager.cs" />
@@ -59,6 +69,7 @@
      <Compile Include="Assets\Scripts\Characters\Woodsman\Woodsman.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\woodsBullet.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\woodsSpecialBulletScript.cs" />
+     <Compile Include="Assets\Scripts\Characters\rewiredControl.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyArchtypeHorde.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyArchtypeMelee.cs" />
@@ -69,6 +80,7 @@
      <Compile Include="Assets\Scripts\Enemy\enemyControl.cs" />
      <Compile Include="Assets\Scripts\Environment\GameCamera.cs" />
      <Compile Include="Assets\Scripts\Environment\MapManager.cs" />
+     <Compile Include="Assets\Scripts\Environment\Props\DoorController.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\KeyController.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\Potion.cs" />
@@ -85,9 +97,15 @@
      <Compile Include="Assets\Scripts\Environment\Triggers\doorTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\cameraControl.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
+     <None Include="Assets\Rewired\Documentation\licences.txt" />
+     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
+     <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
      <None Include="Assets\Scripts\Shaders\MultiTexture.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Rewired_Core">
+ <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
