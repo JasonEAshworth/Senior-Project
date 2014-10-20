@@ -97,7 +97,7 @@ public class EnemyBase : CharacterBase
 
 	protected void rotateTowardsPlayer(GameObject player, float dt)
 	{
-		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(player.transform.position - transform.position), rotationSpeed*Time.deltaTime);
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(new Vector3(player.transform.position.x, 0.0f, player.transform.position.z) - new Vector3(transform.position.x, 0.0f, transform.position.z)), rotationSpeed*Time.deltaTime);
 	}
 
 	protected GameObject findClosestPlayer()
