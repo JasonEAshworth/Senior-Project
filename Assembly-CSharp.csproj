@@ -67,9 +67,12 @@
      <Compile Include="Assets\Scripts\Characters\Warrior\Warrior.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\HawkAI2.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\Woodsman.cs" />
+     <Compile Include="Assets\Scripts\Characters\Woodsman\hawkSphere.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\woodsBullet.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\woodsSpecialBulletScript.cs" />
      <Compile Include="Assets\Scripts\Characters\rewiredControl.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Boss\KingRestless.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Boss\KingShockwave.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyArchtypeHorde.cs" />
      <Compile Include="Assets\Scripts\Enemy\EnemyArchtypeMelee.cs" />
@@ -98,6 +101,7 @@
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
+     <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\LightCone.shader" />
      <None Include="Assets\ShaderForge\Readme.txt" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
@@ -120,7 +124,7 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>Z:/Senior Project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
