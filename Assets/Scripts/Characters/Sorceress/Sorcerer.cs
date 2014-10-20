@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Sorcerer : PlayerBase
 {
@@ -36,11 +37,15 @@ public class Sorcerer : PlayerBase
 				{
 					//Cast Fireball
 					//animator.Play("SorceressFireball");
+					Fireball();
+					Debug.Log ("Fireball");
 				}
 				else
 				{
 					//Cast Ice Bolt
 					//animator.Play("SorceressIceBolt");
+					IceSpike();
+					Debug.Log("Ice Spike");
 				}
 				Debug.Log ("sorceress basic attack");
 			}
@@ -52,8 +57,8 @@ public class Sorcerer : PlayerBase
 				{
 					//Cast Firestorm
 					//animator.Play("SorceressFirestorm");
-					Firestorm();
-					Debug.Log ("Firestorm");
+					Meteor();
+					Debug.Log("Meteor");
 				}
 				else
 				{
@@ -99,25 +104,75 @@ public class Sorcerer : PlayerBase
 		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
 
 		Quaternion angle = transform.rotation * startAngle;
-		Vector3 direction = angle * Vector3.forward * 5;
+		Vector3 direction = angle * Vector3.forward;
 		Vector3 pos = transform.position;
+
+		List<GameObject> enemies = new List<GameObject> ();
 
 		//Creates an angle of 90 degrees of Raycasting
 		for (int i = 0; i < 13; i++) {
-			Debug.DrawRay(pos, direction, Color.red, 5.0f);
+			RaycastHit hit;
+			if(Physics.Raycast(pos + new Vector3(0,0.5f,0), direction, out hit, 7, LayerMask.NameToLayer("Enemy")))
+				if(!enemies.Contains(hit.transform.gameObject))
+					enemies.Add (hit.transform.gameObject);
 
 			direction = stepAngle * direction;
 		}
 
+		//DEBUG PURPOSES////////////////////////
+
+		for(int i=0; i<enemies.Count; i++)
+			Debug.Log (enemies[i]);
+
+		direction = angle * Vector3.forward * 7;
+
+		for (int i = 0; i < 13; i++) {
+			Debug.DrawRay(pos + new Vector3(0,0.5f,0), direction, Color.red, 5.0f);
+			
+			direction = stepAngle * direction;
+		}
+		//////////////////////////////////////////
+
 		//This is where we create the animation for the Blizzard
 		//attack with ice coming out of the ground
 		GameObject Bliz = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Blizzard"), pos, transform.rotation) as GameObject;
+		/*foreach (Transform child in Bliz.transform) {
+			foreach (Transform c in child)
+				if(c.renderer)
+					c.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.0f); 
+		}*/
 		Destroy (Bliz, 5.0f);
 	}
 
-	private void Firestorm(){
+	private void Fireball(){
+		StartCoroutine(Wait());
 		Transform pos = transform.Find("shootPos");
 
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
+	}
+
+	private void Meteor(){
+		Vector3 pos = transform.position;
+
+		GameObject Meteor = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Meteor"), pos, transform.rotation) as GameObject;
+
+		//Example for alphaing out the texture of the object
+		/*GameObject ball = Meteor.transform.FindChild ("Sphere").gameObject;
+		Debug.Log (ball);
+		ball.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.1f);*/
+	}
+
+	private void IceSpike(){
+		Transform pos = transform.Find("shootPos");
+
+		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;
+		icicle.transform.up = transform.forward;
+	}
+
+	private IEnumerator Wait()
+	{
+		Debug.Log ("Wait started");
+		yield return new WaitForSeconds (55.0f);
+		Debug.Log ("Wait ended");
 	}
 }
