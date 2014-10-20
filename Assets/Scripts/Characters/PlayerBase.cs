@@ -153,24 +153,23 @@ public class PlayerBase : CharacterBase
 	{
 		if (item) 
 		{
-			if (Input.GetKeyDown(useItemKey))
+
+			switch(item.tag)
 			{
-				switch(item.tag)
-				{
-				case "Potion":
-					health += item.GetComponent<Potion>().potionValue;
-					Debug.Log(health);
-					item = null;
-					break;
-				case "AttackPotion":
-					item = null;
-					break;
-				case "DefensePotion":
-					item = null;
-					break;
-				}
-				
+			case "Potion":
+				health += item.GetComponent<Potion>().potionValue;
+				Debug.Log(health);
+				item = null;
+				break;
+			case "AttackPotion":
+				item = null;
+				break;
+			case "DefensePotion":
+				item = null;
+				break;
 			}
+				
+
 		}
 	}
 
