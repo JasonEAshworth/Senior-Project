@@ -31,12 +31,6 @@ public class Woodsman : PlayerBase
 	void Update()
 	{
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
-	}
-
-	public override void basicAttack(string dir)
-	{
-
-
 		if (!canFire) 
 		{
 			basicTimer -= Time.deltaTime;
@@ -46,7 +40,7 @@ public class Woodsman : PlayerBase
 				basicTimer = 0.5f;
 			}
 		}
-
+		
 		if (!canSpecial) 
 		{
 			specialTimer -= Time.deltaTime;
@@ -55,8 +49,15 @@ public class Woodsman : PlayerBase
 				canSpecial = true;
 				specialTimer = 10.0f;
 			}
-				
+			
 		}
+	}
+
+	public override void basicAttack(string dir)
+	{
+
+
+
 		//Debug.Log ("warrior basic attack");
 		if (dir == "down" && canFire) 
 		{
@@ -65,7 +66,8 @@ public class Woodsman : PlayerBase
 		if (dir == "up")
 		{
 			float temp = Time.time - firstButtonPressTime;
-			if(temp > 0.4f && canSpecial)
+			firstButtonPressTime = Time.time;
+			if(temp > 0.7f && canSpecial)
 			{
 				specialAttackWoods(temp);
 			}
@@ -74,7 +76,6 @@ public class Woodsman : PlayerBase
 				GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 
 				//bullet.transform.up = transform.forward;
-				Debug.Log (bullet.transform.up);
 				canFire = false;
 			}
 		}

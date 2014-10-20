@@ -7,6 +7,7 @@ public class woodsBullet : MonoBehaviour {
 	private float speed = 15.0f;
 	public Vector3 playerForward;
 	public GameObject woodsPlayer;
+	private float timer;
 	// Use this for initialization
 	void Start () 
 	{
@@ -21,13 +22,18 @@ public class woodsBullet : MonoBehaviour {
 		}
 		playerForward = woodsPlayer.transform.forward;
 		transform.up = playerForward;
+		timer = 1.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log (transform.up);
 		transform.position = transform.position + (transform.up * speed * Time.deltaTime);
+		timer = timer - Time.deltaTime;
+		if (timer <= 0.0f) 
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	void OnCollisionEnter(Collision c)
