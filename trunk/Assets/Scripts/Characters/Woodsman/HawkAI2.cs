@@ -15,7 +15,6 @@ public class HawkAI2 : MonoBehaviour {
 	private Vector3 initialPoint;
 	private bool arrived = false;
 	private bool arrivedPerch = false;
-	private bool arrivedEnemy = false;
 	private bool attacking = false;
 	private Transform perchPos;
 	private float timerPerch;
@@ -58,7 +57,6 @@ public class HawkAI2 : MonoBehaviour {
 				if(timerEnemy <= 0.0f)
 				{
 					attacking = false;
-					arrivedEnemy = false;
 					enemyToAttack = null;
 					timerEnemy = 5.0f;
 					mode = 3;
@@ -80,11 +78,11 @@ public class HawkAI2 : MonoBehaviour {
 				transform.up = facingEnemy;
 				float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
 				
-				if(dist < 0.5f)
+				if(dist < 1f)
 				{
 					transform.position += paddingEnemy * 1.5f * Time.deltaTime;
 				}
-				else if(dist  > 0.7f)
+				else if(dist  > 2.2f)
 				{
 					transform.position += -paddingEnemy * 1.5f * Time.deltaTime;
 				}
@@ -151,7 +149,7 @@ public class HawkAI2 : MonoBehaviour {
 			}
 			else if(dist  > 2.2f)
 			{
-				transform.position += -paddingVector * 1.5f * Time.deltaTime;
+				transform.position += -paddingVector * 3.0f * Time.deltaTime;
 			}
 			transform.RotateAround (woodsman.transform.position, Vector3.up, 120 * Time.deltaTime);
 
