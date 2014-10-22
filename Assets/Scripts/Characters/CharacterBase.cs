@@ -60,7 +60,10 @@ public class CharacterBase : MonoBehaviour
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		//healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
+		if (healthBar != null)
+		{
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
+		}
 	
 		if (health <= 0)
 		{
