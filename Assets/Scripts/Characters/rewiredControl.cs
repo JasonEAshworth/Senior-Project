@@ -27,8 +27,8 @@ public class rewiredControl : MonoBehaviour {
 	
 	private PlayerBase character;
 	//for jumping and rotating torwards direction of travel
-	public float jumpForce = 0.50f;
-	public float verticalVelocity = 0.0f;
+	//public float jumpForce = 0.50f;
+	//public float verticalVelocity = 0.0f;
 	public float rotationSpeed = 250.0f;
 	
 	[System.NonSerialized] // Don't serialize this so the value is lost on an editor script recompile.
@@ -96,21 +96,30 @@ public class rewiredControl : MonoBehaviour {
 		}
 		//Debug.Log (character);
 		//Handle jumping and add it to the movement vector
+		RaycastHit hit;
+		bool grounded = false;
+		Debug.DrawRay (transform.position + transform.up * 0.2f, -transform.up * 0.4f, Color.green, 10.0f);
+		if (Physics.Raycast(transform.position + transform.up * 0.1f, -transform.up, out hit, 0.4f, ~LayerMask.GetMask("Player")))
+		{
+			grounded = true;
+		}
 		if (jump)
 		{
-			if(character.canJump){
+			if(character.canJump)
+			{
 				character.canJump = false;
-				verticalVelocity = character.jumpForce;
+				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
 		}		
-		else if (cc.isGrounded)
+		else if (grounded && character.forces.y <= 0.0f)
 		{
 			character.canJump = true;
-			verticalVelocity  = 0.0f;
+			character.forces = new Vector3(character.forces.x, Mathf.Max(0.0f, character.forces.y), character.forces.z);
 		}		
 		else 
 		{
-			verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;
+			Debug.Log ("not grounded");
+			character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
 		}
 		
 		// Rotate the character to face in the direction that they will move
@@ -154,7 +163,7 @@ public class rewiredControl : MonoBehaviour {
 		
 		
 		// Process movement
-		moveVector.y = verticalVelocity;
+		moveVector.y = 0.0f;
 		
 		if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) {
 			cc.Move(moveVector * moveSpeed * Time.deltaTime);

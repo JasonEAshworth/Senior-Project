@@ -13,7 +13,7 @@ public class CharacterBase : MonoBehaviour
 	public float visibility = 1.0f;
 
 	protected CharacterController cc;
-	private Vector3 forces = Vector3.zero;			// used to apply outside forces on the character (since the character controller won't allow us to use a rigidbody)
+	public Vector3 forces = Vector3.zero;			// used to apply outside forces on the character (since the character controller won't allow us to use a rigidbody)
 	private float forceFriction = 5.0f;
 	private float maxForce = 10.0f;
 
@@ -30,7 +30,9 @@ public class CharacterBase : MonoBehaviour
 	public void FixedUpdate()
 	{
 		cc.Move(forces * Time.deltaTime);
+		float y = forces.y;
 		forces = Vector3.Lerp(forces, Vector3.zero, forceFriction * Time.deltaTime);
+		forces = new Vector3(forces.x, y, forces.z);
 		Vector3.ClampMagnitude(forces, maxForce);
 
 		if (currentDamageCooldown > 0.0f)
