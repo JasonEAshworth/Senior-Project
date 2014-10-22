@@ -15,7 +15,7 @@ public class CharacterBase : MonoBehaviour
 	protected CharacterController cc;
 	private Vector3 forces = Vector3.zero;			// used to apply outside forces on the character (since the character controller won't allow us to use a rigidbody)
 	private float forceFriction = 5.0f;
-	private float maxForce = 25.0f;
+	private float maxForce = 10.0f;
 
 	protected float damageInvulnTime = 0.5f; 		// after taking damage, the character is invulnerable for this many seconds
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
@@ -60,7 +60,7 @@ public class CharacterBase : MonoBehaviour
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
+		//healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
 	
 		if (health <= 0)
 		{

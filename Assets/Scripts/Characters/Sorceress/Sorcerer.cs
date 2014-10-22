@@ -112,7 +112,7 @@ public class Sorcerer : PlayerBase
 		//Creates an angle of 90 degrees of Raycasting
 		for (int i = 0; i < 13; i++) {
 			RaycastHit hit;
-			if(Physics.Raycast(pos + new Vector3(0,0.5f,0), direction, out hit, 7, LayerMask.NameToLayer("Enemy")))
+			if(Physics.Raycast(pos + new Vector3(0,0.5f,0), direction, out hit, 7, LayerMask.GetMask("Enemy")))
 				if(!enemies.Contains(hit.transform.gameObject))
 					enemies.Add (hit.transform.gameObject);
 

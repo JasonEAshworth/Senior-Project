@@ -18,7 +18,7 @@ public class KingRestless : EnemyBase
 	// shockwave
 	public GameObject shockwavePrefab;
 	private float shockwaveAttackRange = 3.0f;
-	private float shockwaveSpawnDistance = 1.0f;
+	private float shockwaveSpawnDistance = 0.25f;
 	// room collapse
 	private bool roomCollapsing = false;
 	// general
@@ -41,6 +41,10 @@ public class KingRestless : EnemyBase
 
 	void FixedUpdate()
 	{
+		if (Input.GetKeyDown (KeyCode.G))
+		{
+			spawnShockwave ();
+		}
 		GameObject closestPlayer;
 		switch (currentAttack)
 		{
@@ -202,6 +206,6 @@ public class KingRestless : EnemyBase
 
 	private void spawnShockwave()
 	{
-		Instantiate(shockwavePrefab, transform.position + transform.forward * shockwaveAttackRange, transform.rotation);
+		Instantiate(shockwavePrefab, transform.position + transform.forward * shockwaveSpawnDistance, transform.rotation);
 	}
 }
