@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AutoTrigger : TriggerController
 {
+	//fires when the player quota is met
+	//fires again when it no longer meets the quota
 	public void OnTriggerEnter(Collider other)
 	{
 		if(CanTrigger(other))
@@ -25,10 +27,5 @@ public class AutoTrigger : TriggerController
 				Trigger();
 			}
 		}
-	}
-
-	public void Update()
-	{
-		UpdateCoolDown();
 	}
 }

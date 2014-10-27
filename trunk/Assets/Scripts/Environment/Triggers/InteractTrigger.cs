@@ -3,6 +3,8 @@ using System.Collections;
 
 public class InteractTrigger : TriggerController
 {
+	//fires when the player quota is met
+	//NOT the same as the AutoTrigger
 	public void OnTriggerEnter(Collider other)
 	{
 		if(CanTrigger(other))
@@ -21,10 +23,5 @@ public class InteractTrigger : TriggerController
 		{
 			playersIn--;
 		}
-	}
-
-	public void Update()
-	{
-		UpdateCoolDown();
 	}
 }
