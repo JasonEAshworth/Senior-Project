@@ -1,24 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ProjectileTrapObj : MonoBehaviour 
+public class ProjectileTrapObj : TrapBase 
 {
-	public float damage = 10.0f;		// amount of damage dealt to the player on contact
-	public float lifetime = 3.0f;		// how long this trap object has to live
-	public float travelSpeed = 3.0f;	// speed in units per second that this projectile travels
+	public float travelSpeed = 5.0f;	// speed in units per second that this projectile travels
 	//may be needed to ensure the object faces and moves in the correct directions
 	//this value should be assigned when it is created by TimedTrap or TriggerTrap
 	//the traps should face the direction the projectile is going to travel
 	//thus it should be set to the trap's transform.forward
 	public Vector3 travelDir = Vector3.zero;
 	
-	void FixedUpdate()
+	protected override void FixedUpdate()
 	{
-		lifetime -= Time.deltaTime;
-		if (lifetime <= 0.0f)
-		{
-			Destroy(gameObject);
-		}
+		base.FixedUpdate();
 
 		Vector3 start = this.transform.position;
 		this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
@@ -27,10 +21,20 @@ public class ProjectileTrapObj : MonoBehaviour
 		Collider cc = this.collider;
 
 		Vector3 sc = this.transform.localScale;
-		float radius = cc.bounds.max.magnitude * Mathf.Max(sc.x, sc.y, sc.z);
+		Vector3 size = cc.bounds.size;
+		float radius = Mathf.Pow(Mathf.Max(size.x, size.y, size.z), 2) * 0.5f * Mathf.Max(sc.x, sc.y, sc.z);
+		//min and max are quite correct
 		Vector3 p1 = cc.bounds.min + this.travelDir * radius;
 		Vector3 p2 = cc.bounds.max - this.travelDir * radius;
 		RaycastHit[] rh = Physics.CapsuleCastAll(p1, p2, radius, this.travelDir, Vector3.Distance(start, end));
+
+
+//		SphereCollider s = this.collider as SphereCollider;
+//		Vector3 sc = this.transform.localScale;
+//		float radius = s.radius * Mathf.Max(sc.x, sc.y, sc.z);
+//		Debug.Log ("or: " + s.radius + "\nnr: " + radius);
+//		RaycastHit[] rh = Physics.SphereCastAll(start, radius, this.travelDir, Vector3.Distance(start, end));
+
 		foreach(RaycastHit hit in rh)
 		{
 			if(hit.transform.gameObject.tag == "Player")
@@ -48,6 +52,7 @@ public class ProjectileTrapObj : MonoBehaviour
 		}
 	}
 
-	// Can be overridden in a script that inherits from projectiletrapobj in case we want a projectile trap to have an additional effect on the player
-	public virtual void trapEffect(GameObject go) {}
+	protected override void ActivateTrigger (bool state)
+	{
+	}
 }

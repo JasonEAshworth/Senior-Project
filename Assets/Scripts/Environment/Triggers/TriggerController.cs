@@ -6,38 +6,26 @@ public class TriggerController : MonoBehaviour
 	//list of objects to affect
 	public GameObject[] obj;
 	//whether the trigger can be used
-	public bool on;
+	public bool on = true;
 	//whether the trigger can be used multiple times
-	public bool multi;
+	public bool multi = false;
 	//two positions for the trigger to allow two different actions
-	public bool state;
+	public bool state = true;
 	//# of players that need to be within the trigger's collider
 	protected int playersIn = 0;
 	//# of players (or objects) to activate the trigger
-	public int playersNeeded;
+	public int playersNeeded = 1;
 	//# of seconds before the trigger can be used again
 	protected float coolDownMax = 1.5f;
-	//# of seconds since the trigger was used
-	protected float coolDown = 0.0f;
 	//whether the trigger is in cool down
-	public bool inCD;
+	public bool inCD = false;
 
-	public void Trigger()
+
+	public void Start()
 	{
-		if(on && !inCD)
+		if(inCD)
 		{
-			for(int i = 0; i < obj.Length; i++)
-			{
-				//"activateTrigger" can be changed and is simply the
-				//name of the function that will be called on obj[i]
-				obj[i].SendMessage("ActivateTrigger", state);
-			}
-			state = !state;
-			if(!multi)
-			{
-				on = false;
-			}
-			inCD = true;
+			StartCoroutine(CoolDownWait());
 		}
 	}
 
@@ -52,29 +40,46 @@ public class TriggerController : MonoBehaviour
 			{
 				ok = true;
 			}
+			else
+			{
+				ok = true;
+			}
 		}
 
 		return ok;
 	}
 
-	public void UpdateCoolDown()
+	public void Trigger()
 	{
-		if(inCD)
+		if(on && !inCD)
 		{
-			coolDown += Time.deltaTime;
-			if(coolDown >= coolDownMax)
+			Debug.Log("triggering...");
+			for(int i = 0; i < obj.Length; i++)
 			{
-				inCD = false;
-				coolDown -= coolDownMax;
-
-				if(tag == "TimedTrigger")
-				{
-					if(!state)
-					{
-						Trigger();
-					}
-				}
+				//"ActivateTrigger" can be changed and is simply the
+				//name of the function that will be called on obj[i]
+				obj[i].SendMessage("ActivateTrigger", state);
 			}
+			state = !state;
+			if(!multi)
+			{
+				on = false;
+			}
+			inCD = true;
+			StartCoroutine(CoolDownWait());
+		}
+	}
+
+	public IEnumerator CoolDownWait()
+	{
+		yield return new WaitForSeconds(coolDownMax);
+		inCD = false;
+		//this is used with interact and auto triggers
+		//makes the trigger "undo" what it previously did when it was triggered
+		//NOT the same as the TimedTrigger
+		if(tag == "DurationTrigger" && !state)
+		{
+			Trigger();
 		}
 	}
 }
