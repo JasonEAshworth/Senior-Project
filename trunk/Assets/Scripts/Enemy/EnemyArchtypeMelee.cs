@@ -31,40 +31,43 @@ public class EnemyArchtypeMelee : EnemyBase {
 	void FixedUpdate() 
 	{
 		player = findClosestPlayerInRange (eRange);
-		target = player.transform;
-		pDistance = (target.position - mTransform.position).magnitude;				
-	
-		if (chasing) 
+		if (player != null)
 		{
-			Debug.Log("Should be Chasing");
-			if(pDistance > giveUpThreshold)
+			target = player.transform;
+			pDistance = (target.position - mTransform.position).magnitude;				
+		
+			if (chasing) 
 			{
-				chasing = false;
-
-			}
-
-			else if(pDistance <= eRange && pDistance >= attackDistance)
-			{
-				Debug.Log ("Should be Attacking");
-				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
-				mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
-				attackTime = Time.time + attackRate;
-				if(attackTime >= attackRate && pDistance <= weaponReach)
+				Debug.Log("Should be Chasing");
+				if(pDistance > giveUpThreshold)
 				{
-					Debug.Log ("SWING SWORD!");
-					moveSpeed = 0f;
-					Attack(attackRate);
+					chasing = false;
 
 				}
-				moveSpeed = 2f;
-			}
 
-		}
-		else
-		{
-			if(pDistance < eRange)
+				else if(pDistance <= eRange && pDistance >= attackDistance)
+				{
+					Debug.Log ("Should be Attacking");
+					cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+					mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
+					attackTime = Time.time + attackRate;
+					if(attackTime >= attackRate && pDistance <= weaponReach)
+					{
+						Debug.Log ("SWING SWORD!");
+						moveSpeed = 0f;
+						Attack(attackRate);
+
+					}
+					moveSpeed = 2f;
+				}
+
+			}
+			else
 			{
-				chasing = true;
+				if(pDistance < eRange)
+				{
+					chasing = true;
+				}
 			}
 		}
 	}

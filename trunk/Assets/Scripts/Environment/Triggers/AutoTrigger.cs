@@ -7,7 +7,7 @@ public class AutoTrigger : TriggerController
 	//fires again when it no longer meets the quota
 	public void OnTriggerEnter(Collider other)
 	{
-		if(CanTrigger(other))
+		if(CanTrigger(other) && other.tag == "Player")
 		{
 			playersIn++;
 			if(state && playersIn >= playersNeeded)
@@ -19,7 +19,7 @@ public class AutoTrigger : TriggerController
 
 	public void OnTriggerExit(Collider other)
 	{
-		if(CanTrigger(other))
+		if(CanTrigger(other) && other.tag == "Player")
 		{
 			playersIn--;
 			if(!state && playersIn < playersNeeded)

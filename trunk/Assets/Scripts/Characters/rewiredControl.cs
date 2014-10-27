@@ -45,7 +45,7 @@ public class rewiredControl : MonoBehaviour {
 		initialized = true;
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 		if(!ReInput.isReady) return; // Exit if Rewired isn't ready. This would only happen during a script recompile in the editor.
 		if(!initialized) Initialize(); // Reinitialize after a recompile in the editor
 		
@@ -96,13 +96,6 @@ public class rewiredControl : MonoBehaviour {
 		}
 		//Debug.Log (character);
 		//Handle jumping and add it to the movement vector
-		RaycastHit hit;
-		bool grounded = false;
-		Debug.DrawRay (transform.position + transform.up * 0.2f, -transform.up * 0.4f, Color.green, 10.0f);
-		if (Physics.Raycast(transform.position + transform.up * 0.1f, -transform.up, out hit, 0.4f, ~LayerMask.GetMask("Player")))
-		{
-			grounded = true;
-		}
 		if (jump)
 		{
 			if(character.canJump)
@@ -110,15 +103,14 @@ public class rewiredControl : MonoBehaviour {
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
-		}		
-		else if (grounded && character.forces.y <= 0.0f)
+		}
+		else if (cc.isGrounded)
 		{
 			character.canJump = true;
 			character.forces = new Vector3(character.forces.x, Mathf.Max(0.0f, character.forces.y), character.forces.z);
 		}		
 		else 
 		{
-			Debug.Log ("not grounded");
 			character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
 		}
 		

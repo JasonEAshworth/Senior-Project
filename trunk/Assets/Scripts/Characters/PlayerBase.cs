@@ -49,70 +49,6 @@ public class PlayerBase : CharacterBase
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-/*	new protected void FixedUpdate()
-	{
-		base.FixedUpdate();
-		if (!dead)
-		{
-			if (controllable)
-			{
-				// MOVEMENT
-				// Get the horizontal movement from the joystick input and scale it with moveSpeed
-				Vector3 xMovement = Input.GetAxis(moveAxisX) * new Vector3(Camera.main.transform.right.x, 0.0f, Camera.main.transform.right.z);
-				Vector3 zMovement = Input.GetAxis(moveAxisZ) * new Vector3(Camera.main.transform.forward.x, 0.0f, Camera.main.transform.forward.z);
-				Vector3 moveVec = Vector3.ClampMagnitude(xMovement + zMovement, 1.0f);
-
-				moveVec *= moveSpeed * Time.deltaTime;
-
-				// Handle jumping and add it to the movement vector
-				if (canJump && Input.GetKeyDown(jumpKey))
-				{
-					verticalVelocity = jumpForce;
-					canJump = false;
-				}
-				else if (cc.isGrounded)
-				{
-					verticalVelocity = 0.0f;
-					canJump = true;
-				}
-				else
-				{
-					verticalVelocity += Physics.gravity.y * 0.1f * Time.deltaTime;
-				}
-
-				moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-
-				cc.Move(moveVec);
-
-				// Rotate the character to face in the direction that they will move
-				if (new Vector3(moveVec.x, 0.0f, moveVec.z).magnitude > 0.01f)
-				{
-					transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVec.x, 0.0f, moveVec.z)), rotationSpeed * Time.deltaTime);
-				}
-
-				basicAttack();
-				classAbility();
-				itemAbility();
-
-				if (Input.GetKeyDown(KeyCode.F1)){
-					Debug.Log("Here");
-					takeDamage(10.0f);
-				}
-			}
-
-
-		}
-		else
-		{
-			respawnTimer -= Time.deltaTime;
-			if (respawnTimer <= 0.0f)
-			{
-				respawn();
-			}
-		}
-	}
-*/
-
 	public override void kill()
 	{
 		dead = true;
@@ -137,6 +73,12 @@ public class PlayerBase : CharacterBase
 		mapMan.notifySpawners(room);
 		mapMan.loadNeighbors(room);
 		mapMan.unloadEmptyRooms();
+
+		HordeRoom h = room.obj.GetComponent<HordeRoom>();
+		if (h != null)
+		{
+			h.startSpawning();
+		}
 	}
 
 	private void addItem(GameObject p)
