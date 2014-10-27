@@ -41,10 +41,6 @@ public class KingRestless : EnemyBase
 
 	void FixedUpdate()
 	{
-		if (Input.GetKeyDown (KeyCode.G))
-		{
-			spawnShockwave ();
-		}
 		GameObject closestPlayer;
 		switch (currentAttack)
 		{

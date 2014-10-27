@@ -13,7 +13,7 @@ public class EnemySpawner : MonoBehaviour
 	public Transform parentRoom;			// the transform of the room this spawner is located in
 	public bool infiniteSpawn = false;		// if set to true, enemies will continue to spawn until spawner is shut down
 	public bool ableToSpawn = true;			// set to false if the enemies should not spawn immediately
-	private bool enemiesRemaining = true;	// becomes false when spawner is spent
+	public bool enemiesRemaining = true;	// becomes false when spawner is spent
 	public float spawnTimer = 3.0f;			// enemy will spawn every spawnTimer seconds
 	private float timeTilSpawn = 0.0f;		// remaining time until next spawn
 	public int[] numberToSpawn;   			// array of ints that correspond with array of enemy prefabs
