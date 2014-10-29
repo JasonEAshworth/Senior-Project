@@ -15,7 +15,7 @@ public class Sorcerer : PlayerBase
 		int maxHealth = health;
 		moveSpeed = 4.0f;
 	}
-	
+
 	public override void basicAttack(string dir)
 	{
 		if(dir == "down")
@@ -52,7 +52,7 @@ public class Sorcerer : PlayerBase
 			else
 			{
 				//Check with attackType to see which basic attack to use
-				mana -= 25.0f;
+				//mana -= 25.0f;
 				if(attackType == 1)
 				{
 					//Cast Firestorm
@@ -145,7 +145,6 @@ public class Sorcerer : PlayerBase
 	}
 
 	private void Fireball(){
-		StartCoroutine(Wait());
 		Transform pos = transform.Find("shootPos");
 
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
@@ -169,10 +168,5 @@ public class Sorcerer : PlayerBase
 		icicle.transform.up = transform.forward;
 	}
 
-	private IEnumerator Wait()
-	{
-		Debug.Log ("Wait started");
-		yield return new WaitForSeconds (55.0f);
-		Debug.Log ("Wait ended");
-	}
+
 }
