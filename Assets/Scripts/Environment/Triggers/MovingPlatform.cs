@@ -17,11 +17,6 @@ public class MovingPlatform : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		if (Input.GetKeyDown (KeyCode.G))
-		{
-			activateTrigger ();
-		}
-
 		if (freeMove || (!freeMove && canMove))
 		{
 			if (looping || (!looping && !doneMoving))
@@ -52,7 +47,7 @@ public class MovingPlatform : MonoBehaviour
 	}
 
 	// If the platform is not set to freeMove, calling this function will allow the platform to move to its next destination. Should be called by triggers
-	public void activateTrigger()
+	public void ActivateTrigger()
 	{
 		canMove = true;
 	}
