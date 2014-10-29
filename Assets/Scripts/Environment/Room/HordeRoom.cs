@@ -56,7 +56,8 @@ public class HordeRoom : MonoBehaviour
 			// When all spawners are spent and all enemies are dead, open the door
 			if (doneSpawning && !enemiesAlive)
 			{
-				//roomDoor.ActivateTrigger(true);
+				GameObject.Find("PlayerManager").GetComponent<PlayerManager>().haveKey = true;
+				roomDoor.ActivateTrigger(true);
 				doorOpen = true;
 			}
 		}
