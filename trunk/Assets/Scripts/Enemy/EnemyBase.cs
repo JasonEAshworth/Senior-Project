@@ -124,8 +124,11 @@ public class EnemyBase : CharacterBase
 		for (int i = 0; i < players.Length; i++)
 		{
 			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
-			shortestRange = Mathf.Min(sqrRange, shortestRange);
-			closestPlayerIdx = i;
+			if (sqrRange < shortestRange)
+			{
+				shortestRange = Mathf.Min(sqrRange, shortestRange);
+				closestPlayerIdx = i;
+			}
 		}
 		if (shortestRange <= range * range) // squaring range is faster than square rooting every distance
 		{

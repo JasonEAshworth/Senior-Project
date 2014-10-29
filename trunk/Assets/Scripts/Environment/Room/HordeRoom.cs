@@ -34,11 +34,12 @@ public class HordeRoom : MonoBehaviour
 			// Check to see if the enemies are done spawning
 			if (!doneSpawning)
 			{
+				doneSpawning = true;
 				foreach (EnemySpawner es in roomSpawners)
 				{
 					if (es.enemiesRemaining)
 					{
-						doneSpawning = true;
+						doneSpawning = false;
 						break;
 					}
 				}
@@ -55,7 +56,8 @@ public class HordeRoom : MonoBehaviour
 			// When all spawners are spent and all enemies are dead, open the door
 			if (doneSpawning && !enemiesAlive)
 			{
-				//roomDoor.ActivateTrigger(false);
+				//roomDoor.ActivateTrigger(true);
+				doorOpen = true;
 			}
 		}
 	}
