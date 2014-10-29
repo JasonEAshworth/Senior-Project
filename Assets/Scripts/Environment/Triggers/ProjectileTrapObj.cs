@@ -12,47 +12,52 @@ public class ProjectileTrapObj : TrapBase
 	
 	protected override void FixedUpdate()
 	{
-		base.FixedUpdate();
-
-		Vector3 start = this.transform.position;
-		this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
-		Vector3 end = this.transform.position;
-
-		Collider cc = this.collider;
-
-		Vector3 sc = this.transform.localScale;
-		Vector3 size = cc.bounds.size;
-		float radius = Mathf.Pow(Mathf.Max(size.x, size.y, size.z), 2) * 0.5f * Mathf.Max(sc.x, sc.y, sc.z);
-		//min and max are quite correct
-		Vector3 p1 = cc.bounds.min + this.travelDir * radius;
-		Vector3 p2 = cc.bounds.max - this.travelDir * radius;
-		RaycastHit[] rh = Physics.CapsuleCastAll(p1, p2, radius, this.travelDir, Vector3.Distance(start, end));
-
-
-//		SphereCollider s = this.collider as SphereCollider;
-//		Vector3 sc = this.transform.localScale;
-//		float radius = s.radius * Mathf.Max(sc.x, sc.y, sc.z);
-//		Debug.Log ("or: " + s.radius + "\nnr: " + radius);
-//		RaycastHit[] rh = Physics.SphereCastAll(start, radius, this.travelDir, Vector3.Distance(start, end));
-
-		foreach(RaycastHit hit in rh)
+		if(!spawner)
 		{
-			if(hit.transform.gameObject.tag == "Player")
+			base.FixedUpdate();
+
+			Vector3 start = this.transform.position;
+			this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
+			Vector3 end = this.transform.position;
+
+			Collider cc = this.collider;
+
+			Vector3 sc = this.transform.localScale;
+			Vector3 size = cc.bounds.size;
+			float radius = Mathf.Pow(Mathf.Max(size.x, size.y, size.z), 2) * 0.5f * Mathf.Max(sc.x, sc.y, sc.z);
+			//min and max aren't quite correct?
+			Vector3 p1 = cc.bounds.min + this.travelDir * radius;
+			Vector3 p2 = cc.bounds.max - this.travelDir * radius;
+			RaycastHit[] rh = Physics.CapsuleCastAll(p1, p2, radius, this.travelDir, Vector3.Distance(start, end));
+
+			foreach(RaycastHit hit in rh)
 			{
-				Debug.Log("hit player!!!");
-				hit.transform.GetComponent<PlayerBase>().takeDamage(this.damage);
-				this.trapEffect(hit.transform.gameObject);
-				Destroy(this.gameObject);
-			}
-			if(hit.transform.name.Contains("wall_"))
-			{
-				Debug.Log("hit something else!!!");
-				Destroy(this.gameObject);
+				this.HitObject(hit.transform);
 			}
 		}
 	}
 
-	protected override void ActivateTrigger (bool state)
+	protected override void OnTriggerEnter(Collider c)
 	{
+		if(!spawner)
+		{
+			this.HitObject(c.transform);
+		}
+	}
+
+	protected override void HitObject(Transform t)
+	{
+		if(t.gameObject.tag == "Player")
+		{
+			Debug.Log("hit player!!!");
+			t.GetComponent<PlayerBase>().takeDamage(this.damage);
+			this.trapEffect(t.gameObject);
+			Destroy(this.gameObject);
+		}
+		if(t.name.Contains("Wall"))
+		{
+			Debug.Log("hit something else!!!");
+			Destroy(this.gameObject);
+		}
 	}
 }

@@ -9,18 +9,40 @@ public class TrapController : MonoBehaviour
 
 	public void ActivateTrigger(bool state)
 	{
-		Debug.Log("trap start");
 		if(trapObject.GetComponent<ProjectileTrapObj>())
 		{
-			//fix this stuff
-			Debug.Log("p trap");
 			GameObject p = Instantiate(trapObject, this.transform.position, Quaternion.identity) as GameObject;
-			p.GetComponent<ProjectileTrapObj>().travelDir  = this.transform.forward;
+			ProjectileTrapObj pto = p.GetComponent<ProjectileTrapObj>();
+			pto.travelDir  = this.transform.forward;
+			pto.spawner  = false;
+			//only works if the prefabs scale is (1,1,1)
+			p.transform.localScale = Vector3.one;
+			p.tag = "Untagged";
+			p.transform.SetParent(this.transform);
 		}
-		else if (trapObject.GetComponent<DurationTrapObj>())
+		else if(trapObject.GetComponent<SpikeTrap>())
 		{
-			Debug.Log("d trap");
-			DurationTrapObj d = Instantiate(trapObject, this.transform.position, Quaternion.identity) as DurationTrapObj;
+			if(state)
+			{
+				GameObject d = Instantiate(trapObject, this.transform.position, Quaternion.identity) as GameObject;
+				SpikeTrap st = d.GetComponent<SpikeTrap>();
+				st.travelDir = this.transform.up;
+				st.spawner = false;
+				d.transform.localScale = Vector3.one;
+				d.tag = "Untagged";
+				d.transform.SetParent(this.transform);
+			}
+			else
+			{
+				foreach(Transform tr in this.transform)
+				{
+					if(tr.GetComponent<SpikeTrap>() && tr.tag != "TrapSpawn")
+					{
+						Destroy(tr.gameObject);
+						break;
+					}
+				}
+			}
 		}
 	}
 }
