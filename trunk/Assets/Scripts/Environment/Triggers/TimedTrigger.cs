@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//continously fires
 public class TimedTrigger : TriggerController
 {
-	//continously fires
 	void Update()
 	{
 		if(!inCD)

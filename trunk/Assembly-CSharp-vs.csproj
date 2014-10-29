@@ -133,6 +133,7 @@
      <Compile Include="Assets\Scripts\Environment\Props\KeyController.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\Potion.cs" />
+     <Compile Include="Assets\Scripts\Environment\Room\HordeRoom.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\AutoTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\Doorway.cs" />
@@ -141,6 +142,7 @@
      <Compile Include="Assets\Scripts\Environment\Triggers\InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\ProjectileTrapObj.cs" />
+     <Compile Include="Assets\Scripts\Environment\Triggers\SpikeTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TimedTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TimedTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TrapBase.cs" />
