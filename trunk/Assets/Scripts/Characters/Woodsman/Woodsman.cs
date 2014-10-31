@@ -30,6 +30,7 @@ public class Woodsman : PlayerBase
 
 	void Update()
 	{
+		base.Update();
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
 		{

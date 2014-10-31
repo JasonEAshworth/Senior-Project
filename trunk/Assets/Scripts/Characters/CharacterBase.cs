@@ -21,10 +21,18 @@ public class CharacterBase : MonoBehaviour
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
 	public RawImage healthBar;
+	protected float healthBarWidth;
+	protected float healthBarHeight;
 
 	protected void Start()
 	{
 		cc = GetComponent<CharacterController>();
+
+		if (healthBar)
+		{
+			healthBarWidth = healthBar.rectTransform.rect.width;
+			healthBarHeight = healthBar.rectTransform.rect.height;
+		}
 	}
 
 	public void FixedUpdate()
@@ -53,14 +61,14 @@ public class CharacterBase : MonoBehaviour
 
 	public void takeDamage(float amount)
 	{
-		if (currentDamageCooldown > 0.0f)
+		if (currentDamageCooldown > 0.0f || dead)
 		{
 			return;
 		}
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
+		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
 	
 		if (health <= 0)
 		{
