@@ -7,6 +7,9 @@ public class TrapController : MonoBehaviour
 	// for example, an arrow from an arrow trap or spikes for a spike trap
 	public GameObject trapObject;
 
+	//a list of currently active traps
+	public ArrayList traps = new ArrayList();
+
 	public void ActivateTrigger(bool state)
 	{
 		if(trapObject.GetComponent<ProjectileTrapObj>())
@@ -15,10 +18,10 @@ public class TrapController : MonoBehaviour
 			ProjectileTrapObj pto = p.GetComponent<ProjectileTrapObj>();
 			pto.travelDir  = this.transform.forward;
 			pto.spawner  = false;
-			//only works if the prefabs scale is (1,1,1)
+			p.GetComponent<MeshRenderer>().enabled = true;
 			p.transform.localScale = Vector3.one;
-			p.tag = "Untagged";
 			p.transform.SetParent(this.transform);
+			this.traps.Add(p);
 		}
 		else if(trapObject.GetComponent<SpikeTrap>())
 		{
@@ -28,20 +31,16 @@ public class TrapController : MonoBehaviour
 				SpikeTrap st = d.GetComponent<SpikeTrap>();
 				st.travelDir = this.transform.up;
 				st.spawner = false;
+				d.GetComponent<MeshRenderer>().enabled = true;
 				d.transform.localScale = Vector3.one;
-				d.tag = "Untagged";
 				d.transform.SetParent(this.transform);
+				this.traps.Add(d);
 			}
 			else
 			{
-				foreach(Transform tr in this.transform)
-				{
-					if(tr.GetComponent<SpikeTrap>() && tr.tag != "TrapSpawn")
-					{
-						Destroy(tr.gameObject);
-						break;
-					}
-				}
+				GameObject go = this.traps[0] as GameObject;
+				Destroy(go);
+				this.traps.Remove(go);
 			}
 		}
 	}

@@ -52,11 +52,13 @@ public class ProjectileTrapObj : TrapBase
 			Debug.Log("hit player!!!");
 			t.GetComponent<PlayerBase>().takeDamage(this.damage);
 			this.trapEffect(t.gameObject);
+			this.transform.parent.GetComponent<TrapController>().traps.Remove(this.gameObject);
 			Destroy(this.gameObject);
 		}
 		if(t.name.Contains("Wall"))
 		{
 			Debug.Log("hit something else!!!");
+			this.transform.parent.GetComponent<TrapController>().traps.Remove(this.gameObject);
 			Destroy(this.gameObject);
 		}
 	}
