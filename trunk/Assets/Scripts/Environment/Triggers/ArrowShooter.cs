@@ -24,6 +24,7 @@ public class ArrowShooter : MonoBehaviour {
 		yield return StartCoroutine(Wait());
 
 		GameObject a = Instantiate (Resources.Load ("Prefabs/Environment/Traps/Arrow"), transform.position, transform.rotation) as GameObject;
+		a.transform.parent = gameObject.transform;
 
 		isFiring = false;
 	}

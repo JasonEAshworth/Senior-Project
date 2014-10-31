@@ -3,21 +3,17 @@ using System.Collections;
 
 public class Warrior : PlayerBase
 {
-	
 	private bool blockProjectiles = false;
 	private int count = 0;
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
 	private float comboStarted = Time.time - 10.0f;
-	private float rage = 100.0f;
 
-	public void init()
+	/*public void init()
 	{
-		maxHealth = 120;
-		health = maxHealth;
 		moveSpeed = 4.0f;
 		blockProjectiles = false;
-	}
+	}*/
 	
 	public override void basicAttack(string dir)
 	{

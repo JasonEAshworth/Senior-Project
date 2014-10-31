@@ -33,6 +33,9 @@ public class PlayerBase : CharacterBase
 	public float mana;
 	public float maxMana = 100.0f;
 
+	protected bool special = false;
+	protected bool normal = false;
+
 	public RoomNode roomIn;
 
 	// controls
@@ -150,6 +153,9 @@ public class PlayerBase : CharacterBase
 	public void manaRegen(float perSec){
 	//mana regeneration function for any players with
 	//mana regenerate.
+		if (manaBar.rectTransform.sizeDelta.x > 0)
+				return;
+
 		perSec = perSec * Time.deltaTime;
 		mana += perSec;
 		Mathf.Clamp (mana, 0, 100);
@@ -158,7 +164,9 @@ public class PlayerBase : CharacterBase
 		if (manaBar != null)
 		{
 			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322*amt, 0.0f));
-			Mathf.Clamp(manaBar.rectTransform.sizeDelta.x, 0, 100);
+			if(manaBar.rectTransform.sizeDelta.x > 0){
+				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
+			}
 		}
 	}
 
