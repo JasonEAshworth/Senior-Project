@@ -27,7 +27,7 @@ public class PlayerBase : CharacterBase
 	public playerClass classType;
 
 	protected GameObject item;
-	public RawImage healthBar;
+	//public RawImage healthBar;
 	public RawImage manaBar;
 
 	public float mana;
@@ -57,12 +57,19 @@ public class PlayerBase : CharacterBase
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
+	protected void Update()
+	{
+		// Handle respawn timer
+		if (dead)
+		{
+
+		}
+	}
+
 	public override void kill()
 	{
 		dead = true;
 		respawnTimer = timeToRespawn;
-		// temp code for testing
-		renderer.material.color = Color.red;
 	}
 
 	public void respawn()
@@ -81,6 +88,7 @@ public class PlayerBase : CharacterBase
 		mapMan.notifySpawners(room);
 		mapMan.loadNeighbors(room);
 		mapMan.unloadEmptyRooms();
+		mapMan.updateRespawnPoints(room);
 
 		HordeRoom h = room.obj.GetComponent<HordeRoom>();
 		if (h != null)

@@ -64,7 +64,7 @@ public class Warrior : PlayerBase
 				count = 0;
 			}
 			//If the warrior still has rage, he uses his special; Otherwise, he just does a basic attack
-			else if(rage >= 25.0f)
+			/*else if(rage >= 25.0f)
 			{
 				Debug.Log ("warrior special attack");
 				attacking = true;
@@ -74,7 +74,7 @@ public class Warrior : PlayerBase
 				{
 					animation.Play("WarriorCleaveAttack");
 				}*/
-			}
+			//}
 			else
 			{
 				//animator.Play("WarriorBasicAttack");

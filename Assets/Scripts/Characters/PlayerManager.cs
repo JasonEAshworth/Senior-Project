@@ -37,9 +37,6 @@ public class PlayerManager : MonoBehaviour
 		// set players to 4 at start
 		numPlayers = 4;
 
-		// acquire all spawn points for players 
-		getNewSpawnPoints();
-
 		for (int i=0; i<numPlayers; i++) 
 		{
 			switch (selectedClasses[i])
@@ -121,9 +118,9 @@ public class PlayerManager : MonoBehaviour
 		return spawns[randSpawn].transform.position;
 	}
 
-	public void getNewSpawnPoints()
+	public void assignNewSpawnPoints(GameObject[] newSpawns)
 	{
-		spawns = GameObject.FindGameObjectsWithTag("Respawn");
+		spawns = newSpawns;
 	}
 
 	public void respawnAllPlayers()

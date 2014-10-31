@@ -96,7 +96,7 @@ public class rewiredControl : MonoBehaviour {
 		}
 		//Debug.Log (character);
 		//Handle jumping and add it to the movement vector
-		if (jump)
+		if (jump && !character.dead)
 		{
 			if(character.canJump)
 			{
@@ -119,40 +119,40 @@ public class rewiredControl : MonoBehaviour {
 		{
 			transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)), rotationSpeed * Time.deltaTime);
 		}
-		
-		// Process fire button down
-		if (fire) {
-			Debug.Log("FIRE");
-			character.basicAttack ("down");	
-		}
-		
-		//process fire button up
-		if(fireUp) {
-			character.basicAttack("up");
-		}
-		
-		//process class ability button down
-		if (classAbility) {
-			character.classAbility("down");
-		}
-		
-		//process class ability button up
-		if (classAbilityUp) {
-			character.classAbility("up");
-		}
-		
-		
-		//if (utilityUp) 
-		//{
-		//Debug.Log("Need to implement Utility (Y) Button Up");
-		//}
-		
-		if (utilityDown) 
+
+		if (!character.dead)
 		{
-			character.itemAbility();
+			// Process fire button down
+			if (fire) {
+				Debug.Log("FIRE");
+				character.basicAttack ("down");	
+			}
+			
+			//process fire button up
+			if(fireUp) {
+				character.basicAttack("up");
+			}
+			
+			//process class ability button down
+			if (classAbility) {
+				character.classAbility("down");
+			}
+			
+			//process class ability button up
+			if (classAbilityUp) {
+				character.classAbility("up");
+			}
+		
+			//if (utilityUp) 
+			//{
+			//Debug.Log("Need to implement Utility (Y) Button Up");
+			//}
+			
+			if (utilityDown) 
+			{
+				character.itemAbility();
+			}
 		}
-		
-		
 		
 		// Process movement
 		moveVector.y = 0.0f;
