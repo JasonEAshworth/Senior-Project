@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 public enum playerClass
 {
@@ -27,6 +27,11 @@ public class PlayerBase : CharacterBase
 	public playerClass classType;
 
 	protected GameObject item;
+	public RawImage healthBar;
+	public RawImage manaBar;
+
+	public float mana;
+	public float maxMana = 100.0f;
 
 	public RoomNode roomIn;
 
@@ -112,6 +117,48 @@ public class PlayerBase : CharacterBase
 			}
 				
 
+		}
+	}
+
+	public IEnumerator Wait(float sec){
+		yield return new WaitForSeconds (sec);
+	}
+
+	public void useMana(float amt){
+	//checks and then subtracts mana from pool
+		if (checkForMana (amt))
+			mana -= amt;
+		else
+			return;
+
+		amt = amt / maxMana;
+		if (manaBar != null)
+		{
+			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta - (new Vector2 (322*amt, 0.0f));
+		}
+
+	}
+
+	private bool checkForMana(float amt){
+	//takes in an amount of mana to check if attack can occur
+		if (mana - amt > 0)
+			return true;
+		else
+			return false;
+	}
+
+	public void manaRegen(float perSec){
+	//mana regeneration function for any players with
+	//mana regenerate.
+		perSec = perSec * Time.deltaTime;
+		mana += perSec;
+		Mathf.Clamp (mana, 0, 100);
+		float amt = perSec / maxMana;
+
+		if (manaBar != null)
+		{
+			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322*amt, 0.0f));
+			Mathf.Clamp(manaBar.rectTransform.sizeDelta.x, 0, 100);
 		}
 	}
 

@@ -6,14 +6,13 @@ public class Sorcerer : PlayerBase
 {
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
-	private float mana = 100.0f;
 	private float timeButtonHeld;
 
-	void start()
-	{
-		int health = 100;
-		int maxHealth = health;
-		moveSpeed = 4.0f;
+	private bool special = false;
+	private bool normal = false;
+	
+	void Update(){
+		manaRegen (2.5f);
 	}
 
 	public override void basicAttack(string dir)
@@ -24,8 +23,7 @@ public class Sorcerer : PlayerBase
 			Debug.Log ("sorceress attack");
 			attackStarted = Time.time;
 		}
-		float currentTime = Time.time;
-		float timeSinceAttack = currentTime - attackStarted;
+		float timeSinceAttack = Time.time - attackStarted;
 		if (dir == "up")
 		{
 			//When the attack key is released, check to see how long it was
@@ -35,19 +33,14 @@ public class Sorcerer : PlayerBase
 				//Check with attackType to see which basic attack to use
 				if(attackType == 1)
 				{
-					//Cast Fireball
-					//animator.Play("SorceressFireball");
-					Fireball();
-					Debug.Log ("Fireball");
+					if(!normal)
+						StartCoroutine(Fireball());
 				}
 				else
 				{
-					//Cast Ice Bolt
-					//animator.Play("SorceressIceBolt");
-					IceSpike();
-					Debug.Log("Ice Spike");
+					if(!normal)
+						StartCoroutine(IceSpike());
 				}
-				Debug.Log ("sorceress basic attack");
 			}
 			else
 			{
@@ -55,18 +48,13 @@ public class Sorcerer : PlayerBase
 				//mana -= 25.0f;
 				if(attackType == 1)
 				{
-					//Cast Firestorm
-					//animator.Play("SorceressFirestorm");
-					Meteor();
-					Debug.Log("Meteor");
+					if(!special)
+						StartCoroutine(Meteor());
 				}
 				else
 				{
-					//Cast Blizzard
-					//animator.Play("SorceressBlizzard");
-					Blizzard();
-					Debug.Log("Blizzard");
-
+					if(!special)
+						StartCoroutine(Blizzard());
 				}
 				Debug.Log("sorceress special attack");
 			}
@@ -99,7 +87,10 @@ public class Sorcerer : PlayerBase
 		}
 	}
 
-	private void Blizzard(){
+	private IEnumerator Blizzard(){
+		special = true;
+
+		useMana (25.0f);
 		Quaternion startAngle = Quaternion.AngleAxis (-30, Vector3.up);
 		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
 
@@ -142,31 +133,48 @@ public class Sorcerer : PlayerBase
 					c.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.0f); 
 		}*/
 		Destroy (Bliz, 5.0f);
+
+		yield return StartCoroutine (Wait (5.0f));
+		special = false;
 	}
 
-	private void Fireball(){
+	private IEnumerator Fireball(){
+		normal = true;
+
+		useMana(5.0f);
 		Transform pos = transform.Find("shootPos");
-
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
+
+		yield return StartCoroutine (Wait (1.5f));
+		normal = false;
 	}
 
-	private void Meteor(){
-		Vector3 pos = transform.position;
+	private IEnumerator Meteor(){
+		special = true;
 
+		useMana (25.0f);
+		Vector3 pos = transform.position;
 		GameObject Meteor = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Meteor"), pos, transform.rotation) as GameObject;
 
 		//Example for alphaing out the texture of the object
 		/*GameObject ball = Meteor.transform.FindChild ("Sphere").gameObject;
 		Debug.Log (ball);
 		ball.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.1f);*/
+
+		yield return StartCoroutine (Wait (5.0f));
+		special = false;
 	}
 
-	private void IceSpike(){
-		Transform pos = transform.Find("shootPos");
+	private IEnumerator IceSpike(){
+		normal = true;
 
+		useMana(2.0f);
+		Transform pos = transform.Find("shootPos");
 		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;
 		icicle.transform.up = transform.forward;
+
+		yield return StartCoroutine (Wait (0.5f));
+		normal = false;
 	}
-
-
+	
 }
