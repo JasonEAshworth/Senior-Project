@@ -17,6 +17,7 @@ public class SpikeTrap : TrapBase
 		if(!spawner)
 		{
 			Vector3 start = this.transform.position;
+			//need to do this better
 			if((this.transform.position - this.startPos).magnitude < travelDist)
 			{
 				this.transform.position += this.travelDir * 3.0f * Time.deltaTime;
