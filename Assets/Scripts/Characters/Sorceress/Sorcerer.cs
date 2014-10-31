@@ -8,9 +8,6 @@ public class Sorcerer : PlayerBase
 	private float attackStarted = Time.time - 10.0f;
 	private float timeButtonHeld;
 
-	private bool special = false;
-	private bool normal = false;
-	
 	void Update(){
 		manaRegen (2.5f);
 	}

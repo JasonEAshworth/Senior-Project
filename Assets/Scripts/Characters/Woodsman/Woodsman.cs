@@ -55,9 +55,6 @@ public class Woodsman : PlayerBase
 
 	public override void basicAttack(string dir)
 	{
-
-
-
 		//Debug.Log ("warrior basic attack");
 		if (dir == "down" && canFire) 
 		{
