@@ -62,12 +62,17 @@ public class PlayerBase : CharacterBase
 		// Handle respawn timer
 		if (dead)
 		{
-
+			respawnTimer -= Time.deltaTime;
+			if (respawnTimer <= 0.0f)
+			{
+				respawn();
+			}
 		}
 	}
 
 	public override void kill()
 	{
+		health = 0.0f;
 		dead = true;
 		respawnTimer = timeToRespawn;
 	}
@@ -76,6 +81,8 @@ public class PlayerBase : CharacterBase
 	{
 		transform.position = manager.getRespawnPoint();
 		transform.rotation = Quaternion.identity;
+
+		health = maxHealth;
 
 		verticalVelocity = 0.0f;
 
