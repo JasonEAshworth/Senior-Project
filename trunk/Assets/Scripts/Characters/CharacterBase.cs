@@ -49,8 +49,6 @@ public class CharacterBase : MonoBehaviour
 	public virtual void kill()
 	{
 		dead = true;
-		// temp code for testing
-		renderer.material.color = Color.red;
 	}
 
 	public void takeDamage(float amount)
@@ -62,10 +60,7 @@ public class CharacterBase : MonoBehaviour
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		if (healthBar != null)
-		{
-			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
-		}
+		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
 	
 		if (health <= 0)
 		{

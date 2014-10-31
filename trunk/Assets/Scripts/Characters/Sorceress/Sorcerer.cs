@@ -9,6 +9,7 @@ public class Sorcerer : PlayerBase
 	private float timeButtonHeld;
 
 	void Update(){
+		base.Update();
 		manaRegen (2.5f);
 	}
 
