@@ -81,4 +81,9 @@ public class TriggerController : MonoBehaviour
 			Trigger();
 		}
 	}
+
+	public virtual void ActivateTrigger(bool state)
+	{
+		this.on = true;
+	}
 }
