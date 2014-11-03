@@ -13,8 +13,8 @@ public class Gold : MonoBehaviour {
 	void OnTriggerEnter(Collider player)
 	{
 		if (player.gameObject.CompareTag ("Player")) 
-		{
-			//player.gameObject.SendMessage ("addGold", gameObject);
+		{	
+			player.gameObject.SendMessage ("addScore", gameObject);
 			Destroy(gameObject);
 		}
 		

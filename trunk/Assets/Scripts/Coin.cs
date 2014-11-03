@@ -14,7 +14,7 @@ public class Coin : MonoBehaviour {
 	{
 		if (player.gameObject.CompareTag ("Player")) 
 		{
-			//player.gameObject.SendMessage ("addGold", gameObject);
+			player.gameObject.SendMessage ("addScore", gameObject);
 			Destroy(gameObject);
 		}
 		
