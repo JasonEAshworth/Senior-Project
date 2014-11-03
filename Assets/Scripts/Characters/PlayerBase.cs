@@ -168,7 +168,7 @@ public class PlayerBase : CharacterBase
 	public void manaRegen(float perSec){
 	//mana regeneration function for any players with
 	//mana regenerate.
-		if (manaBar.rectTransform.sizeDelta.x > 0)
+		if (manaBar == null || manaBar.rectTransform.sizeDelta.x > 0)
 				return;
 
 		perSec = perSec * Time.deltaTime;
