@@ -6,6 +6,7 @@ public class CharacterBase : MonoBehaviour
 {
 	public float health = 100.0f;
 	public float maxHealth = 100.0f;
+	public float score = 0.0f;
 	public bool dead = false;
 
 	public float moveSpeed = 10.0f;
@@ -23,6 +24,8 @@ public class CharacterBase : MonoBehaviour
 	public RawImage healthBar;
 	protected float healthBarWidth;
 	protected float healthBarHeight;
+
+	public PlayerManager manager;
 
 	protected void Start()
 	{
@@ -57,6 +60,12 @@ public class CharacterBase : MonoBehaviour
 	public virtual void kill()
 	{
 		dead = true;
+	}
+
+	public void respawn()
+	{
+		health = maxHealth;
+		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*1, 0.0f));
 	}
 
 	public void takeDamage(float amount)

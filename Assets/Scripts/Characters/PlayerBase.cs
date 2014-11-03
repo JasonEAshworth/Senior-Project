@@ -87,6 +87,8 @@ public class PlayerBase : CharacterBase
 		verticalVelocity = 0.0f;
 
 		dead = false;
+
+		base.respawn();
 	}
 
 	public void enterRoom(RoomNode room)

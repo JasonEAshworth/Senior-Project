@@ -90,6 +90,7 @@
      <Compile Include="Assets\Exploder\Playmaker\CrackAction.cs" />
      <Compile Include="Assets\Exploder\Playmaker\ExplodeAction.cs" />
      <Compile Include="Assets\Exploder\Playmaker\ExplodeCrackedAction.cs" />
+     <Compile Include="Assets\Resize_GUI.cs" />
      <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
@@ -155,6 +156,7 @@
      <Compile Include="Assets\Scripts\Environment\Triggers\TriggerTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\cameraControl.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
+     <Compile Include="Assets\Scripts\GUI\Resize.cs" />
      <Compile Include="Assets\Scripts\Gold.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
