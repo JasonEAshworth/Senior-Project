@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
 			switch (selectedClasses[i])
 			{
 			case playerClass.WOODSMAN:
-				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Woodsman/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+				GameObject player1 = Instantiate (Resources.Load("Animations/Char_AM_Archer_Unity"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player1.tag = "Player";
 				woods = player1.GetComponent<Woodsman>();
 				woods.classType = playerClass.WOODSMAN;
@@ -59,7 +59,7 @@ public class PlayerManager : MonoBehaviour
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
-				GameObject player2 = Instantiate (Resources.Load("Prefabs/Character/Sorceress/Sorceress"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+				GameObject player2 = Instantiate (Resources.Load("Animations/Char_AM_Sorceress_Unitya"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player2.tag = "Player";
 				sorc = player2.GetComponent<Sorcerer>();
 				sorc.classType = playerClass.SORCERER;
@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
 				break;
 
 			case playerClass.ROGUE:
-				GameObject player3 = Instantiate (Resources.Load("Prefabs/Character/Rogue/Rogue"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+				GameObject player3 = Instantiate (Resources.Load("Animations/Char_AM_Rogue_Unity"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player3.tag = "Player";
 				rogue = player3.GetComponent<Rogue>();
 				rogue.classType = playerClass.ROGUE;
