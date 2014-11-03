@@ -26,7 +26,7 @@ public class EnemyBase : CharacterBase
 	public float attackDamage = 0f;
 
 	// Move Variables
-	//public float moveSpeed = 1;
+	public float moveSpeed = 1;
 	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
