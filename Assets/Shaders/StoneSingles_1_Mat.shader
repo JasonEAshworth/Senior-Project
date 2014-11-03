@@ -1,7 +1,7 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32620,y:32633|diff-623-RGB,spec-627-RGB,normal-645-OUT;n:type:ShaderForge.SFN_Tex2d,id:623,x:33017,y:32467,ptlb:node_diffuse,ptin:_node_diffuse,tex:d7f91ca53d035644fb60d2edd6ebc61a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:625,x:33486,y:33180,ptlb:Nrm_Structure,ptin:_Nrm_Structure,tex:ccbf4489ce16e4640951eb375984ffda,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:627,x:33166,y:32652,ptlb:Node_spec,ptin:_Node_spec,tex:d344079e3f1725643b8f8dc8b8d1b0aa,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:629,x:33550,y:32950,v1:1,v2:1,v3:2;n:type:ShaderForge.SFN_Multiply,id:631,x:33352,y:32842|A-633-RGB,B-629-OUT;n:type:ShaderForge.SFN_Tex2d,id:633,x:33530,y:32712,ptlb:Nrm_Noise,ptin:_Nrm_Noise,tex:6d4bf8d475fb823459f90225844677b7,ntxv:3,isnm:True|UVIN-641-OUT;n:type:ShaderForge.SFN_TexCoord,id:635,x:34015,y:32667,uv:0;n:type:ShaderForge.SFN_Multiply,id:637,x:33237,y:33286|A-625-RGB,B-639-OUT;n:type:ShaderForge.SFN_Vector3,id:639,x:33460,y:33389,v1:4,v2:4,v3:0.2;n:type:ShaderForge.SFN_Multiply,id:641,x:33772,y:32688|A-635-UVOUT,B-643-OUT;n:type:ShaderForge.SFN_Vector1,id:643,x:34003,y:32851,v1:3;n:type:ShaderForge.SFN_Add,id:645,x:33038,y:32997|A-631-OUT,B-637-OUT;proporder:623-625-633-627;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32620,y:32633|diff-623-RGB,spec-627-RGB,normal-645-OUT;n:type:ShaderForge.SFN_Tex2d,id:623,x:33017,y:32467,ptlb:node_diffuse,ptin:_node_diffuse,tex:9ee3fa24f6ea8fb4daa45dcd20f54e7b,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:625,x:33486,y:33180,ptlb:Nrm_Structure,ptin:_Nrm_Structure,tex:a400d78e788ae1a4688eda987689b5a9,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:627,x:33166,y:32652,ptlb:Node_spec,ptin:_Node_spec,tex:d344079e3f1725643b8f8dc8b8d1b0aa,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:629,x:33550,y:32950,v1:1,v2:1,v3:2;n:type:ShaderForge.SFN_Multiply,id:631,x:33352,y:32842|A-633-RGB,B-629-OUT;n:type:ShaderForge.SFN_Tex2d,id:633,x:33530,y:32712,ptlb:Nrm_Noise,ptin:_Nrm_Noise,tex:6d4bf8d475fb823459f90225844677b7,ntxv:3,isnm:True|UVIN-641-OUT;n:type:ShaderForge.SFN_TexCoord,id:635,x:34015,y:32667,uv:0;n:type:ShaderForge.SFN_Multiply,id:637,x:33237,y:33286|A-625-RGB,B-639-OUT;n:type:ShaderForge.SFN_Vector3,id:639,x:33460,y:33389,v1:4,v2:4,v3:0.2;n:type:ShaderForge.SFN_Multiply,id:641,x:33772,y:32688|A-635-UVOUT,B-643-OUT;n:type:ShaderForge.SFN_Vector1,id:643,x:34003,y:32851,v1:3;n:type:ShaderForge.SFN_Add,id:645,x:33038,y:32997|A-631-OUT,B-637-OUT;proporder:623-625-633-627;pass:END;sub:END;*/
 
 Shader "Shader Forge/StoneSingles_1_Mat" {
     Properties {
@@ -67,8 +67,8 @@ Shader "Shader Forge/StoneSingles_1_Mat" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_641 = (i.uv0.rg*3.0);
-                float2 node_685 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_685.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
+                float2 node_684 = i.uv0;
+                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_684.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -83,11 +83,11 @@ Shader "Shader Forge/StoneSingles_1_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_Node_spec,TRANSFORM_TEX(node_685.rg, _Node_spec)).rgb;
+                float3 specularColor = tex2D(_Node_spec,TRANSFORM_TEX(node_684.rg, _Node_spec)).rgb;
                 float3 specular = (floor(attenuation) * _LightColor0.xyz) * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_diffuse,TRANSFORM_TEX(node_685.rg, _node_diffuse)).rgb;
+                finalColor += diffuseLight * tex2D(_node_diffuse,TRANSFORM_TEX(node_684.rg, _node_diffuse)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor,1);
@@ -149,8 +149,8 @@ Shader "Shader Forge/StoneSingles_1_Mat" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_641 = (i.uv0.rg*3.0);
-                float2 node_686 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_686.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
+                float2 node_685 = i.uv0;
+                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_685.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -165,11 +165,11 @@ Shader "Shader Forge/StoneSingles_1_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_Node_spec,TRANSFORM_TEX(node_686.rg, _Node_spec)).rgb;
+                float3 specularColor = tex2D(_Node_spec,TRANSFORM_TEX(node_685.rg, _Node_spec)).rgb;
                 float3 specular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_diffuse,TRANSFORM_TEX(node_686.rg, _node_diffuse)).rgb;
+                finalColor += diffuseLight * tex2D(_node_diffuse,TRANSFORM_TEX(node_685.rg, _node_diffuse)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
