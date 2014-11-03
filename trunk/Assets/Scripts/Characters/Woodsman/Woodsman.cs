@@ -9,8 +9,9 @@ public class Woodsman : PlayerBase
 	private bool canSpecial = true;
 
 	private float basicTimer = 0.5f;
-	private float specialTimer = 10.0f;
+	private float specialTimer = 3.0f;
 	private float firstButtonPressTime = 0.0f;
+	public float zeroMoveTimer = 0.0f;
 	private GameObject hawk;
 	private Transform hawkPos;
 
@@ -48,7 +49,7 @@ public class Woodsman : PlayerBase
 			if(specialTimer <= 0.0f)
 			{
 				canSpecial = true;
-				specialTimer = 10.0f;
+				specialTimer = 3.0f;
 			}
 			
 		}
@@ -60,11 +61,21 @@ public class Woodsman : PlayerBase
 		if (dir == "down" && canFire) 
 		{
 			firstButtonPressTime = Time.time;
+			zeroMoveTimer += Time.deltaTime;
+			Debug.Log (zeroMoveTimer);
+			if(zeroMoveTimer >0.04f)
+			{
+				moveSpeed = 0.0f;
+
+			}
+
 		}
 		if (dir == "up")
 		{
 			float temp = Time.time - firstButtonPressTime;
 			firstButtonPressTime = Time.time;
+			moveSpeed = 4.0f;
+			zeroMoveTimer = 0.0f;
 			if(temp > 0.7f && canSpecial)
 			{
 				specialAttackWoods(temp);
@@ -84,7 +95,6 @@ public class Woodsman : PlayerBase
 		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
 		scr.heldTime = time;
-		specialBullet.transform.up = transform.forward;
 		canSpecial = false;
 	}
 	

@@ -8,6 +8,7 @@ public class woodsBullet : MonoBehaviour {
 	public Vector3 playerForward;
 	public GameObject woodsPlayer;
 	private float timer;
+	private float dmg = 5.0f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -38,7 +39,13 @@ public class woodsBullet : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
-		if (c.gameObject.CompareTag("Enemy") || c.gameObject.CompareTag("wall"))
+		if (c.gameObject.CompareTag("Enemy"))
+		{
+			EnemyBase scr = c.gameObject.GetComponent<EnemyBase>();
+			scr.takeDamage(dmg);
+			Destroy(gameObject);
+		}
+		else if(c.gameObject.CompareTag("wall"))
 		{
 			Destroy (gameObject);
 		}
