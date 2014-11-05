@@ -14,6 +14,7 @@ public class woodsBullet : MonoBehaviour {
 	{
 		GameObject playerManager = GameObject.FindGameObjectWithTag("PlayerManager");
 		PlayerManager playerManagerScript = playerManager.GetComponent<PlayerManager> ();
+		Debug.Log (playerManagerScript.numPlayers);
 		for (int i=0; i<playerManagerScript.numPlayers; i++)
 		{
 			if(playerManagerScript.players[i].GetComponent<PlayerBase>().classType == playerClass.WOODSMAN)

@@ -7,6 +7,8 @@ public class Woodsman : PlayerBase
 
 	private bool canFire = true;
 	private bool canSpecial = true;
+	private bool specialAttacking = false;
+	private bool basicAttacking = false;
 
 	private float basicTimer = 0.5f;
 	private float specialTimer = 3.0f;
@@ -14,25 +16,36 @@ public class Woodsman : PlayerBase
 	public float zeroMoveTimer = 0.0f;
 	private GameObject hawk;
 	private Transform hawkPos;
+	private HawkAI2 hawkScripts;
+	public float hawkCost;
+	public float woodsManaRegen = 2.0f;
+	public Animator anim;
 
 	public void init()
 	{
-		int health = 100;
-		int maxHealth = health;
+		anim = GetComponent<Animator> ();
+		health = 100;
+		maxHealth = health;
 		moveSpeed = 4.0f;
 
-		//hawkPos = transform.Find("hawkSpawn");
-		//hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
+		maxMana = 100.0f;
+		mana = maxMana;
+		hawkCost = 0.35f;
+
+		hawkPos = transform.Find("hawkSpawn");
+		hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
 
 
 		shootPosition = transform.Find("shootPos");
 
+
+		hawkScripts = hawk.GetComponent<HawkAI2> ();
 	}
 
 	void Update()
 	{
 		base.Update();
-		//hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
+		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
 		{
 			basicTimer -= Time.deltaTime;
@@ -53,6 +66,12 @@ public class Woodsman : PlayerBase
 			}
 			
 		}
+
+		if (mana < maxMana && hawkScripts.mode != 2) 
+		{
+			manaRegen(woodsManaRegen);
+		}
+
 	}
 
 	public override void basicAttack(string dir)
@@ -61,29 +80,20 @@ public class Woodsman : PlayerBase
 		if (dir == "down" && canFire) 
 		{
 			firstButtonPressTime = Time.time;
-			zeroMoveTimer += Time.deltaTime;
-			Debug.Log (zeroMoveTimer);
-			if(zeroMoveTimer >0.04f)
-			{
-				moveSpeed = 0.0f;
-
-			}
-
 		}
 		if (dir == "up")
 		{
 			float temp = Time.time - firstButtonPressTime;
 			firstButtonPressTime = Time.time;
 			moveSpeed = 4.0f;
-			zeroMoveTimer = 0.0f;
 			if(temp > 0.7f && canSpecial)
 			{
 				specialAttackWoods(temp);
 			}
 			else if(canFire)
 			{
+				anim.SetTrigger("Attack");
 				GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
-
 				//bullet.transform.up = transform.forward;
 				canFire = false;
 			}
@@ -92,6 +102,7 @@ public class Woodsman : PlayerBase
 	
 	public void specialAttackWoods(float time)
 	{
+		anim.SetTrigger("Attack");
 		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
 		scr.heldTime = time;
@@ -103,9 +114,10 @@ public class Woodsman : PlayerBase
 		//Debug.Log ("warrior class ability");
 		if (dir == "down") 
 		{
-			HawkAI2 hawkScripts = hawk.GetComponent<HawkAI2> ();
-			if (hawkScripts.mode != 2 && hawkScripts.mode != 3) 
+
+			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
 			{
+				anim.SetTrigger("Hawk");
 				hawkScripts.mode = 2;
 			}
 		}

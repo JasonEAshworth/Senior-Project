@@ -7,15 +7,18 @@ public class HawkAI2 : MonoBehaviour {
 	// init variables
 	public int mode;
 	public GameObject woodsman;
+	public Woodsman script;
 
 	// vectors needed 
 	private Vector3 paddingVector;
 	private Vector3 facingVector;
-
-	private Vector3 initialPoint;
+	public Vector3 initialPoint;
+	
 	private bool arrived = false;
 	private bool arrivedPerch = false;
 	private bool attacking = false;
+
+	// Transform needed where to perch on woodsman shoulder
 	private Transform perchPos;
 
 	// timer variables
@@ -35,8 +38,8 @@ public class HawkAI2 : MonoBehaviour {
 		PlayerManager pManager = GameObject.FindGameObjectWithTag ("PlayerManager").GetComponent<PlayerManager>();
 		for (int i=0; i<pManager.players.Count; i++) 
 		{
-			Woodsman wScript = pManager.players[i].GetComponent<Woodsman>();
-			if(wScript)
+			script = pManager.players[i].GetComponent<Woodsman>();
+			if(script)
 			{
 				woodsman = pManager.players[i];
 				break;
@@ -61,6 +64,7 @@ public class HawkAI2 : MonoBehaviour {
 		// Setting how long the hawk will attack an enemy when set out by player
 		// and it comes into contact with an enemy
 		timerEnemy = 5.0f;
+
 	}
 	
 	// Update is called once per frame
@@ -72,6 +76,8 @@ public class HawkAI2 : MonoBehaviour {
 		// attack the enemy and circle it for five seconds before coming back to the woodsman
 		if (mode == 2) 
 		{
+
+
 			// Making sure the hawk is not a child of the woodsman as it effects movement and
 			// rotation
 			transform.parent = null;
@@ -90,6 +96,7 @@ public class HawkAI2 : MonoBehaviour {
 				{
 					attacking = false;
 					enemyToAttack = null;
+					initialPoint = Vector3.zero;
 					timerEnemy = 5.0f;
 					mode = 3;
 				}
@@ -143,6 +150,7 @@ public class HawkAI2 : MonoBehaviour {
 			if (Vector3.Distance(transform.position,initialPoint) <= 0.1 && !arrived && !attacking)
 			{
 				transform.position = initialPoint;
+				initialPoint = Vector3.zero;
 				arrived = true;
 			}
 
@@ -150,6 +158,8 @@ public class HawkAI2 : MonoBehaviour {
 			// position towards the initialPoint
 			else if(!attacking)
 			{
+
+
 				Vector3 hawkXZ = new Vector3(transform.position.x,0,transform.position.z);
 				Vector3 woodsXZ = new Vector3(woodsman.transform.position.x,0,woodsman.transform.position.z);
 				
@@ -178,6 +188,17 @@ public class HawkAI2 : MonoBehaviour {
 				}
 				initialPoint = Vector3.zero;
 				arrived = false;
+			}
+
+			// Decrement the woodsman's energy as you go out, if you hit zero come back
+			script.useMana(script.hawkCost);
+			Debug.Log (script.hawkCost);
+			if(script.mana <= script.hawkCost)
+			{
+				initialPoint = Vector3.zero;
+				Debug.Log (initialPoint);
+				arrived = false;
+				mode = 3;
 			}
 			
 		}
@@ -259,9 +280,9 @@ public class HawkAI2 : MonoBehaviour {
 				arrivedPerch = false;
 			}
 		}
-
+		
 	}
-
+	
 	void OnTriggerEnter(Collider c)
 	{
 		// If we hit a wall or door and in mode 2 then we must come back to the woodsman
