@@ -18,6 +18,7 @@ public class EnemyArchtypeMelee : EnemyBase {
 	public float weaponReach = 1.5f;
 
 	// Behavior / Rates
+	private float attackRate = 2.0f;
 	private bool chasing = false;
 	private float attackTime = Time.time;
 	
@@ -29,6 +30,7 @@ public class EnemyArchtypeMelee : EnemyBase {
 	// Update is called once per frame
 	void FixedUpdate() 
 	{
+		base.FixedUpdate();
 		player = findClosestPlayerInRange (eRange);
 		if (player != null)
 		{

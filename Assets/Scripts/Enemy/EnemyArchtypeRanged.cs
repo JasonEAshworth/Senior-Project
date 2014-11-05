@@ -13,43 +13,46 @@ public class EnemyArchtypeRanged : EnemyBase {
 	public float eRange = 10f;
 	public float pDistance;
 	public GameObject player;
-	public float attackRate = 2f;
+	public Transform shootPos;
 
 	// Behavior / Rates
 	private bool chasing = false;
-	private float attackTime = Time.time;
+	private float attackTime = 0.0f;
 	
 	// Use this for initialization
 	void Awake() 
 	{
 		mTransform = transform;
+		shootPos = transform.Find ("shootPos");
+		aR = 2f;
 	}
 	// Update is called once per frame
 	void FixedUpdate() 
 	{
+		base.FixedUpdate();
 		player = findClosestPlayerInRange (eRange);
 		target = player.transform;
-		pDistance = (target.position - mTransform.position).magnitude;				
-	
+		pDistance = (target.position - mTransform.position).magnitude;
+
 		if (chasing) 
 		{
-			Debug.Log("Should be Chasing");
+			//Debug.Log("Should be Chasing");
 			if(pDistance > giveUpThreshold)
 			{
 				chasing = false;
-
 			}
 
 			else if(pDistance <= eRange && pDistance >= attackDistance)
 			{
-				Debug.Log ("Should be Attacking");
+				//Debug.Log ("Should be Attacking");
 				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
 				mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
-				attackTime = Time.time + attackRate;
-				if(attackTime >= attackRate)
+				attackTime = Time.deltaTime + attackTime;
+				if(attackTime >= aR)
 				{
-					Debug.Log ("Firing Arrows!");
-					Attack(attackRate);
+					//Debug.Log ("Firing Arrows!");
+					Attack(aR);
+					attackTime = 0.0f;
 				}
 				moveSpeed = 0.2f;
 			}
@@ -60,10 +63,9 @@ public class EnemyArchtypeRanged : EnemyBase {
 				//mTransform.position += mTransform.forward*-1 * moveSpeed * Time.deltaTime;
 				mTransform.rotation = Quaternion.Slerp(mTransform.rotation, target.rotation, Time.deltaTime * rotationSpeed);
 				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
-				moveSpeed = 3;
-				Debug.Log("Should be running");
+				moveSpeed = 3.0f;
+				//Debug.Log("Should be running");
 			}
-
 
 		}
 		else
@@ -73,5 +75,11 @@ public class EnemyArchtypeRanged : EnemyBase {
 				chasing = true;
 			}
 		}
+	}
+
+	public override void Attack (float atkRate)
+	{
+		GameObject bullet = Instantiate(Resources.Load ("Prefabs/Enemies/RestlessBullet"),shootPos.position,Quaternion.identity) as GameObject;
+		bullet.transform.up = transform.forward;
 	}
 }
