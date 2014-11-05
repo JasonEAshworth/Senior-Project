@@ -35,33 +35,26 @@ public class Warrior : PlayerBase
 		if (dir == "up") {
 
 			//If there is too long of time between basic attacks, the combo is reset
-			if (timeSinceCombo > 3.0f){
+			/*if (timeSinceCombo > 3.0f){
 				count = 0;
-			}
+			}*/
 
 			//When the attack key is released, check to see how long it was
 			//held to determin what attack to do.
-			if (count < 3 && timeSinceAttack < 1.0f && !normal){
+			if (count < 3 && !normal){
 				//Check and see if the user has done the basic attack in time
 				//to continue with the combo
 
-				if (canProgressCombo && timeSinceCombo <= 3.0f){
-					count++;
+				if (canProgressCombo){
 					//addMana(5.0f);
 					canProgressCombo = false;
-					GetComponent<Animator>().SetTrigger("Attack" + count.ToString());
+					GetComponent<Animator>().SetTrigger("Attack");
 					Debug.Log("Warrior Basic Attack, Count: " + count);
 				} 
-				else{
-					count = 0;
-					//addMana(5.0f);
-					Debug.Log("Warrior Basic Attack, Count: " + count);
-				}
 			}
 
 			//If the combo is complete, do the smash attack
-			if (count == 3 && timeSinceAttack < 1.0f){
-
+			if (count == 3){
 				count = 0;
 				if(!normal)
 					StartCoroutine(comboAttack());

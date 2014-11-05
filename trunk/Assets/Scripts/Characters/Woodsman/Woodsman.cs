@@ -21,8 +21,8 @@ public class Woodsman : PlayerBase
 		int maxHealth = health;
 		moveSpeed = 4.0f;
 
-		hawkPos = transform.Find("hawkSpawn");
-		hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
+		//hawkPos = transform.Find("hawkSpawn");
+		//hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
 
 
 		shootPosition = transform.Find("shootPos");
@@ -32,7 +32,7 @@ public class Woodsman : PlayerBase
 	void Update()
 	{
 		base.Update();
-		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
+		//hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
 		{
 			basicTimer -= Time.deltaTime;
