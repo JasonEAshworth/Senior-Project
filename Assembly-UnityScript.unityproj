@@ -91,6 +91,7 @@
      <None Include="Assets\Shaders\ColumnSquare_1_Mat.shader" />
      <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
      <None Include="Assets\Shaders\TombFancy_1_Mat.shader" />
+     <None Include="Assets\Shaders\Zombie_Mat.shader" />
      <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
      <None Include="Assets\Scripts\Shaders\MultiTexture.shader" />
      <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />

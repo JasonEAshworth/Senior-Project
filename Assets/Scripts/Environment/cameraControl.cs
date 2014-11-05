@@ -9,7 +9,7 @@ public class cameraControl : MonoBehaviour
 	private bool isOrthographic;
 
     public GameObject[] targets;
-	public GameObject captureBox;
+	//public GameObject captureBox;
 	public bool dubugText = true;
 	public float[] yClamp = {5, 25};
 	public float[] zClamp = {25, 20};
@@ -21,7 +21,7 @@ public class cameraControl : MonoBehaviour
     {
         Console.WriteLine ("START");
         targets = GameObject.FindGameObjectsWithTag ("Player");
-		captureBox = GameObject.FindGameObjectWithTag ("CaptureBox");
+		//captureBox = GameObject.FindGameObjectWithTag ("CaptureBox");
         //avgBox = GameObject.FindGameObjectWithTag ("avgBox");
         // Square diagonal = Sqrt(2) * Length 
         //roomDiagonal = 1.414f * roomLength;
@@ -45,7 +45,7 @@ public class cameraControl : MonoBehaviour
 			sum += targets [i].transform.position;
 		}
 		avgDistance = sum / targets.Length;
-		captureBox.transform.position = avgDistance;
+		//captureBox.transform.position = avgDistance;
 		
 		// Next, we find what the biggest difference in distance between any two characters is
 		float[] largestDifferenceInfo = returnLargestDifference ();

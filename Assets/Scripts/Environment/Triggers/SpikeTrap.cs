@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SpikeTrap : TrapBase
 {
-	public int travelDist = 0;
+	public float travelDist = 0.0f;
 	private Vector3 startPos = Vector3.zero;
 	public Vector3 travelDir = Vector3.zero;
 
