@@ -100,6 +100,8 @@ public class rewiredControl : MonoBehaviour {
 		{
 			if(character.canJump)
 			{
+				Debug.Log ("trigger jump");
+				character.GetComponent<Animator>().SetTrigger("Jump");
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
@@ -156,8 +158,18 @@ public class rewiredControl : MonoBehaviour {
 			// Process movement
 			moveVector.y = 0.0f;
 			
-			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) {
+			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
+			{
 				cc.Move(moveVector * moveSpeed * Time.deltaTime);
+			}
+
+			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)
+			{
+				character.GetComponent<Animator>().SetBool("Run", true);
+			}
+			else
+			{
+				character.GetComponent<Animator>().SetBool("Run", false);
 			}
 		}
 	}

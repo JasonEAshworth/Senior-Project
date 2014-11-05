@@ -9,6 +9,7 @@ public class Warrior : PlayerBase
 	private float attackStarted = Time.time - 10.0f;
 	private float comboStarted = Time.time - 10.0f;
 	private bool attacking = false;
+	private bool canProgressCombo = true;
 
 	/*public void init()
 	{
@@ -44,21 +45,23 @@ public class Warrior : PlayerBase
 				//Check and see if the user has done the basic attack in time
 				//to continue with the combo
 
-				if (timeSinceCombo <= 3.0f){
+				if (canProgressCombo && timeSinceCombo <= 3.0f){
 					count++;
-					addMana(5.0f);
+					//addMana(5.0f);
+					canProgressCombo = false;
+					GetComponent<Animator>().SetTrigger("Attack" + count.ToString());
 					Debug.Log("Warrior Basic Attack, Count: " + count);
 				} 
 				else{
 					count = 0;
-					addMana(5.0f);
+					//addMana(5.0f);
 					Debug.Log("Warrior Basic Attack, Count: " + count);
 				}
 			}
 
 			//If the combo is complete, do the smash attack
-			else if (count == 3 && timeSinceAttack < 1.0f){
-				Debug.Log("Warrior Combo Attack");
+			if (count == 3 && timeSinceAttack < 1.0f){
+
 				count = 0;
 				if(!normal)
 					StartCoroutine(comboAttack());
@@ -119,7 +122,8 @@ public class Warrior : PlayerBase
 		normal = true;
 		
 		//do attack shit here
-		addMana (10.0f);
+
+		//addMana (10.0f);
 		yield return StartCoroutine (Wait (0.5f));
 		normal = false;
 	}
@@ -146,9 +150,14 @@ public class Warrior : PlayerBase
 		else if (dir == "up") 
 		{
 			// animator.Play("NormalWalkingWarrior");
-			moveSpeed = moveSpeed *2;
+			moveSpeed = moveSpeed * 2;
 			blockProjectiles = false;
 		}
+	}
+
+	public void notifyAttackEnd()
+	{
+		canProgressCombo = true;
 	}
 		
 	}
