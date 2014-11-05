@@ -2134,7 +2134,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Shoot
       takeName: Take 001
-      firstFrame: 245
+      firstFrame: 329
       lastFrame: 394
       wrapMode: 0
       orientationOffsetY: -66
@@ -2488,7 +2488,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Hawk
       takeName: Take 001
-      firstFrame: 415
+      firstFrame: 434
       lastFrame: 535
       wrapMode: 0
       orientationOffsetY: -66
