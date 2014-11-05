@@ -96,12 +96,10 @@ public class rewiredControl : MonoBehaviour {
 		}
 		//Debug.Log (character);
 		//Handle jumping and add it to the movement vector
-		if (jump && !character.dead)
+		if (jump)
 		{
 			if(character.canJump)
 			{
-				Debug.Log ("trigger jump");
-				character.GetComponent<Animator>().SetTrigger("Jump");
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
@@ -115,63 +113,55 @@ public class rewiredControl : MonoBehaviour {
 		{
 			character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
 		}
-
-		if (!character.dead)
-		{
-			// Rotate the character to face in the direction that they will move
-			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.01f)
-			{
-				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)), rotationSpeed * Time.deltaTime);
-			}
-
-			// Process fire button down
-			if (fire) {
-				Debug.Log("FIRE");
-				character.basicAttack ("down");	
-			}
-			
-			//process fire button up
-			if(fireUp) {
-				character.basicAttack("up");
-			}
-			
-			//process class ability button down
-			if (classAbility) {
-				character.classAbility("down");
-			}
-			
-			//process class ability button up
-			if (classAbilityUp) {
-				character.classAbility("up");
-			}
 		
-			//if (utilityUp) 
-			//{
-			//Debug.Log("Need to implement Utility (Y) Button Up");
-			//}
-			
-			if (utilityDown) 
-			{
-				character.itemAbility();
-			}
-
-			// Process movement
-			moveVector.y = 0.0f;
-			
-			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
-			{
-				cc.Move(moveVector * moveSpeed * Time.deltaTime);
-			}
-
-			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)
-			{
-				character.GetComponent<Animator>().SetBool("Run", true);
-			}
-			else
-			{
-				character.GetComponent<Animator>().SetBool("Run", false);
-			}
+		// Rotate the character to face in the direction that they will move
+		if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.01f)
+		{
+			transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)), rotationSpeed * Time.deltaTime);
 		}
+		
+		// Process fire button down
+		if (fire) {
+			Debug.Log("FIRE");
+			character.basicAttack ("down");	
+		}
+		
+		//process fire button up
+		if(fireUp) {
+			character.basicAttack("up");
+		}
+		
+		//process class ability button down
+		if (classAbility) {
+			character.classAbility("down");
+		}
+		
+		//process class ability button up
+		if (classAbilityUp) {
+			character.classAbility("up");
+		}
+		
+		
+		//if (utilityUp) 
+		//{
+		//Debug.Log("Need to implement Utility (Y) Button Up");
+		//}
+		
+		if (utilityDown) 
+		{
+			character.itemAbility();
+		}
+		
+		
+		
+		// Process movement
+		moveVector.y = 0.0f;
+		
+		if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) {
+			cc.Move(moveVector * moveSpeed * Time.deltaTime);
+		}
+		
+		
 	}
 }
 

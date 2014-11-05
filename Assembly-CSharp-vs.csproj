@@ -107,7 +107,6 @@
      <Compile Include="Assets\Scripts\Characters\Sorceress\FBParticleBehavior.cs" />
      <Compile Include="Assets\Scripts\Characters\Sorceress\Fireball.cs" />
      <Compile Include="Assets\Scripts\Characters\Sorceress\Icicle_Shot.cs" />
-     <Compile Include="Assets\Scripts\Characters\Sorceress\MeteorController.cs" />
      <Compile Include="Assets\Scripts\Characters\Sorceress\Sorcerer.cs" />
      <Compile Include="Assets\Scripts\Characters\Warrior\Warrior.cs" />
      <Compile Include="Assets\Scripts\Characters\Woodsman\HawkAI2.cs" />
@@ -130,23 +129,19 @@
      <Compile Include="Assets\Scripts\Enemy\enemyControl.cs" />
      <Compile Include="Assets\Scripts\Environment\GameCamera.cs" />
      <Compile Include="Assets\Scripts\Environment\MapManager.cs" />
-     <Compile Include="Assets\Scripts\Environment\Props\Arrow.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\DoorController.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\KeyController.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\LightFlicker.cs" />
      <Compile Include="Assets\Scripts\Environment\Props\Potion.cs" />
      <Compile Include="Assets\Scripts\Environment\Room\HordeRoom.cs" />
-     <Compile Include="Assets\Scripts\Environment\Triggers\ArrowShooter.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\AutoTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\CheckpointCollider.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\Doorway.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\DurationTrapObj.cs" />
-     <Compile Include="Assets\Scripts\Environment\Triggers\FallingDeath.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\FlameTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\ProjectileTrapObj.cs" />
-     <Compile Include="Assets\Scripts\Environment\Triggers\SpikeTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TimedTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TimedTrigger.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TrapBase.cs" />
@@ -154,65 +149,41 @@
      <Compile Include="Assets\Scripts\Environment\Triggers\TriggerController.cs" />
      <Compile Include="Assets\Scripts\Environment\Triggers\TriggerTrap.cs" />
      <Compile Include="Assets\Scripts\Environment\cameraControl.cs" />
+     <Compile Include="Assets\Scripts\Environment\cameraControl2.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Scripts\Gold.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EditorLabel.cs" />
      <Compile Include="Assets\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
-     <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
-     <None Include="Assets\Scripts\Shaders\IceShader.shader" />
-     <None Include="Assets\Shaders\ReaperStatue_1_Mat.shader" />
-     <None Include="Assets\Shaders\Table_1_Mat.shader" />
-     <None Include="Assets\Shaders\SmallContainers_1_Mat.shader" />
-     <None Include="Assets\Scripts\Shaders\Steve 1.shader" />
-     <None Include="Assets\Shaders\Wall_4_1_Mat.shader" />
-     <None Include="Assets\Shaders\Floor_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\LightCone.shader" />
      <None Include="Assets\Exploder\Demo\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\ShaderForge\Readme.txt" />
-     <None Include="Assets\Shaders\ColumnRound_1_Mat_B.shader" />
-     <None Include="Assets\Shaders\Wall_Doorway_1_Mat.shader" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
-     <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
-     <None Include="Assets\Scripts\Shaders\NewShader.shader" />
      <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\Vegetation.shader" />
-     <None Include="Assets\Shaders\Scrolls_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
-     <None Include="Assets\Shaders\ColumnsRuined_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\Refraction.shader" />
      <None Include="Assets\Exploder\Demo\Shaders\VertexColor.shader" />
-     <None Include="Assets\Shaders\TombTop_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\Parallax.shader" />
-     <None Include="Assets\Scripts\Shaders\Steve.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\LightWrapping.shader" />
-     <None Include="Assets\Shaders\Wall_4_Cutout_1_Mat.shader" />
-     <None Include="Assets\Shaders\Bones_1_Mat.shader" />
-     <None Include="Assets\Scripts\Shaders\Floor.shader" />
      <None Include="Assets\Exploder\Exploder\3rd\P2T.txt" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\TessellationDisplacement.shader" />
-     <None Include="Assets\Shaders\Switch_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\Tiles.shader" />
-     <None Include="Assets\Shaders\ColumnSquare_1_Mat.shader" />
      <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
-     <None Include="Assets\Shaders\TombFancy_1_Mat.shader" />
-     <None Include="Assets\Shaders\Zombie_Mat.shader" />
-     <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
      <None Include="Assets\Scripts\Shaders\MultiTexture.shader" />
-     <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Exploder/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>Z:/profiledata/Documents/Senior Project/trunk/Assets/Exploder/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>Z:/profiledata/Documents/Senior Project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

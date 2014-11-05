@@ -90,14 +90,11 @@ public class KingRestless : EnemyBase
 			{
 				closestPlayer = findClosestPlayer();
 				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
 				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
 				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < basicAttackRange)
 				{
-					attackBegun = true;
-					myAnimator.StopPlayback();
 					myAnimator.SetTrigger("startBasicAttack");
-
+					attackBegun = true;
 				}
 			}
 			else if (attackBegun)
@@ -117,7 +114,6 @@ public class KingRestless : EnemyBase
 			{
 				closestPlayer = findClosestPlayer();
 				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
 				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
 				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < homeRunAttackRange)
 				{
@@ -142,7 +138,6 @@ public class KingRestless : EnemyBase
 			{
 				closestPlayer = findClosestPlayer();
 				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
 				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
 				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < homeRunAttackRange)
 				{

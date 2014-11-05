@@ -3,26 +3,28 @@ using System.Collections;
 
 public class Warrior : PlayerBase
 {
+	
 	private bool blockProjectiles = false;
 	private int count = 0;
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
 	private float comboStarted = Time.time - 10.0f;
-	private bool attacking = false;
-	private bool canProgressCombo = true;
+	private float rage = 100.0f;
 
-	/*public void init()
+	public void init()
 	{
+		maxHealth = 120;
+		health = maxHealth;
 		moveSpeed = 4.0f;
 		blockProjectiles = false;
-	}*/
+	}
 	
 	public override void basicAttack(string dir)
 	{
 		if (dir == "down")
 		{
 			//Check enemy facing
-			//Debug.Log ("warrior attack");
+			Debug.Log ("warrior attack");
 			attackStarted = Time.time;
 			if(count == 0)
 			{
@@ -32,42 +34,55 @@ public class Warrior : PlayerBase
 		float currentTime = Time.time;
 		float timeSinceAttack = currentTime - attackStarted;
 		float timeSinceCombo = currentTime - comboStarted;
-		if (dir == "up") {
-
+		if (dir == "up") 
+		{
 			//If there is too long of time between basic attacks, the combo is reset
-			/*if (timeSinceCombo > 3.0f){
+			if (timeSinceCombo > 3.0f)
+			{
 				count = 0;
-			}*/
-
+			}
 			//When the attack key is released, check to see how long it was
 			//held to determin what attack to do.
-			if (count < 3 && !normal){
+			if (count < 3 && timeSinceAttack < 1.0f)
+			{
 				//Check and see if the user has done the basic attack in time
 				//to continue with the combo
-
-				if (canProgressCombo){
-					//addMana(5.0f);
-					canProgressCombo = false;
-					GetComponent<Animator>().SetTrigger("Attack");
-					Debug.Log("Warrior Basic Attack, Count: " + count);
-				} 
+				if (timeSinceCombo <= 3.0f)
+				{
+					//animator.Play("WarriorBasicAttack");
+					Debug.Log ("Basic Warrior Attack");
+					count++;
+				}
+				else
+				{
+					//animator.Play("WarriorBasicAttack");
+					Debug.Log ("Basic Warrior Attack/Combo reset");
+					count = 0;
+				}
 			}
-
 			//If the combo is complete, do the smash attack
-			if (count == 3){
+			else if (count == 3 && timeSinceAttack < 1.0f)
+			{
+				//animator.Play("WarriorCleaveAttack");
+				Debug.Log ("Cleave Warrior Attack");
 				count = 0;
-				if(!normal)
-					StartCoroutine(comboAttack());
 			}
-
 			//If the warrior still has rage, he uses his special; Otherwise, he just does a basic attack
-			else if(mana >= 25.0f){
-				Debug.Log("Warrior Special Attack");
-				if(!special)
-					StartCoroutine(specialAttack());
+			else if(rage >= 25.0f)
+			{
+				Debug.Log ("warrior special attack");
+				attacking = true;
+				rage -= 25.0f;
+				/*
+				if(!animation.isPlaying)
+				{
+					animation.Play("WarriorCleaveAttack");
+				}*/
 			}
-			else{
-
+			else
+			{
+				//animator.Play("WarriorBasicAttack");
+				Debug.Log ("Basic Warrior Attack");
 			}
 		}
 			
@@ -110,47 +125,22 @@ public class Warrior : PlayerBase
 				//Use Item
 			}
 		}*/
-
-	private IEnumerator comboAttack(){
-		normal = true;
 		
-		//do attack shit here
-
-		//addMana (10.0f);
-		yield return StartCoroutine (Wait (0.5f));
-		normal = false;
-	}
-
-	private IEnumerator specialAttack(){
-		special = true;
-
-		useMana(25.0f);
-		//do special attack shit
-
-		yield return StartCoroutine (Wait (0.5f));
-		special = false;
-	}
-	
-	public override void classAbility(string dir)
-	{
-		if (dir == "down" && !attacking) 
+		public override void classAbility(string dir)
 		{
-			Debug.Log ("warrior class ability");
-			// animator.Play("WarriorClassAbility");
-			moveSpeed = moveSpeed / 2;
-			blockProjectiles = true;
-		} 
-		else if (dir == "up") 
-		{
-			// animator.Play("NormalWalkingWarrior");
-			moveSpeed = moveSpeed * 2;
-			blockProjectiles = false;
+			if (dir == "down" && !attacking) 
+			{
+				Debug.Log ("warrior class ability");
+				// animator.Play("WarriorClassAbility");
+				moveSpeed = moveSpeed / 2;
+				blockProjectiles = true;
+			} 
+			else if (dir == "up") 
+			{
+				// animator.Play("NormalWalkingWarrior");
+				moveSpeed = moveSpeed *2;
+				blockProjectiles = false;
+			}
 		}
-	}
-
-	public void notifyAttackEnd()
-	{
-		canProgressCombo = true;
-	}
 		
 	}

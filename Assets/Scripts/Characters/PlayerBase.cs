@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 public enum playerClass
 {
@@ -23,17 +23,10 @@ public class PlayerBase : CharacterBase
 	public bool canJump = true;
 	public float jumpForce = 7.0f;
 	public float verticalVelocity = 0.0f;
+	public bool attacking = false;
 	public playerClass classType;
 
 	protected GameObject item;
-	//public RawImage healthBar;
-	public RawImage manaBar;
-
-	public float mana;
-	public float maxMana = 100.0f;
-
-	protected bool special = false;
-	protected bool normal = false;
 
 	public RoomNode roomIn;
 
@@ -56,24 +49,12 @@ public class PlayerBase : CharacterBase
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
 	}
 
-	protected void Update()
-	{
-		// Handle respawn timer
-		if (dead)
-		{
-			respawnTimer -= Time.deltaTime;
-			if (respawnTimer <= 0.0f)
-			{
-				respawn();
-			}
-		}
-	}
-
 	public override void kill()
 	{
-		health = 0.0f;
 		dead = true;
 		respawnTimer = timeToRespawn;
+		// temp code for testing
+		renderer.material.color = Color.red;
 	}
 
 	public void respawn()
@@ -81,13 +62,9 @@ public class PlayerBase : CharacterBase
 		transform.position = manager.getRespawnPoint();
 		transform.rotation = Quaternion.identity;
 
-		health = maxHealth;
-
 		verticalVelocity = 0.0f;
 
 		dead = false;
-
-		base.respawn();
 	}
 
 	public void enterRoom(RoomNode room)
@@ -96,7 +73,6 @@ public class PlayerBase : CharacterBase
 		mapMan.notifySpawners(room);
 		mapMan.loadNeighbors(room);
 		mapMan.unloadEmptyRooms();
-		mapMan.updateRespawnPoints(room);
 
 		HordeRoom h = room.obj.GetComponent<HordeRoom>();
 		if (h != null)
@@ -137,73 +113,6 @@ public class PlayerBase : CharacterBase
 				
 
 		}
-	}
-
-	public void useMana(float amt){
-	//checks and then subtracts mana from pool
-		if (checkForMana (amt))
-			mana -= amt;
-		else
-			return;
-
-		amt = amt / maxMana;
-		if (manaBar != null)
-		{
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta - (new Vector2 (322*amt, 0.0f));
-		}
-
-	}
-
-	public void addMana(float amt){
-		mana += amt;
-
-		if(mana + amt > maxMana)
-			mana = maxMana;
-
-		amt = amt / maxMana;
-		if (manaBar) {
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322 * amt, 0.0f));
-			if(manaBar.rectTransform.sizeDelta.x > 0){
-				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
-			}
-		}
-	}
-
-	private bool checkForMana(float amt){
-	//takes in an amount of mana to check if attack can occur
-		if (mana - amt > 0)
-			return true;
-		else
-			return false;
-	}
-
-	public void manaRegen(float perSec){
-	//mana regeneration function for any players with
-	//mana regenerate.
-		if (manaBar == null || manaBar.rectTransform.sizeDelta.x > 0)
-				return;
-
-		perSec = perSec * Time.deltaTime;
-		mana += perSec;
-		Mathf.Clamp (mana, 0, maxMana);
-		float amt = perSec / maxMana;
-
-		if (manaBar != null)
-		{
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322*amt, 0.0f));
-			if(manaBar.rectTransform.sizeDelta.x > 0){
-				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
-			}
-		}
-	}
-
-	public void formMana(int size){
-	//when the player starts, either fill his mana bar or not
-		Debug.Log ("making the mana bar");
-		if(size == 1)
-			manaBar.rectTransform.sizeDelta = new Vector2 (0, manaBar.rectTransform.sizeDelta.y);
-		else if(size == 0)
-			manaBar.rectTransform.sizeDelta = new Vector2 (-322, manaBar.rectTransform.sizeDelta.y);
 	}
 
 	public virtual void basicAttack(string dir){}

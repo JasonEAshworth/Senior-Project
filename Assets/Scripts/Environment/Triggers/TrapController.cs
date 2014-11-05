@@ -7,41 +7,20 @@ public class TrapController : MonoBehaviour
 	// for example, an arrow from an arrow trap or spikes for a spike trap
 	public GameObject trapObject;
 
-	//a list of currently active traps
-	public ArrayList traps = new ArrayList();
-
 	public void ActivateTrigger(bool state)
 	{
+		Debug.Log("trap start");
 		if(trapObject.GetComponent<ProjectileTrapObj>())
 		{
+			//fix this stuff
+			Debug.Log("p trap");
 			GameObject p = Instantiate(trapObject, this.transform.position, Quaternion.identity) as GameObject;
-			ProjectileTrapObj pto = p.GetComponent<ProjectileTrapObj>();
-			pto.travelDir  = this.transform.forward;
-			pto.spawner  = false;
-			p.GetComponent<MeshRenderer>().enabled = true;
-			p.transform.localScale = Vector3.one;
-			p.transform.SetParent(this.transform);
-			this.traps.Add(p);
+			p.GetComponent<ProjectileTrapObj>().travelDir  = this.transform.forward;
 		}
-		else if(trapObject.GetComponent<SpikeTrap>())
+		else if (trapObject.GetComponent<DurationTrapObj>())
 		{
-			if(state)
-			{
-				GameObject d = Instantiate(trapObject, this.transform.position, Quaternion.identity) as GameObject;
-				SpikeTrap st = d.GetComponent<SpikeTrap>();
-				st.travelDir = this.transform.up;
-				st.spawner = false;
-				d.GetComponent<MeshRenderer>().enabled = true;
-				d.transform.localScale = Vector3.one;
-				d.transform.SetParent(this.transform);
-				this.traps.Add(d);
-			}
-			else
-			{
-				GameObject go = this.traps[0] as GameObject;
-				Destroy(go);
-				this.traps.Remove(go);
-			}
+			Debug.Log("d trap");
+			DurationTrapObj d = Instantiate(trapObject, this.transform.position, Quaternion.identity) as DurationTrapObj;
 		}
 	}
 }

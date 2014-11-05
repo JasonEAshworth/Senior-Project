@@ -11,14 +11,14 @@ public class EnemyArchtypeMelee : EnemyBase {
 	public Transform target;
 	private Transform mTransform;
 
-	public float eRange = 20f;
+	public float eRange = 10f;
 	public float pDistance;
 	public GameObject player;
+	public float attackRate = 2f;
 
 	public float weaponReach = 1.5f;
 
 	// Behavior / Rates
-	private float attackRate = 2.0f;
 	private bool chasing = false;
 	private float attackTime = Time.time;
 	
@@ -30,15 +30,15 @@ public class EnemyArchtypeMelee : EnemyBase {
 	// Update is called once per frame
 	void FixedUpdate() 
 	{
-		base.FixedUpdate();
 		player = findClosestPlayerInRange (eRange);
 		if (player != null)
 		{
 			target = player.transform;
-			pDistance = (target.position - mTransform.position).magnitude;
+			pDistance = (target.position - mTransform.position).magnitude;				
 		
 			if (chasing) 
 			{
+				Debug.Log("Should be Chasing");
 				if(pDistance > giveUpThreshold)
 				{
 					chasing = false;
@@ -47,6 +47,7 @@ public class EnemyArchtypeMelee : EnemyBase {
 
 				else if(pDistance <= eRange && pDistance >= attackDistance)
 				{
+					Debug.Log ("Should be Attacking");
 					cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
 					mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
 					attackTime = Time.time + attackRate;

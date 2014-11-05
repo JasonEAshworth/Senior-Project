@@ -35,14 +35,17 @@ public class PlayerManager : MonoBehaviour
 		selectedClasses.Add(playerClass.WARRIOR);
 
 		// set players to 4 at start
-		//numPlayers = 4;
+		numPlayers = 4;
+
+		// acquire all spawn points for players 
+		getNewSpawnPoints();
 
 		for (int i=0; i<numPlayers; i++) 
 		{
 			switch (selectedClasses[i])
 			{
 			case playerClass.WOODSMAN:
-				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/WoodsMan/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
+				GameObject player1 = Instantiate (Resources.Load("Prefabs/Character/Woodsman/Woodsman"),spawns[i].transform.position,Quaternion.identity) as GameObject;
 				player1.tag = "Player";
 				woods = player1.GetComponent<Woodsman>();
 				woods.classType = playerClass.WOODSMAN;
@@ -53,10 +56,7 @@ public class PlayerManager : MonoBehaviour
 				woods.playerNum = i;
 				woods.health = 100.0f;
 				woods.maxHealth = 100.0f;
-				woods.mana = 100.0f;
 				woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
-				woods.manaBar = GameObject.Find("woodsmanMana").GetComponent<RawImage>();
-				woods.formMana(1);
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
@@ -70,10 +70,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.playerNum = i;
 				sorc.health = 100.0f;
 				sorc.maxHealth = 100.0f;
-				sorc.mana = 100.0f;
 				sorc.healthBar = GameObject.Find("SorcererHealth").GetComponent<RawImage>();
-				sorc.manaBar = GameObject.Find("SorcererMana").GetComponent<RawImage>();
-				sorc.formMana(1);
 				players.Add (player2);
 				break;
 
@@ -88,10 +85,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.playerNum = i;
 				rogue.health = 100.0f;
 				rogue.maxHealth = 100.0f;
-				rogue.mana = 100.0f;
 				rogue.healthBar = GameObject.Find("RogueHealth").GetComponent<RawImage>();
-				rogue.manaBar = GameObject.Find("RogueMana").GetComponent<RawImage>();
-				rogue.formMana(1);
 				players.Add (player3);
 				break;
 			
@@ -106,10 +100,7 @@ public class PlayerManager : MonoBehaviour
 				war.playerNum = i;
 				war.health = 100.0f;
 				war.maxHealth = 100.0f;
-				war.mana = 0.0f;
 				war.healthBar = GameObject.Find("WarriorHealth").GetComponent<RawImage>();
-				war.manaBar = GameObject.Find("WarriorMana").GetComponent<RawImage>();
-				war.formMana(0);
 				players.Add (player4);
 				break;
 			}
@@ -122,9 +113,9 @@ public class PlayerManager : MonoBehaviour
 		return spawns[randSpawn].transform.position;
 	}
 
-	public void assignNewSpawnPoints(GameObject[] newSpawns)
+	public void getNewSpawnPoints()
 	{
-		spawns = newSpawns;
+		spawns = GameObject.FindGameObjectsWithTag("Respawn");
 	}
 
 	public void respawnAllPlayers()

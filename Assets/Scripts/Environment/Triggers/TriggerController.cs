@@ -16,9 +16,10 @@ public class TriggerController : MonoBehaviour
 	//# of players (or objects) to activate the trigger
 	public int playersNeeded = 1;
 	//# of seconds before the trigger can be used again
-	public float coolDownMax = 1.5f;
+	protected float coolDownMax = 1.5f;
 	//whether the trigger is in cool down
 	public bool inCD = false;
+
 
 	public void Start()
 	{
@@ -80,10 +81,5 @@ public class TriggerController : MonoBehaviour
 		{
 			Trigger();
 		}
-	}
-
-	public virtual void ActivateTrigger(bool state)
-	{
-		this.on = true;
 	}
 }

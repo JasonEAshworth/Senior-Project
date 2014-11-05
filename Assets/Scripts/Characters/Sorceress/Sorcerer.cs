@@ -6,13 +6,16 @@ public class Sorcerer : PlayerBase
 {
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
+	private float mana = 100.0f;
 	private float timeButtonHeld;
 
-	void Update(){
-		base.Update();
-		manaRegen (2.5f);
+	void start()
+	{
+		int health = 100;
+		int maxHealth = health;
+		moveSpeed = 4.0f;
 	}
-
+	
 	public override void basicAttack(string dir)
 	{
 		if(dir == "down")
@@ -21,7 +24,8 @@ public class Sorcerer : PlayerBase
 			Debug.Log ("sorceress attack");
 			attackStarted = Time.time;
 		}
-		float timeSinceAttack = Time.time - attackStarted;
+		float currentTime = Time.time;
+		float timeSinceAttack = currentTime - attackStarted;
 		if (dir == "up")
 		{
 			//When the attack key is released, check to see how long it was
@@ -31,28 +35,38 @@ public class Sorcerer : PlayerBase
 				//Check with attackType to see which basic attack to use
 				if(attackType == 1)
 				{
-					if(!normal)
-						StartCoroutine(Fireball());
+					//Cast Fireball
+					//animator.Play("SorceressFireball");
+					Fireball();
+					Debug.Log ("Fireball");
 				}
 				else
 				{
-					if(!normal)
-						StartCoroutine(IceSpike());
+					//Cast Ice Bolt
+					//animator.Play("SorceressIceBolt");
+					IceSpike();
+					Debug.Log("Ice Spike");
 				}
+				Debug.Log ("sorceress basic attack");
 			}
 			else
 			{
 				//Check with attackType to see which basic attack to use
-				//mana -= 25.0f;
+				mana -= 25.0f;
 				if(attackType == 1)
 				{
-					if(!special)
-						StartCoroutine(Meteor());
+					//Cast Firestorm
+					//animator.Play("SorceressFirestorm");
+					Meteor();
+					Debug.Log("Meteor");
 				}
 				else
 				{
-					if(!special)
-						StartCoroutine(Blizzard());
+					//Cast Blizzard
+					//animator.Play("SorceressBlizzard");
+					Blizzard();
+					Debug.Log("Blizzard");
+
 				}
 				Debug.Log("sorceress special attack");
 			}
@@ -85,10 +99,7 @@ public class Sorcerer : PlayerBase
 		}
 	}
 
-	private IEnumerator Blizzard(){
-		special = true;
-
-		useMana (25.0f);
+	private void Blizzard(){
 		Quaternion startAngle = Quaternion.AngleAxis (-30, Vector3.up);
 		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
 
@@ -131,48 +142,37 @@ public class Sorcerer : PlayerBase
 					c.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.0f); 
 		}*/
 		Destroy (Bliz, 5.0f);
-
-		yield return StartCoroutine (Wait (5.0f));
-		special = false;
 	}
 
-	private IEnumerator Fireball(){
-		normal = true;
-
-		useMana(5.0f);
+	private void Fireball(){
+		StartCoroutine(Wait());
 		Transform pos = transform.Find("shootPos");
-		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
 
-		yield return StartCoroutine (Wait (1.5f));
-		normal = false;
+		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
 	}
 
-	private IEnumerator Meteor(){
-		special = true;
-
-		useMana (25.0f);
+	private void Meteor(){
 		Vector3 pos = transform.position;
+
 		GameObject Meteor = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Meteor"), pos, transform.rotation) as GameObject;
 
 		//Example for alphaing out the texture of the object
 		/*GameObject ball = Meteor.transform.FindChild ("Sphere").gameObject;
 		Debug.Log (ball);
 		ball.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.1f);*/
-
-		yield return StartCoroutine (Wait (5.0f));
-		special = false;
 	}
 
-	private IEnumerator IceSpike(){
-		normal = true;
-
-		useMana(2.0f);
+	private void IceSpike(){
 		Transform pos = transform.Find("shootPos");
+
 		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;
 		icicle.transform.up = transform.forward;
-
-		yield return StartCoroutine (Wait (0.5f));
-		normal = false;
 	}
-	
+
+	private IEnumerator Wait()
+	{
+		Debug.Log ("Wait started");
+		yield return new WaitForSeconds (55.0f);
+		Debug.Log ("Wait ended");
+	}
 }

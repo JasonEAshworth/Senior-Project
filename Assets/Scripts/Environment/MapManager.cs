@@ -85,7 +85,6 @@ public class RoomNode
 	public bool hasBeenLoaded = false; // used to keep track of the first time a room is loaded for item management
 	public List<GameObject> doors;
 	public List<GameObject> items;
-	public List<GameObject> playerRespawns;
 	public List<EnemySpawner> enemySpawners;
 	public RoomNode[] neighbors;
 	public RoomNode north
@@ -139,7 +138,6 @@ public class RoomNode
 		neighbors = new RoomNode[4] {null, null, null, null};
 		doors = new List<GameObject>();
 		items = new List<GameObject>();
-		playerRespawns = new List<GameObject>();
 		enemySpawners = new List<EnemySpawner>();
 		// set up room type
 		if (n.Contains("_H_"))
@@ -170,8 +168,6 @@ public class MapManager : MonoBehaviour
 	private RoomGraph map;
 	public string[] roomsToLoad = new string[3];
 
-	private int playerSpawnRoom = 0;
-
 	private PlayerManager pMan;
 
 	void Awake()
@@ -189,13 +185,12 @@ public class MapManager : MonoBehaviour
 		map.connectRooms(map.rooms[1], map.rooms[2], Direction.WEST);
 		// Look at the first room's neighbors and set them up
 		loadNeighbors(map.rooms[0]);
-		// Give the player manager the first room's spawn points
-		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
 	}
 
 	void Start()
 	{
+		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+
 		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
 		{
 			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
@@ -210,15 +205,6 @@ public class MapManager : MonoBehaviour
 			GameObject room = Instantiate(Resources.Load(roomNode.name), Vector3.zero, Quaternion.Euler(0.0f, 180.0f, 0.0f)) as GameObject;
 			roomNode.obj = room;
 			map.roomsActive.Add(roomNode);
-			// Gather all of the room's respawn points
-			GameObject[] respawns = GameObject.FindGameObjectsWithTag("Respawn");
-			foreach (GameObject r in respawns)
-			{
-				if (r.transform.root == roomNode.obj.transform)
-				{
-					roomNode.playerRespawns.Add(r);
-				}
-			}
 			EnemySpawner[] es = room.GetComponentsInChildren<EnemySpawner>();
 			for (int i = 0; i < es.Length; i++)
 			{
@@ -363,16 +349,5 @@ public class MapManager : MonoBehaviour
 			}
 		}
 		return roomsIn;
-	}
-
-	// Called whenever a player enters a room. If this room is closer to the end of the dungeon, it assigns new respawn points for the players
-	public void updateRespawnPoints(RoomNode room)
-	{
-		int roomIdx = map.rooms.IndexOf(room);
-		if (roomIdx > playerSpawnRoom)
-		{
-			playerSpawnRoom = roomIdx;
-			pMan.assignNewSpawnPoints(room.playerRespawns.ToArray());
-		}
 	}
 }

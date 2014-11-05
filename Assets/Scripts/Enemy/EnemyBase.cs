@@ -22,8 +22,12 @@ public class EnemyBase : CharacterBase
 	public bool attacking = false;
 	public float attackDistance = 0f;
 	public float giveUpThreshold = 0f;
-	public float aR = 0f;
+	public float attackRate = 0f;
 	public float attackDamage = 0f;
+
+	// Move Variables
+	//public float moveSpeed = 1;
+	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
 	public bool partOfHorde = false;
@@ -47,9 +51,8 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	protected void FixedUpdate()
+	new protected void FixedUpdate()
 	{
-		base.FixedUpdate();
 		if (!dead)
 		{
 			// move around the screen based on AI and enemyController script.
@@ -121,11 +124,8 @@ public class EnemyBase : CharacterBase
 		for (int i = 0; i < players.Length; i++)
 		{
 			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
-			if (sqrRange < shortestRange)
-			{
-				shortestRange = Mathf.Min(sqrRange, shortestRange);
-				closestPlayerIdx = i;
-			}
+			shortestRange = Mathf.Min(sqrRange, shortestRange);
+			closestPlayerIdx = i;
 		}
 		if (shortestRange <= range * range) // squaring range is faster than square rooting every distance
 		{

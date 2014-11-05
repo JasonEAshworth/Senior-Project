@@ -6,7 +6,6 @@ public class CharacterBase : MonoBehaviour
 {
 	public float health = 100.0f;
 	public float maxHealth = 100.0f;
-	public float score = 0.0f;
 	public bool dead = false;
 
 	public float moveSpeed = 10.0f;
@@ -22,20 +21,10 @@ public class CharacterBase : MonoBehaviour
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
 	public RawImage healthBar;
-	protected float healthBarWidth;
-	protected float healthBarHeight;
-
-	public PlayerManager manager;
 
 	protected void Start()
 	{
 		cc = GetComponent<CharacterController>();
-
-		if (healthBar)
-		{
-			healthBarWidth = healthBar.rectTransform.rect.width;
-			healthBarHeight = healthBar.rectTransform.rect.height;
-		}
 	}
 
 	public void FixedUpdate()
@@ -60,24 +49,23 @@ public class CharacterBase : MonoBehaviour
 	public virtual void kill()
 	{
 		dead = true;
-	}
-
-	public void respawn()
-	{
-		health = maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*1, 0.0f));
+		// temp code for testing
+		renderer.material.color = Color.red;
 	}
 
 	public void takeDamage(float amount)
 	{
-		if (currentDamageCooldown > 0.0f || dead)
+		if (currentDamageCooldown > 0.0f)
 		{
 			return;
 		}
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+		if (healthBar != null)
+		{
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (322*amt4Health, 0.0f));
+		}
 	
 		if (health <= 0)
 		{
@@ -87,9 +75,5 @@ public class CharacterBase : MonoBehaviour
 		{
 			currentDamageCooldown = damageInvulnTime;
 		}
-	}
-
-	public IEnumerator Wait(float sec){
-		yield return new WaitForSeconds (sec);
 	}
 }
