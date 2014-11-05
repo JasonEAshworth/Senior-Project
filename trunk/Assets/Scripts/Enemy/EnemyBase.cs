@@ -22,12 +22,8 @@ public class EnemyBase : CharacterBase
 	public bool attacking = false;
 	public float attackDistance = 0f;
 	public float giveUpThreshold = 0f;
-	public float attackRate = 0f;
+	public float aR = 0f;
 	public float attackDamage = 0f;
-
-	// Move Variables
-	public float moveSpeed = 1;
-	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
 	public bool partOfHorde = false;
@@ -51,8 +47,9 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	new protected void FixedUpdate()
+	protected void FixedUpdate()
 	{
+		base.FixedUpdate();
 		if (!dead)
 		{
 			// move around the screen based on AI and enemyController script.
