@@ -1684,8 +1684,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Jump
       takeName: Take 001
-      firstFrame: 150
-      lastFrame: 269
+      firstFrame: 199
+      lastFrame: 229
       wrapMode: 0
       orientationOffsetY: -78.8000031
       level: 0
@@ -4029,7 +4029,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -4041,7 +4041,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .629268289
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -4363,7 +4371,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -4375,7 +4383,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .586498141
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -4697,7 +4713,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -4709,7 +4725,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .627249241
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
