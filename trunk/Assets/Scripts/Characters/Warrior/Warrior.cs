@@ -8,6 +8,7 @@ public class Warrior : PlayerBase
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
 	private float comboStarted = Time.time - 10.0f;
+	private bool attacking = false;
 
 	/*public void init()
 	{
@@ -20,7 +21,7 @@ public class Warrior : PlayerBase
 		if (dir == "down")
 		{
 			//Check enemy facing
-			Debug.Log ("warrior attack");
+			//Debug.Log ("warrior attack");
 			attackStarted = Time.time;
 			if(count == 0)
 			{
@@ -30,55 +31,47 @@ public class Warrior : PlayerBase
 		float currentTime = Time.time;
 		float timeSinceAttack = currentTime - attackStarted;
 		float timeSinceCombo = currentTime - comboStarted;
-		if (dir == "up") 
-		{
+		if (dir == "up") {
+
 			//If there is too long of time between basic attacks, the combo is reset
-			if (timeSinceCombo > 3.0f)
-			{
+			if (timeSinceCombo > 3.0f){
 				count = 0;
 			}
+
 			//When the attack key is released, check to see how long it was
 			//held to determin what attack to do.
-			if (count < 3 && timeSinceAttack < 1.0f)
-			{
+			if (count < 3 && timeSinceAttack < 1.0f && !normal){
 				//Check and see if the user has done the basic attack in time
 				//to continue with the combo
-				if (timeSinceCombo <= 3.0f)
-				{
-					//animator.Play("WarriorBasicAttack");
-					Debug.Log ("Basic Warrior Attack");
+
+				if (timeSinceCombo <= 3.0f){
 					count++;
-				}
-				else
-				{
-					//animator.Play("WarriorBasicAttack");
-					Debug.Log ("Basic Warrior Attack/Combo reset");
+					addMana(5.0f);
+					Debug.Log("Warrior Basic Attack, Count: " + count);
+				} 
+				else{
 					count = 0;
+					addMana(5.0f);
+					Debug.Log("Warrior Basic Attack, Count: " + count);
 				}
 			}
+
 			//If the combo is complete, do the smash attack
-			else if (count == 3 && timeSinceAttack < 1.0f)
-			{
-				//animator.Play("WarriorCleaveAttack");
-				Debug.Log ("Cleave Warrior Attack");
+			else if (count == 3 && timeSinceAttack < 1.0f){
+				Debug.Log("Warrior Combo Attack");
 				count = 0;
+				if(!normal)
+					StartCoroutine(comboAttack());
 			}
+
 			//If the warrior still has rage, he uses his special; Otherwise, he just does a basic attack
-			/*else if(rage >= 25.0f)
-			{
-				Debug.Log ("warrior special attack");
-				attacking = true;
-				rage -= 25.0f;
-				/*
-				if(!animation.isPlaying)
-				{
-					animation.Play("WarriorCleaveAttack");
-				}*/
-			//}
-			else
-			{
-				//animator.Play("WarriorBasicAttack");
-				Debug.Log ("Basic Warrior Attack");
+			else if(mana >= 25.0f){
+				Debug.Log("Warrior Special Attack");
+				if(!special)
+					StartCoroutine(specialAttack());
+			}
+			else{
+
 			}
 		}
 			
@@ -121,22 +114,41 @@ public class Warrior : PlayerBase
 				//Use Item
 			}
 		}*/
+
+	private IEnumerator comboAttack(){
+		normal = true;
 		
-		public override void classAbility(string dir)
+		//do attack shit here
+		addMana (10.0f);
+		yield return StartCoroutine (Wait (0.5f));
+		normal = false;
+	}
+
+	private IEnumerator specialAttack(){
+		special = true;
+
+		useMana(25.0f);
+		//do special attack shit
+
+		yield return StartCoroutine (Wait (0.5f));
+		special = false;
+	}
+	
+	public override void classAbility(string dir)
+	{
+		if (dir == "down" && !attacking) 
 		{
-			if (dir == "down" && !attacking) 
-			{
-				Debug.Log ("warrior class ability");
-				// animator.Play("WarriorClassAbility");
-				moveSpeed = moveSpeed / 2;
-				blockProjectiles = true;
-			} 
-			else if (dir == "up") 
-			{
-				// animator.Play("NormalWalkingWarrior");
-				moveSpeed = moveSpeed *2;
-				blockProjectiles = false;
-			}
+			Debug.Log ("warrior class ability");
+			// animator.Play("WarriorClassAbility");
+			moveSpeed = moveSpeed / 2;
+			blockProjectiles = true;
+		} 
+		else if (dir == "up") 
+		{
+			// animator.Play("NormalWalkingWarrior");
+			moveSpeed = moveSpeed *2;
+			blockProjectiles = false;
 		}
+	}
 		
 	}
