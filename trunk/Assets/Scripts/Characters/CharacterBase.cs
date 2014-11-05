@@ -88,4 +88,8 @@ public class CharacterBase : MonoBehaviour
 			currentDamageCooldown = damageInvulnTime;
 		}
 	}
+
+	public IEnumerator Wait(float sec){
+		yield return new WaitForSeconds (sec);
+	}
 }

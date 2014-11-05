@@ -56,6 +56,7 @@ public class PlayerManager : MonoBehaviour
 				woods.mana = 100.0f;
 				woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
 				woods.manaBar = GameObject.Find("woodsmanMana").GetComponent<RawImage>();
+				woods.formMana(1);
 				players.Add (player1);
 				break;
 			case playerClass.SORCERER:
@@ -72,6 +73,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.mana = 100.0f;
 				sorc.healthBar = GameObject.Find("SorcererHealth").GetComponent<RawImage>();
 				sorc.manaBar = GameObject.Find("SorcererMana").GetComponent<RawImage>();
+				sorc.formMana(1);
 				players.Add (player2);
 				break;
 
@@ -89,6 +91,7 @@ public class PlayerManager : MonoBehaviour
 				rogue.mana = 100.0f;
 				rogue.healthBar = GameObject.Find("RogueHealth").GetComponent<RawImage>();
 				rogue.manaBar = GameObject.Find("RogueMana").GetComponent<RawImage>();
+				rogue.formMana(1);
 				players.Add (player3);
 				break;
 			
@@ -106,6 +109,7 @@ public class PlayerManager : MonoBehaviour
 				war.mana = 0.0f;
 				war.healthBar = GameObject.Find("WarriorHealth").GetComponent<RawImage>();
 				war.manaBar = GameObject.Find("WarriorMana").GetComponent<RawImage>();
+				war.formMana(0);
 				players.Add (player4);
 				break;
 			}

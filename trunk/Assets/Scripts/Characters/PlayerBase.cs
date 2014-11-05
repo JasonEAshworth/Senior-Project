@@ -23,7 +23,6 @@ public class PlayerBase : CharacterBase
 	public bool canJump = true;
 	public float jumpForce = 7.0f;
 	public float verticalVelocity = 0.0f;
-	public bool attacking = false;
 	public playerClass classType;
 
 	protected GameObject item;
@@ -140,10 +139,6 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	public IEnumerator Wait(float sec){
-		yield return new WaitForSeconds (sec);
-	}
-
 	public void useMana(float amt){
 	//checks and then subtracts mana from pool
 		if (checkForMana (amt))
@@ -157,6 +152,21 @@ public class PlayerBase : CharacterBase
 			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta - (new Vector2 (322*amt, 0.0f));
 		}
 
+	}
+
+	public void addMana(float amt){
+		mana += amt;
+
+		if(mana + amt > maxMana)
+			mana = maxMana;
+
+		amt = amt / maxMana;
+		if (manaBar) {
+			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322 * amt, 0.0f));
+			if(manaBar.rectTransform.sizeDelta.x > 0){
+				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
+			}
+		}
 	}
 
 	private bool checkForMana(float amt){
@@ -175,7 +185,7 @@ public class PlayerBase : CharacterBase
 
 		perSec = perSec * Time.deltaTime;
 		mana += perSec;
-		Mathf.Clamp (mana, 0, 100);
+		Mathf.Clamp (mana, 0, maxMana);
 		float amt = perSec / maxMana;
 
 		if (manaBar != null)
@@ -185,6 +195,15 @@ public class PlayerBase : CharacterBase
 				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
 			}
 		}
+	}
+
+	public void formMana(int size){
+	//when the player starts, either fill his mana bar or not
+		Debug.Log ("making the mana bar");
+		if(size == 1)
+			manaBar.rectTransform.sizeDelta = new Vector2 (0, manaBar.rectTransform.sizeDelta.y);
+		else if(size == 0)
+			manaBar.rectTransform.sizeDelta = new Vector2 (-322, manaBar.rectTransform.sizeDelta.y);
 	}
 
 	public virtual void basicAttack(string dir){}
