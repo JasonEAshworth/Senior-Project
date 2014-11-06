@@ -48,7 +48,7 @@ public class EnemyArchtypeMelee : EnemyBase {
 				else if(pDistance <= eRange && pDistance >= attackDistance)
 				{
 					cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
-					mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
+					rotateTowardsPlayer(player, Time.deltaTime);
 					attackTime = Time.time + attackRate;
 					if(attackTime >= attackRate && pDistance <= weaponReach)
 					{

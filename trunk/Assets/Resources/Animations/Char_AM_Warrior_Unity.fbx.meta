@@ -3020,7 +3020,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Block
       takeName: Take 001
-      firstFrame: 1130
+      firstFrame: 1175
       lastFrame: 1219
       wrapMode: 0
       orientationOffsetY: -78.8000031
@@ -4022,7 +4022,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack1
       takeName: Take 001
-      firstFrame: 1490
+      firstFrame: 1514
       lastFrame: 1579
       wrapMode: 0
       orientationOffsetY: -78.8000031
@@ -4042,8 +4042,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .629268289
+      - time: .542563081
         functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .301586866
+        functionName: triggerNormalAttack
         data: 
         objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
           type: 2}
@@ -4364,7 +4372,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack2
       takeName: Take 001
-      firstFrame: 1600
+      firstFrame: 1636
       lastFrame: 1749
       wrapMode: 0
       orientationOffsetY: -78.8000031
@@ -4384,8 +4392,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: .586498141
+      - time: .410197556
         functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .333332986
+        functionName: triggerNormalAttack
         data: 
         objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
           type: 2}
@@ -4706,7 +4722,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack3
       takeName: Take 001
-      firstFrame: 1775
+      firstFrame: 1793
       lastFrame: 2009
       wrapMode: 0
       orientationOffsetY: -78.8000031
@@ -4728,6 +4744,14 @@ ModelImporter:
       events:
       - time: .627249241
         functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .280423135
+        functionName: triggerComboAttack
         data: 
         objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
           type: 2}
@@ -5048,8 +5072,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Whirlwind
       takeName: Take 001
-      firstFrame: 2029.99988
-      lastFrame: 2210
+      firstFrame: 2090
+      lastFrame: 2174
       wrapMode: 0
       orientationOffsetY: -78.8000031
       level: 0
@@ -5067,7 +5091,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .174603954
+        functionName: triggerWhirlwind
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .602268279
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: dfa9f0b39c6357f4d9294f4cd895a2c3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

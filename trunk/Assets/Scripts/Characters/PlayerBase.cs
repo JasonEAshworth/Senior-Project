@@ -47,9 +47,10 @@ public class PlayerBase : CharacterBase
 	public KeyCode specialAttackKey;
 
 	public PlayerManager manager;
+	
 	private MapManager mapMan;
 
-	void Start()
+	protected void Start()
 	{
 		base.Start();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();

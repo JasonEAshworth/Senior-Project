@@ -25,8 +25,6 @@ public class CharacterBase : MonoBehaviour
 	protected float healthBarWidth;
 	protected float healthBarHeight;
 
-	public PlayerManager manager;
-
 	protected void Start()
 	{
 		cc = GetComponent<CharacterController>();
@@ -79,8 +77,10 @@ public class CharacterBase : MonoBehaviour
 		health -= amount;
 
 		float amt4Health = amount / maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
-	
+		if (healthBar != null)
+		{
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+		}
 		if (health <= 0)
 		{
 			kill();
