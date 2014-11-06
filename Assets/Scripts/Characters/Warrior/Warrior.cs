@@ -20,6 +20,7 @@ public class Warrior : PlayerBase
 	private float specialAttackDuration = 2.0f;
 	private float specialAttackForce = 20.0f;
 
+
 	public override void basicAttack(string dir)
 	{
 		if (dir == "down")

@@ -21,7 +21,7 @@ public class PlayerBase : CharacterBase
 	public bool controllable = true;
 
 	public bool canJump = true;
-	public float jumpForce = 7.0f;
+	public float jumpForce = 15.0f;
 	public float verticalVelocity = 0.0f;
 	public playerClass classType;
 
