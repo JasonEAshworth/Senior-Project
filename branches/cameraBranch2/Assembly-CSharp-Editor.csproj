@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -75,28 +75,30 @@
      <None Include="Assets\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/Editor/UnityEditor.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>D:/Senior Project/branches/cameraBranch2/Assets/Exploder/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>C:/Users/James/Documents/Senior Project/etgg4801_2014/branches/cameraBranch2/Assets/Exploder/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Editor">
- <HintPath>D:/Senior Project/branches/cameraBranch2/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
+ <HintPath>C:/Users/James/Documents/Senior Project/etgg4801_2014/branches/cameraBranch2/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>D:/Senior Project/branches/cameraBranch2/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>C:/Users/James/Documents/Senior Project/etgg4801_2014/branches/cameraBranch2/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
  <Reference Include="ShaderForge">
- <HintPath>D:/Senior Project/branches/cameraBranch2/Assets/ShaderForge/Editor/Code/ShaderForge.dll</HintPath>
+ <HintPath>C:/Users/James/Documents/Senior Project/etgg4801_2014/branches/cameraBranch2/Assets/ShaderForge/Editor/Code/ShaderForge.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
- <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{E2C207C2-5C8C-71B5-3CCB-2F8BE9EA42EB}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript.unityproj">
       <Project>{2B0F4173-000F-0262-ADE2-8F9B9AB766AB}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
   </ItemGroup>
