@@ -59,7 +59,9 @@ public class CharacterBase : MonoBehaviour
 
 	public virtual void kill()
 	{
+		float amt4Health = health / maxHealth;
 		dead = true;
+		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
 	}
 
 	public void respawn()
