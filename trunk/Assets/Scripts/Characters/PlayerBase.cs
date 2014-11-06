@@ -71,6 +71,7 @@ public class PlayerBase : CharacterBase
 
 	public override void kill()
 	{
+		base.kill();
 		health = 0.0f;
 		dead = true;
 		respawnTimer = timeToRespawn;

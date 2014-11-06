@@ -186,7 +186,8 @@ public class MapManager : MonoBehaviour
 		loadRoom(map.rooms[0]);
 		// TEMP: hardcoded room neighbors, will be set up by file read or randomization or something later
 		map.connectRooms(map.rooms[0], map.rooms[1], Direction.NORTH);
-		map.connectRooms(map.rooms[1], map.rooms[2], Direction.WEST);
+		map.connectRooms(map.rooms[1], map.rooms[2], Direction.NORTH);
+		map.connectRooms(map.rooms[2], map.rooms[3], Direction.WEST);
 		// Look at the first room's neighbors and set them up
 		loadNeighbors(map.rooms[0]);
 		// Give the player manager the first room's spawn points
