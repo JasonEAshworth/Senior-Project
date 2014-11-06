@@ -8,14 +8,6 @@ public class Rogue : PlayerBase
 	private bool dash = false;
 	public float dashDur = 0.4f;
 	private float elapsed = 0.0f;
-	
-	void start()
-	{
-		int health = 100;
-		int maxHealth = health;
-		float visibility = 1.0f;
-		float moveSpeed = 6.0f;
-	}
 
 	public override void basicAttack(string dir)
 	{

@@ -50,10 +50,13 @@ public class EnemyBase : CharacterBase
 	protected void FixedUpdate()
 	{
 		base.FixedUpdate();
-		if (!dead)
+		if (cc.isGrounded)
 		{
-			// move around the screen based on AI and enemyController script.
-			// attack player if within range (melee,ranged)
+			forces = new Vector3(forces.x, Mathf.Max(0.0f, forces.y), forces.z);
+		}		
+		else 
+		{
+			addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
 		}
 	}
 

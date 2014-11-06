@@ -46,7 +46,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 			{
 				//Debug.Log ("Should be Attacking");
 				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
-				mTransform.rotation = Quaternion.Slerp (mTransform.rotation, Quaternion.LookRotation(target.position - mTransform.position), rotationSpeed*Time.deltaTime);
+				rotateTowardsPlayer(player, Time.deltaTime);
 				attackTime = Time.deltaTime + attackTime;
 				if(attackTime >= aR)
 				{
