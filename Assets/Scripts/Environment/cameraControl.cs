@@ -31,7 +31,7 @@ public class cameraControl : MonoBehaviour
             isOrthographic = Camera.main.orthographic;
         }
 		
-		virFoV = camera.fieldOfView * radConversion;
+		virFoV = Camera.main.fieldOfView * radConversion;
 		horFoV = 2 * Mathf.Atan((16/9) * Mathf.Tan((float)(virFoV)));
     }
 
@@ -79,7 +79,8 @@ public class cameraControl : MonoBehaviour
 		}
 	
 		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
-		Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
+		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
+		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180, 0);
 
 		// DEBUG STUFF
 		if (debugBool) 
