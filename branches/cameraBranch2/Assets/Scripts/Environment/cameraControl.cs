@@ -10,23 +10,29 @@ public class cameraControl : MonoBehaviour
 
     public GameObject[] targets;
 	//public GameObject captureBox;
-	public float[] angleClamp = {5, 15};
+	public float[] angleClamp = {15, 5};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
 	public GameObject cube;
+	public float playerHight;
+	public float bufferSize;
+	public bool debugBool = true;
+
+	private float horFoV;
+	private float virFoV;
+	private const float radConversion = (float)(Math.PI / 180);
 
     // Starts the camera, gets the player targest, and gets the diagonal distance of the room
     public void Start ()
     {
         Console.WriteLine ("START");
         targets = GameObject.FindGameObjectsWithTag ("Player");
-		//captureBox = GameObject.FindGameObjectWithTag ("CaptureBox");
-        //avgBox = GameObject.FindGameObjectWithTag ("avgBox");
-        // Square diagonal = Sqrt(2) * Length 
-        //roomDiagonal = 1.414f * roomLength;
         if (Camera.main) {
             isOrthographic = Camera.main.orthographic;
         }
+		
+		virFoV = camera.fieldOfView * radConversion;
+		horFoV = 2 * Mathf.Atan((16/9) * Mathf.Tan((float)(virFoV)));
     }
 
 	public void LateUpdate() 
@@ -54,33 +60,30 @@ public class cameraControl : MonoBehaviour
 		 * The work and proofs for the calculations can be found in the SVN.
 		 */
 
+		// Players largest distance between one another divided by the max distance they can be apart
 		float distanceRatio = largestDifference / maxDistanceAway;
-		float shiftAngle = (float)(Mathf.LerpAngle (angleClamp [1], angleClamp [0], distanceRatio) * Math.PI / 180.0f); 
-		float horFoVAngle = Mathf.Atan ((16 / 9) * Mathf.Tan ((float)(Camera.main.fieldOfView * Math.PI / 180.0f)));
-		float backHypot = (xMax / (2 * Mathf.Tan (.5f * horFoVAngle)));
-		float zOffset =  backHypot * Mathf.Sin (shiftAngle);
-		float yOffset = 0.0f;
 
-		if (zOffset > zMax) {
-			yOffset = backHypot * Mathf.Cos (shiftAngle);
-		} else {
-			yOffset = zMax / (Mathf.Tan (shiftAngle + (float)(Camera.main.fieldOfView * Math.PI / 360.0f)) - Mathf.Tan(shiftAngle));
-			zOffset = (yOffset * Mathf.Tan (shiftAngle)) + (zMax / 2);
+		// Angle the camera will be shifted
+		float shiftAngle = (float)(Mathf.LerpAngle (angleClamp [0], angleClamp [1], distanceRatio)); 
+		shiftAngle = shiftAngle * radConversion;
+
+		float yOffset = (xMax / (2 * Mathf.Tan (horFoV/2))) + playerHight;
+		float zOffset = yOffset * Mathf.Tan (shiftAngle);
+		float constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - yOffset;
+
+		if (constrainedZ < zMax) {
+			Debug.Log ("Bound by Z Axis");
+			constrainedZ = zMax;
+			yOffset = ((Mathf.Tan (shiftAngle + virFoV) * playerHight + zMax) / (Mathf.Tan(shiftAngle + virFoV) - Mathf.Tan (shiftAngle)));
+			zOffset = yOffset * Mathf.Tan(shiftAngle);
 		}
 	
-		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset);
+		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
-		Debug.DrawLine (Camera.main.transform.position, new Vector3 (xMid, 0, zMid));
-		Debug.Log ("DRAW CALL RESULTS");
-		for (int i = 0; i < 4; i++) {
-			Debug.Log (seperationInfo[i]);
-		}
-		Debug.Log ("zOffset: " + zOffset.ToString());
-		Debug.Log ("yOffset: " + yOffset.ToString());
-		Debug.Log ("FoV: " + (Camera.main.fieldOfView).ToString());
-		cube.transform.position = new Vector3 (xMid, 0, zMid);
-		cube.transform.localScale = new Vector3 (xMax, 2, zMax);
-		//Debug.Break();
+
+		// DEBUG STUFF
+		if (debugBool) 
+			debug(shiftAngle, xMax, zMax, xMid, zMid, zOffset, yOffset);
 	}
 
     // Gets the largest distance between any two players, and returns it
@@ -119,6 +122,24 @@ public class cameraControl : MonoBehaviour
 		float[] toReturn = {largestDistance, xMax, zMax, xMid, zMid};
 		return toReturn;
     }
+
+	private void debug(float angle, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
+	{
+		Debug.DrawLine (Camera.main.transform.position, new Vector3 (xMid, 0, zMid));
+		Debug.Log ("DRAW CALL RESULTS");
+		Debug.Log ("angleOffset: " + angle.ToString());
+		Debug.Log ("xMax: " + xMax.ToString());
+		Debug.Log ("zMax: " + zMax.ToString());
+		Debug.Log ("xMid: " + xMid.ToString());
+		Debug.Log ("zMid: " + zMid.ToString());
+		Debug.Log ("zOffset: " + zOffset.ToString());
+		Debug.Log ("yOffset: " + yOffset.ToString() + "\n");
+		//Debug.Log ("FoV: " + (Camera.main.fieldOfView).ToString());
+		cube.transform.position = new Vector3 (xMid,1, zMid);
+		cube.transform.localScale = new Vector3 (xMax, 2, zMax);
+		//Debug.Break();
+	}
+
 }
 
 // This is the old code used in the previous version of the camera. Its kept in case we need to refer back on our
