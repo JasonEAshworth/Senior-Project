@@ -23,7 +23,7 @@ public class SpikeTrap : TrapBase
 				this.transform.position += this.travelDir * 3.0f * Time.deltaTime;
 			}
 
-			Vector3 end = this.transform.position;
+			/*Vector3 end = this.transform.position;
 			Collider cc = this.GetComponent<Collider>();
 			Vector3 sc = this.transform.localScale;
 			Vector3 size = cc.bounds.size;
@@ -36,7 +36,7 @@ public class SpikeTrap : TrapBase
 			foreach(RaycastHit hit in rh)
 			{
 				this.HitObject(hit.transform);
-			}
+			}*/
 		}
 	}
 

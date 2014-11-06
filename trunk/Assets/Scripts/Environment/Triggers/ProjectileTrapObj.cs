@@ -20,7 +20,7 @@ public class ProjectileTrapObj : TrapBase
 			this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
 			Vector3 end = this.transform.position;
 
-			Collider cc = this.collider;
+			/*Collider cc = this.collider;
 
 			Vector3 sc = this.transform.localScale;
 			Vector3 size = cc.bounds.size;
@@ -33,7 +33,7 @@ public class ProjectileTrapObj : TrapBase
 			foreach(RaycastHit hit in rh)
 			{
 				this.HitObject(hit.transform);
-			}
+			}*/
 		}
 	}
 
