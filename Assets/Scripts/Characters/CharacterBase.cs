@@ -59,7 +59,9 @@ public class CharacterBase : MonoBehaviour
 	{
 		float amt4Health = health / maxHealth;
 		dead = true;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+		if (healthBar)
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+		Destroy (gameObject);
 	}
 
 	public void respawn()

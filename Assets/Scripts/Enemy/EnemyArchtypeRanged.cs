@@ -18,6 +18,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 	// Behavior / Rates
 	private bool chasing = false;
 	private float attackTime = 0.0f;
+	public float aR;
 	
 	// Use this for initialization
 	void Awake() 

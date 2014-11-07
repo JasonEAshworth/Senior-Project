@@ -22,12 +22,16 @@ public class EnemyBase : CharacterBase
 	public bool attacking = false;
 	public float attackDistance = 0f;
 	public float giveUpThreshold = 0f;
-	public float aR = 0f;
+	public float attackRate = 0f;
 	public float attackDamage = 0f;
+
+	// Move Variables
+	public float moveSpeed = 1.0f;
+	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
 	public bool partOfHorde = false;
-	
+
 	// Manager Code
 	public EnemyManager manager;
 	private MapManager mapManager;
@@ -36,7 +40,7 @@ public class EnemyBase : CharacterBase
 	protected void Start()
 	{
 		base.Start();
-		health = maxHealth;
+		health = 10.0f;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 		//renderer.material.color = Color.blue;
@@ -47,9 +51,8 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	protected void FixedUpdate()
+	new protected void FixedUpdate()
 	{
-		base.FixedUpdate();
 		if (cc.isGrounded)
 		{
 			forces = new Vector3(forces.x, Mathf.Max(0.0f, forces.y), forces.z);
@@ -135,5 +138,22 @@ public class EnemyBase : CharacterBase
 			return players[closestPlayerIdx];
 		}
 		return null;
+	}
+
+	public void slow(){
+		Debug.Log(moveSpeed);
+		moveSpeed = 0.0f;
+
+		//yield return StartCoroutine(Wait(5.0f));
+
+		//moveSpeed = 1.0f;
+	}
+
+	public IEnumerator freeze(){
+		moveSpeed = 0.0f;
+
+		yield return StartCoroutine (Wait (5.0f));
+
+		moveSpeed = 1.0f;
 	}
 }
