@@ -81,7 +81,7 @@ public class EnemyBase : CharacterBase
 		Vector3 dodgeVector = Vector3.zero;
 		if (Physics.Raycast(transform.position, moveVector, Time.deltaTime * moveSpeed))
 		{
-			dodgeVector = transform.right * moveSpeed;
+			dodgeVector = transform.right * moveSpeed * Time.deltaTime;
 		}
 		else
 		{
@@ -89,7 +89,7 @@ public class EnemyBase : CharacterBase
 		}
 		moveVector = moveVector * 0.4f + dodgeVector * 0.6f;
 		// move towards destination
-		cc.Move(moveVector * dt);
+		cc.Move(moveVector * dt * moveMulti);
 	}
 
 	protected void rotateTowardsPlayer(GameObject player, float dt)

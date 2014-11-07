@@ -46,7 +46,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 			else if(pDistance <= eRange && pDistance >= attackDistance)
 			{
 				//Debug.Log ("Should be Attacking");
-				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime * moveMulti);
 				rotateTowardsPlayer(player, Time.deltaTime);
 				attackTime = Time.deltaTime + attackTime;
 				if(attackTime >= aR)
@@ -55,7 +55,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 					//Attack(aR);
 					attackTime = 0.0f;
 				}
-				moveSpeed = 0.2f;
+				moveMulti = 0.2f;
 			}
 
 			else if(pDistance <= attackDistance)
@@ -63,8 +63,8 @@ public class EnemyArchtypeRanged : EnemyBase {
 				// rotate 180 degrees and go to 1/2 the distance of the attack 'sphere'
 				//mTransform.position += mTransform.forward*-1 * moveSpeed * Time.deltaTime;
 				mTransform.rotation = Quaternion.Slerp(mTransform.rotation, target.rotation, Time.deltaTime * rotationSpeed);
-				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
-				moveSpeed = 3.0f;
+				cc.Move(mTransform.forward * moveSpeed * Time.deltaTime * moveMulti);
+				moveMulti = 3.0f;
 				//Debug.Log("Should be running");
 			}
 

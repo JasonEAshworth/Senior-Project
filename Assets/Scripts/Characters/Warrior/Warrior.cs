@@ -67,13 +67,13 @@ public class Warrior : PlayerBase
 		if (dir == "down" && canAttack)
 		{
 			GetComponent<Animator>().SetTrigger("Block");
-			//moveSpeed = moveSpeed / 2;
+			moveMulti = 0.5f;
 			blockProjectiles = true;
 		} 
 		else if (dir == "up") 
 		{
 			GetComponent<Animator>().SetTrigger("Idle");
-			//moveSpeed = moveSpeed * 2;
+			moveMulti = 1.0f;
 			blockProjectiles = false;
 		}
 	}
