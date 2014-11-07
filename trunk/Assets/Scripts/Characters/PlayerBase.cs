@@ -111,6 +111,7 @@ public class PlayerBase : CharacterBase
 	private void addItem(GameObject p)
 	{
 		item = p;
+		base.addItem (p);
 	}
 
 	private void addKey()
@@ -126,7 +127,13 @@ public class PlayerBase : CharacterBase
 			switch(item.tag)
 			{
 			case "Potion":
-				health += item.GetComponent<Potion>().potionValue;
+				float amt = item.GetComponent<Potion>().potionValue;
+				base.itemAbility("Potion", amt);
+				health += amt;
+				if(health > maxHealth)
+				{
+					health = maxHealth;
+				}
 				Debug.Log(health);
 				item = null;
 				break;
