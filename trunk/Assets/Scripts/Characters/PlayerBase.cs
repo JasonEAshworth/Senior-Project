@@ -88,6 +88,7 @@ public class PlayerBase : CharacterBase
 		verticalVelocity = 0.0f;
 
 		dead = false;
+		canJump = false;
 
 		base.respawn();
 	}
@@ -202,9 +203,9 @@ public class PlayerBase : CharacterBase
 	public void formMana(int size){
 	//when the player starts, either fill his mana bar or not
 		Debug.Log ("making the mana bar");
-		if(size == 1)
+		if(size == 1 && manaBar != null)
 			manaBar.rectTransform.sizeDelta = new Vector2 (0, manaBar.rectTransform.sizeDelta.y);
-		else if(size == 0)
+		else if(size == 0 && manaBar != null)
 			manaBar.rectTransform.sizeDelta = new Vector2 (-322, manaBar.rectTransform.sizeDelta.y);
 	}
 

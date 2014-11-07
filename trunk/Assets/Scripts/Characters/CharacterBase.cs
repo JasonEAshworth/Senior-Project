@@ -36,7 +36,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public void FixedUpdate()
+	protected void FixedUpdate()
 	{
 		cc.Move(forces * Time.deltaTime);
 		float y = forces.y;
@@ -60,14 +60,18 @@ public class CharacterBase : MonoBehaviour
 		float amt4Health = health / maxHealth;
 		dead = true;
 		if (healthBar)
+		{
 			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
-		Destroy (gameObject);
+		}
 	}
 
 	public void respawn()
 	{
 		health = maxHealth;
-		healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*1, 0.0f));
+		if (healthBar)
+		{
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*1, 0.0f));
+		}
 	}
 
 	public void takeDamage(float amount)

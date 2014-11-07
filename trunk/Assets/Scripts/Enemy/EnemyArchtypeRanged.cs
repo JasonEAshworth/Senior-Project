@@ -52,7 +52,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 				if(attackTime >= aR)
 				{
 					//Debug.Log ("Firing Arrows!");
-					Attack(aR);
+					//Attack(aR);
 					attackTime = 0.0f;
 				}
 				moveSpeed = 0.2f;
@@ -78,7 +78,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 		}
 	}
 
-	public override void Attack (float atkRate)
+	public void Attack ()
 	{
 		GameObject bullet = Instantiate(Resources.Load ("Prefabs/Enemies/RestlessBullet"),shootPos.position,Quaternion.identity) as GameObject;
 		bullet.transform.up = transform.forward;
