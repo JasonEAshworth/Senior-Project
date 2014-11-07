@@ -7,6 +7,7 @@ public class Sorcerer : PlayerBase
 	private int attackType = 1;
 	private float attackStarted = Time.time - 10.0f;
 	private float timeButtonHeld;
+	private float blizzardDamage = 20.0f;
 
 	void Update(){
 		base.Update();
@@ -111,10 +112,11 @@ public class Sorcerer : PlayerBase
 			direction = stepAngle * direction;
 		}
 
-		//DEBUG PURPOSES////////////////////////
-
 		for(int i=0; i<enemies.Count; i++)
-			Debug.Log (enemies[i]);
+		{
+			enemies[i].SendMessage("takeDamage", blizzardDamage);
+			enemies[i].SendMessage("freeze");
+		}
 
 		direction = angle * Vector3.forward * 7;
 

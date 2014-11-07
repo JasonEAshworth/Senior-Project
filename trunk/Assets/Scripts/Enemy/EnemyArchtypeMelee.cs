@@ -43,7 +43,7 @@ public class EnemyArchtypeMelee : EnemyBase
 				}
 				else
 				{
-					cc.Move(mTransform.forward * moveSpeed * Time.deltaTime);
+					cc.Move(mTransform.forward * moveSpeed * Time.deltaTime * moveMulti);
 					rotateTowardsPlayer(player, Time.deltaTime);
 				}
 			}
