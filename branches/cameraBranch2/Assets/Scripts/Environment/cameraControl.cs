@@ -10,14 +10,14 @@ public class cameraControl : MonoBehaviour
 
     public GameObject[] targets;
 	//public GameObject captureBox;
-	public float[] angleClamp = {15, 5};
+	public float[] angleClamp = {-15, 10};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
 	public float playerHight;
 	public float bufferSize;
 	public bool debugBool = true;
-	public float xRatio = 1;
-	public float hightLimit = 5;
+	public float xRatio = .8888f;
+	public float hightLimit = 10;
 
 	private float horFoV;
 	private float virFoV;
@@ -33,7 +33,8 @@ public class cameraControl : MonoBehaviour
         }
 		
 		virFoV = Camera.main.fieldOfView * radConversion;
-		horFoV = 2 * Mathf.Atan((16/9) * Mathf.Tan((float)(virFoV)));
+		horFoV = 2 * Mathf.Atan(Camera.main.aspect * Mathf.Tan((float)(virFoV)));
+		Debug.Log (Camera.main.aspect);
     }
 
 	public void LateUpdate() 
