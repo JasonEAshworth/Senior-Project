@@ -2348,7 +2348,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Fire_Light
       takeName: Take 001
-      firstFrame: 370
+      firstFrame: 390
       lastFrame: 429
       wrapMode: 0
       orientationOffsetY: 0
