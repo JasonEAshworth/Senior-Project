@@ -52,7 +52,7 @@ public class TriggerController : MonoBehaviour
 	{
 		if(on && !inCD)
 		{
-			Debug.Log("triggering...");
+			//Debug.Log("triggering...");
 			for(int i = 0; i < obj.Length; i++)
 			{
 				//"ActivateTrigger" can be changed and is simply the

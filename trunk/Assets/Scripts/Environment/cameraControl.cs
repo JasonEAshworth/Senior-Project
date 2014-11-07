@@ -9,30 +9,163 @@ public class cameraControl : MonoBehaviour
 	private bool isOrthographic;
 
     public GameObject[] targets;
-	//public GameObject captureBox;
-	public bool dubugText = true;
-	public float[] yClamp = {5, 25};
-	public float[] zClamp = {25, 20};
+	public GameObject captureBox;
+	public float[] angleClamp = {-15, 10};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
+	public float playerHight;
+	public float bufferSize;
+	public bool debugBool = false;
+	public float xRatio = .8888f;
+	public float hightMin = 10;
+
+	private float horFoV;
+	private float virFoV;
+	private const float radConversion = (float)(Math.PI / 180);
 
     // Starts the camera, gets the player targest, and gets the diagonal distance of the room
     public void Start ()
     {
         Console.WriteLine ("START");
         targets = GameObject.FindGameObjectsWithTag ("Player");
-		//captureBox = GameObject.FindGameObjectWithTag ("CaptureBox");
-        //avgBox = GameObject.FindGameObjectWithTag ("avgBox");
-        // Square diagonal = Sqrt(2) * Length 
-        //roomDiagonal = 1.414f * roomLength;
         if (Camera.main) {
             isOrthographic = Camera.main.orthographic;
         }
+		
+		virFoV = Camera.main.fieldOfView * radConversion;
+		horFoV = 2 * Mathf.Atan(Camera.main.aspect * Mathf.Tan((float)(virFoV)));
+
+		captureBox = GameObject.Find ("CaptureBox");
+
+		Debug.Log (Camera.main.aspect);
     }
 
-    
+	public void LateUpdate() 
+	{
+		Console.WriteLine ("START");
+		// If we can't find a player, we return without altering the camera's position
+		if (!GameObject.FindWithTag ("Player")) {
+			return;
+		}
 
-    public void LateUpdate ()
+		// We get information on the two players that are the farthest apart
+		float[] seperationInfo = LargestDifferenceInfo ();
+		float largestDifference = seperationInfo [0];
+		float xMax = seperationInfo[1] + bufferSize;
+		float zMax = seperationInfo[2] + bufferSize;
+		float xMid = seperationInfo[3];
+		float zMid = seperationInfo[4];
+
+		/* We need to set the camera to contain all players. We use the information gained from the last call
+		 * First, we use some trig nonsense to get the horizontal FoV, and also get the offset angle for the camera.
+		 * Then, we check if its the x or z distance that is determining how much we need on camera. 
+		 * If its the x length, we take what we alerady have found and simply finish by finding the hight. However
+		 * if its the z, we redo the calculations using equations based on z being the bounding axis. 
+		 * 
+		 * The work and proofs for the calculations can be found in the SVN.
+		 */
+
+		// Players largest distance between one another divided by the max distance they can be apart
+		float distanceRatio = largestDifference / maxDistanceAway;
+
+		xMax += xMax *  (2 - distanceRatio) * xRatio;
+		// Angle the camera will be shifted
+		float shiftAngle = (float)(Mathf.LerpAngle (angleClamp [0], angleClamp [1], distanceRatio)); 
+		shiftAngle = shiftAngle * radConversion;
+
+		float yOffset = ((xMax * .5f) / (Mathf.Tan (horFoV/2f))) + playerHight;
+		float zOffset = yOffset * Mathf.Tan (shiftAngle);
+		float constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
+
+		if (constrainedZ < zMax) {
+			Debug.Log ("Bound by Z Axis");
+			constrainedZ = zMax;
+			yOffset = ((Mathf.Tan (shiftAngle + virFoV) * playerHight + zMax) / (Mathf.Tan(shiftAngle + virFoV) - Mathf.Tan (shiftAngle)));
+			zOffset = yOffset * Mathf.Tan(shiftAngle);
+		}
+
+		if (yOffset < hightMin) 
+		{
+			yOffset = hightMin;
+			zOffset = yOffset * Mathf.Tan (shiftAngle);
+			constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
+		}
+	
+		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
+		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
+		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180, 0);
+		captureBox.transform.position = new Vector3(xMid, yOffset, zMid + zOffset + constrainedZ / 2);
+
+		// DEBUG STUFF
+		if (debugBool) 
+			debug(shiftAngle, largestDifference, xMax, zMax, xMid, zMid, zOffset, yOffset);
+	}
+
+    // Gets the largest distance between any two players, and returns it
+    public float[] LargestDifferenceInfo ()
+    {
+        float currentDistance = 0.0f;
+		float curXMax = 0.0f;
+		float curZMax = 0.0f;
+        float largestDistance = 0.0f;
+		float xMax = 0.0f;
+		float zMax = 0.0f;
+		float xMid = targets[0].transform.position.x;  
+		float zMid = targets[0].transform.position.z;
+
+        for (int i = 0; i < targets.Length - 1; i++) {
+            for (int j = i + 1; j < targets.Length; j++) {
+				currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
+				curXMax = Mathf.Abs(targets[i].transform.position.x - targets[j].transform.position.x); 
+				curZMax = Mathf.Abs(targets[i].transform.position.z - targets[j].transform.position.z);
+                if (currentDistance > largestDistance) {
+					largestDistance = currentDistance;
+                }
+				if (xMax < curXMax)
+				{
+					xMax = curXMax;
+					xMid = (targets[i].transform.position.x + targets[j].transform.position.x) / 2;
+				}
+				if (zMax < curZMax)
+				{
+					zMax = curZMax;
+					zMid = (targets[i].transform.position.z + targets[j].transform.position.z) / 2;
+				}
+            }
+        }
+		
+		float[] toReturn = {largestDistance, xMax, zMax, xMid, zMid};
+		return toReturn;
+    }
+
+	
+	//public GameObject cube;
+	private void debug(float angle, float longest, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
+	{
+		Debug.DrawLine (Camera.main.transform.position, new Vector3 (xMid, 0, zMid));
+		Debug.Log ("DRAW CALL RESULTS");
+		Debug.Log ("angleOffset: " + angle.ToString());
+		Debug.Log ("longest: " + longest.ToString());
+		Debug.Log ("xMax: " + xMax.ToString());
+		Debug.Log ("zMax: " + zMax.ToString());
+		Debug.Log ("xMid: " + xMid.ToString());
+		Debug.Log ("zMid: " + zMid.ToString());
+		Debug.Log ("zOffset: " + zOffset.ToString());
+		Debug.Log ("yOffset: " + yOffset.ToString() + "\n");
+		//Debug.Log ("FoV: " + (Camera.main.fieldOfView).ToString());
+		//cube.transform.position = new Vector3 (xMid,1, zMid);
+		//cube.transform.localScale = new Vector3 (xMax, 2, zMax);
+		//Debug.Break();
+	}
+
+}
+
+// This is the old code used in the previous version of the camera. Its kept in case we need to refer back on our
+// previous methods for new ideas, or alterations to the current code. 
+
+/* EVEN LESS OLD CODE
+ * 
+ * public void LateUpdateOLD ()
     {
         // If we can't find a player, we return without altering the camera's position
         if (!GameObject.FindWithTag ("Player")) {
@@ -45,10 +178,10 @@ public class cameraControl : MonoBehaviour
 			sum += targets [i].transform.position;
 		}
 		avgDistance = sum / targets.Length;
-		//captureBox.transform.position = avgDistance;
+		captureBox.transform.position = avgDistance;
 		
 		// Next, we find what the biggest difference in distance between any two characters is
-		float[] largestDifferenceInfo = returnLargestDifference ();
+		float[] largestDifferenceInfo = LargestDifferenceInfo ();
 		float largestDifference = largestDifferenceInfo [0];
 		float maxX = largestDifferenceInfo [1];
 		float maxZ = largestDifferenceInfo [2];
@@ -63,34 +196,9 @@ public class cameraControl : MonoBehaviour
 
                 
     }
-
-    // Gets the largest distance between any two players, and returns it
-    public float[] returnLargestDifference ()
-    {
-        float currentDistance = 0.0f;
-        float largestDistance = 0.0f;
-		float xMax = 0.0f;
-		float zMax = 0.0f;
-        for (int i = 0; i < targets.Length; i++) {
-            for (int j = 0; j < targets.Length; j++) {
-				if (i == j) 
-					continue;
-                currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
-                if (currentDistance > largestDistance) {
-                    largestDistance = currentDistance;
-					xMax = targets[i].transform.position.x - targets[j].transform.position.x;
-					zMax = targets[i].transform.position.z - targets[j].transform.position.z;
-                }
-            }
-        }
-		
-		float[] toReturn = {largestDistance, xMax, zMax};
-		return toReturn;
-    }
-}
-
-// This is the old code used in the previous version of the camera. Its kept in case we need to refer back on our
-// previous methods for new ideas, or alterations to the current code. 
+ *
+ *
+ */
 
 /* LESS OLD CODE
  * 
