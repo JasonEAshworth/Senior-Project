@@ -15,7 +15,7 @@ public class HawkAI2 : MonoBehaviour {
 	public Vector3 initialPoint;
 	
 	private bool arrived = false;
-	private bool arrivedPerch = false;
+	public bool arrivedPerch = false;
 	private bool attacking = false;
 
 	// Transform needed where to perch on woodsman shoulder
@@ -156,7 +156,7 @@ public class HawkAI2 : MonoBehaviour {
 
 			// If the hawk isn't currently attacking an enemy make sure to update its 
 			// position towards the initialPoint
-			else if(!attacking)
+			else if(!attacking && mode == 2)
 			{
 
 
@@ -192,12 +192,12 @@ public class HawkAI2 : MonoBehaviour {
 
 			// Decrement the woodsman's energy as you go out, if you hit zero come back
 			script.useMana(script.hawkCost);
-			Debug.Log (script.hawkCost);
 			if(script.mana <= script.hawkCost)
 			{
 				initialPoint = Vector3.zero;
-				Debug.Log (initialPoint);
 				arrived = false;
+				enemyToAttack = null;
+				attacking = false;
 				mode = 3;
 			}
 			
@@ -303,7 +303,7 @@ public class HawkAI2 : MonoBehaviour {
 	// the enemyToAttack.
 	void setEnemy(GameObject c)
 	{
-		if(enemyToAttack == null)
+		if(enemyToAttack == null && mode == 2)
 		{
 			enemyToAttack = c;
 		}

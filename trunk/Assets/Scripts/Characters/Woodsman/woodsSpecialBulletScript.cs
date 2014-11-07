@@ -10,6 +10,7 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	private bool infinitePierce = false;
 	public Vector3 playerForward;
 	private float dmg = 15.0f;
+	private float timer = 7.0f;
 	// Use this for initialization
 	void Start () 
 	{
@@ -38,6 +39,11 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	void Update () 
 	{
 		transform.position = transform.position + (transform.up * speed * Time.deltaTime);
+		timer -= Time.deltaTime;
+		if(timer <= 0.0f)
+		{
+			Destroy (gameObject);
+		}
 	}
 	
 	void OnCollisionEnter(Collision c)
