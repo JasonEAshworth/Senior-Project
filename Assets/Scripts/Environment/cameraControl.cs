@@ -13,10 +13,11 @@ public class cameraControl : MonoBehaviour
 	public float[] angleClamp = {15, 5};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
-	public GameObject cube;
 	public float playerHight;
 	public float bufferSize;
 	public bool debugBool = true;
+	public float xRatio = 1;
+	public float hightLimit = 5;
 
 	private float horFoV;
 	private float virFoV;
@@ -46,8 +47,8 @@ public class cameraControl : MonoBehaviour
 		// We get information on the two players that are the farthest apart
 		float[] seperationInfo = LargestDifferenceInfo ();
 		float largestDifference = seperationInfo [0];
-		float xMax = seperationInfo[1];
-		float zMax = seperationInfo[2];
+		float xMax = seperationInfo[1] + bufferSize;
+		float zMax = seperationInfo[2] + bufferSize;
 		float xMid = seperationInfo[3];
 		float zMid = seperationInfo[4];
 
@@ -63,19 +64,27 @@ public class cameraControl : MonoBehaviour
 		// Players largest distance between one another divided by the max distance they can be apart
 		float distanceRatio = largestDifference / maxDistanceAway;
 
+		xMax += xMax *  (2 - distanceRatio) * xRatio;
 		// Angle the camera will be shifted
 		float shiftAngle = (float)(Mathf.LerpAngle (angleClamp [0], angleClamp [1], distanceRatio)); 
 		shiftAngle = shiftAngle * radConversion;
 
-		float yOffset = (xMax / (2 * Mathf.Tan (horFoV/2))) + playerHight;
+		float yOffset = ((xMax * .5f) / (Mathf.Tan (horFoV/2f))) + playerHight;
 		float zOffset = yOffset * Mathf.Tan (shiftAngle);
-		float constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - yOffset;
+		float constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
 
 		if (constrainedZ < zMax) {
 			Debug.Log ("Bound by Z Axis");
 			constrainedZ = zMax;
 			yOffset = ((Mathf.Tan (shiftAngle + virFoV) * playerHight + zMax) / (Mathf.Tan(shiftAngle + virFoV) - Mathf.Tan (shiftAngle)));
 			zOffset = yOffset * Mathf.Tan(shiftAngle);
+		}
+
+		if (yOffset < hightLimit) 
+		{
+			yOffset = hightLimit;
+			zOffset = yOffset * Mathf.Tan (shiftAngle);
+			constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
 		}
 	
 		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
@@ -84,7 +93,7 @@ public class cameraControl : MonoBehaviour
 
 		// DEBUG STUFF
 		if (debugBool) 
-			debug(shiftAngle, xMax, zMax, xMid, zMid, zOffset, yOffset);
+			debug(shiftAngle, largestDifference, xMax, zMax, xMid, zMid, zOffset, yOffset);
 	}
 
     // Gets the largest distance between any two players, and returns it
@@ -124,11 +133,14 @@ public class cameraControl : MonoBehaviour
 		return toReturn;
     }
 
-	private void debug(float angle, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
+	
+	//public GameObject cube;
+	private void debug(float angle, float longest, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
 	{
 		Debug.DrawLine (Camera.main.transform.position, new Vector3 (xMid, 0, zMid));
 		Debug.Log ("DRAW CALL RESULTS");
 		Debug.Log ("angleOffset: " + angle.ToString());
+		Debug.Log ("longest: " + longest.ToString());
 		Debug.Log ("xMax: " + xMax.ToString());
 		Debug.Log ("zMax: " + zMax.ToString());
 		Debug.Log ("xMid: " + xMid.ToString());
@@ -136,8 +148,8 @@ public class cameraControl : MonoBehaviour
 		Debug.Log ("zOffset: " + zOffset.ToString());
 		Debug.Log ("yOffset: " + yOffset.ToString() + "\n");
 		//Debug.Log ("FoV: " + (Camera.main.fieldOfView).ToString());
-		cube.transform.position = new Vector3 (xMid,1, zMid);
-		cube.transform.localScale = new Vector3 (xMax, 2, zMax);
+		//cube.transform.position = new Vector3 (xMid,1, zMid);
+		//cube.transform.localScale = new Vector3 (xMax, 2, zMax);
 		//Debug.Break();
 	}
 
