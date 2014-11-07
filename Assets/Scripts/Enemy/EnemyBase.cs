@@ -22,12 +22,7 @@ public class EnemyBase : CharacterBase
 	public bool attacking = false;
 	public float attackDistance = 0f;
 	public float giveUpThreshold = 0f;
-	public float attackRate = 0f;
 	public float attackDamage = 0f;
-
-	// Move Variables
-	public float moveSpeed = 1.0f;
-	//public float rotationSpeed = 3f;
 
 	// Enemy Control Variables
 	public bool partOfHorde = false;
@@ -40,7 +35,6 @@ public class EnemyBase : CharacterBase
 	protected void Start()
 	{
 		base.Start();
-		health = 10.0f;
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
 		//renderer.material.color = Color.blue;
@@ -51,8 +45,9 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	new protected void FixedUpdate()
+	protected void FixedUpdate()
 	{
+		base.FixedUpdate();
 		if (cc.isGrounded)
 		{
 			forces = new Vector3(forces.x, Mathf.Max(0.0f, forces.y), forces.z);
@@ -63,11 +58,10 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	public virtual void Attack(float attackRate)
+	public override void kill()
 	{
-		Debug.Log ("We have called attack!");
-		// do calculations based on atk power and player def
-
+		dead = true;
+		Destroy(gameObject);
 	}
 
 	protected void moveTowardsPlayer(GameObject player, float dt)
@@ -111,6 +105,10 @@ public class EnemyBase : CharacterBase
 		int closestPlayerIdx = 0;
 		for (int i = 0; i < players.Length; i++)
 		{
+			if (players[i].GetComponent<PlayerBase>().dead)
+			{
+				continue;
+			}
 			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
 			shortestRange = Mathf.Min(sqrRange, shortestRange);
 			closestPlayerIdx = i;
@@ -126,6 +124,10 @@ public class EnemyBase : CharacterBase
 		int closestPlayerIdx = 0;
 		for (int i = 0; i < players.Length; i++)
 		{
+			if (players[i].GetComponent<PlayerBase>().dead)
+			{
+				continue;
+			}
 			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
 			if (sqrRange < shortestRange)
 			{
