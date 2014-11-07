@@ -160,7 +160,7 @@ public class rewiredControl : MonoBehaviour {
 			
 			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
 			{
-				cc.Move(moveVector * moveSpeed * Time.deltaTime);
+				cc.Move(moveVector * moveSpeed * Time.deltaTime * character.moveMulti);
 			}
 
 			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)

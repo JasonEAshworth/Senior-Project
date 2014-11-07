@@ -28,7 +28,6 @@ public class Woodsman : PlayerBase
 		anim = GetComponent<Animator> ();
 		health = 100;
 		maxHealth = health;
-		moveSpeed = 4.0f;
 
 		maxMana = 100.0f;
 		mana = maxMana;
@@ -79,7 +78,7 @@ public class Woodsman : PlayerBase
 			canMoveTimer += Time.deltaTime;
 			if(canMoveTimer >= 0.04f)
 			{
-				moveSpeed = 0.0f;
+				moveMulti = 0.0f;
 			}
 		}
 
@@ -100,7 +99,7 @@ public class Woodsman : PlayerBase
 			float temp = Time.time - firstButtonPressTime;
 			firstButtonPressTime = Time.time;
 			canMove = true;
-			moveSpeed = 4.0f;
+			moveMulti = 1.0f;
 			canMoveTimer = 0.0f;
 			if(temp > 0.7f && canSpecial)
 			{
