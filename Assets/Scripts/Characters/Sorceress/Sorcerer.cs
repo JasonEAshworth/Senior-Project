@@ -76,10 +76,12 @@ public class Sorcerer : PlayerBase
 			if(attackType == 1)
 			{
 				attackType = 0;
+				GetComponent<Animator> ().SetTrigger ("IceIdle");
 			}
 			else
 			{
 				attackType = 1;
+				GetComponent<Animator> ().SetTrigger ("FireIdle");
 			}
 			Debug.Log ("sorceress class ability");
 		}
@@ -89,6 +91,7 @@ public class Sorcerer : PlayerBase
 		special = true;
 
 		useMana (25.0f);
+		GetComponent<Animator> ().SetTrigger ("IceHeavy");
 		Quaternion startAngle = Quaternion.AngleAxis (-30, Vector3.up);
 		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
 
@@ -140,6 +143,7 @@ public class Sorcerer : PlayerBase
 		normal = true;
 
 		useMana(5.0f);
+		GetComponent<Animator> ().SetTrigger ("FireLight");
 		Transform pos = transform.Find("shootPos");
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
 
@@ -151,6 +155,7 @@ public class Sorcerer : PlayerBase
 		special = true;
 
 		useMana (25.0f);
+		GetComponent<Animator> ().SetTrigger ("FireHeavy");
 		Vector3 pos = transform.position;
 		GameObject Meteor = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Meteor"), pos, transform.rotation) as GameObject;
 
@@ -167,6 +172,7 @@ public class Sorcerer : PlayerBase
 		normal = true;
 
 		useMana(2.0f);
+		GetComponent<Animator> ().SetTrigger ("IceLight");
 		Transform pos = transform.Find("shootPos");
 		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;
 		icicle.transform.up = transform.forward;
