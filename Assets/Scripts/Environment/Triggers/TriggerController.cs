@@ -33,7 +33,7 @@ public class TriggerController : MonoBehaviour
 		bool ok = false;
 
 		//follow this format
-		if(other.gameObject.CompareTag("Player"))
+		if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Hawk"))
 		{
 			if(gameObject.CompareTag("DoorTrigger"))
 			{
