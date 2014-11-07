@@ -4,6 +4,7 @@ using System.Collections;
 public class Fireball : MonoBehaviour {
 
 	public float speed = 15.0f;
+	private float fireballDamage = 50.0f;
 
 	void Start(){
 		Destroy (gameObject, 5.0f);
@@ -16,7 +17,7 @@ public class Fireball : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c){
 		if (c.gameObject.CompareTag ("Enemy")) {
-			c.gameObject.SendMessage ("takeDamage", 10.0f);
+			c.gameObject.SendMessage ("takeDamage", fireballDamage);
 			Destroy (gameObject);
 		} 
 	}

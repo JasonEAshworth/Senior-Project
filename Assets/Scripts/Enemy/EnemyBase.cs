@@ -142,20 +142,19 @@ public class EnemyBase : CharacterBase
 		return null;
 	}
 
-	public void slow(){
-		Debug.Log(moveSpeed);
-		moveSpeed = 0.0f;
+	public IEnumerator slow(){
+		moveMulti = 0.5f;
 
-		//yield return StartCoroutine(Wait(5.0f));
+		yield return StartCoroutine(Wait(5.0f));
 
-		//moveSpeed = 1.0f;
+		moveMulti = 1.0f;
 	}
 
 	public IEnumerator freeze(){
-		moveSpeed = 0.0f;
+		moveMulti = 0.0f;
 
 		yield return StartCoroutine (Wait (5.0f));
 
-		moveSpeed = 1.0f;
+		moveMulti = 1.0f;
 	}
 }
