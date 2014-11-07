@@ -26,12 +26,15 @@ public class CharacterBase : MonoBehaviour
 	protected float healthBarWidth;
 	protected float healthBarHeight;
 
+	public RawImage potionImg;
+
 	protected void Start()
 	{
 		cc = GetComponent<CharacterController>();
 
 		if (healthBar)
 		{
+			potionImg.enabled = false;
 			healthBarWidth = healthBar.rectTransform.rect.width;
 			healthBarHeight = healthBar.rectTransform.rect.height;
 		}
@@ -95,6 +98,32 @@ public class CharacterBase : MonoBehaviour
 		else
 		{
 			currentDamageCooldown = damageInvulnTime;
+		}
+	}
+
+	public void addItem(GameObject p)
+	{
+		if(p.tag == "Potion")
+		{
+			potionImg.enabled = true;
+		}
+	}
+
+	public void itemAbility(string i, float amount = 0)
+	{
+		if(i == "Potion")
+		{
+			potionImg.enabled = false;
+			if(health + amount > maxHealth)
+			{
+				Debug.Log(amount);
+				Debug.Log(health);
+				Debug.Log(maxHealth);
+				amount -= (health + amount) - maxHealth;
+			}
+			float amt4Health = amount / maxHealth;
+			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+
 		}
 	}
 
