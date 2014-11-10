@@ -9,6 +9,11 @@ public class Sorcerer : PlayerBase
 	private float timeButtonHeld;
 	private float blizzardDamage = 20.0f;
 
+	/*void Start(){
+		base.Start ();
+		GetComponentInChildren<Light>().color = new Color(1.0f, 0.6f, 0.6f);
+	}*/
+
 	void Update(){
 		base.Update();
 		manaRegen (2.5f);
@@ -78,11 +83,13 @@ public class Sorcerer : PlayerBase
 			{
 				attackType = 0;
 				GetComponent<Animator> ().SetTrigger ("IceIdle");
+				GetComponentInChildren<Light>().color = new Color(0.6f, 0.6f, 1.0f);
 			}
 			else
 			{
 				attackType = 1;
 				GetComponent<Animator> ().SetTrigger ("FireIdle");
+				GetComponentInChildren<Light>().color = new Color(1.0f, 0.6f, 0.6f);
 			}
 			Debug.Log ("sorceress class ability");
 		}

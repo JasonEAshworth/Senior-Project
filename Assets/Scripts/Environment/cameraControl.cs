@@ -13,8 +13,8 @@ public class cameraControl : MonoBehaviour
 	public float[] angleClamp = {-15, 10};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
-	public float playerHight;
-	public float bufferSize;
+	public float playerHight = 2f;
+	public float bufferSize = 2f;
 	public bool debugBool = false;
 	public float xRatio = .8888f;
 	public float hightMin = 10;
@@ -94,7 +94,7 @@ public class cameraControl : MonoBehaviour
 		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
 		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180, 0);
-		captureBox.transform.position = new Vector3(xMid, yOffset, zMid + zOffset + constrainedZ / 2);
+		captureBox.transform.position = new Vector3(xMid, 0, zMid);
 
 		// DEBUG STUFF
 		if (debugBool) 
@@ -115,7 +115,9 @@ public class cameraControl : MonoBehaviour
 
         for (int i = 0; i < targets.Length - 1; i++) {
             for (int j = i + 1; j < targets.Length; j++) {
-				currentDistance = Vector3.Distance (targets [i].transform.position, targets [j].transform.position);
+				Vector3 temp1 = new Vector3(targets[i].transform.position.x, 0, targets[i].transform.position.z);
+				Vector3 temp2 = new Vector3(targets[j].transform.position.x, 0, targets[j].transform.position.z);
+				currentDistance = Vector3.Distance(temp1, temp2);
 				curXMax = Mathf.Abs(targets[i].transform.position.x - targets[j].transform.position.x); 
 				curZMax = Mathf.Abs(targets[i].transform.position.z - targets[j].transform.position.z);
                 if (currentDistance > largestDistance) {

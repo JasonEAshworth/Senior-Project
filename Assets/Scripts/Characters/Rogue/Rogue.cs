@@ -12,6 +12,7 @@ public class Rogue : PlayerBase
 
 	public override void basicAttack(string dir)
 	{
+		Debug.Log ("attacking");
 		if(dir == "down")
 		{
 			//Check enemy facing
