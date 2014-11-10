@@ -1,0 +1,1 @@
+Files contained within this folder are individual clips of each animation!
