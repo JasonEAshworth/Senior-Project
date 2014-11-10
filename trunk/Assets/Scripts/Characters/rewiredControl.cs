@@ -84,10 +84,10 @@ public class rewiredControl : MonoBehaviour {
 		case 0:
 			character = plyrMgr.woods;
 			break;
-		case 1:
+		case 2:
 			character = plyrMgr.sorc;
 			break;
-		case 2:
+		case 1:
 			character = plyrMgr.rogue;
 			break;
 		case 3:
@@ -100,7 +100,6 @@ public class rewiredControl : MonoBehaviour {
 		{
 			if(character.canJump)
 			{
-				Debug.Log ("trigger jump");
 				character.GetComponent<Animator>().SetTrigger("Jump");
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
@@ -111,10 +110,10 @@ public class rewiredControl : MonoBehaviour {
 			character.canJump = true;
 			character.forces = new Vector3(character.forces.x, Mathf.Max(0.0f, character.forces.y), character.forces.z);
 		}		
-		else 
-		{
-			character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
-		}
+
+		character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
+		//character.addForce(new Vector3(0.0f, Physics.gravity.y  * Time.deltaTime, 0.0f));
+
 
 		if (!character.dead)
 		{
@@ -161,6 +160,7 @@ public class rewiredControl : MonoBehaviour {
 			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
 			{
 				cc.Move(moveVector * moveSpeed * Time.deltaTime * character.moveMulti);
+				//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
 			}
 
 			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)

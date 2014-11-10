@@ -112,7 +112,7 @@ public class HawkAI2 : MonoBehaviour {
 						EnemyBase scr = enemyToAttack.GetComponent<EnemyBase>();
 						if(scr)
 						{
-							scr.takeDamage (5.0f);
+							scr.takeDamage (10.0f);
 						}
 						damageTimer = 0.0f;
 					}
@@ -229,6 +229,10 @@ public class HawkAI2 : MonoBehaviour {
 			{
 				transform.position += -paddingVector * 3.0f * Time.deltaTime;
 			}
+			else if(dist > 3.5f)
+			{
+				mode = 3;
+			}
 			transform.RotateAround (woodsman.transform.position, Vector3.up, 120 * Time.deltaTime);
 
 		}
@@ -278,6 +282,12 @@ public class HawkAI2 : MonoBehaviour {
 				timerIdle = Random.Range(15.0f,22.0f);
 				transform.parent = null;
 				arrivedPerch = false;
+			}
+
+			float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (woodsman.transform.position.x, 0, woodsman.transform.position.z));
+			if (dist > 3.0f)
+			{
+				mode = 3;
 			}
 		}
 		

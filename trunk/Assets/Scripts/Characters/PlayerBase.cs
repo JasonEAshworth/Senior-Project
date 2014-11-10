@@ -13,14 +13,14 @@ public enum playerClass
 public class PlayerBase : CharacterBase 
 {
 	public float respawnTimer = 0.0f;
-	public float timeToRespawn = 3.0f;
+	public float timeToRespawn = 0.5f;
 
 	public int playerNum = -1;
 	public int playerId = -1;
 
 	public bool controllable = true;
 
-	public bool canJump = true;
+	public bool canJump = false;
 	public float jumpForce = 15.0f;
 	public float verticalVelocity = 0.0f;
 	public playerClass classType;
@@ -38,13 +38,13 @@ public class PlayerBase : CharacterBase
 	public RoomNode roomIn;
 
 	// controls
-	public string moveAxisX;
+/*	public string moveAxisX;
 	public string moveAxisZ;
 	public KeyCode jumpKey;
 	public KeyCode basicAttackKey;
 	public KeyCode useItemKey = KeyCode.Space;
 	public KeyCode classAbilityKey;
-	public KeyCode specialAttackKey;
+	public KeyCode specialAttackKey;*/
 
 	public PlayerManager manager;
 	

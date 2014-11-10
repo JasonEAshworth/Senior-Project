@@ -9,7 +9,7 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	public float heldTime = 0.0f;
 	private bool infinitePierce = false;
 	public Vector3 playerForward;
-	private float dmg = 15.0f;
+	private float dmg = 25.0f;
 	private float timer = 7.0f;
 	// Use this for initialization
 	void Start () 

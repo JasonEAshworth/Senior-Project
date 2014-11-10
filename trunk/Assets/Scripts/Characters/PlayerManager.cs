@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour
 
 		// set players to 4 at start
 		//numPlayers = 4;
-
+		Debug.Log (numPlayers);
 		for (int i=0; i<numPlayers; i++) 
 		{
 			switch (selectedClasses[i])
@@ -76,6 +76,7 @@ public class PlayerManager : MonoBehaviour
 				sorc.manaBar = GameObject.Find("SorcererMana").GetComponent<RawImage>();
 				sorc.potionImg = GameObject.Find("sorcPotionImg").GetComponent<RawImage>();
 				sorc.formMana(1);
+				sorc.GetComponentInChildren<Light>().color = new Color(1.0f, 0.6f, 0.6f);
 				players.Add (player2);
 				break;
 
