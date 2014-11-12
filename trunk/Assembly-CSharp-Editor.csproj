@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{C9C5ACED-AF37-B251-9AC8-2374AADD4A08}</ProjectGuid>
+	<ProjectGuid>{40CB0B0E-CC78-1750-9836-1F2D679B85F4}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,67 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Resources\Scripts\Characters\CharacterBase.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\PlayerBase.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\PlayerManager.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Rogue\Rogue.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Sorceress\Fireball.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Sorceress\Icicle_Shot.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Sorceress\MeteorController.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Sorceress\Sorcerer.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Warrior\Warrior.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Woodsman\HawkAI2.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Woodsman\Woodsman.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Woodsman\hawkSphere.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Woodsman\woodsBullet.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\Woodsman\woodsSpecialBulletScript.cs" />
-     <Compile Include="Assets\Resources\Scripts\Characters\rewiredControl.cs" />
-     <Compile Include="Assets\Resources\Scripts\Coin.cs" />
-     <Compile Include="Assets\Resources\Scripts\DropGold.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\Boss\KingRestless.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\Boss\KingShockwave.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemyArchtypeHorde.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemyArchtypeMelee.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemyArchtypeRanged.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemyBase.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemyManager.cs" />
-     <Compile Include="Assets\Resources\Scripts\Enemy\EnemySpawner.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\MapManager.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\Arrow.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\DoorController.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\KeyController.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\LightFlicker.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\Potion.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Room\HordeRoom.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\ArrowShooter.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\AutoTrigger.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\CheckpointCollider.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\Doorway.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\FallingDeath.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\FlameTrap.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\InteractTrigger.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\MovingPlatform.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\ProjectileTrapObj.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\SpikeTrap.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TimedTrap.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TimedTrigger.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TrapBase.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TrapController.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TriggerController.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TriggerTrap.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\cameraControl.cs" />
-     <Compile Include="Assets\Resources\Scripts\GUI\HealthScaling.cs" />
-     <Compile Include="Assets\Resources\Scripts\Gold.cs" />
-     <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
-     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
-     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
-     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchButtonExample.cs" />
-     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchControllerExample.cs" />
-     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\TouchJoystickExample.cs" />
-     <Compile Include="Assets\Rewired\Examples\EightPlayers\Scripts\EightPlayersExample_Player.cs" />
-     <Compile Include="Assets\Rewired\Examples\FallbackJoystickIdentification\Scripts\FallbackJoystickIdentificationDemo.cs" />
-     <Compile Include="Assets\Rewired\Examples\Shared\Scripts\Bullet.cs" />
-     <Compile Include="Assets\Rewired\Internal\Scripts\InputManager.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\CustomInspector_External.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\HardwareJoystickMapInspector.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\HardwareJoystickTemplateMapInspector.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\Editor\CustomInspectors\InputManagerInspector.cs" />
+     <Compile Include="Assets\Rewired\Internal\Scripts\Editor\UnityEditorBridge.cs" />
      <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
      <None Include="Assets\Shaders\IceShader.shader" />
      <None Include="Assets\Shaders\ReaperStatue_1_Mat.shader" />
@@ -153,11 +97,14 @@
      <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="ShaderForge">
+ <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Plugins/ShaderForge/Editor/Code/ShaderForge.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
  <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Plugins/Exploder/Exploder/3rd/P2T.dll</HintPath>
@@ -165,10 +112,20 @@
  <Reference Include="Rewired_Core">
  <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
+ <Reference Include="Rewired_Editor">
+ <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{1ECCC056-403F-DE82-16EC-800D8F942A9F}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{1ECCC056-403F-DE82-16EC-800D8F942A9F}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
+      <Project>{86B659CC-1081-2BE2-8A2F-2F1FD391F4DA}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{C9C5ACED-AF37-B251-9AC8-2374AADD4A08}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

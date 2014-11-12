@@ -43,7 +43,7 @@ public class Woodsman : PlayerBase
 		hawkScripts = hawk.GetComponent<HawkAI2> ();
 	}
 
-	void Update()
+	protected override void Update()
 	{
 		base.Update();
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);

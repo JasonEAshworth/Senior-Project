@@ -14,7 +14,7 @@ public class Sorcerer : PlayerBase
 		GetComponentInChildren<Light>().color = new Color(1.0f, 0.6f, 0.6f);
 	}*/
 
-	void Update(){
+	protected override void Update(){
 		base.Update();
 		manaRegen (2.5f);
 	}

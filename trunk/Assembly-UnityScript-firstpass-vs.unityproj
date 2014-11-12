@@ -52,11 +52,11 @@
      <Compile Include="Assets\Plugins\Exploder\DemoClickExplode\DemoClickExplode.js" />
      <Compile Include="Assets\Plugins\Exploder\DemoSimple\DemoSimple.js" />
      <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\IceShader.shader" />
+     <None Include="Assets\Shaders\IceShader.shader" />
      <None Include="Assets\Shaders\ReaperStatue_1_Mat.shader" />
      <None Include="Assets\Shaders\Table_1_Mat.shader" />
      <None Include="Assets\Shaders\SmallContainers_1_Mat.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\Steve 1.shader" />
+     <None Include="Assets\Shaders\Steve 1.shader" />
      <None Include="Assets\Shaders\Wall_4_1_Mat.shader" />
      <None Include="Assets\Shaders\Floor_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightCone.shader" />
@@ -67,7 +67,7 @@
      <None Include="Assets\Rewired\Documentation\licences.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
      <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\NewShader.shader" />
+     <None Include="Assets\Shaders\NewShader.shader" />
      <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Vegetation.shader" />
      <None Include="Assets\Shaders\Scrolls_1_Mat.shader" />
@@ -78,11 +78,11 @@
      <None Include="Assets\Plugins\Exploder\Demo\Shaders\VertexColor.shader" />
      <None Include="Assets\Shaders\TombTop_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Parallax.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\Steve.shader" />
+     <None Include="Assets\Shaders\Steve.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightWrapping.shader" />
      <None Include="Assets\Shaders\Wall_4_Cutout_1_Mat.shader" />
      <None Include="Assets\Shaders\Bones_1_Mat.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\Floor.shader" />
+     <None Include="Assets\Shaders\Floor.shader" />
      <None Include="Assets\Plugins\Exploder\Exploder\3rd\P2T.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\TessellationDisplacement.shader" />
@@ -93,7 +93,7 @@
      <None Include="Assets\Shaders\TombFancy_1_Mat.shader" />
      <None Include="Assets\Shaders\Zombie_Mat.shader" />
      <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
-     <None Include="Assets\Resources\Scripts\Shaders\MultiTexture.shader" />
+     <None Include="Assets\Shaders\MultiTexture.shader" />
      <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />

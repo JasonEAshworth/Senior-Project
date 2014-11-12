@@ -28,7 +28,7 @@ public class EnemyArchtypeRanged : EnemyBase {
 		aR = 2f;
 	}
 	// Update is called once per frame
-	void FixedUpdate() 
+	protected override void FixedUpdate() 
 	{
 		base.FixedUpdate();
 		player = findClosestPlayerInRange (eRange);

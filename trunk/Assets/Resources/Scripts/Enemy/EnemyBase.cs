@@ -32,7 +32,7 @@ public class EnemyBase : CharacterBase
 	private MapManager mapManager;
 	protected EnemyArchtypeHorde hordeManager;
 
-	protected void Start()
+	protected override void Start()
 	{
 		base.Start();
 		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
@@ -45,7 +45,7 @@ public class EnemyBase : CharacterBase
 		}
 	}
 
-	protected void FixedUpdate()
+	protected override void FixedUpdate()
 	{
 		base.FixedUpdate();
 		if (cc.isGrounded)
