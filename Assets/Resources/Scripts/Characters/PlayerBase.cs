@@ -50,14 +50,15 @@ public class PlayerBase : CharacterBase
 	
 	private MapManager mapMan;
 
-	protected void Start()
+	protected override void Start()
 	{
 		base.Start();
 		manager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 		mapMan = GameObject.Find("MapManager").GetComponent<MapManager>();
+		jumpForce = 9.0f;
 	}
 
-	protected void Update()
+	protected virtual void Update()
 	{
 		// Handle respawn timer
 		if (dead)
@@ -78,7 +79,7 @@ public class PlayerBase : CharacterBase
 		respawnTimer = timeToRespawn;
 	}
 
-	public void respawn()
+	public override void respawn()
 	{
 		transform.position = manager.getRespawnPoint();
 		transform.rotation = Quaternion.identity;
@@ -108,7 +109,7 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	private void addItem(GameObject p)
+	public override void addItem(GameObject p)
 	{
 		item = p;
 		base.addItem (p);

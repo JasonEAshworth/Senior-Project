@@ -28,7 +28,7 @@ public class CharacterBase : MonoBehaviour
 
 	public RawImage potionImg;
 
-	protected void Start()
+	protected virtual void Start()
 	{
 		cc = GetComponent<CharacterController>();
 
@@ -40,7 +40,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	protected void FixedUpdate()
+	protected virtual void FixedUpdate()
 	{
 		cc.Move(forces * Time.deltaTime * moveMulti);
 		float y = forces.y;
@@ -69,7 +69,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public void respawn()
+	public virtual void respawn()
 	{
 		health = maxHealth;
 		if (healthBar)
@@ -101,7 +101,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public void addItem(GameObject p)
+	public virtual void addItem(GameObject p)
 	{
 		if(p.tag == "Potion")
 		{
@@ -109,7 +109,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public void itemAbility(string i, float amount = 0)
+	public void itemAbility(string i, float amount)
 	{
 		if(i == "Potion")
 		{

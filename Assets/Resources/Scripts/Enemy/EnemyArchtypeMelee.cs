@@ -19,7 +19,7 @@ public class EnemyArchtypeMelee : EnemyBase
 		mTransform = transform;
 	}
 
-	void FixedUpdate() 
+	protected override void FixedUpdate() 
 	{
 		base.FixedUpdate();
 		player = findClosestPlayerInRange (chaseRange);

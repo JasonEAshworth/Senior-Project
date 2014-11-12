@@ -46,13 +46,13 @@ public class KingRestless : EnemyBase
 											// 5 room collapse
 											// 6 for future use
 
-	void Start()
+	protected override void Start()
 	{
 		base.Start();
 		myAnimator = GetComponent<Animator>();
 	}
 
-	void FixedUpdate()
+	protected override void FixedUpdate()
 	{
 		if (health <= maxHealth * 0.6f && !firestorm)
 		{

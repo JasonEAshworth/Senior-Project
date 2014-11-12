@@ -47,7 +47,12 @@ public class Warrior : PlayerBase
 		}
 	}
 
-	private IEnumerator specialAttack()
+	public override void specialAttack()
+	{
+		StartCoroutine(Whirlwind());
+	}
+
+	private IEnumerator Whirlwind()
 	{
 		while (!canAttack)
 		{
@@ -112,7 +117,7 @@ public class Warrior : PlayerBase
 	public void triggerWhirlwind()
 	{
 		canAttack = false;
-		StartCoroutine(specialAttack());
+		specialAttack();
 	}
 		
 }

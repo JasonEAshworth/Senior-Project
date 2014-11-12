@@ -40,13 +40,18 @@ public class Rogue : PlayerBase
 				dash = true;
 				controllable = false;
 				//animator.Play("RogueSpecialAttack");
-				StartCoroutine(specialAttack());
+				specialAttack();
 				GetComponent<Animator>().SetTrigger("Dash");
 			}
 		}
 	}
+
+	public override void specialAttack()
+	{
+		StartCoroutine(Dash());
+	}
 	
-	public IEnumerator specialAttack()
+	public IEnumerator Dash()
 	{
 		while(elapsed < dashDur)
 		{
