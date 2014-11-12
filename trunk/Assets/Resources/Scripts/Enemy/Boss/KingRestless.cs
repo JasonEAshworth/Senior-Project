@@ -4,26 +4,39 @@ using System.Collections;
 public class KingRestless : EnemyBase
 {
 	private Animator myAnimator;
+	private GameObject closestPlayer;
 
 	// basic attack
 	private float basicAttackRange = 1.5f;
+	private bool basic = false;
+
 	// home run 
 	private float homeRunAttackRange = 1.0f;
+	private bool homerun = false;
+
 	// whirlwind
 	private float whirlwindAttackRange = 2.5f;
 	private float whirlwindDamageRange = 1.0f;
 	private float whirlwindDamage = 15.0f;
 	private float whirlwindForceRange = 5.0f;
 	private float whirlwindForceMagnitude = 1.0f;
+	private bool whirlwind = false;
+
 	// shockwave
 	public GameObject shockwavePrefab;
 	private float shockwaveAttackRange = 3.0f;
 	private float shockwaveSpawnDistance = 0.25f;
+	private bool shockwave = false;
+
 	// room collapse
 	private bool roomCollapsing = false;
+
+	//firestorm
+	private bool firestorm = false;
+
 	// general
-	private bool attackBegun = false;
-	private int currentAttack = -1; 		// the index of the current attack in progress
+	/*private bool attackBegun = false;
+	private int currentAttack = -1; */		// the index of the current attack in progress
 											// -1 no attack
 											// 0 basic attack
 											// 1 home run
@@ -41,8 +54,44 @@ public class KingRestless : EnemyBase
 
 	void FixedUpdate()
 	{
-		GameObject closestPlayer;
-		switch (currentAttack)
+		if (health <= maxHealth * 0.6f && !firestorm)
+		{
+			//move to center of room
+
+			//do attack
+			firestormAttack();
+		}
+		else if (health <= maxHealth * 0.3f && !roomCollapsing)
+		{
+			//move to pillar object???
+
+			//do attack (aka smash)
+			roomcollapseAttack();
+		}
+
+
+		if (!homerun) 
+		{
+			find (homeRunAttackRange, "homerun");
+			StartCoroutine (homerunAttack ());
+		} 
+		else if (!shockwave) 
+		{
+			find (shockwaveAttackRange, "shockwave");
+			StartCoroutine (shockwaveAttack ());
+		} 
+		else if (!whirlwind) 
+		{
+			find (whirlwindAttackRange, "whirlwind");
+			StartCoroutine (whirlwindAttack ());
+		} 
+		else if (!basic) 
+		{
+			find (basicAttackRange, "basic");
+			StartCoroutine (basicAttack ());
+		}
+
+		/*switch (currentAttack)
 		{
 		// Choose attack
 		case -1:
@@ -202,11 +251,77 @@ public class KingRestless : EnemyBase
 				}
 			}
 			break;
+		}*/
+	}
+
+	private void find(float attackRange, string animation)
+	{
+		closestPlayer = findClosestPlayer();
+		moveTowardsPlayer(closestPlayer, Time.deltaTime);
+		rotateTowardsPlayer(closestPlayer, Time.deltaTime);
+		if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < attackRange)
+		{
+			myAnimator.SetTrigger(animation);
 		}
 	}
 
-	private void spawnShockwave()
+	private IEnumerator shockwaveAttack()
 	{
-		Instantiate(shockwavePrefab, transform.position + transform.forward * shockwaveSpawnDistance, transform.rotation);
+		shockwave = true;
+
+		yield return StartCoroutine (Wait (20.0f));
+		shockwave = false;
+	}
+
+	private IEnumerator whirlwindAttack()
+	{
+		whirlwind = true;
+
+		LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
+		// Draw all players in within a large range
+		Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
+		foreach (Collider c in hit)
+		{
+			Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
+			fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
+			c.GetComponent<CharacterBase>().addForce(fromPlayer);
+		}
+		// Damage all players in a small sphere
+		hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
+		foreach (Collider c in hit)
+		{
+			c.GetComponent<CharacterBase>().takeDamage(whirlwindDamage);
+		}
+		
+		yield return StartCoroutine (Wait (10.0f));
+		whirlwind = false;
+	}
+
+	private IEnumerator basicAttack()
+	{
+		basic = true;
+		
+		yield return StartCoroutine (Wait (5.0f));
+		basic = false;
+	}
+
+	private void firestormAttack()
+	{
+		//this is a phase attack
+		firestorm = true;
+	}
+
+	private void roomcollapseAttack()
+	{
+		//this is a phase attack
+		roomCollapsing = true;
+	}
+
+	private IEnumerator homerunAttack()
+	{
+		homerun = true;
+		
+		yield return StartCoroutine (Wait (10.0f));
+		homerun = false;
 	}
 }
