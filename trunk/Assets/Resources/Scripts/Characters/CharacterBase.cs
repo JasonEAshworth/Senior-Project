@@ -109,6 +109,18 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
+	public virtual void addScore(GameObject p)
+	{
+		if (p.tag == "Coin")
+		{
+			score += 1;
+		}
+		if (p.tag == "Gold")
+		{
+			score += 10;
+		}
+	}
+
 	public void itemAbility(string i, float amount)
 	{
 		if(i == "Potion")

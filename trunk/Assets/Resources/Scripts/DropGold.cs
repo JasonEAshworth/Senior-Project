@@ -2,43 +2,46 @@
 using System.Collections;
 
 public class DropGold : MonoBehaviour {
-
-
-	int numGold = Random.Range(0,5);
-	int numCoins = Random.Range(0,10);
+	
+	public float multiplyer = 1.0f;
+	float numGold = Random.Range(0.0f,5.0f);
+	float numCoins = Random.Range(0.0f,10.0f);
+	public float numGoldOveride = -1.0f;
+	public float numCoinOveride = -1.0f;
 	public int goldDropRate;
 	public int potionDropRate;
 	public GameObject gld;
 	public GameObject Coin;
 	public GameObject Ptn;
 	
-	/*void Update ()
+	public void Reward()
 	{
-		if(Input.GetKeyDown(KeyCode.Space))
+		numGold = Mathf.Floor(numGold * multiplyer);
+		numCoins = Mathf.Floor(numCoins * multiplyer);
+		float yPos = transform.position.y;
+		if(yPos < 0.5f)
 		{
-			for(int g = 0; g < numGold; g++)
-				GameObject.Instantiate(gld, new Vector3(transform.position.x + Random.Range(-1.0F,1.0F),transform.position.y,transform.position.z - Random.Range(-1.0F,1.0F)), transform.rotation);
-			Destroy(gameObject);
+			yPos = 0.5f;
 		}
-	}*/
-	
-	void OnTriggerEnter(Collider player)
-	{
-		if (player.gameObject.CompareTag ("Player")) 
+		int item = Random.Range(0, 100);
+		if(item < goldDropRate)
 		{
-			int item = Random.Range(0, 100);
-			if(item < goldDropRate)
+			if(numGoldOveride >= 0)
 			{
-				for(int g = 0; g < numCoins; g++)
-					GameObject.Instantiate(Coin, new Vector3(transform.position.x + Random.Range(-1.0F,1.0F),transform.position.y,transform.position.z - Random.Range(-1.0F,1.0F)), transform.rotation);
-				for(int g = 0; g < numGold; g++)
-					GameObject.Instantiate(gld, new Vector3(transform.position.x + Random.Range(-1.0F,1.0F),transform.position.y,transform.position.z - Random.Range(-1.0F,1.0F)), transform.rotation);
+				numGold = numGoldOveride;
 			}
-			if(item >= 100 - potionDropRate)
+			if(numCoinOveride >= 0)
 			{
-				GameObject.Instantiate(Ptn, new Vector3(transform.position.x + Random.Range(-1.0F,1.0F),transform.position.y,transform.position.z - Random.Range(-1.0F,1.0F)), transform.rotation);
+				numCoins = numCoinOveride;
 			}
-			Destroy(gameObject);
+			for(int g = 0; g < numCoins; g++)
+				GameObject.Instantiate(Coin, new Vector3(transform.position.x + (Random.Range(-1.0F,1.0F)*(multiplyer)),yPos,transform.position.z - (Random.Range(-1.0F,1.0F)*(multiplyer))), transform.rotation);
+			for(int g = 0; g < numGold; g++)
+				GameObject.Instantiate(gld, new Vector3(transform.position.x + (Random.Range(-1.0F,1.0F)*(multiplyer)),yPos,transform.position.z - (Random.Range(-1.0F,1.0F)*(multiplyer))), transform.rotation);
+		}
+		if(item >= 100 - potionDropRate)
+		{
+			GameObject.Instantiate(Ptn, new Vector3(transform.position.x + Random.Range(-1.0F,1.0F),yPos,transform.position.z - Random.Range(-1.0F,1.0F)), transform.rotation);
 		}
 		
 	}
