@@ -2689,7 +2689,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Attack
       takeName: Take 001
-      firstFrame: 900
+      firstFrame: 931
       lastFrame: 1139
       wrapMode: 0
       orientationOffsetY: 0
@@ -2708,7 +2708,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .362792552
+        functionName: basicAttack
+        data: 
+        objectReferenceParameter: {fileID: 100002, guid: e8cee61a145ad9a448dbcae236d7eb39,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .879831791
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100002, guid: e8cee61a145ad9a448dbcae236d7eb39,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

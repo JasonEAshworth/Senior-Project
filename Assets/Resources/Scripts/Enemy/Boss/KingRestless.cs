@@ -7,12 +7,11 @@ public class KingRestless : EnemyBase
 	private GameObject closestPlayer;
 
 	// basic attack
+	private float basicAttackDamage = 20.0f;
 	private float basicAttackRange = 1.5f;
-	private bool basic = false;
 
 	// home run 
 	private float homeRunAttackRange = 1.0f;
-	private bool homerun = false;
 
 	// whirlwind
 	private float whirlwindAttackRange = 2.5f;
@@ -20,13 +19,11 @@ public class KingRestless : EnemyBase
 	private float whirlwindDamage = 15.0f;
 	private float whirlwindForceRange = 5.0f;
 	private float whirlwindForceMagnitude = 1.0f;
-	private bool whirlwind = false;
 
 	// shockwave
 	public GameObject shockwavePrefab;
 	private float shockwaveAttackRange = 3.0f;
 	private float shockwaveSpawnDistance = 0.25f;
-	private bool shockwave = false;
 
 	// room collapse
 	private bool roomCollapsing = false;
@@ -35,6 +32,7 @@ public class KingRestless : EnemyBase
 	private bool firestorm = false;
 
 	// general
+	private bool attackInProgress = false;
 	/*private bool attackBegun = false;
 	private int currentAttack = -1; */		// the index of the current attack in progress
 											// -1 no attack
@@ -44,7 +42,6 @@ public class KingRestless : EnemyBase
 											// 3 shockwave
 											// 4 firestorm
 											// 5 room collapse
-											// 6 for future use
 
 	protected override void Start()
 	{
@@ -54,41 +51,56 @@ public class KingRestless : EnemyBase
 
 	protected override void FixedUpdate()
 	{
-		if (health <= maxHealth * 0.6f && !firestorm)
+		if (!attackInProgress)
 		{
-			//move to center of room
+			if (health <= maxHealth * 0.6f && !firestorm)
+			{
+				//move to center of room
 
-			//do attack
-			firestormAttack();
-		}
-		else if (health <= maxHealth * 0.3f && !roomCollapsing)
-		{
-			//move to pillar object???
+				//do attack
+				firestormAttack();
+			}
+			else if (health <= maxHealth * 0.3f && !roomCollapsing)
+			{
+				//move to pillar object???
 
-			//do attack (aka smash)
-			roomcollapseAttack();
-		}
+				// HULK SMASH
+				roomCollapseAttack();
+			}
 
-
-		if (!homerun) 
-		{
-			find (homeRunAttackRange, "homerun");
-			StartCoroutine (homerunAttack ());
-		} 
-		else if (!shockwave) 
-		{
-			find (shockwaveAttackRange, "shockwave");
-			StartCoroutine (shockwaveAttack ());
-		} 
-		else if (!whirlwind) 
-		{
-			find (whirlwindAttackRange, "whirlwind");
-			StartCoroutine (whirlwindAttack ());
-		} 
-		else if (!basic) 
-		{
-			find (basicAttackRange, "basic");
-			StartCoroutine (basicAttack ());
+			int r;
+			r = Random.Range(1, 16);
+			// Basic Attack
+			if (true)//r <= 10)
+			{
+				if (find(basicAttackRange))
+				{
+					// Begins the attack animation, which has an animation event that calls basicAttack()
+					attackInProgress = true;
+					myAnimator.SetTrigger("basicAttack");
+				}
+			}
+			else if (r <= 12)
+			{
+				if (find(homeRunAttackRange))
+				{
+					StartCoroutine (homerunAttack());
+				}
+			}
+			else if (r <= 14)
+			{
+				if (find(shockwaveAttackRange))
+				{
+					StartCoroutine (shockwaveAttack());
+				}
+			}
+			else
+			{
+				if (find(whirlwindAttackRange))
+				{
+					StartCoroutine (whirlwindAttack());
+				}
+			}
 		}
 
 		/*switch (currentAttack)
@@ -254,29 +266,26 @@ public class KingRestless : EnemyBase
 		}*/
 	}
 
-	private void find(float attackRange, string animation)
+	private bool find(float attackRange)
 	{
 		closestPlayer = findClosestPlayer();
 		moveTowardsPlayer(closestPlayer, Time.deltaTime);
 		rotateTowardsPlayer(closestPlayer, Time.deltaTime);
 		if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < attackRange)
 		{
-			myAnimator.SetTrigger(animation);
+			return true;
 		}
+		myAnimator.SetTrigger("walk");
+		return false;
 	}
 
 	private IEnumerator shockwaveAttack()
 	{
-		shockwave = true;
-
-		yield return StartCoroutine (Wait (20.0f));
-		shockwave = false;
+		yield return StartCoroutine (Wait (2.0f));
 	}
 
 	private IEnumerator whirlwindAttack()
 	{
-		whirlwind = true;
-
 		LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
 		// Draw all players in within a large range
 		Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
@@ -293,16 +302,16 @@ public class KingRestless : EnemyBase
 			c.GetComponent<CharacterBase>().takeDamage(whirlwindDamage);
 		}
 		
-		yield return StartCoroutine (Wait (10.0f));
-		whirlwind = false;
+		yield return StartCoroutine (Wait (2.0f));
 	}
 
-	private IEnumerator basicAttack()
+	public void basicAttack()
 	{
-		basic = true;
-		
-		yield return StartCoroutine (Wait (5.0f));
-		basic = false;
+		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward, 1.0f, LayerMask.GetMask("Player"));
+		foreach (Collider c in hit)
+		{
+			c.SendMessage("takeDamage", basicAttackDamage);
+		}
 	}
 
 	private void firestormAttack()
@@ -311,7 +320,7 @@ public class KingRestless : EnemyBase
 		firestorm = true;
 	}
 
-	private void roomcollapseAttack()
+	private void roomCollapseAttack()
 	{
 		//this is a phase attack
 		roomCollapsing = true;
@@ -319,9 +328,11 @@ public class KingRestless : EnemyBase
 
 	private IEnumerator homerunAttack()
 	{
-		homerun = true;
-		
-		yield return StartCoroutine (Wait (10.0f));
-		homerun = false;
+		yield return StartCoroutine (Wait (2.0f));
+	}
+
+	public void notifyAttackEnd()
+	{
+		attackInProgress = false;
 	}
 }
