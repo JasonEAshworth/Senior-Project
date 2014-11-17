@@ -1,6 +1,6 @@
 //Maya ASCII 2014 scene
-//Name: Sorceress_AM_Character_merged_B.ma
-//Last modified: Fri, Nov 14, 2014 01:32:12 PM
+//Name: Char_SM_Sorc_Merged.ma
+//Last modified: Mon, Nov 17, 2014 09:08:07 AM
 //Codeset: 1252
 requires maya "2014";
 currentUnit -l centimeter -a degree -t film;
@@ -2671,7 +2671,7 @@ createNode mesh -n "Lower_Torso_UV:polySurfaceShape1" -p "Lower_Torso_UV:Mesh";
 		 0.58673698 0.239048 0.59317702 0.27322999 0.49569401 0.297391 0.47981799 0.26418599;
 	setAttr ".cuvs" -type "string" "map1";
 	setAttr ".dcc" -type "string" "Ambient+Diffuse";
-	setAttr -s 29 ".pt";
+	setAttr -s 28 ".pt";
 	setAttr ".pt[98]" -type "float3" 0.50331134 -0.0023166705 -0.1339546 ;
 	setAttr ".pt[99]" -type "float3" 0.25099123 0.025616657 -0.29917595 ;
 	setAttr ".pt[100]" -type "float3" -0.1276457 0.039901897 -0.30365381 ;
@@ -8602,7 +8602,7 @@ createNode shadingEngine -n "lambert6SG";
 	setAttr -s 3 ".gn";
 createNode materialInfo -n "materialInfo6";
 createNode file -n "file6";
-	setAttr ".ftn" -type "string" "C:/Users/PaigeN/Desktop/Character_Sorceress_AM_Mesh//sourceimages/Skirt_256_colormap.png";
+	setAttr ".ftn" -type "string" "C:/Users/PaigeN/Desktop/Character_Sorceress_AM_Mesh//sourceimages/Txt_Sorc_Skirt_256.png";
 createNode place2dTexture -n "place2dTexture6";
 createNode lambert -n "Mat_Torso";
 createNode shadingEngine -n "lambert7SG";
@@ -8612,7 +8612,7 @@ createNode shadingEngine -n "lambert7SG";
 	setAttr -s 3 ".gn";
 createNode materialInfo -n "materialInfo7";
 createNode file -n "file7";
-	setAttr ".ftn" -type "string" "C:/Users/PaigeN/Desktop/Character_Sorceress_AM_Mesh//sourceimages/Torso_256_colomap.png";
+	setAttr ".ftn" -type "string" "C:/Users/PaigeN/Desktop/Character_Sorceress_AM_Mesh//sourceimages/Txt_Sorc_Torso_256.png";
 createNode place2dTexture -n "place2dTexture7";
 createNode polySoftEdge -n "polySoftEdge1";
 	setAttr ".uopa" yes;
@@ -9045,4 +9045,4 @@ connectAttr "place2dTexture5.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "place2dTexture6.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "place2dTexture7.msg" ":defaultRenderUtilityList1.u" -na;
 connectAttr "defaultRenderLayer.msg" ":defaultRenderingList1.r" -na;
-// End of Sorceress_AM_Character_merged_B.ma
+// End of Char_SM_Sorc_Merged.ma
