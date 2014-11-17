@@ -60,6 +60,8 @@ public class EnemyBase : CharacterBase
 
 	public override void kill()
 	{
+		DropGold dg = gameObject.GetComponent<DropGold>();
+		dg.Reward();
 		dead = true;
 		Destroy(gameObject);
 	}
