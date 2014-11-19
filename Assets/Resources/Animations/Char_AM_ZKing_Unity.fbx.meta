@@ -5396,7 +5396,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .481791854
+        functionName: homerunAttack
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: 1af62ccf91136434da8c12cbe50812ea,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .940928757
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100000, guid: 1af62ccf91136434da8c12cbe50812ea,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
