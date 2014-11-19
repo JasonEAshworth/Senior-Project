@@ -33,15 +33,8 @@ public class KingRestless : EnemyBase
 
 	// general
 	private bool attackInProgress = false;
-	/*private bool attackBegun = false;
-	private int currentAttack = -1; */		// the index of the current attack in progress
-											// -1 no attack
-											// 0 basic attack
-											// 1 home run
-											// 2 whirlwind
-											// 3 shockwave
-											// 4 firestorm
-											// 5 room collapse
+
+
 
 	protected override void Start()
 	{
@@ -53,6 +46,7 @@ public class KingRestless : EnemyBase
 	{
 		if (!attackInProgress)
 		{
+			// Check for phase attacks first
 			if (health <= maxHealth * 0.6f && !firestorm)
 			{
 				//move to center of room
@@ -68,202 +62,29 @@ public class KingRestless : EnemyBase
 				roomCollapseAttack();
 			}
 
-			int r;
-			r = Random.Range(1, 16);
-			// Basic Attack
-			if (true)//r <= 10)
+			// Then check for other attacks
+			if (find(basicAttackRange))
 			{
-				if (find(basicAttackRange))
-				{
-					// Begins the attack animation, which has an animation event that calls basicAttack()
-					attackInProgress = true;
-					myAnimator.SetTrigger("basicAttack");
-				}
+				// Begins the attack animation, which has an animation event that calls basicAttack()
+				attackInProgress = true;
+				myAnimator.SetTrigger("basicAttack");
 			}
-			else if (r <= 12)
+
+			else if (find(homeRunAttackRange))
 			{
-				if (find(homeRunAttackRange))
-				{
-					StartCoroutine (homerunAttack());
-				}
+				StartCoroutine (homerunAttack());
 			}
-			else if (r <= 14)
+
+			else if (find(shockwaveAttackRange))
 			{
-				if (find(shockwaveAttackRange))
-				{
-					StartCoroutine (shockwaveAttack());
-				}
+				StartCoroutine (shockwaveAttack());
 			}
-			else
+
+			else if (find(whirlwindAttackRange))
 			{
-				if (find(whirlwindAttackRange))
-				{
-					StartCoroutine (whirlwindAttack());
-				}
+				StartCoroutine (whirlwindAttack());
 			}
 		}
-
-		/*switch (currentAttack)
-		{
-		// Choose attack
-		case -1:
-			if (health < maxHealth * 0.3f && !roomCollapsing)
-			{
-				currentAttack = 5;
-			}
-			else
-			{
-				int r;
-				if (health > maxHealth * 0.5f)
-				{
-					r = Random.Range(1, 16);
-				}
-				else
-				{
-					r = Random.Range(1, 18);
-				}
-				if (r <= 10)
-				{
-					currentAttack = 0;
-				}
-				else if (r <= 12)
-				{
-					currentAttack = 1;
-				}
-				else if (r <= 14)
-				{
-					currentAttack = 2;
-				}
-				else if (r <= 16)
-				{
-					currentAttack = 3;
-				}
-				else 
-				{
-					currentAttack = 4;
-				}
-			}
-			break;
-		// Basic attack
-		case 0:
-			// Get within range of closest player
-			if (!attackBegun)
-			{
-				closestPlayer = findClosestPlayer();
-				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
-				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
-				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < basicAttackRange)
-				{
-					attackBegun = true;
-					myAnimator.StopPlayback();
-					myAnimator.SetTrigger("startBasicAttack");
-
-				}
-			}
-			else if (attackBegun)
-			{
-				// wait for animation to finish playing and set currentAttack to -1
-				if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("BasicAttack"))
-				{
-					attackBegun = false;
-					currentAttack = -1;
-				}
-			}
-			break;
-		// Home run
-		case 1:
-			// Get within range of closest player
-			if (!attackBegun)
-			{
-				closestPlayer = findClosestPlayer();
-				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
-				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
-				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < homeRunAttackRange)
-				{
-					myAnimator.SetTrigger("startHomeRun");
-					attackBegun = true;
-				}
-			}
-			else if (attackBegun)
-			{
-				// wait for animation to finish playing and set currentAttack to -1
-				if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("HomeRun"))
-				{
-					attackBegun = false;
-					currentAttack = -1;
-				}
-			}
-			break;
-		// Whirlwind
-		case 2:
-			// Get within range of closest player
-			if (!attackBegun)
-			{
-				closestPlayer = findClosestPlayer();
-				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				myAnimator.SetTrigger("startMoving");
-				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
-				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < homeRunAttackRange)
-				{
-					myAnimator.SetTrigger("startWhirlwind");
-					attackBegun = true;
-				}
-			}
-			else if (attackBegun)
-			{
-				// If the animation is still playing...
-				if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Whirlwind"))
-				{
-					LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
-					// Draw all players in within a large range
-					Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
-					foreach (Collider c in hit)
-					{
-						Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
-						fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
-						c.GetComponent<CharacterBase>().addForce(fromPlayer);
-					}
-					// Damage all players in a small sphere
-					hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
-					foreach (Collider c in hit)
-					{
-						c.GetComponent<CharacterBase>().takeDamage(whirlwindDamage);
-					}
-				}
-				else
-				{
-					attackBegun = false;
-					currentAttack = -1;
-				}
-			}
-			break;
-		// Shockwave
-		case 3:
-			// Get within range of closest player
-			if (!attackBegun)
-			{
-				closestPlayer = findClosestPlayer();
-				moveTowardsPlayer(closestPlayer, Time.deltaTime);
-				rotateTowardsPlayer(closestPlayer, Time.deltaTime);
-				if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < shockwaveAttackRange)
-				{
-					myAnimator.SetTrigger("startShockwave");
-					attackBegun = true;
-				}
-			}
-			else if (attackBegun)
-			{
-				// the actual spawning of the shockwave is handled with an animation event trigger
-				if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Shockwave"))
-				{
-					attackBegun = false;
-					currentAttack = -1;
-				}
-			}
-			break;
-		}*/
 	}
 
 	private bool find(float attackRange)
@@ -281,11 +102,16 @@ public class KingRestless : EnemyBase
 
 	private IEnumerator shockwaveAttack()
 	{
+		attackInProgress = true;
+
 		yield return StartCoroutine (Wait (2.0f));
+		attackInProgress = false;
 	}
 
 	private IEnumerator whirlwindAttack()
 	{
+		attackInProgress = true;
+
 		LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
 		// Draw all players in within a large range
 		Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
@@ -293,16 +119,17 @@ public class KingRestless : EnemyBase
 		{
 			Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
 			fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
-			c.GetComponent<CharacterBase>().addForce(fromPlayer);
+			c.SendMessage("addForce", fromPlayer);
 		}
 		// Damage all players in a small sphere
 		hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
 		foreach (Collider c in hit)
 		{
-			c.GetComponent<CharacterBase>().takeDamage(whirlwindDamage);
+			c.SendMessage("takeDamage", whirlwindDamage);
 		}
 		
 		yield return StartCoroutine (Wait (2.0f));
+		attackInProgress = false;
 	}
 
 	public void basicAttack()
@@ -328,7 +155,10 @@ public class KingRestless : EnemyBase
 
 	private IEnumerator homerunAttack()
 	{
+		attackInProgress = true;
+
 		yield return StartCoroutine (Wait (2.0f));
+		attackInProgress = false;
 	}
 
 	public void notifyAttackEnd()
