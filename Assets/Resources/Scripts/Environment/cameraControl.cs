@@ -10,14 +10,14 @@ public class cameraControl : MonoBehaviour
 
     public GameObject[] targets;
 	public GameObject captureBox;
-	public float[] angleClamp = {-15, 10};
+	public float[] angleClamp = {15, 8};
 	public float maxDistanceAway = 40f;
 	public Vector3 avgDistance;
 	public float playerHight = 2f;
-	public float bufferSize = 2f;
+	public float bufferSize = 4f;
 	public bool debugBool = false;
 	public float xRatio = .8888f;
-	public float hightMin = 10;
+	public float hightMin = 20;
 
 	private float horFoV;
 	private float virFoV;
@@ -91,7 +91,20 @@ public class cameraControl : MonoBehaviour
 			constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
 		}
 	
-		Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
+		if (Time.deltaTime >= 1)
+		{
+			Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
+		}
+		else 
+		{
+			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
+			Debug.Log (Camera.main.transform.position);
+			float newX = Camera.main.transform.position.x - Time.deltaTime * (Camera.main.transform.position.x - xMid);
+			float newY = Camera.main.transform.position.y - Time.deltaTime * (Camera.main.transform.position.y - yOffset);
+			float newZ = Camera.main.transform.position.z - Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
+			Camera.main.transform.position = new Vector3 (newX, newY, newZ);
+		}
+		//Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
 		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180, 0);
 		captureBox.transform.position = new Vector3(xMid, 0, zMid);
