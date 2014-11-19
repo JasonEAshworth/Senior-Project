@@ -66,6 +66,17 @@ public class EnemyBase : CharacterBase
 		Destroy(gameObject);
 	}
 
+	protected void moveToPosition(Vector3 pos, float dt)
+	{
+		Vector3 moveVector = pos - transform.position;
+		cc.Move(moveVector.normalized * dt * moveSpeed * moveMulti);
+	}
+
+	protected void rotateTowardsPoint(Vector3 pos, float dt)
+	{
+		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(new Vector3(pos.x, 0.0f, pos.z) - new Vector3(transform.position.x, 0.0f, transform.position.z)), rotationSpeed*Time.deltaTime);
+	}
+
 	protected void moveTowardsPlayer(GameObject player, float dt)
 	{
 		Vector3 toPlayer = Vector3.Normalize(player.transform.position - transform.position);

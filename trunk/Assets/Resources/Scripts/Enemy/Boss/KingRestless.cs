@@ -11,6 +11,7 @@ public class KingRestless : EnemyBase
 	private float basicAttackRange = 1.5f;
 
 	// home run 
+	private float homerunAttackDamage = 80.0f;
 	private float homeRunAttackRange = 1.0f;
 
 	// whirlwind
@@ -26,20 +27,23 @@ public class KingRestless : EnemyBase
 	private float shockwaveSpawnDistance = 0.25f;
 
 	// room collapse
+	public GameObject ceilingBoulder;
 	private bool roomCollapsing = false;
+	private float boulderFallInterval = 1.0f;
 
 	//firestorm
 	private bool firestorm = false;
 
 	// general
 	private bool attackInProgress = false;
-
+	private GameObject roomCenter;
 
 
 	protected override void Start()
 	{
 		base.Start();
 		myAnimator = GetComponent<Animator>();
+		roomCenter = GameObject.Find("Boss Room Center");
 	}
 
 	protected override void FixedUpdate()
@@ -47,32 +51,42 @@ public class KingRestless : EnemyBase
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
-			if (health <= maxHealth * 0.6f && !firestorm)
+			/*if (health <= maxHealth * 0.6f && !firestorm)
 			{
 				//move to center of room
 
 				//do attack
 				firestormAttack();
 			}
-			else if (health <= maxHealth * 0.3f && !roomCollapsing)
+			else if (health <= maxHealth * 0.3f && !roomCollapsing)*/
+			if (!roomCollapsing)
 			{
-				//move to pillar object???
+				// Move to the center of the room
+				moveToPosition(roomCenter.transform.position, Time.deltaTime);
+				rotateTowardsPoint(roomCenter.transform.position, Time.deltaTime);
 
 				// HULK SMASH
-				roomCollapseAttack();
+				float dist = Vector3.Distance(transform.position, roomCenter.transform.position);
+				if (dist < 0.4f)
+				{
+					attackInProgress = true;
+					roomCollapsing = true;
+					myAnimator.SetTrigger("roomCollapse");
+				}
 			}
 
 			// Then check for other attacks
-			if (find(basicAttackRange))
+			/*if (find(basicAttackRange))
 			{
 				// Begins the attack animation, which has an animation event that calls basicAttack()
 				attackInProgress = true;
 				myAnimator.SetTrigger("basicAttack");
 			}
 
-			else if (find(homeRunAttackRange))
+			if (find(homeRunAttackRange))
 			{
-				StartCoroutine (homerunAttack());
+				attackInProgress = true;
+				myAnimator.SetTrigger("homerun");
 			}
 
 			else if (find(shockwaveAttackRange))
@@ -83,7 +97,7 @@ public class KingRestless : EnemyBase
 			else if (find(whirlwindAttackRange))
 			{
 				StartCoroutine (whirlwindAttack());
-			}
+			}*/
 		}
 	}
 
@@ -147,18 +161,30 @@ public class KingRestless : EnemyBase
 		firestorm = true;
 	}
 
-	private void roomCollapseAttack()
+	public void startRoomCollapse()
 	{
-		//this is a phase attack
-		roomCollapsing = true;
+		StartCoroutine(roomCollapseAttack());
 	}
 
-	private IEnumerator homerunAttack()
+	private IEnumerator roomCollapseAttack()
 	{
-		attackInProgress = true;
+		while (roomCollapsing)
+		{
+			Vector3 boulderPos = new Vector3(roomCenter.transform.position.x + Random.Range(-15.0f, 15.0f), roomCenter.transform.position.y + 5.0f, roomCenter.transform.position.z + Random.Range(-15.0f, 15.0f));
+			Instantiate(ceilingBoulder, boulderPos, Quaternion.identity);
+			yield return new WaitForSeconds(boulderFallInterval);
+		}
+		yield return null;
+	}
 
-		yield return StartCoroutine (Wait (2.0f));
-		attackInProgress = false;
+	public void homerunAttack()
+	{
+		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward, 1.0f, LayerMask.GetMask("Player"));
+		foreach (Collider c in hit)
+		{
+			c.SendMessage("takeDamage", homerunAttackDamage);
+			c.SendMessage("addForce", (c.transform.position - transform.position).normalized * 35.0f);
+		}
 	}
 
 	public void notifyAttackEnd()
