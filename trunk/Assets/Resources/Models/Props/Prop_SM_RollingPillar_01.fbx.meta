@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: c4330d37026419c449b6023d83930311
+guid: 64bb5aee00cf1d04384a0ee67cad0f95
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Prop_AM_BossDoor
+    100000: Camera
+    100002: Directional Light
+    100004: //RootNode
+    100006: RollingPillar
+    100008: Texture Group
+    400000: Camera
+    400002: Directional Light
+    400004: //RootNode
+    400006: RollingPillar
+    400008: Texture Group
+    2300000: RollingPillar
+    3300000: RollingPillar
+    4300000: RollingPillar
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
