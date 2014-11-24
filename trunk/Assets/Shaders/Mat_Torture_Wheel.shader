@@ -1,7 +1,7 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32719,y:32712|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:33131,y:32677,ptlb:Txt_Wheel_Wood_Diff,ptin:_Txt_Wheel_Wood_Diff,tex:94ba0cb3a3985fc43938a71367d3608e,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:33114,y:32903,ptlb:Txt_Wood_Norm,ptin:_Txt_Wood_Norm,tex:f7f37872429b40e4caa2b04f63a2ebac,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:4,x:32945,y:32491,ptlb:Txt_Iron_Diff,ptin:_Txt_Iron_Diff,tex:c0e6c24418b32a541bdc13afe2cb82ec,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:5,x:33006,y:33128,ptlb:Txt_Iron_Norm,ptin:_Txt_Iron_Norm,tex:637c50f44b36aa84d8305f5af5a6c259,ntxv:3,isnm:True;proporder:2-4-3;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32719,y:32712|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:33131,y:32677,ptlb:Txt_Wheel_Wood_Diff,ptin:_Txt_Wheel_Wood_Diff,tex:94ba0cb3a3985fc43938a71367d3608e,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:33114,y:32903,ptlb:Txt_Wood_Norm,ptin:_Txt_Wood_Norm,tex:f7f37872429b40e4caa2b04f63a2ebac,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:4,x:32945,y:32491,ptlb:Txt_Iron_Diff,ptin:_Txt_Iron_Diff,tex:c0e6c24418b32a541bdc13afe2cb82ec,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:5,x:33006,y:33128,ptlb:Txt_Iron_Norm,ptin:_Txt_Iron_Norm,tex:637c50f44b36aa84d8305f5af5a6c259,ntxv:3,isnm:True;proporder:2-4-3;pass:END;sub:END;*/
 
 Shader "Shader Forge/Mat_Torture_Wheel" {
     Properties {
@@ -63,19 +63,19 @@ Shader "Shader Forge/Mat_Torture_Wheel" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_24 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Txt_Wood_Norm,TRANSFORM_TEX(node_24.rg, _Txt_Wood_Norm))).rgb;
+                float2 node_34 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_Txt_Wood_Norm,TRANSFORM_TEX(node_34.rg, _Txt_Wood_Norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
-                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
+                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Txt_Wheel_Wood_Diff,TRANSFORM_TEX(node_24.rg, _Txt_Wheel_Wood_Diff)).rgb;
+                finalColor += diffuseLight * tex2D(_Txt_Wheel_Wood_Diff,TRANSFORM_TEX(node_34.rg, _Txt_Wheel_Wood_Diff)).rgb;
 /// Final Color:
                 return fixed4(finalColor,1);
             }
@@ -133,19 +133,19 @@ Shader "Shader Forge/Mat_Torture_Wheel" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_25 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Txt_Wood_Norm,TRANSFORM_TEX(node_25.rg, _Txt_Wood_Norm))).rgb;
+                float2 node_35 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_Txt_Wood_Norm,TRANSFORM_TEX(node_35.rg, _Txt_Wood_Norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Txt_Wheel_Wood_Diff,TRANSFORM_TEX(node_25.rg, _Txt_Wheel_Wood_Diff)).rgb;
+                finalColor += diffuseLight * tex2D(_Txt_Wheel_Wood_Diff,TRANSFORM_TEX(node_35.rg, _Txt_Wheel_Wood_Diff)).rgb;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
             }
