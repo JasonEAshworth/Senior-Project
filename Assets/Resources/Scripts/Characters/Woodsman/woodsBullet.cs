@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class woodsBullet : MonoBehaviour {
 
@@ -40,6 +41,10 @@ public class woodsBullet : MonoBehaviour {
 
 	void OnCollisionEnter(Collision c)
 	{
+		if (c.collider.GetComponent<Explodable>() != null)
+		{
+			c.collider.SendMessage("Boom");
+		}
 		if (c.gameObject.CompareTag("Enemy"))
 		{
 			EnemyBase scr = c.gameObject.GetComponent<EnemyBase>();

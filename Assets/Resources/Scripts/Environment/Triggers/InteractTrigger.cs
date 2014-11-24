@@ -7,7 +7,7 @@ public class InteractTrigger : TriggerController
 {
 	public void OnTriggerEnter(Collider other)
 	{
-		if(CanTrigger(other))
+		if(CanTrigger(other.gameObject))
 		{
 			playersIn++;
 			if(playersIn >= playersNeeded)
@@ -19,7 +19,7 @@ public class InteractTrigger : TriggerController
 
 	public void OnTriggerExit(Collider other)
 	{
-		if(CanTrigger(other))
+		if(CanTrigger(other.gameObject))
 		{
 			playersIn--;
 		}

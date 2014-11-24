@@ -29,7 +29,7 @@ public class rewiredControl : MonoBehaviour {
 	//for jumping and rotating torwards direction of travel
 	//public float jumpForce = 0.50f;
 	//public float verticalVelocity = 0.0f;
-	public float rotationSpeed = 250.0f;
+	public float rotationSpeed = 90.0f;
 	
 	[System.NonSerialized] // Don't serialize this so the value is lost on an editor script recompile.
 	private bool initialized;
