@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Rogue : PlayerBase
 {
@@ -202,11 +203,20 @@ public class Rogue : PlayerBase
 	// Called by an animation event at the start of Attack1 and 2 animation
 	public void triggerNormalAttack()
 	{
-		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward, 0.5f, LayerMask.GetMask("Enemy"));
+		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward, 0.5f);
 		foreach (Collider c in hit)
 		{
-			c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage);
+			if (c.tag == "Enemy")
+			{
+				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage);
+			}
+			if (c.GetComponent<Explodable>() != null)
+			{
+				c.SendMessage("Boom");
+			}
 		}
+
+
 	}
 	
 	new void FixedUpdate()
