@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Icicle_Shot : MonoBehaviour 
 {
@@ -23,5 +24,9 @@ public class Icicle_Shot : MonoBehaviour
 			c.gameObject.SendMessage ("slow");
 			Destroy (gameObject);
 		} 
+		if (c.GetComponent<Explodable>() != null)
+		{
+			c.SendMessage("Boom");
+		}
 	}
 }

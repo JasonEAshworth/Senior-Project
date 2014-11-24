@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Warrior : PlayerBase
 {
@@ -59,9 +60,16 @@ public class Warrior : PlayerBase
 			Collider[] hit = Physics.OverlapSphere(transform.position, 1.5f, LayerMask.GetMask("Enemy"));
 			foreach (Collider c in hit)
 			{
-				Vector3 forceDir = (c.transform.position - transform.position);
-				forceDir = new Vector3(forceDir.x, 0.0f, forceDir.z).normalized;
-				c.GetComponent<EnemyBase>().addForce(forceDir * specialAttackForce);
+				if (c.tag == "Enemy")
+				{
+					Vector3 forceDir = (c.transform.position - transform.position);
+					forceDir = new Vector3(forceDir.x, 0.0f, forceDir.z).normalized;
+					c.GetComponent<EnemyBase>().addForce(forceDir * specialAttackForce);
+				}
+				if (c.GetComponent<Explodable>() != null)
+				{
+					c.SendMessage("Boom");
+				}
 			}
 			yield return new WaitForSeconds(0.2f);
 		}
@@ -95,8 +103,15 @@ public class Warrior : PlayerBase
 		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward, 1.0f, LayerMask.GetMask("Enemy"));
 		foreach (Collider c in hit)
 		{
-			addMana(5.0f);
-			c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage);
+			if (c.tag == "Enemy")
+			{
+				addMana(5.0f);
+				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage);
+			}
+			if (c.GetComponent<Explodable>() != null)
+			{
+				c.SendMessage("Boom");
+			}
 		}
 	}
 
@@ -106,11 +121,18 @@ public class Warrior : PlayerBase
 		Collider[] hit = Physics.OverlapSphere(transform.position + transform.forward * 1.5f, 1.25f, LayerMask.GetMask("Enemy"));
 		foreach (Collider c in hit)
 		{
-			addMana(5.0f);
-			c.GetComponent<EnemyBase>().takeDamage(comboAttackDamage);
-			Vector3 forceDir = (c.transform.position - transform.position);
-			forceDir = new Vector3(forceDir.x, 0.0f, forceDir.z).normalized;
-			c.GetComponent<EnemyBase>().addForce(forceDir * comboAttackForce);
+			if (c.tag == "Enemy")
+			{
+				addMana(5.0f);
+				c.GetComponent<EnemyBase>().takeDamage(comboAttackDamage);
+				Vector3 forceDir = (c.transform.position - transform.position);
+				forceDir = new Vector3(forceDir.x, 0.0f, forceDir.z).normalized;
+				c.GetComponent<EnemyBase>().addForce(forceDir * comboAttackForce);
+			}
+			if (c.GetComponent<Explodable>() != null)
+			{
+				c.SendMessage("Boom");
+			}
 		}
 	}
 
