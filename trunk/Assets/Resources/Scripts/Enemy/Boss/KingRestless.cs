@@ -20,6 +20,8 @@ public class KingRestless : EnemyBase
 	private float whirlwindDamage = 15.0f;
 	private float whirlwindForceRange = 5.0f;
 	private float whirlwindForceMagnitude = 1.0f;
+	private float whirlwindInterval = 0.2f;
+	private bool spinning = false;
 
 	// shockwave
 	public GameObject shockwavePrefab;
@@ -30,6 +32,7 @@ public class KingRestless : EnemyBase
 	public GameObject ceilingBoulder;
 	private bool roomCollapsing = false;
 	private float boulderFallInterval = 1.0f;
+	private float boulderFallHeight = 10.0f;
 
 	//firestorm
 	private bool firestorm = false;
@@ -51,15 +54,14 @@ public class KingRestless : EnemyBase
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
-			/*if (health <= maxHealth * 0.6f && !firestorm)
+			if (health <= maxHealth * 0.6f && !firestorm)
 			{
 				//move to center of room
 
 				//do attack
 				firestormAttack();
 			}
-			else if (health <= maxHealth * 0.3f && !roomCollapsing)*/
-			if (!roomCollapsing)
+			else if (health <= maxHealth * 0.3f && !roomCollapsing)
 			{
 				// Move to the center of the room
 				moveToPosition(roomCenter.transform.position, Time.deltaTime);
@@ -76,7 +78,7 @@ public class KingRestless : EnemyBase
 			}
 
 			// Then check for other attacks
-			/*if (find(basicAttackRange))
+			if (find(basicAttackRange))
 			{
 				// Begins the attack animation, which has an animation event that calls basicAttack()
 				attackInProgress = true;
@@ -91,13 +93,14 @@ public class KingRestless : EnemyBase
 
 			else if (find(shockwaveAttackRange))
 			{
-				StartCoroutine (shockwaveAttack());
+				attackInProgress = true;
+				myAnimator.SetTrigger("shockwave");
 			}
 
 			else if (find(whirlwindAttackRange))
 			{
 				StartCoroutine (whirlwindAttack());
-			}*/
+			}
 		}
 	}
 
@@ -114,36 +117,45 @@ public class KingRestless : EnemyBase
 		return false;
 	}
 
-	private IEnumerator shockwaveAttack()
+	public void startShockwave()
 	{
-		attackInProgress = true;
+		GameObject shockwave = Instantiate(shockwavePrefab, transform.position + shockwaveSpawnDistance * transform.forward, Quaternion.LookRotation(transform.forward)) as GameObject;
+		shockwave.transform.parent = roomCenter.transform.root;
+	}
 
-		yield return StartCoroutine (Wait (2.0f));
-		attackInProgress = false;
+	public void startWhirlwind()
+	{
+		StartCoroutine(whirlwindAttack());
+	}
+
+	public void endWhirlwind()
+	{
+		spinning = false;
 	}
 
 	private IEnumerator whirlwindAttack()
 	{
-		attackInProgress = true;
-
+		spinning = true;
 		LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
-		// Draw all players in within a large range
-		Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
-		foreach (Collider c in hit)
+
+		while (spinning)
 		{
-			Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
-			fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
-			c.SendMessage("addForce", fromPlayer);
+			// Draw all players in within a large range
+			Collider[] hit = Physics.OverlapSphere(transform.position, whirlwindForceRange, playerMask);
+			foreach (Collider c in hit)
+			{
+				Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
+				fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
+				c.SendMessage("addForce", fromPlayer);
+			}
+			// Damage all players in a small sphere
+			hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
+			foreach (Collider c in hit)
+			{
+				c.SendMessage("takeDamage", whirlwindDamage);
+			}
+			yield return new WaitForSeconds(whirlwindInterval);
 		}
-		// Damage all players in a small sphere
-		hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
-		foreach (Collider c in hit)
-		{
-			c.SendMessage("takeDamage", whirlwindDamage);
-		}
-		
-		yield return StartCoroutine (Wait (2.0f));
-		attackInProgress = false;
 	}
 
 	public void basicAttack()
@@ -170,8 +182,9 @@ public class KingRestless : EnemyBase
 	{
 		while (roomCollapsing)
 		{
-			Vector3 boulderPos = new Vector3(roomCenter.transform.position.x + Random.Range(-15.0f, 15.0f), roomCenter.transform.position.y + 5.0f, roomCenter.transform.position.z + Random.Range(-15.0f, 15.0f));
-			Instantiate(ceilingBoulder, boulderPos, Quaternion.identity);
+			Vector3 boulderPos = new Vector3(roomCenter.transform.position.x + Random.Range(-20.0f, 20.0f), roomCenter.transform.position.y + boulderFallHeight, roomCenter.transform.position.z + Random.Range(-20.0f, 20.0f));
+			GameObject boulder = Instantiate(ceilingBoulder, boulderPos, Quaternion.identity) as GameObject;
+			boulder.transform.parent = roomCenter.transform.root; // make sure the boulder is spawned as a child of the current room
 			yield return new WaitForSeconds(boulderFallInterval);
 		}
 		yield return null;
