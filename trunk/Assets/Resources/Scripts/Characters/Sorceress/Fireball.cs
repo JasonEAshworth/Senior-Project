@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Fireball : MonoBehaviour {
 
@@ -19,6 +20,11 @@ public class Fireball : MonoBehaviour {
 		if (c.gameObject.CompareTag ("Enemy")) {
 			c.gameObject.SendMessage ("takeDamage", fireballDamage);
 			Destroy (gameObject);
-		} 
+		}
+		if (c.GetComponent<Explodable>() != null)
+		{
+			c.SendMessage("Boom");
+		}
+
 	}
 }
