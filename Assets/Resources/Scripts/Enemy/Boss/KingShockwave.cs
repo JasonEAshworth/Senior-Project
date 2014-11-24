@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class KingShockwave : MonoBehaviour 
 {
@@ -10,6 +11,12 @@ public class KingShockwave : MonoBehaviour
 	private float currentDistance = 0.0f;
 	private float hitForce = 4.0f;
 	private float hitDamage = 25.0f;
+	private List<GameObject> playersHit;
+
+	void Start()
+	{
+		playersHit = new List<GameObject>();
+	}
 
 	void FixedUpdate()
 	{
@@ -38,7 +45,11 @@ public class KingShockwave : MonoBehaviour
 				if (Physics.Raycast(pos + new Vector3(0,0.5f,0), direction, out hit, currentDistance, LayerMask.GetMask("Player")))
 				{
 					hit.collider.GetComponent<PlayerBase>().addForce(direction * hitForce * Time.deltaTime);
-					hit.collider.GetComponent<PlayerBase>().takeDamage(hitDamage);
+					if (!playersHit.Contains(hit.collider.gameObject))
+					{
+						hit.collider.GetComponent<PlayerBase>().takeDamage(hitDamage);
+						playersHit.Add(hit.collider.gameObject);
+					}
 				}
 				direction = stepAngle * direction;
 			}
