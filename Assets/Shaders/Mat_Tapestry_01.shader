@@ -1,12 +1,12 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32719,y:32712|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:33044,y:32621,ptlb:node_2,ptin:_node_2,tex:6da67a994c402384a95ef6f3733c72d2,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:33089,y:32813,ptlb:node_3,ptin:_node_3,tex:989137a98255602438b523fee8f517a6,ntxv:0,isnm:False;proporder:2-3;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32719,y:32712|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:33044,y:32621,ptlb:node_2,ptin:_node_2,tex:6da67a994c402384a95ef6f3733c72d2,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:33089,y:32813,ptlb:node_3,ptin:_node_3,tex:989137a98255602438b523fee8f517a6,ntxv:3,isnm:True;proporder:2-3;pass:END;sub:END;*/
 
 Shader "Shader Forge/Mat_Tapestry_01" {
     Properties {
         _node_2 ("node_2", 2D) = "white" {}
-        _node_3 ("node_3", 2D) = "white" {}
+        _node_3 ("node_3", 2D) = "bump" {}
     }
     SubShader {
         Tags {
@@ -62,19 +62,19 @@ Shader "Shader Forge/Mat_Tapestry_01" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_22 = i.uv0;
-                float3 normalLocal = tex2D(_node_3,TRANSFORM_TEX(node_22.rg, _node_3)).rgb;
+                float2 node_68 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_68.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
-                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
+                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_22.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_68.rg, _node_2)).rgb;
 /// Final Color:
                 return fixed4(finalColor,1);
             }
@@ -132,19 +132,19 @@ Shader "Shader Forge/Mat_Tapestry_01" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_23 = i.uv0;
-                float3 normalLocal = tex2D(_node_3,TRANSFORM_TEX(node_23.rg, _node_3)).rgb;
+                float2 node_69 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_69.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_23.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_69.rg, _node_2)).rgb;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
             }
