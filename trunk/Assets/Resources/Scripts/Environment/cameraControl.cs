@@ -78,7 +78,7 @@ public class cameraControl : MonoBehaviour
 		float constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
 
 		if (constrainedZ < zMax) {
-			Debug.Log ("Bound by Z Axis");
+			//Debug.Log ("Bound by Z Axis");
 			constrainedZ = zMax;
 			yOffset = ((Mathf.Tan (shiftAngle + virFoV) * playerHight + zMax) / (Mathf.Tan(shiftAngle + virFoV) - Mathf.Tan (shiftAngle)));
 			zOffset = yOffset * Mathf.Tan(shiftAngle);
@@ -97,8 +97,8 @@ public class cameraControl : MonoBehaviour
 		}
 		else 
 		{
-			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
-			Debug.Log (Camera.main.transform.position);
+//			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
+//			Debug.Log (Camera.main.transform.position);
 			float newX = Camera.main.transform.position.x - Time.deltaTime * (Camera.main.transform.position.x - xMid);
 			float newY = Camera.main.transform.position.y - Time.deltaTime * (Camera.main.transform.position.y - yOffset);
 			float newZ = Camera.main.transform.position.z - Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));

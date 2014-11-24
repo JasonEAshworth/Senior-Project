@@ -82,7 +82,7 @@ public class Woodsman : PlayerBase
 			}
 		}
 
-		Debug.Log (hawkCost);
+		//Debug.Log (hawkCost);
 
 	}
 

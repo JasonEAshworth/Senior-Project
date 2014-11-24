@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class woodsSpecialBulletScript : MonoBehaviour {
 	
@@ -49,6 +50,10 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	void OnCollisionEnter(Collision c)
 	{
 		Debug.Log ("hi");
+		if (c.collider.GetComponent<Explodable>() != null)
+		{
+			c.collider.SendMessage("Boom");
+		}
 		if(c.gameObject.CompareTag("wall"))
 		{
 			Destroy (gameObject);

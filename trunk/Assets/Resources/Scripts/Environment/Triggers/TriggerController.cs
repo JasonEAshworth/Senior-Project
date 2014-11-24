@@ -28,12 +28,12 @@ public class TriggerController : MonoBehaviour
 		}
 	}
 
-	public bool CanTrigger(Collider other)
+	public bool CanTrigger(GameObject go)
 	{
 		bool ok = false;
 
 		//follow this format
-		if(other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Hawk"))
+		if(go.CompareTag("Player") || go.CompareTag("Hawk"))
 		{
 			if(gameObject.CompareTag("DoorTrigger"))
 			{
@@ -82,7 +82,7 @@ public class TriggerController : MonoBehaviour
 		}
 	}
 
-	public virtual void ActivateTrigger(bool state)
+	public void ActivateTrigger(bool state)
 	{
 		this.on = true;
 	}
