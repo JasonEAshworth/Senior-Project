@@ -6,6 +6,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Collections;
 using UnityEngine;
 
 namespace Exploder
@@ -51,6 +52,7 @@ namespace Exploder
         /// </summary>
         public static Vector3 GetCentroid(GameObject obj)
         {
+			UnityEngine.Debug.Log (obj);
             var meshRenderer = obj.GetComponentsInChildren<MeshRenderer>();
 
             var centroid = Vector3.zero;

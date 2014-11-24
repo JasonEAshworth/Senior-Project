@@ -14,5 +14,42 @@ namespace Exploder
     /// </summary>
     public class Explodable : MonoBehaviour
     {
+		public ExploderObject exploder = null;
+
+		public float force = 1.0f;
+		public float radius = 0.5f;
+		public int targetFragments = 10;
+		public Vector3 ForceVector = Camera.main.transform.up.normalized;
+
+		void Start () {
+			exploder = GameObject.FindGameObjectWithTag("TheExploder").GetComponent<ExploderObject>();
+			
+		}
+		
+		void Boom(){
+			var centroid = ExploderUtils.GetCentroid(gameObject);
+			
+			// place the exploder object to centroid position
+			exploder.transform.position = centroid;
+			exploder.ExplodeSelf = false;
+			
+			// adjust force vector to be in direction from shotgun
+			exploder.ForceVector = ForceVector;
+			//                Utils.Log("ForceVec: " + exploder.ForceVector);
+			exploder.Force = force;
+			exploder.UseForceVector = true;
+			
+			// fragment pieces
+			exploder.TargetFragments = targetFragments;
+			
+			// set explosion radius to 5 meters
+			exploder.Radius = radius;
+			
+			// run explosion
+			exploder.Explode();
+			
+			
+		}
+
     }
 }
