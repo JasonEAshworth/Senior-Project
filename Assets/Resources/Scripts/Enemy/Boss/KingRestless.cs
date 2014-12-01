@@ -13,6 +13,8 @@ public class KingRestless : EnemyBase
 	// home run 
 	private float homerunAttackDamage = 80.0f;
 	private float homeRunAttackRange = 1.0f;
+	private float homerunTimer = 0.0f;
+	private float homerunCooldown = 20.0f;
 
 	// whirlwind
 	private float whirlwindSpeedMod = 0.8f;
@@ -22,12 +24,16 @@ public class KingRestless : EnemyBase
 	private float whirlwindForceRange = 8.0f;
 	private float whirlwindForceMagnitude = 3.0f;
 	private float whirlwindInterval = 0.2f;
+	private float whirlwindTimer = 0.0f;
+	private float whirlwindCooldown = 10.0f;
 	private bool spinning = false;
 
 	// shockwave
 	public GameObject shockwavePrefab;
 	private float shockwaveAttackRange = 3.0f;
 	private float shockwaveSpawnDistance = 0.25f;
+	private float shockwaveTimer = 0.0f;
+	private float shockwaveCooldown = 15.0f;
 
 	// room collapse
 	public GameObject ceilingBoulder;
@@ -52,6 +58,10 @@ public class KingRestless : EnemyBase
 
 	protected override void FixedUpdate()
 	{
+		homerunTimer -= Time.deltaTime;
+		shockwaveTimer -= Time.deltaTime;
+		whirlwindTimer -= Time.deltaTime;
+
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
@@ -79,29 +89,40 @@ public class KingRestless : EnemyBase
 			}
 
 			// Then check for other attacks
-			if (find(basicAttackRange))
+			if (homerunTimer <= 0.0f)
 			{
-				// Begins the attack animation, which has an animation event that calls basicAttack()
-				attackInProgress = true;
-				myAnimator.SetTrigger("basicAttack");
+				if (find(homeRunAttackRange))
+				{
+					attackInProgress = true;
+					myAnimator.SetTrigger("homerun");
+					homerunTimer = homerunCooldown;
+				}
 			}
-
-			else if (find(homeRunAttackRange))
+			else if (shockwaveTimer <= 0.0f)
 			{
-				attackInProgress = true;
-				myAnimator.SetTrigger("homerun");
+				if (find(shockwaveAttackRange))
+				{
+					attackInProgress = true;
+					myAnimator.SetTrigger("shockwave");
+					shockwaveTimer = shockwaveCooldown;
+				}
 			}
-
-			else if (find(shockwaveAttackRange))
+			else if (whirlwindTimer <= 0.0f)
 			{
-				attackInProgress = true;
-				myAnimator.SetTrigger("shockwave");
+				if (find(whirlwindAttackRange))
+				{
+					attackInProgress = true;
+					myAnimator.SetTrigger("whirlwind");
+					whirlwindTimer = whirlwindCooldown;
+				}
 			}
-
-			else if (find(whirlwindAttackRange))
+			else
 			{
-				attackInProgress = true;
-				myAnimator.SetTrigger("whirlwind");
+				if (find(basicAttackRange))
+				{
+					attackInProgress = true;
+					myAnimator.SetTrigger("basicAttack");
+				}
 			}
 		}
 	}
