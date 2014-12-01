@@ -21,6 +21,23 @@ ModelImporter:
     100030: polySurface6
     100032: polySurface7
     100034: //RootNode
+    100036: group3
+    100038: Stock_A
+    100040: transform1
+    100042: transform10
+    100044: transform11
+    100046: transform12
+    100048: transform13
+    100050: transform14
+    100052: transform15
+    100054: transform2
+    100056: transform3
+    100058: transform4
+    100060: transform5
+    100062: transform6
+    100064: transform7
+    100066: transform8
+    100068: transform9
     400000: group1
     400002: group2
     400004: pCube10
@@ -39,6 +56,23 @@ ModelImporter:
     400030: polySurface6
     400032: polySurface7
     400034: //RootNode
+    400036: group3
+    400038: Stock_A
+    400040: transform1
+    400042: transform10
+    400044: transform11
+    400046: transform12
+    400048: transform13
+    400050: transform14
+    400052: transform15
+    400054: transform2
+    400056: transform3
+    400058: transform4
+    400060: transform5
+    400062: transform6
+    400064: transform7
+    400066: transform8
+    400068: transform9
     2300000: pCube10
     2300002: pCube11
     2300004: pCube12
@@ -54,6 +88,7 @@ ModelImporter:
     2300024: pCube6 1
     2300026: polySurface6
     2300028: polySurface7
+    2300030: Stock_A
     3300000: pCube10
     3300002: pCube11
     3300004: pCube12
@@ -69,6 +104,7 @@ ModelImporter:
     3300024: pCube6 1
     3300026: polySurface6
     3300028: polySurface7
+    3300030: Stock_A
     4300000: polySurface6
     4300002: polySurface7
     4300004: pCube10
@@ -84,6 +120,7 @@ ModelImporter:
     4300024: pCube12
     4300026: pCube13
     4300028: pCube14
+    4300030: Stock_A
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -104,7 +141,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
