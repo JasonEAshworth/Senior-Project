@@ -64,8 +64,8 @@ Shader "Shader Forge/Mat_Chest" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_47 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_47.rg, _node_3))).rgb;
+                float2 node_67 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_67.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -80,11 +80,11 @@ Shader "Shader Forge/Mat_Chest" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_47.rg, _node_4)).rgb;
+                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_67.rg, _node_4)).rgb;
                 float3 specular = (floor(attenuation) * _LightColor0.xyz) * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_47.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_67.rg, _node_2)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor,1);
@@ -144,8 +144,8 @@ Shader "Shader Forge/Mat_Chest" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_48 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_48.rg, _node_3))).rgb;
+                float2 node_68 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_68.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -160,11 +160,11 @@ Shader "Shader Forge/Mat_Chest" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_48.rg, _node_4)).rgb;
+                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_68.rg, _node_4)).rgb;
                 float3 specular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_48.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_68.rg, _node_2)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
