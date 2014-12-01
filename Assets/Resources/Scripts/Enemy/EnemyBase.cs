@@ -123,8 +123,11 @@ public class EnemyBase : CharacterBase
 				continue;
 			}
 			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
-			shortestRange = Mathf.Min(sqrRange, shortestRange);
-			closestPlayerIdx = i;
+			if (sqrRange < shortestRange)
+			{
+				shortestRange = sqrRange;
+				closestPlayerIdx = i;
+			}
 		}
 		return players[closestPlayerIdx];
 	}

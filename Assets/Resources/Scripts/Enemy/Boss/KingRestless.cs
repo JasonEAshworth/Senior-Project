@@ -15,11 +15,12 @@ public class KingRestless : EnemyBase
 	private float homeRunAttackRange = 1.0f;
 
 	// whirlwind
+	private float whirlwindSpeedMod = 0.8f;
 	private float whirlwindAttackRange = 2.5f;
-	private float whirlwindDamageRange = 1.0f;
+	private float whirlwindDamageRange = 1.5f;
 	private float whirlwindDamage = 15.0f;
-	private float whirlwindForceRange = 5.0f;
-	private float whirlwindForceMagnitude = 1.0f;
+	private float whirlwindForceRange = 8.0f;
+	private float whirlwindForceMagnitude = 3.0f;
 	private float whirlwindInterval = 0.2f;
 	private bool spinning = false;
 
@@ -85,7 +86,7 @@ public class KingRestless : EnemyBase
 				myAnimator.SetTrigger("basicAttack");
 			}
 
-			if (find(homeRunAttackRange))
+			else if (find(homeRunAttackRange))
 			{
 				attackInProgress = true;
 				myAnimator.SetTrigger("homerun");
@@ -99,7 +100,8 @@ public class KingRestless : EnemyBase
 
 			else if (find(whirlwindAttackRange))
 			{
-				StartCoroutine (whirlwindAttack());
+				attackInProgress = true;
+				myAnimator.SetTrigger("whirlwind");
 			}
 		}
 	}
@@ -125,7 +127,9 @@ public class KingRestless : EnemyBase
 
 	public void startWhirlwind()
 	{
+		spinning = true;
 		StartCoroutine(whirlwindAttack());
+		StartCoroutine(whirlwindPlayerSeek());
 	}
 
 	public void endWhirlwind()
@@ -135,7 +139,6 @@ public class KingRestless : EnemyBase
 
 	private IEnumerator whirlwindAttack()
 	{
-		spinning = true;
 		LayerMask playerMask = LayerMask.GetMask(new string[]{"Player"});
 
 		while (spinning)
@@ -145,8 +148,8 @@ public class KingRestless : EnemyBase
 			foreach (Collider c in hit)
 			{
 				Vector3 fromPlayer = (transform.position - c.transform.position).normalized;
-				fromPlayer *= whirlwindForceMagnitude * Time.deltaTime;
-				c.SendMessage("addForce", fromPlayer);
+				fromPlayer *= whirlwindForceMagnitude;
+				c.GetComponent<CharacterBase>().addForce(fromPlayer);
 			}
 			// Damage all players in a small sphere
 			hit = Physics.OverlapSphere(transform.position, whirlwindDamageRange, playerMask);
@@ -156,6 +159,19 @@ public class KingRestless : EnemyBase
 			}
 			yield return new WaitForSeconds(whirlwindInterval);
 		}
+	}
+
+	private IEnumerator whirlwindPlayerSeek()
+	{
+		moveMulti *= whirlwindSpeedMod;
+		while (spinning)
+		{
+			GameObject target = findClosestPlayer();
+			moveTowardsPlayer(target, Time.deltaTime);
+			yield return new WaitForEndOfFrame();
+		}
+		moveMulti /= whirlwindSpeedMod;
+		yield return null;
 	}
 
 	public void basicAttack()
