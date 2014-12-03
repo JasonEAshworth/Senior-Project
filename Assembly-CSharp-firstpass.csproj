@@ -99,20 +99,23 @@
      <None Include="Assets\Shaders\IceShader.shader" />
      <None Include="Assets\Shaders\ReaperStatue_1_Mat.shader" />
      <None Include="Assets\Shaders\Table_1_Mat.shader" />
+     <None Include="Assets\Shaders\Mat_Torture_IronChair_Iron.shader" />
      <None Include="Assets\Shaders\SmallContainers_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_RailingSegment_01.shader" />
+     <None Include="Assets\Shaders\Mat_Torture_Stocks.shader" />
      <None Include="Assets\Shaders\Steve 1.shader" />
      <None Include="Assets\Shaders\Wall_4_1_Mat.shader" />
      <None Include="Assets\Shaders\Floor_1_Mat.shader" />
+     <None Include="Assets\Shaders\Mat_SM_Padlock.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightCone.shader" />
      <None Include="Assets\Plugins\Exploder\Demo\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Shaders\Chain.shader" />
      <None Include="Assets\Shaders\Mat_Tapestry_01.shader" />
      <None Include="Assets\Plugins\ShaderForge\Readme.txt" />
      <None Include="Assets\Shaders\ColumnRound_1_Mat_B.shader" />
      <None Include="Assets\Shaders\Wall_Doorway_1_Mat.shader" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
-     <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
      <None Include="Assets\Shaders\NewShader.shader" />
      <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Vegetation.shader" />
@@ -124,7 +127,9 @@
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Refraction.shader" />
      <None Include="Assets\Plugins\Exploder\Demo\Shaders\VertexColor.shader" />
+     <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Crate_a.shader" />
+     <None Include="Assets\Shaders\Mat_JudasCradle3.shader" />
      <None Include="Assets\Shaders\TombTop_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Parallax.shader" />
      <None Include="Assets\Shaders\Steve.shader" />
@@ -135,7 +140,9 @@
      <None Include="Assets\Shaders\Mat_SM_Barrel.shader" />
      <None Include="Assets\Shaders\Floor.shader" />
      <None Include="Assets\Plugins\Exploder\Exploder\3rd\P2T.txt" />
+     <None Include="Assets\Shaders\Mat_Torture_IronChair_Wood.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\VertexColorRounding.shader" />
+     <None Include="Assets\Shaders\mat_candle.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\TessellationDisplacement.shader" />
      <None Include="Assets\Shaders\Mat_Carpet.shader" />
      <None Include="Assets\Shaders\Switch_1_Mat.shader" />
@@ -148,10 +155,13 @@
      <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_CoatOfArms.shader" />
      <None Include="Assets\Shaders\MultiTexture.shader" />
+     <None Include="Assets\Shaders\Mat_LionMount.shader" />
+     <None Include="Assets\Shaders\Mat_BossDoor_A.shader" />
      <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
      <None Include="Assets\Shaders\Mat_Padlock.shader" />
+     <None Include="Assets\Shaders\Mat_AM_Key_A.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
