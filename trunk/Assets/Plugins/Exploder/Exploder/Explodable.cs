@@ -19,10 +19,11 @@ namespace Exploder
 		public float force = 1.0f;
 		public float radius = 0.5f;
 		public int targetFragments = 10;
-		public Vector3 ForceVector = Camera.main.transform.up.normalized;
+		public Vector3 ForceVector;
 
 		void Start () {
 			exploder = GameObject.FindGameObjectWithTag("TheExploder").GetComponent<ExploderObject>();
+			ForceVector = Camera.main.transform.up.normalized;
 			
 		}
 		

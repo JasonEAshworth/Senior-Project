@@ -77,15 +77,17 @@ public class Rogue : PlayerBase
 		//Make the rogue invisible
 		if(dir == "down")
 		{
-			visibility = 0.0f;
-			GetComponent<Animator>().SetTrigger("Sneak");
-		}
-		//Remove GetKeyUp if you want the ability to continue even if the user releases the key
-		else if(dir == "up")
-		{
-			visibility = 1.0f;
-			canAttack = true;
-			GetComponent<Animator>().SetTrigger("Idle");
+			if(visibility == 1.0f)
+			{
+				visibility = 0.0f;
+				GetComponent<Animator>().SetTrigger("Sneak");
+			}
+			else if (visibility == 0.0f)
+			{
+				visibility = 1.0f;
+				canAttack = true;
+				GetComponent<Animator>().SetTrigger("Idle");
+			}
 		}
 	}
 

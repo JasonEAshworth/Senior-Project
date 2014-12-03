@@ -307,7 +307,7 @@ namespace Exploder
             {
                 if (dontUseTag)
                 {
-                    foreach (var fragment in pool)
+                    foreach (Fragment fragment in pool)
                     {
                         fragment.gameObject.AddComponent<Explodable>();
                     }

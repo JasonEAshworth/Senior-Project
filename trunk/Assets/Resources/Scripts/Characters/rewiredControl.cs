@@ -100,13 +100,15 @@ public class rewiredControl : MonoBehaviour {
 		{
 			if(character.canJump)
 			{
-				character.GetComponent<Animator>().SetTrigger("Jump");
+				//character.GetComponent<Animator>().SetTrigger("Jump");
+				character.GetComponent<Animator>().SetBool("Jump", true);
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
 		}
 		else if (cc.isGrounded)
 		{
+			character.GetComponent<Animator>().SetBool("Jump", false);
 			character.canJump = true;
 			character.forces = new Vector3(character.forces.x, Mathf.Max(0.0f, character.forces.y), character.forces.z);
 		}		
