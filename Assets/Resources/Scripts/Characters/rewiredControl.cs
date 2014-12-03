@@ -8,7 +8,7 @@ public class rewiredControl : MonoBehaviour {
 	
 	public int playerId = 0; // The Rewired player id of this character
 	
-	public float moveSpeed = 3.0f;
+	public float moveSpeed = 3.5f;
 	public float bulletSpeed = 15.0f;
 	public GameObject bulletPrefab;
 	
@@ -29,7 +29,7 @@ public class rewiredControl : MonoBehaviour {
 	//for jumping and rotating torwards direction of travel
 	//public float jumpForce = 0.50f;
 	//public float verticalVelocity = 0.0f;
-	public float rotationSpeed = 90.0f;
+	public float rotationSpeed = 200.0f;
 	
 	[System.NonSerialized] // Don't serialize this so the value is lost on an editor script recompile.
 	private bool initialized;
