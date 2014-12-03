@@ -58,6 +58,7 @@ public class KingRestless : EnemyBase
 
 	protected override void FixedUpdate()
 	{
+		base.FixedUpdate();
 		homerunTimer -= Time.deltaTime;
 		shockwaveTimer -= Time.deltaTime;
 		whirlwindTimer -= Time.deltaTime;

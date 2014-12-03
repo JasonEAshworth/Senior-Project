@@ -57,7 +57,10 @@ public class HordeRoom : MonoBehaviour
 			if (doneSpawning && !enemiesAlive)
 			{
 				GameObject.Find("PlayerManager").GetComponent<PlayerManager>().haveKey = true;
-				roomDoor.ActivateTrigger(true);
+				if (roomDoor != null)
+				{
+					roomDoor.ActivateTrigger(true);
+				}
 				doorOpen = true;
 			}
 		}
