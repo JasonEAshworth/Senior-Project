@@ -13,8 +13,6 @@ public class KingRestless : EnemyBase
 	// home run 
 	private float homerunAttackDamage = 80.0f;
 	private float homeRunAttackRange = 1.0f;
-	private float homerunTimer = 0.0f;
-	private float homerunCooldown = 20.0f;
 
 	// whirlwind
 	private float whirlwindSpeedMod = 0.8f;
@@ -24,16 +22,12 @@ public class KingRestless : EnemyBase
 	private float whirlwindForceRange = 8.0f;
 	private float whirlwindForceMagnitude = 3.0f;
 	private float whirlwindInterval = 0.2f;
-	private float whirlwindTimer = 0.0f;
-	private float whirlwindCooldown = 10.0f;
 	private bool spinning = false;
 
 	// shockwave
 	public GameObject shockwavePrefab;
 	private float shockwaveAttackRange = 3.0f;
 	private float shockwaveSpawnDistance = 0.25f;
-	private float shockwaveTimer = 0.0f;
-	private float shockwaveCooldown = 15.0f;
 
 	// room collapse
 	public GameObject ceilingBoulder;
@@ -42,45 +36,62 @@ public class KingRestless : EnemyBase
 	private float boulderFallHeight = 10.0f;
 
 	//firestorm
-	private bool firestorm = false;
+	public GameObject firestormPrefab;
+	private bool firestorming = false;
 
 	// general
 	private bool attackInProgress = false;
-	private GameObject roomCenter;
+	private Transform roomCenter;
+	private int lastAttack = -1;
+	private int currentAttack = -1;			// the index of the attack in progress
+											// -1 = no attack in progress
+											// 0 = basic attack
+											// 1 = homerun
+											// 2 = shockwave
+											// 3 = whirlwind
 
 
 	protected override void Start()
 	{
 		base.Start();
 		myAnimator = GetComponent<Animator>();
-		roomCenter = GameObject.Find("Boss Room Center");
+		roomCenter = GameObject.Find("Boss Room Center").transform;
 	}
 
 	protected override void FixedUpdate()
 	{
 		base.FixedUpdate();
-		homerunTimer -= Time.deltaTime;
-		shockwaveTimer -= Time.deltaTime;
-		whirlwindTimer -= Time.deltaTime;
 
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
-			if (health <= maxHealth * 0.6f && !firestorm)
+			if (health <= maxHealth * 0.6f && !firestorming)
 			{
-				//move to center of room
+				// Move to the center of the room
+				moveToPosition(roomCenter.position, Time.deltaTime);
+				rotateTowardsPoint(roomCenter.position, Time.deltaTime);
 
 				//do attack
-				firestormAttack();
+				float dist = Vector3.Distance(transform.position, roomCenter.position);
+				if (dist < 0.4f)
+				{
+					attackInProgress = true;
+					firestorming = true;
+					myAnimator.SetTrigger("firestorm");
+
+					Vector3 firestormCenter = roomCenter.position;
+					GameObject firestormObj = Instantiate(firestormPrefab, firestormCenter, Quaternion.identity) as GameObject;
+					firestormObj.transform.parent = roomCenter.root;
+				}
 			}
 			else if (health <= maxHealth * 0.3f && !roomCollapsing)
 			{
 				// Move to the center of the room
-				moveToPosition(roomCenter.transform.position, Time.deltaTime);
-				rotateTowardsPoint(roomCenter.transform.position, Time.deltaTime);
+				moveToPosition(roomCenter.position, Time.deltaTime);
+				rotateTowardsPoint(roomCenter.position, Time.deltaTime);
 
 				// HULK SMASH
-				float dist = Vector3.Distance(transform.position, roomCenter.transform.position);
+				float dist = Vector3.Distance(transform.position, roomCenter.position);
 				if (dist < 0.4f)
 				{
 					attackInProgress = true;
@@ -89,40 +100,70 @@ public class KingRestless : EnemyBase
 				}
 			}
 
-			// Then check for other attacks
-			if (homerunTimer <= 0.0f)
-			{
-				if (find(homeRunAttackRange))
-				{
-					attackInProgress = true;
-					myAnimator.SetTrigger("homerun");
-					homerunTimer = homerunCooldown;
-				}
-			}
-			else if (shockwaveTimer <= 0.0f)
-			{
-				if (find(shockwaveAttackRange))
-				{
-					attackInProgress = true;
-					myAnimator.SetTrigger("shockwave");
-					shockwaveTimer = shockwaveCooldown;
-				}
-			}
-			else if (whirlwindTimer <= 0.0f)
-			{
-				if (find(whirlwindAttackRange))
-				{
-					attackInProgress = true;
-					myAnimator.SetTrigger("whirlwind");
-					whirlwindTimer = whirlwindCooldown;
-				}
-			}
+			// If no phase attacks, set up another attack
 			else
 			{
-				if (find(basicAttackRange))
+				// If no attack currently selected, pick one at random
+				if (currentAttack == -1)
 				{
-					attackInProgress = true;
-					myAnimator.SetTrigger("basicAttack");
+					float randomTemp = Random.Range(0.0f, 100.0f);
+
+					if (randomTemp < 55.0f)
+					{
+						currentAttack = 0; // basic attack
+					}
+					else if (randomTemp < 70.0f)
+					{
+						currentAttack = 1; // homerun
+					}
+					else if (randomTemp < 85.0f)
+					{
+						currentAttack = 2; // shockwave
+					}
+					else
+					{
+						currentAttack = 3; // whirlwind
+					}
+					// if we picked the same attack as last time, just do a basic attack
+					if (currentAttack == lastAttack)
+					{
+						currentAttack = 0;
+					}
+					lastAttack = currentAttack;
+				}
+
+				// Once an attack is set up, move to the appropriate location and begin attack when close enough
+				if (currentAttack == 0)
+				{
+					if (find(basicAttackRange))
+					{
+						attackInProgress = true;
+						myAnimator.SetTrigger("basicAttack");
+					}
+				}
+				else if (currentAttack == 1)
+				{
+					if (find(homeRunAttackRange))
+					{
+						attackInProgress = true;
+						myAnimator.SetTrigger("homerun");
+					}
+				}
+				else if (currentAttack == 2)
+				{
+					if (find(shockwaveAttackRange))
+					{
+						attackInProgress = true;
+						myAnimator.SetTrigger("shockwave");
+					}
+				}
+				else if (currentAttack == 3)
+				{
+					if (find(whirlwindAttackRange))
+					{
+						attackInProgress = true;
+						myAnimator.SetTrigger("whirlwind");
+					}
 				}
 			}
 		}
@@ -144,7 +185,7 @@ public class KingRestless : EnemyBase
 	public void startShockwave()
 	{
 		GameObject shockwave = Instantiate(shockwavePrefab, transform.position + shockwaveSpawnDistance * transform.forward, Quaternion.LookRotation(transform.forward)) as GameObject;
-		shockwave.transform.parent = roomCenter.transform.root;
+		shockwave.transform.parent = roomCenter.root;
 	}
 
 	public void startWhirlwind()
@@ -205,12 +246,6 @@ public class KingRestless : EnemyBase
 		}
 	}
 
-	private void firestormAttack()
-	{
-		//this is a phase attack
-		firestorm = true;
-	}
-
 	public void startRoomCollapse()
 	{
 		StartCoroutine(roomCollapseAttack());
@@ -220,9 +255,9 @@ public class KingRestless : EnemyBase
 	{
 		while (roomCollapsing)
 		{
-			Vector3 boulderPos = new Vector3(roomCenter.transform.position.x + Random.Range(-20.0f, 20.0f), roomCenter.transform.position.y + boulderFallHeight, roomCenter.transform.position.z + Random.Range(-20.0f, 20.0f));
+			Vector3 boulderPos = new Vector3(roomCenter.position.x + Random.Range(-20.0f, 20.0f), roomCenter.position.y + boulderFallHeight, roomCenter.position.z + Random.Range(-20.0f, 20.0f));
 			GameObject boulder = Instantiate(ceilingBoulder, boulderPos, Quaternion.identity) as GameObject;
-			boulder.transform.parent = roomCenter.transform.root; // make sure the boulder is spawned as a child of the current room
+			boulder.transform.parent = roomCenter.root; // make sure the boulder is spawned as a child of the current room
 			yield return new WaitForSeconds(boulderFallInterval);
 		}
 		yield return null;
@@ -240,6 +275,7 @@ public class KingRestless : EnemyBase
 
 	public void notifyAttackEnd()
 	{
+		currentAttack = -1;
 		attackInProgress = false;
 	}
 }

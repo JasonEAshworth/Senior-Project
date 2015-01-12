@@ -2040,7 +2040,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: .899487913
+        functionName: notifyAttackEnd
+        data: 
+        objectReferenceParameter: {fileID: 100002, guid: e8cee61a145ad9a448dbcae236d7eb39,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
