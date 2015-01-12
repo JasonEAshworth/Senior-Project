@@ -1,13 +1,23 @@
 fileFormatVersion: 2
-guid: 849485644a9c9bb41ab252a52a34d787
+guid: 024b900787e0af94c96a33feb2c1f287
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: IronChair
+    100000: Col_Chair
+    100002: Col_Chair1
+    100004: Col_Chair2
+    100006: //RootNode
+    100008: transform6
+    100010: transform7
+    400000: Col_Chair
+    400002: Col_Chair1
+    400004: Col_Chair2
+    400006: //RootNode
+    400008: transform6
+    400010: transform7
+    2300000: Col_Chair2
+    3300000: Col_Chair2
+    4300000: Col_Chair2
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -28,7 +38,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
