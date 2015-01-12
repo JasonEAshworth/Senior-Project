@@ -1,14 +1,14 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32545,y:32538|diff-2-RGB,spec-5-RGB,normal-4-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:32929,y:32437,ptlb:node_2,ptin:_node_2,tex:f066923cab124d64e9e6860b71027030,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:32929,y:32828,ptlb:node_3,ptin:_node_3,tex:4d95e04c83a775f488ba13862ca55def,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4,x:32929,y:32627,ptlb:node_4,ptin:_node_4,tex:26ce90f55538a774db36040e03257b15,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:5,x:32932,y:33020,ptlb:node_5,ptin:_node_5,tex:d333da7b61a70d144af6e332579a48ff,ntxv:0,isnm:False;proporder:5-2-4-3;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32545,y:32538|diff-2-RGB,spec-5-RGB,gloss-3-G,normal-4-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:32929,y:32437,ptlb:node_2,ptin:_node_2,tex:f066923cab124d64e9e6860b71027030,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:32929,y:32828,ptlb:node_3,ptin:_node_3,tex:4d95e04c83a775f488ba13862ca55def,ntxv:2,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:4,x:32929,y:32627,ptlb:node_4,ptin:_node_4,tex:26ce90f55538a774db36040e03257b15,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:5,x:32932,y:33020,ptlb:node_5,ptin:_node_5,tex:d333da7b61a70d144af6e332579a48ff,ntxv:0,isnm:False;proporder:5-2-4-3;pass:END;sub:END;*/
 
 Shader "Shader Forge/Mat_WineRack" {
     Properties {
         _node_5 ("node_5", 2D) = "white" {}
         _node_2 ("node_2", 2D) = "white" {}
         _node_4 ("node_4", 2D) = "bump" {}
-        _node_3 ("node_3", 2D) = "white" {}
+        _node_3 ("node_3", 2D) = "black" {}
     }
     SubShader {
         Tags {
@@ -32,6 +32,7 @@ Shader "Shader Forge/Mat_WineRack" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _node_2; uniform float4 _node_2_ST;
+            uniform sampler2D _node_3; uniform float4 _node_3_ST;
             uniform sampler2D _node_4; uniform float4 _node_4_ST;
             uniform sampler2D _node_5; uniform float4 _node_5_ST;
             struct VertexInput {
@@ -71,13 +72,13 @@ Shader "Shader Forge/Mat_WineRack" {
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
-                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
+                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
 ///////// Gloss:
-                float gloss = 0.5;
+                float gloss = tex2D(_node_3,TRANSFORM_TEX(node_49.rg, _node_3)).g;
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
@@ -112,6 +113,7 @@ Shader "Shader Forge/Mat_WineRack" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _node_2; uniform float4 _node_2_ST;
+            uniform sampler2D _node_3; uniform float4 _node_3_ST;
             uniform sampler2D _node_4; uniform float4 _node_4_ST;
             uniform sampler2D _node_5; uniform float4 _node_5_ST;
             struct VertexInput {
@@ -151,13 +153,13 @@ Shader "Shader Forge/Mat_WineRack" {
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
 ///////// Gloss:
-                float gloss = 0.5;
+                float gloss = tex2D(_node_3,TRANSFORM_TEX(node_50.rg, _node_3)).g;
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
