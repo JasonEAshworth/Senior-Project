@@ -5,9 +5,37 @@ ModelImporter:
   fileIDToRecycleName:
     100000: ArrowNock
     100002: //RootNode
+    100004: Bow_BaseSocket
+    100006: Bow_Center
+    100008: BowArm_Bottom
+    100010: BowArm_Bottom1
+    100012: BowArm_Bottom2
+    100014: BowArm_Bottom3
+    100016: BowArm_Bottom4
+    100018: BowArm_Top
+    100020: BowArm_Top1
+    100022: BowArm_Top2
+    100024: BowArm_Top3
+    100026: BowArm_Top4
+    100028: Prop_Sm_Bow_A_High1
     400000: ArrowNock
     400002: //RootNode
+    400004: Bow_BaseSocket
+    400006: Bow_Center
+    400008: BowArm_Bottom
+    400010: BowArm_Bottom1
+    400012: BowArm_Bottom2
+    400014: BowArm_Bottom3
+    400016: BowArm_Bottom4
+    400018: BowArm_Top
+    400020: BowArm_Top1
+    400022: BowArm_Top2
+    400024: BowArm_Top3
+    400026: BowArm_Top4
+    400028: Prop_Sm_Bow_A_High1
+    4300000: Prop_Sm_Bow_A_High1
     9500000: //RootNode
+    13700000: Prop_Sm_Bow_A_High1
   materials:
     importMaterials: 1
     materialName: 0
@@ -27,7 +55,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
