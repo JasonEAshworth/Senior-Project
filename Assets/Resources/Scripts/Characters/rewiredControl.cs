@@ -29,7 +29,7 @@ public class rewiredControl : MonoBehaviour {
 	//for jumping and rotating torwards direction of travel
 	//public float jumpForce = 0.50f;
 	//public float verticalVelocity = 0.0f;
-	public float rotationSpeed = 200.0f;
+	public float rotationSpeed = 1600.0f;
 	
 	[System.NonSerialized] // Don't serialize this so the value is lost on an editor script recompile.
 	private bool initialized;
@@ -123,6 +123,7 @@ public class rewiredControl : MonoBehaviour {
 			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.01f)
 			{
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)), rotationSpeed * Time.deltaTime);
+				//transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)),  Time.deltaTime);
 			}
 
 			// Process fire button down
