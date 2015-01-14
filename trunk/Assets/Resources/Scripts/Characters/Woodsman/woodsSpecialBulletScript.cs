@@ -47,7 +47,7 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 		}
 	}
 	
-	void OnCollisionEnter(Collision c)
+	void OnTriggerEnter(Collider c)
 	{
 		Debug.Log ("hi");
 		if (c.collider.GetComponent<Explodable>() != null)

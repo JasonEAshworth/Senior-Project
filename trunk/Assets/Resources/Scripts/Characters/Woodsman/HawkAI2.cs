@@ -8,6 +8,7 @@ public class HawkAI2 : MonoBehaviour {
 	public int mode;
 	public GameObject woodsman;
 	public Woodsman script;
+	public float dmg = 10.0f;
 
 	// vectors needed 
 	private Vector3 paddingVector;
@@ -29,11 +30,15 @@ public class HawkAI2 : MonoBehaviour {
 	private float speed = 8.0f;
 
 	// a variable used to store the current enemy the hawk can attack
-	public GameObject enemyToAttack;
+	public List<GameObject> enemiesToAttack;
 
 	// Use this for initialization
 	void Start () 
 	{
+		// list of enemies to keep track of for the hawk to attack
+		// the hawk will only attack the one that the woodsman has done the most damage to
+		enemiesToAttack = new List<GameObject>();
+
 		// Looping through the current players to find the woodsman character to use its forward for movement
 		PlayerManager pManager = GameObject.FindGameObjectWithTag ("PlayerManager").GetComponent<PlayerManager>();
 		for (int i=0; i<pManager.players.Count; i++) 
@@ -63,144 +68,177 @@ public class HawkAI2 : MonoBehaviour {
 
 		// Setting how long the hawk will attack an enemy when set out by player
 		// and it comes into contact with an enemy
-		timerEnemy = 5.0f;
+		timerEnemy = 2.0f;
 
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (enemiesToAttack.Count > 0) 
+		{
+			mode = 2;
+		}
+
 		// Mode 2 is the hawk being sent out by the player using the woodsman
 		// class ability, It goes towards the initial point which is just a set distance
 		// in front of the woodsman using its forward vector.  If it sees an enemy it then will 
 		// attack the enemy and circle it for five seconds before coming back to the woodsman
 		if (mode == 2) 
 		{
-
-
-			// Making sure the hawk is not a child of the woodsman as it effects movement and
-			// rotation
-			transform.parent = null;
-
-			// Checking to see if there is a enemy that the hawk's sphere collider has 
-			// come into contact with. If it has it sets attacking= true and the only 
-			// movement that it is affected by inside this mode is the stuff in this if block.
-			if(enemyToAttack)
+			GameObject mostDamaged = null;
+			float temp = 0.0f;
+			for(int i=0;i<enemiesToAttack.Count;i++)
 			{
-				attacking = true;
+				EnemyBase scr = enemiesToAttack[i].GetComponent<EnemyBase>();
+				if(temp == 0.0f || scr.damageTaken > temp)
+				{
+					mostDamaged = enemiesToAttack[i];
+				}
+			}
 
-				// Keep track of the timer for attacking the enemy, if it is zero set enemyToAttack to null
-				// and attacking to false, and switch the mode to 3 which returns it to woodsman.
+			if(mostDamaged)
+			{
+				Vector3 towardsEnemy = mostDamaged.transform.position - transform.position;
+				transform.up = new Vector3(towardsEnemy.x,0.0f,towardsEnemy.z);
+				if(Vector3.Distance(transform.position,mostDamaged.transform.position) > 2.0f)
+				{
+					transform.position += (towardsEnemy * speed * Time.deltaTime);
+				}
 				timerEnemy = timerEnemy - Time.deltaTime;
 				if(timerEnemy <= 0.0f)
 				{
-					attacking = false;
-					enemyToAttack = null;
-					initialPoint = Vector3.zero;
-					timerEnemy = 5.0f;
-					mode = 3;
-				}
-
-				if(attacking)
-				{
-					
-					// This is the timer for damage, it adds time to it and if it hits 1 second
-					// it resets and deals damage to the enemyToAttack the hawk has.
-					damageTimer = damageTimer + Time.deltaTime;
-					if(damageTimer >= 1.0f && enemyToAttack)
-					{
-						EnemyBase scr = enemyToAttack.GetComponent<EnemyBase>();
-						if(scr)
-						{
-							scr.takeDamage (10.0f);
-						}
-						damageTimer = 0.0f;
-					}
-
-					// This just creates a vector towards the enemy to either increase or decrease the hawk's rotation
-					// around the enemyToAttack
-					Vector3 paddingEnemy = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
-					paddingEnemy.Normalize();
-
-					// This is a vector used to keep the hawk's transform.up to update to make it look
-					// like it is flying around the enemyToAttack properly.
-					Vector3 facingEnemy = Vector3.Cross (paddingEnemy, Vector3.up);
-					transform.up = facingEnemy;
-
-					// Just calculating distance to see if the hawk's rotation radius needs increased or decreased
-					float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
-					
-					if(dist < 1f)
-					{
-						transform.position += paddingEnemy * 1.5f * Time.deltaTime;
-					}
-					else if(dist  > 2.2f)
-					{
-						transform.position += -paddingEnemy * 1.5f * Time.deltaTime;
-					}
-
-					// A call to just rotate around the enemyToAttack
-					transform.RotateAround(enemyToAttack.transform.position,Vector3.up,120 * Time.deltaTime);
+					EnemyBase scr = mostDamaged.GetComponent<EnemyBase>();
+					scr.takeDamage(dmg);
 				}
 
 			}
 
-			// Making sure that if the hawk is within a certain distance to the initialPoint
-			// to just set arrived = true
-			if (Vector3.Distance(transform.position,initialPoint) <= 0.1 && !arrived && !attacking)
-			{
-				transform.position = initialPoint;
-				initialPoint = Vector3.zero;
-				arrived = true;
-			}
-
-			// If the hawk isn't currently attacking an enemy make sure to update its 
-			// position towards the initialPoint
-			else if(!attacking && mode == 2)
-			{
-
-
-				Vector3 hawkXZ = new Vector3(transform.position.x,0,transform.position.z);
-				Vector3 woodsXZ = new Vector3(woodsman.transform.position.x,0,woodsman.transform.position.z);
-				
-				if(initialPoint == Vector3.zero)
-				{
-					initialPoint = transform.position + (woodsman.transform.forward * 12.0f) + (woodsXZ-hawkXZ);
-				}
-				Vector3 moveVec = (initialPoint-transform.position);
-				moveVec.Normalize();
-				transform.up = moveVec;
-				transform.position = transform.position + (moveVec * speed * Time.deltaTime);
-			}
-
-			// If the hawk arrived at the initialPoint and hasn't hit an enemy
-			// then depending on how far from the woodsman it currently is, set its
-			// mode to the corresponding value and update the variables needed.
-			if (arrived && !attacking)
-			{
-				if(Vector3.Distance(woodsman.transform.position,transform.position) > 2.4f)
-				{
-					mode = 3;
-				}
-				else 
-				{
-					mode = 1;
-				}
-				initialPoint = Vector3.zero;
-				arrived = false;
-			}
-
-			// Decrement the woodsman's energy as you go out, if you hit zero come back
-			script.useMana(script.hawkCost);
-			if(script.mana <= script.hawkCost)
-			{
-				initialPoint = Vector3.zero;
-				arrived = false;
-				enemyToAttack = null;
-				attacking = false;
-				mode = 3;
-			}
-			
+//
+//
+//			// Making sure the hawk is not a child of the woodsman as it effects movement and
+//			// rotation
+//			transform.parent = null;
+//
+//			// Checking to see if there is a enemy that the hawk's sphere collider has 
+//			// come into contact with. If it has it sets attacking= true and the only 
+//			// movement that it is affected by inside this mode is the stuff in this if block.
+//			if(enemyToAttack)
+//			{
+//				attacking = true;
+//
+//				// Keep track of the timer for attacking the enemy, if it is zero set enemyToAttack to null
+//				// and attacking to false, and switch the mode to 3 which returns it to woodsman.
+//				timerEnemy = timerEnemy - Time.deltaTime;
+//				if(timerEnemy <= 0.0f)
+//				{
+//					attacking = false;
+//					//enemyToAttack = null;
+//					initialPoint = Vector3.zero;
+//					timerEnemy = 5.0f;
+//					mode = 3;
+//				}
+//
+//				if(attacking)
+//				{
+//					
+//					// This is the timer for damage, it adds time to it and if it hits 1 second
+//					// it resets and deals damage to the enemyToAttack the hawk has.
+//					damageTimer = damageTimer + Time.deltaTime;
+//					if(damageTimer >= 1.0f && enemyToAttack)
+//					{
+//						EnemyBase scr = enemyToAttack.GetComponent<EnemyBase>();
+//						if(scr)
+//						{
+//							scr.takeDamage (10.0f);
+//						}
+//						damageTimer = 0.0f;
+//					}
+//
+//					// This just creates a vector towards the enemy to either increase or decrease the hawk's rotation
+//					// around the enemyToAttack
+//					Vector3 paddingEnemy = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
+//					paddingEnemy.Normalize();
+//
+//					// This is a vector used to keep the hawk's transform.up to update to make it look
+//					// like it is flying around the enemyToAttack properly.
+//					Vector3 facingEnemy = Vector3.Cross (paddingEnemy, Vector3.up);
+//					transform.up = facingEnemy;
+//
+//					// Just calculating distance to see if the hawk's rotation radius needs increased or decreased
+//					float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (enemyToAttack.transform.position.x, 0, enemyToAttack.transform.position.z));
+//					
+//					if(dist < 1f)
+//					{
+//						transform.position += paddingEnemy * 1.5f * Time.deltaTime;
+//					}
+//					else if(dist  > 2.2f)
+//					{
+//						transform.position += -paddingEnemy * 1.5f * Time.deltaTime;
+//					}
+//
+//					// A call to just rotate around the enemyToAttack
+//					transform.RotateAround(enemyToAttack.transform.position,Vector3.up,120 * Time.deltaTime);
+//				}
+//
+//			}
+//
+//			// Making sure that if the hawk is within a certain distance to the initialPoint
+//			// to just set arrived = true
+//			if (Vector3.Distance(transform.position,initialPoint) <= 0.1 && !arrived && !attacking)
+//			{
+//				transform.position = initialPoint;
+//				initialPoint = Vector3.zero;
+//				arrived = true;
+//			}
+//
+//			// If the hawk isn't currently attacking an enemy make sure to update its 
+//			// position towards the initialPoint
+//			else if(!attacking && mode == 2)
+//			{
+//
+//
+//				Vector3 hawkXZ = new Vector3(transform.position.x,0,transform.position.z);
+//				Vector3 woodsXZ = new Vector3(woodsman.transform.position.x,0,woodsman.transform.position.z);
+//				
+//				if(initialPoint == Vector3.zero)
+//				{
+//					initialPoint = transform.position + (woodsman.transform.forward * 12.0f) + (woodsXZ-hawkXZ);
+//				}
+//				Vector3 moveVec = (initialPoint-transform.position);
+//				moveVec.Normalize();
+//				transform.up = moveVec;
+//				transform.position = transform.position + (moveVec * speed * Time.deltaTime);
+//			}
+//
+//			// If the hawk arrived at the initialPoint and hasn't hit an enemy
+//			// then depending on how far from the woodsman it currently is, set its
+//			// mode to the corresponding value and update the variables needed.
+//			if (arrived && !attacking)
+//			{
+//				if(Vector3.Distance(woodsman.transform.position,transform.position) > 2.4f)
+//				{
+//					mode = 3;
+//				}
+//				else 
+//				{
+//					mode = 1;
+//				}
+//				initialPoint = Vector3.zero;
+//				arrived = false;
+//			}
+//
+//			// Decrement the woodsman's energy as you go out, if you hit zero come back
+//			script.useMana(script.hawkCost);
+//			if(script.mana <= script.hawkCost)
+//			{
+//				initialPoint = Vector3.zero;
+//				arrived = false;
+//				enemyToAttack = null;
+//				attacking = false;
+//				mode = 3;
+//			}
+//			
 		}
 
 		// Mode 1 is the idle which just rotates around the woodsman.
@@ -313,10 +351,10 @@ public class HawkAI2 : MonoBehaviour {
 	// the enemyToAttack.
 	void setEnemy(GameObject c)
 	{
-		if(enemyToAttack == null && mode == 2)
-		{
-			enemyToAttack = c;
-		}
+//		if(enemyToAttack == null && mode == 2)
+//		{
+//			enemyToAttack = c;
+//		}
 	}
 	
 }
