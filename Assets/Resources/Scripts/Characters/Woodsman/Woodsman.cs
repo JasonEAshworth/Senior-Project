@@ -78,7 +78,7 @@ public class Woodsman : PlayerBase
 			canMoveTimer += Time.deltaTime;
 			if(canMoveTimer >= 0.04f)
 			{
-				moveMulti = 0.0f;
+				moveMulti = 0.3f;
 			}
 		}
 
