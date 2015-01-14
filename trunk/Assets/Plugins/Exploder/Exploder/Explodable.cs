@@ -23,7 +23,7 @@ namespace Exploder
 
 		void Start () {
 			exploder = GameObject.FindGameObjectWithTag("TheExploder").GetComponent<ExploderObject>();
-			ForceVector = Camera.main.transform.up.normalized;
+			ForceVector = -Camera.main.transform.up.normalized;
 			
 		}
 		
@@ -48,6 +48,8 @@ namespace Exploder
 			
 			// run explosion
 			exploder.Explode();
+
+			//Destroy (this);
 			
 			
 		}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class KingRestless : EnemyBase
 {
@@ -32,11 +33,13 @@ public class KingRestless : EnemyBase
 	// room collapse
 	public GameObject ceilingBoulder;
 	private bool roomCollapsing = false;
+	private float boulderError = 4.0f;
 	private float boulderFallInterval = 1.0f;
 	private float boulderFallHeight = 10.0f;
 
 	//firestorm
 	public GameObject firestormPrefab;
+	private GameObject firestormInstance;
 	private bool firestorming = false;
 
 	// general
@@ -80,8 +83,8 @@ public class KingRestless : EnemyBase
 					myAnimator.SetTrigger("firestorm");
 
 					Vector3 firestormCenter = roomCenter.position;
-					GameObject firestormObj = Instantiate(firestormPrefab, firestormCenter, Quaternion.identity) as GameObject;
-					firestormObj.transform.parent = roomCenter.root;
+					firestormInstance = Instantiate(firestormPrefab, firestormCenter, Quaternion.identity) as GameObject;
+					firestormInstance.transform.parent = roomCenter.root;
 				}
 			}
 			else if (health <= maxHealth * 0.3f && !roomCollapsing)
@@ -182,6 +185,13 @@ public class KingRestless : EnemyBase
 		return false;
 	}
 
+	public override void kill()
+	{
+		StopAllCoroutines();
+		Destroy(firestormInstance);
+		base.kill();
+	}
+
 	public void startShockwave()
 	{
 		GameObject shockwave = Instantiate(shockwavePrefab, transform.position + shockwaveSpawnDistance * transform.forward, Quaternion.LookRotation(transform.forward)) as GameObject;
@@ -255,7 +265,10 @@ public class KingRestless : EnemyBase
 	{
 		while (roomCollapsing)
 		{
-			Vector3 boulderPos = new Vector3(roomCenter.position.x + Random.Range(-20.0f, 20.0f), roomCenter.position.y + boulderFallHeight, roomCenter.position.z + Random.Range(-20.0f, 20.0f));
+			List<GameObject> playerList = GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players;
+			int playerIdx = Random.Range(0, playerList.Count);
+			Vector3 playerPos = playerList[playerIdx].transform.position;
+			Vector3 boulderPos = new Vector3(playerPos.x + Random.Range(-boulderError, boulderError), playerPos.y + boulderFallHeight, playerPos.z + Random.Range(-boulderError, boulderError));
 			GameObject boulder = Instantiate(ceilingBoulder, boulderPos, Quaternion.identity) as GameObject;
 			boulder.transform.parent = roomCenter.root; // make sure the boulder is spawned as a child of the current room
 			yield return new WaitForSeconds(boulderFallInterval);
