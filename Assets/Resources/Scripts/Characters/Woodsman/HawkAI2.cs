@@ -91,7 +91,8 @@ public class HawkAI2 : MonoBehaviour {
 			for(int i=0;i<enemiesToAttack.Count;i++)
 			{
 				EnemyBase scr = enemiesToAttack[i].GetComponent<EnemyBase>();
-				if(temp == 0.0f || scr.damageTaken > temp)
+				//if(temp == 0.0f || scr.damageTaken > temp)
+				if (temp == 0.0f)
 				{
 					mostDamaged = enemiesToAttack[i];
 				}
