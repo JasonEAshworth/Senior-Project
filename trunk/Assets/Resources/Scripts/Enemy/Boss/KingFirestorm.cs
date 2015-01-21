@@ -4,11 +4,17 @@ using System.Collections;
 public class KingFirestorm : MonoBehaviour 
 {
 	private float firestormDamage = 10.0f;
+	private float rotationSpeed = 0.15f;
+
+	void Start()
+	{
+		StartCoroutine(warmup());
+	}
 
 	void FixedUpdate()
 	{
 		Vector3 targetRotation = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 10.0f, transform.eulerAngles.z);
-		transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, targetRotation, 0.1f, 0.1f);
+		transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, targetRotation, rotationSpeed, rotationSpeed);
 	}
 
 	void OnTriggerStay(Collider c)

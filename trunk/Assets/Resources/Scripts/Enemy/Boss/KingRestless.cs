@@ -34,8 +34,8 @@ public class KingRestless : EnemyBase
 	public GameObject ceilingBoulder;
 	private bool roomCollapsing = false;
 	private float boulderError = 4.0f;
-	private float boulderFallInterval = 1.0f;
-	private float boulderFallHeight = 10.0f;
+	private float boulderFallInterval = 0.8f;
+	private float boulderFallHeight = 12.0f;
 
 	//firestorm
 	public GameObject firestormPrefab;
@@ -68,7 +68,7 @@ public class KingRestless : EnemyBase
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
-			if (health <= maxHealth * 0.6f && !firestorming)
+			if (health <= maxHealth * 0.35f && !firestorming)
 			{
 				// Move to the center of the room
 				moveToPosition(roomCenter.position, Time.deltaTime);
@@ -87,8 +87,9 @@ public class KingRestless : EnemyBase
 					firestormInstance.transform.parent = roomCenter.root;
 				}
 			}
-			else if (health <= maxHealth * 0.3f && !roomCollapsing)
+			else if (health <= maxHealth * 0.6f && !roomCollapsing)
 			{
+				//Debug.Break ();
 				// Move to the center of the room
 				moveToPosition(roomCenter.position, Time.deltaTime);
 				rotateTowardsPoint(roomCenter.position, Time.deltaTime);
