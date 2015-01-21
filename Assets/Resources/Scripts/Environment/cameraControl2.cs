@@ -4,7 +4,7 @@ using System;
 
 [RequireComponent (typeof(CharacterController))]
 
-public class cameraControl : MonoBehaviour
+public class cameraControl2 : MonoBehaviour
 {	
 	private bool isOrthographic;
 
@@ -18,8 +18,6 @@ public class cameraControl : MonoBehaviour
 	public bool debugBool = false;
 	public float xRatio = .8888f;
 	public float hightMin = 20;
-	public float shiftAngle = 15;
-	public float rotationAngle = 15;
 
 	private float horFoV;
 	private float virFoV;
@@ -93,26 +91,22 @@ public class cameraControl : MonoBehaviour
 			constrainedZ = Mathf.Tan (shiftAngle + virFoV) * (yOffset - playerHight) - zOffset;
 		}
 	
-		Vector3 newCamPos;
 		if (Time.deltaTime >= 1)
 		{
-			newCamPos = new Vector3 (xMid + (yOffset * .2f), yOffset, zMid + zOffset + constrainedZ / 2);
+			Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		}
 		else 
 		{
 //			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
 //			Debug.Log (Camera.main.transform.position);
-			float newX = Camera.main.transform.position.x - 2 * Time.deltaTime * (Camera.main.transform.position.x - (xMid + (yOffset * .2f)));
-			float newY = Camera.main.transform.position.y - 2 * Time.deltaTime * (Camera.main.transform.position.y - yOffset - 5);
-			float newZ = Camera.main.transform.position.z - 2 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
-			newCamPos = new Vector3 (newX, newY, newZ);
+			float newX = Camera.main.transform.position.x - Time.deltaTime * (Camera.main.transform.position.x - xMid);
+			float newY = Camera.main.transform.position.y - Time.deltaTime * (Camera.main.transform.position.y - yOffset);
+			float newZ = Camera.main.transform.position.z - Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
+			Camera.main.transform.position = new Vector3 (newX, newY, newZ);
 		}
-		newCamPos = edgeShiftCheck(newCamPos);
-		Camera.main.transform.position = newCamPos;
-
 		//Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
-		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180 + rotationAngle, shiftAngle);
+		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180, 0);
 		captureBox.transform.position = new Vector3(xMid, 0, zMid);
 
 		// DEBUG STUFF
@@ -159,43 +153,9 @@ public class cameraControl : MonoBehaviour
 		return toReturn;
     }
 
-	public Vector3 edgeShiftCheck (Vector3 cameraPos) 
-	{
-		RaycastHit hit;
-		Vector3 shiftedPos = new Vector3(cameraPos.x, 1, cameraPos.z);
-		float forwardWall = 0;
-		float leftWall = 0;
-		float backWall = 0;
-		float rightWall = 0;
-
-		if (Physics.Raycast(shiftedPos, Vector3.forward, out hit, 2.0F)) 
-		{
-			forwardWall = Vector3.Distance(hit.point, shiftedPos);
-			forwardWall = 2.0f - forwardWall;
-		}
-		if (Physics.Raycast(shiftedPos, Vector3.left, out hit, 2.0F)) 
-		{
-			leftWall = Vector3.Distance(hit.point, shiftedPos);
-			leftWall = 2.0f - leftWall;
-		}
-		if (Physics.Raycast(shiftedPos, Vector3.back, out hit, 2.0F)) 
-		{
-			backWall = Vector3.Distance(hit.point, shiftedPos);
-			backWall = 2.0f - backWall;
-		}
-		if (Physics.Raycast(shiftedPos, Vector3.right, out hit, 2.0F)) 
-		{
-			rightWall = Vector3.Distance(hit.point, shiftedPos);
-			rightWall = 2.0f - rightWall;
-		}
-
-		cameraPos = new Vector3(cameraPos.x + leftWall - rightWall, cameraPos.y, cameraPos.z + backWall - forwardWall);
-
-		return cameraPos;
-	}
-
+	
 	//public GameObject cube;
-	private void debug (float angle, float longest, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
+	private void debug(float angle, float longest, float xMax, float zMax, float xMid, float zMid, float zOffset, float yOffset)
 	{
 		Debug.DrawLine (Camera.main.transform.position, new Vector3 (xMid, 0, zMid));
 		Debug.Log ("DRAW CALL RESULTS");
