@@ -121,7 +121,7 @@ public class EnemyBase : CharacterBase
 		int closestPlayerIdx = 0;
 		for (int i = 0; i < players.Length; i++)
 		{
-			if (players[i].GetComponent<PlayerBase>().dead)
+			if (players[i].GetComponent<PlayerBase>().dead || players[i].GetComponent<PlayerBase>().visibility == 0)
 			{
 				continue;
 			}
@@ -143,7 +143,7 @@ public class EnemyBase : CharacterBase
 		int closestPlayerIdx = 0;
 		for (int i = 0; i < players.Length; i++)
 		{
-			if (players[i].GetComponent<PlayerBase>().dead)
+			if (players[i].GetComponent<PlayerBase>().dead || players[i].GetComponent<PlayerBase>().visibility == 0)
 			{
 				continue;
 			}
