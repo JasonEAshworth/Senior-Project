@@ -34,7 +34,10 @@ public class CharacterBase : MonoBehaviour
 
 		if (healthBar)
 		{
-			potionImg.enabled = false;
+			if (potionImg)
+			{
+				potionImg.enabled = false;
+			}
 			healthBarWidth = healthBar.rectTransform.rect.width;
 			healthBarHeight = healthBar.rectTransform.rect.height;
 		}
