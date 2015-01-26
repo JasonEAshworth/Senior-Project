@@ -3,49 +3,96 @@ using System.Collections;
 
 public class Woodsman : PlayerBase
 {
+	// objects init
 	private Transform shootPosition;
+	private GameObject hawk;
+	private Transform hawkPos;
+	private HawkAI2 hawkScripts;	
+	public Animator anim;
+	private LineRenderer lr;
 
+	// bool inits
 	private bool canFire = true;
 	private bool canSpecial = true;
 	private bool specialAttacking = false;
 	private bool basicAttacking = false;
+	private bool canMove = true;
 
+	// init variables
 	private float basicTimer = 0.5f;
 	private float specialTimer = 3.0f;
 	private float firstButtonPressTime = 0.0f;
 	public float zeroMoveTimer = 0.0f;
-	private GameObject hawk;
-	private Transform hawkPos;
-	private HawkAI2 hawkScripts;
 	public float hawkCost;
 	public float woodsManaRegen = 2.0f;
-	public Animator anim;
-	private bool canMove = true;
 	private float canMoveTimer = 0.0f;
+	private int lineSegments = 2;
+	private float lineWidth = 0.09f;
+	private float lineLength = 35.0f;
+	private Vector3 lineEndPoint = Vector3.zero;
 
 	public void init()
 	{
+		// initialize the linerenderer to hold only 2 positions
+		lr = gameObject.GetComponent<LineRenderer> ();
+		lr.SetVertexCount (lineSegments);
+		lr.SetWidth(lineWidth, lineWidth);
+
+		// get the animator object
 		anim = GetComponent<Animator> ();
+
 		health = 100;
 		maxHealth = health;
 
-		maxMana = 100.0f;
+		maxMana = 3.0f;
 		mana = maxMana;
 		hawkCost = 0.15f;
 
+		// instantiate the hawk at the hawkspawn position
 		hawkPos = transform.Find("hawkSpawn");
 		hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
 
-
+		// acquire the position from where to shoot arrows
 		shootPosition = transform.Find("shootPos");
+
+		// set the moveTimer to 0 at the beginning
 		canMoveTimer = 0.0f;
 
+		// Get the hawk script to be able to set modes
 		hawkScripts = hawk.GetComponent<HawkAI2> ();
 	}
 
 	protected override void Update()
 	{
 		base.Update();
+
+
+
+		RaycastHit hit;
+		Ray rayCast = new Ray (transform.position, transform.forward);
+		if(Physics.Raycast(rayCast,out hit, lineLength,~LayerMask.GetMask ("CaptureBox")))
+		{
+			lineEndPoint = new Vector3(hit.point.x,shootPosition.position.y,hit.point.z);
+		}
+		else
+		{
+			lineEndPoint = (shootPosition.forward*lineLength)+new Vector3(transform.position.x,shootPosition.position.y,transform.position.z);
+		}
+
+
+		for(int i=0;i<lineSegments;i++)
+		{
+			if(i == 0)
+			{
+				lr.SetPosition(i,shootPosition.position);
+			}
+			if(i == 1)
+			{
+				lr.SetPosition(i,lineEndPoint);
+			}
+		}
+
+
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
 		{
