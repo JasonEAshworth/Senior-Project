@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ public class KingRestless : EnemyBase
 {
 	private Animator myAnimator;
 	private GameObject closestPlayer;
+	public GameObject healthBarObject;
 
 	// basic attack
 	private float basicAttackDamage = 20.0f;
@@ -59,6 +61,16 @@ public class KingRestless : EnemyBase
 		base.Start();
 		myAnimator = GetComponent<Animator>();
 		roomCenter = GameObject.Find("Boss Room Center").transform;
+		healthBarObject.transform.FindChild("BossNameText").GetComponent<Text>().text = "King Restless";
+		healthBarObject.SetActive(true);
+	}
+
+	void OnDestroy()
+	{
+		if (healthBarObject)
+		{
+			healthBarObject.SetActive(false);
+		}
 	}
 
 	protected override void FixedUpdate()
@@ -171,6 +183,11 @@ public class KingRestless : EnemyBase
 				}
 			}
 		}
+	}
+
+	void OnGUI()
+	{
+
 	}
 
 	private bool find(float attackRange)
