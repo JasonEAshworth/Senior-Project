@@ -28,6 +28,8 @@ public class CharacterBase : MonoBehaviour
 
 	public RawImage potionImg;
 
+	public GameObject characterMesh;
+
 	protected virtual void Start()
 	{
 		cc = GetComponent<CharacterController>();
@@ -83,11 +85,14 @@ public class CharacterBase : MonoBehaviour
 
 	public void takeDamage(float amount)
 	{
-		if (currentDamageCooldown > 0.0f || dead)
-		{
-			return;
-		}
 		health -= amount;
+
+		// Flash red to indicate damage taken
+		if (characterMesh != null)
+		{
+			StopCoroutine ("flashRed"); // stop the character from flashing if they are flashing already
+			StartCoroutine("flashRed");
+		}
 
 		float amt4Health = amount / maxHealth;
 		if (healthBar != null)
@@ -144,5 +149,23 @@ public class CharacterBase : MonoBehaviour
 
 	public IEnumerator Wait(float sec){
 		yield return new WaitForSeconds (sec);
+	}
+
+	public IEnumerator flashRed()
+	{
+		float start = Time.time;
+		float end = start + damageInvulnTime;
+		Material[] modelMats = characterMesh.renderer.materials;
+
+		while (Time.time <= end)
+		{
+			float gbValue = Mathf.SmoothStep(0.0f, 1.0f, (Time.time - start) / (end - Time.time));
+			foreach (Material m in modelMats)
+			{
+				m.color = new Color(1.0f, gbValue, gbValue);
+			}
+
+			yield return null;
+		}
 	}
 }
