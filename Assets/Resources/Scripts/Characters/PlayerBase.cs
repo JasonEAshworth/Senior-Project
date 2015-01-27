@@ -71,6 +71,16 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
+	public void takeDamage(float amount)
+	{
+		// Gives the players only an invuln period after being hit
+		if (currentDamageCooldown > 0.0f || dead)
+		{
+			return;
+		}
+		base.takeDamage(amount);
+	}
+
 	public override void kill()
 	{
 		base.kill();

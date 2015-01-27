@@ -1,6 +1,6 @@
 ﻿Shader "Custom/MultiTexture" {
 	Properties {
-		_Color ("MainColor", Color) = (1,1,1,1)
+		_Color ("Main Color", Color) = (1,1,1,1)
 		_SpecColor ("SpecColor", Color) = (0.5, 0.5, 0.5, 1)
 		_Shininess ("Shininess", Range (0.03, 1)) = 0.068125
 		_DiffTex ("DiffTexture", 2D) = "white" {}
