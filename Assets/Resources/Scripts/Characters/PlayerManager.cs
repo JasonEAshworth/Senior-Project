@@ -19,6 +19,8 @@ public class PlayerManager : MonoBehaviour
 	public Warrior war;
 	public Rogue rogue;
 
+	public Vector3 playersCenter;
+
 	void Start() 
 	{
 		// instantiate players list
@@ -121,6 +123,11 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
+	public void Update() 
+	{
+		updateCenterLocation();
+	}
+
 	public Vector3 getRespawnPoint()
 	{
 		int randSpawn = Random.Range (0,4);
@@ -139,5 +146,17 @@ public class PlayerManager : MonoBehaviour
 			players[i].transform.position = spawns[i].transform.position;
 			players[i].GetComponent<PlayerBase>().controllable = true;
 		}
+	}
+
+	public void updateCenterLocation()
+	{
+		Vector3 center = Vector3.zero;
+		for (int i = 0; i <  players.Count; i++) 
+		{
+			center = center + players[i].transform.position;
+		}
+		center = center / players.Count;
+
+		playersCenter = center;
 	}
 }

@@ -18,7 +18,6 @@ public class cameraControl : MonoBehaviour
 	public bool debugBool = false;
 	public float xRatio = .8888f;
 	public float hightMin = 20;
-	public float shiftAngle = 15;
 	public float rotationAngle = 15;
 
 	private float horFoV;
@@ -103,7 +102,7 @@ public class cameraControl : MonoBehaviour
 //			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
 //			Debug.Log (Camera.main.transform.position);
 			float newX = Camera.main.transform.position.x - 2 * Time.deltaTime * (Camera.main.transform.position.x - (xMid + (yOffset * .2f)));
-			float newY = Camera.main.transform.position.y - 2 * Time.deltaTime * (Camera.main.transform.position.y - yOffset - 5);
+			float newY = Camera.main.transform.position.y - 2 * Time.deltaTime * (Camera.main.transform.position.y - yOffset - 2);
 			float newZ = Camera.main.transform.position.z - 2 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
 			newCamPos = new Vector3 (newX, newY, newZ);
 		}
