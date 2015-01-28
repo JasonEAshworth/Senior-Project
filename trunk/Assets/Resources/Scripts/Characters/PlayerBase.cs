@@ -25,7 +25,7 @@ public class PlayerBase : CharacterBase
 	public float verticalVelocity = 0.0f;
 	public playerClass classType;
 
-	protected GameObject item;
+	protected string item;
 	//public RawImage healthBar;
 	public RawImage manaBar;
 
@@ -119,10 +119,14 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	public override void addItem(GameObject p)
+	public void addItem(string p)
 	{
 		item = p;
-		base.addItem (p);
+
+		if (p == "HealthPotion" || p == "HastePotion")
+		{
+			potionImg.enabled = true;
+		}
 	}
 
 	private void addKey()
@@ -132,12 +136,21 @@ public class PlayerBase : CharacterBase
 
 	public void itemAbility()
 	{
-		if (item) 
+		if (item != "") 
 		{
-			item.SetActive(true);
 			potionImg.enabled = false;
-			item.SendMessage("itemAbility", this);
-			Destroy (item);
+
+			switch (item)
+			{
+			case "HealthPotion":
+				PotionBase.useHealthPotion(this);
+				break;
+			case "HastePotion":
+				PotionBase.useHastePotion(this);
+				break;
+			}
+
+			item = "";
 		}
 	}
 
