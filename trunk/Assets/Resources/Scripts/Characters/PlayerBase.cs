@@ -134,29 +134,10 @@ public class PlayerBase : CharacterBase
 	{
 		if (item) 
 		{
-
-			switch(item.tag)
-			{
-			case "Potion":
-				float amt = item.GetComponent<Potion>().potionValue;
-				base.itemAbility("Potion", amt);
-				health += amt;
-				if(health > maxHealth)
-				{
-					health = maxHealth;
-				}
-				Debug.Log(health);
-				item = null;
-				break;
-			case "AttackPotion":
-				item = null;
-				break;
-			case "DefensePotion":
-				item = null;
-				break;
-			}
-				
-
+			item.SetActive(true);
+			potionImg.enabled = false;
+			item.SendMessage("itemAbility", this);
+			Destroy (item);
 		}
 	}
 

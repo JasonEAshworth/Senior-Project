@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Potion : MonoBehaviour {
-
-	public int potionValue = 20;
+public class PotionBase : MonoBehaviour 
+{
 
 	void Update ()
 	{
@@ -17,6 +16,10 @@ public class Potion : MonoBehaviour {
 			player.gameObject.SendMessage ("addItem", gameObject);
 			gameObject.SetActive (false);
 		}
+	}
+
+	public virtual void itemAbility(PlayerBase p)
+	{
 
 	}
 }

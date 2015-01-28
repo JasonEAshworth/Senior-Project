@@ -23,8 +23,8 @@ public class CharacterBase : MonoBehaviour
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
 	public RawImage healthBar;
-	protected float healthBarWidth;
-	protected float healthBarHeight;
+	public float healthBarWidth;
+	public float healthBarHeight;
 
 	public RawImage potionImg;
 
@@ -133,16 +133,7 @@ public class CharacterBase : MonoBehaviour
 	{
 		if(i == "Potion")
 		{
-			potionImg.enabled = false;
-			if(health + amount > maxHealth)
-			{
-				Debug.Log(amount);
-				Debug.Log(health);
-				Debug.Log(maxHealth);
-				amount -= (health + amount) - maxHealth;
-			}
-			float amt4Health = amount / maxHealth;
-			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+
 
 		}
 	}
