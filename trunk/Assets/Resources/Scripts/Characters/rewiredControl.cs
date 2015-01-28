@@ -11,6 +11,8 @@ public class rewiredControl : MonoBehaviour {
 	public float moveSpeed = 3.5f;
 	public float bulletSpeed = 15.0f;
 	public GameObject bulletPrefab;
+
+	public int maxDist = 20; // Distance the players can be seperated from one another
 	
 	private Player player; // The Rewired Player
 	private CharacterController cc;
@@ -162,8 +164,20 @@ public class rewiredControl : MonoBehaviour {
 			
 			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
 			{
-				cc.Move(moveVector * moveSpeed * Time.deltaTime * character.moveMulti);
-				//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
+				Vector3 newLocation = moveVector * moveSpeed * Time.deltaTime * character.moveMulti;
+				float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
+				Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
+				// If the player is moving too far away from the center, they are stopped. If they're already
+				// too far away, they are only allowed to move closer to the center.
+				if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 
+				{
+					cc.Move(newLocation);
+					//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
+				} 
+				else
+				{
+					Debug.Log(player.descriptiveName + " couldn't move!");
+				}
 			}
 
 			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)

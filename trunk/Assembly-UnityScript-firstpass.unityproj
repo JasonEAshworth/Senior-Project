@@ -79,12 +79,15 @@
      <None Include="Assets\Shaders\NewShader.shader" />
      <None Include="Assets\Shaders\Mat_Chair.shader" />
      <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
+     <None Include="Assets\Shaders\Mat_Meathook.shader" />
+     <None Include="Assets\Shaders\Mat_Ladder.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Vegetation.shader" />
      <None Include="Assets\Shaders\Scrolls_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
      <None Include="Assets\Shaders\Mat_Torture_Wheel.shader" />
      <None Include="Assets\Shaders\Mat_Chest.shader" />
      <None Include="Assets\Shaders\ColumnsRuined_1_Mat.shader" />
+     <None Include="Assets\Shaders\Bread.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Refraction.shader" />
      <None Include="Assets\Plugins\Exploder\Demo\Shaders\VertexColor.shader" />
@@ -111,6 +114,7 @@
      <None Include="Assets\Shaders\Mat_AM_Staff.shader" />
      <None Include="Assets\Shaders\Mat_Carpet.shader" />
      <None Include="Assets\Shaders\Switch_1_Mat.shader" />
+     <None Include="Assets\Shaders\Mat_SM_Cot.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Tiles.shader" />
      <None Include="Assets\Shaders\ColumnSquare_1_Mat.shader" />
      <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
@@ -125,6 +129,8 @@
      <None Include="Assets\Shaders\TombBottom_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
+     <None Include="Assets\Shaders\Mat_Baskets.shader" />
+     <None Include="Assets\Shaders\Mat_Log.shader" />
      <None Include="Assets\Shaders\Mat_Padlock.shader" />
      <None Include="Assets\Shaders\Mat_WineRack.shader" />
      <None Include="Assets\Shaders\Mat_AM_Key_A.shader" />
@@ -132,10 +138,10 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Plugins/Exploder/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>C:/Senior Project/trunk/Assets/Plugins/Exploder/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>C:/Senior Project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
