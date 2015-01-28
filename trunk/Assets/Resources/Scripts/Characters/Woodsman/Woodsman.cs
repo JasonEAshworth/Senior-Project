@@ -10,6 +10,7 @@ public class Woodsman : PlayerBase
 	private HawkAI2 hawkScripts;	
 	public Animator anim;
 	private LineRenderer lr;
+	private GameObject bomb;
 
 	// bool inits
 	private bool canFire = true;
@@ -17,19 +18,19 @@ public class Woodsman : PlayerBase
 	private bool specialAttacking = false;
 	private bool basicAttacking = false;
 	private bool canMove = true;
+	private bool bombActive = false;
 
 	// init variables
 	private float basicTimer = 0.5f;
 	private float specialTimer = 3.0f;
 	private float firstButtonPressTime = 0.0f;
 	public float zeroMoveTimer = 0.0f;
-	public float hawkCost;
-	public float woodsManaRegen = 2.0f;
 	private float canMoveTimer = 0.0f;
 	private int lineSegments = 2;
 	private float lineWidth = 0.09f;
 	private float lineLength = 35.0f;
 	private Vector3 lineEndPoint = Vector3.zero;
+	public int hitCount = 0;
 
 	public void init()
 	{
@@ -45,8 +46,7 @@ public class Woodsman : PlayerBase
 		maxHealth = health;
 
 		maxMana = 3.0f;
-		mana = maxMana;
-		hawkCost = 0.15f;
+		mana = 0.0f;
 
 		// instantiate the hawk at the hawkspawn position
 		hawkPos = transform.Find("hawkSpawn");
@@ -64,10 +64,17 @@ public class Woodsman : PlayerBase
 
 	protected override void Update()
 	{
+		// call update of parent class
 		base.Update();
 
 
+		if(hitCount >= 5)
+		{
+			addMana(1.0f);
+		}
 
+		// Cast out a ray to figure out if the aim assist will hit anything
+		// if so make it the contact point of the collision for the end of the line
 		RaycastHit hit;
 		Ray rayCast = new Ray (transform.position, transform.forward);
 		if(Physics.Raycast(rayCast,out hit, lineLength,~LayerMask.GetMask ("CaptureBox")))
@@ -79,7 +86,7 @@ public class Woodsman : PlayerBase
 			lineEndPoint = (shootPosition.forward*lineLength)+new Vector3(transform.position.x,shootPosition.position.y,transform.position.z);
 		}
 
-
+		// render line
 		for(int i=0;i<lineSegments;i++)
 		{
 			if(i == 0)
@@ -115,10 +122,6 @@ public class Woodsman : PlayerBase
 			
 		}
 
-		if (mana < maxMana && hawkScripts.mode != 2) 
-		{
-			manaRegen(woodsManaRegen);
-		}
 
 		if(!canMove)
 		{
@@ -177,11 +180,24 @@ public class Woodsman : PlayerBase
 		if (dir == "down") 
 		{
 
-			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
+			if(!bombActive && mana >= 1.0f)
 			{
-				anim.SetTrigger("Hawk");
-				hawkScripts.mode = 2;
+				Debug.Log (mana);
+				bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,0.0f,transform.position.z),Quaternion.identity) as GameObject;
+				useMana (1.0f);
+				bombActive = true;
 			}
+			else
+			{
+				BombBehavior scr = bomb.GetComponent<BombBehavior>();
+				scr.explode = true;
+				bombActive = false;
+			}
+//			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
+//			{
+//				anim.SetTrigger("Hawk");
+//				hawkScripts.mode = 2;
+//			}
 		}
 	}
 }

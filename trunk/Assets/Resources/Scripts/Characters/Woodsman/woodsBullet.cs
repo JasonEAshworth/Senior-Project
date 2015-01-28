@@ -60,6 +60,10 @@ public class woodsBullet : MonoBehaviour {
 			{
 				hawkScript.enemiesToAttack.Add (c.gameObject);
 			}
+
+			Woodsman tempScr = woodsPlayer.GetComponent<Woodsman>();
+
+
 			Destroy(gameObject);
 		}
 		else if(c.gameObject.CompareTag("wall"))
