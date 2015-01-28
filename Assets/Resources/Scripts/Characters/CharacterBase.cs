@@ -109,14 +109,6 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public virtual void addItem(GameObject p)
-	{
-		if(p.tag == "Potion")
-		{
-			potionImg.enabled = true;
-		}
-	}
-
 	public virtual void addScore(GameObject p)
 	{
 		if (p.tag == "Coin")
@@ -126,15 +118,6 @@ public class CharacterBase : MonoBehaviour
 		if (p.tag == "Gold")
 		{
 			score += 10;
-		}
-	}
-
-	public void itemAbility(string i, float amount)
-	{
-		if(i == "Potion")
-		{
-
-
 		}
 	}
 

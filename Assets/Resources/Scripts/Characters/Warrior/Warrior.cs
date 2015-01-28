@@ -21,6 +21,8 @@ public class Warrior : PlayerBase
 	private float specialAttackDuration = 2.0f;
 	private float specialAttackForce = 20.0f;
 
+	private float whirlwindDamageDelay = 0.2f;
+
 
 	public override void basicAttack(string dir)
 	{
@@ -71,7 +73,7 @@ public class Warrior : PlayerBase
 					c.SendMessage("Boom");
 				}
 			}
-			yield return new WaitForSeconds(0.2f);
+			yield return new WaitForSeconds(whirlwindDamageDelay);
 		}
 	}
 
