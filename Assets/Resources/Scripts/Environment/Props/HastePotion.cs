@@ -14,8 +14,10 @@ public class HastePotion : MonoBehaviour
 	private IEnumerator hasteCoroutine(PlayerBase p)
 	{
 		GetComponent<Animator>().speed = speedIncrease;
+		p.attackSpeed = speedIncrease;
 		yield return new WaitForSeconds(effectDuration);
 		GetComponent<Animator>().speed = 1.0f;
+		p.attackSpeed = 1.0f;
 		Destroy(this);
 		yield return null;
 	}

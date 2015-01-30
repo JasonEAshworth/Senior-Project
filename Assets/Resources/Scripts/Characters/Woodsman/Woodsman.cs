@@ -107,7 +107,7 @@ public class Woodsman : PlayerBase
 			if(basicTimer <= 0.0f)
 			{
 				canFire = true;
-				basicTimer = 0.5f;
+				basicTimer = 0.5f / attackSpeed;
 			}
 		}
 		
@@ -151,7 +151,7 @@ public class Woodsman : PlayerBase
 			canMove = true;
 			moveMulti = 1.0f;
 			canMoveTimer = 0.0f;
-			if(temp > 0.7f && canSpecial)
+			if(temp > 0.7f / attackSpeed && canSpecial)
 			{
 				specialAttackWoods(temp);
 			}

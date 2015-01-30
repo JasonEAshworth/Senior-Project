@@ -35,6 +35,8 @@ public class PlayerBase : CharacterBase
 	protected bool special = false;
 	protected bool normal = false;
 
+	public float attackSpeed = 1.0f;
+
 	public RoomNode roomIn;
 
 	// controls

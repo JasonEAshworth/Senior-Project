@@ -27,7 +27,7 @@ public class Rogue : PlayerBase
 		//held to determine what attack to do.
 		if (dir == "up" && canAttack)
 		{
-			if(timeSinceAttack < 1.0f)
+			if(timeSinceAttack < 1.0f / attackSpeed)
 			{
 				Debug.Log ("rogue basic attack");
 				//Basic Attack
@@ -166,7 +166,6 @@ public class Rogue : PlayerBase
 	
 	protected void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log("ote");
 		GameObject go = collider.gameObject;
 		if(go.tag == "Enemy")
 		{
