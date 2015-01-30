@@ -166,7 +166,7 @@ public class rewiredControl : MonoBehaviour {
 			{
 				Vector3 newLocation = moveVector * moveSpeed * Time.deltaTime * character.moveMulti;
 				float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
-				Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
+				//Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
 				// If the player is moving too far away from the center, they are stopped. If they're already
 				// too far away, they are only allowed to move closer to the center.
 				if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 

@@ -189,8 +189,8 @@ public class Woodsman : PlayerBase
 			}
 			else
 			{
-				BombBehavior scr = bomb.GetComponent<BombBehavior>();
-				scr.explode = true;
+				//BombBehavior scr = bomb.GetComponent<BombBehavior>();
+				//scr.explode = true;
 				bombActive = false;
 			}
 //			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
