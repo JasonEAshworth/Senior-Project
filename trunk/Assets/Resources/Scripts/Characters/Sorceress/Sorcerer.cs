@@ -32,7 +32,7 @@ public class Sorcerer : PlayerBase
 		{
 			//When the attack key is released, check to see how long it was
 			//held to determin what attack to do.
-			if(timeSinceAttack < 1.0f || mana < 25.0f)
+			if(timeSinceAttack < 1.0f / attackSpeed || mana < 25.0f)
 			{
 				//Check with attackType to see which basic attack to use
 				if(attackType == 1)
@@ -144,7 +144,7 @@ public class Sorcerer : PlayerBase
 		}*/
 		Destroy (Bliz, 5.0f);
 
-		yield return StartCoroutine (Wait (5.0f));
+		yield return StartCoroutine (Wait (5.0f / attackSpeed));
 		special = false;
 	}
 
@@ -156,7 +156,7 @@ public class Sorcerer : PlayerBase
 		Transform pos = transform.Find("shootPos");
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
 
-		yield return StartCoroutine (Wait (1.5f));
+		yield return StartCoroutine (Wait (1.5f / attackSpeed));
 		normal = false;
 	}
 
@@ -173,7 +173,7 @@ public class Sorcerer : PlayerBase
 		Debug.Log (ball);
 		ball.renderer.material.color = new Color (255, 0.0f, 0.0f, 0.1f);*/
 
-		yield return StartCoroutine (Wait (5.0f));
+		yield return StartCoroutine (Wait (5.0f / attackSpeed));
 		special = false;
 	}
 
@@ -186,7 +186,7 @@ public class Sorcerer : PlayerBase
 		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;
 		icicle.transform.up = transform.forward;
 
-		yield return StartCoroutine (Wait (0.5f));
+		yield return StartCoroutine (Wait (0.5f / attackSpeed));
 		normal = false;
 	}
 	

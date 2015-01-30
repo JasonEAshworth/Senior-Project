@@ -37,7 +37,7 @@ public class Warrior : PlayerBase
 		if (dir == "up" && canAttack) {
 			//When the attack key is released, check to see how long it was
 			//held to determine what attack to do.
-			if (timeSinceAttack > specialChargeTime && mana >= specialAttackCost){
+			if (timeSinceAttack > specialChargeTime / attackSpeed && mana >= specialAttackCost){
 				// special attack
 				useMana(specialAttackCost);
 				GetComponent<Animator>().SetTrigger("Whirlwind");
