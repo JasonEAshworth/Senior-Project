@@ -4,6 +4,7 @@ using System.Collections;
 public class KingCollapseBoulder : MonoBehaviour 
 {
 	private float boulderDamage = 20.0f;
+	private float fallSpeed = 3.5f;
 
 	void Start()
 	{
