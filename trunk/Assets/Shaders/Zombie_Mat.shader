@@ -64,8 +64,8 @@ Shader "Shader Forge/Zombie_Mat" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_9 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_zombie_norm,TRANSFORM_TEX(node_9.rg, _node_zombie_norm))).rgb;
+                float2 node_14 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_zombie_norm,TRANSFORM_TEX(node_14.rg, _node_zombie_norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -80,11 +80,11 @@ Shader "Shader Forge/Zombie_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_zombie_spec,TRANSFORM_TEX(node_9.rg, _node_zombie_spec)).rgb;
+                float3 specularColor = tex2D(_node_zombie_spec,TRANSFORM_TEX(node_14.rg, _node_zombie_spec)).rgb;
                 float3 specular = (floor(attenuation) * _LightColor0.xyz) * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_zombie_diff,TRANSFORM_TEX(node_9.rg, _node_zombie_diff)).rgb;
+                finalColor += diffuseLight * tex2D(_node_zombie_diff,TRANSFORM_TEX(node_14.rg, _node_zombie_diff)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor,1);
@@ -144,8 +144,8 @@ Shader "Shader Forge/Zombie_Mat" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_10 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_zombie_norm,TRANSFORM_TEX(node_10.rg, _node_zombie_norm))).rgb;
+                float2 node_15 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_zombie_norm,TRANSFORM_TEX(node_15.rg, _node_zombie_norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -160,11 +160,11 @@ Shader "Shader Forge/Zombie_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_zombie_spec,TRANSFORM_TEX(node_10.rg, _node_zombie_spec)).rgb;
+                float3 specularColor = tex2D(_node_zombie_spec,TRANSFORM_TEX(node_15.rg, _node_zombie_spec)).rgb;
                 float3 specular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_zombie_diff,TRANSFORM_TEX(node_10.rg, _node_zombie_diff)).rgb;
+                finalColor += diffuseLight * tex2D(_node_zombie_diff,TRANSFORM_TEX(node_15.rg, _node_zombie_diff)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
