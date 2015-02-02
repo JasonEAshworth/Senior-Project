@@ -4,10 +4,10 @@
 // Redistribution of source code without permission not allowed
 
 using Exploder;
-using UnityEngine;
 
 using UnityEditor;
 
+using UnityEngine;
 
 [CustomEditor(typeof (ExploderObject)), CanEditMultipleObjects]
 public class EditorExploderObject : UnityEditor.Editor

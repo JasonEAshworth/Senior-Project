@@ -81,7 +81,7 @@ public class KingRestless : EnemyBase
 		if (!attackInProgress)
 		{
 			// Check for phase attacks first
-			if (health <= maxHealth * 0.35f && !firestorming)
+			if (health <= maxHealth * 0.3f && !firestorming)
 			{
 				// Move to the center of the room
 				myAnimator.SetTrigger("walk");

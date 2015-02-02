@@ -13,7 +13,7 @@ public class KingFirestorm : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		Vector3 targetRotation = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 10.0f, transform.eulerAngles.z);
+		Vector3 targetRotation = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 0.1f, transform.eulerAngles.z);
 		transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, targetRotation, rotationSpeed, rotationSpeed);
 	}
 
