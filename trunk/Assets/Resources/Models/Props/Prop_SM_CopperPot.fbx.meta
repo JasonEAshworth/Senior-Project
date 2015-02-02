@@ -1,13 +1,29 @@
 fileFormatVersion: 2
-guid: 0c4b0e9fa0ce2604a8ddab4686018e52
+guid: 3cad814b74271514c9e7384762660396
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pPlane1
+    100000: CopperPot_Tall
+    100002: DutchOven
+    100004: polySurface5
+    100006: pPlane1
+    100008: pPlane2
+    100010: //RootNode
+    100012: transform6
+    100014: transform7
+    100016: transform8
+    400000: CopperPot_Tall
+    400002: DutchOven
+    400004: polySurface5
+    400006: pPlane1
+    400008: pPlane2
+    400010: //RootNode
+    400012: transform6
+    400014: transform7
+    400016: transform8
+    2300000: CopperPot_Tall
+    3300000: CopperPot_Tall
+    4300000: CopperPot_Tall
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -28,7 +44,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
