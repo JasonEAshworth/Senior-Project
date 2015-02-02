@@ -36,8 +36,9 @@ public class KingRestless : EnemyBase
 	public GameObject ceilingBoulder;
 	private bool roomCollapsing = false;
 	private float boulderError = 4.0f;
-	private float boulderFallInterval = 0.8f;
-	private float boulderFallHeight = 12.0f;
+	private float boulderFallIntervalLow = 0.4f;
+	private float boulderFallIntervalHigh = 0.8f;
+	private float boulderFallHeight = 14.0f;
 
 	//firestorm
 	public GameObject firestormPrefab;
@@ -83,6 +84,7 @@ public class KingRestless : EnemyBase
 			if (health <= maxHealth * 0.35f && !firestorming)
 			{
 				// Move to the center of the room
+				myAnimator.SetTrigger("walk");
 				moveToPosition(roomCenter.position, Time.deltaTime);
 				rotateTowardsPoint(roomCenter.position, Time.deltaTime);
 
@@ -101,8 +103,8 @@ public class KingRestless : EnemyBase
 			}
 			else if (health <= maxHealth * 0.6f && !roomCollapsing)
 			{
-				//Debug.Break ();
 				// Move to the center of the room
+				myAnimator.SetTrigger("walk");
 				moveToPosition(roomCenter.position, Time.deltaTime);
 				rotateTowardsPoint(roomCenter.position, Time.deltaTime);
 
@@ -289,7 +291,7 @@ public class KingRestless : EnemyBase
 			Vector3 boulderPos = new Vector3(playerPos.x + Random.Range(-boulderError, boulderError), playerPos.y + boulderFallHeight, playerPos.z + Random.Range(-boulderError, boulderError));
 			GameObject boulder = Instantiate(ceilingBoulder, boulderPos, Quaternion.identity) as GameObject;
 			boulder.transform.parent = roomCenter.root; // make sure the boulder is spawned as a child of the current room
-			yield return new WaitForSeconds(boulderFallInterval);
+			yield return new WaitForSeconds(Random.Range(boulderFallIntervalLow, boulderFallIntervalHigh));
 		}
 		yield return null;
 	}
