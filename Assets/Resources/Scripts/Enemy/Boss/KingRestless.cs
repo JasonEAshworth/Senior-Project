@@ -311,4 +311,22 @@ public class KingRestless : EnemyBase
 		currentAttack = -1;
 		attackInProgress = false;
 	}
+
+	public override IEnumerator flashRed()
+	{
+		float start = Time.time;
+		float end = start + damageInvulnTime;
+		Material[] modelMats = characterMesh.renderer.materials;
+		
+		while (Time.time <= end)
+		{
+			float gbValue = Mathf.SmoothStep(0.0f, 1.0f, (Time.time - start) / (end - Time.time));
+			foreach (Material m in modelMats)
+			{
+				m.SetColor("_node_zombie_diff", new Color(1.0f, gbValue, gbValue));
+			}
+			
+			yield return null;
+		}
+	}
 }

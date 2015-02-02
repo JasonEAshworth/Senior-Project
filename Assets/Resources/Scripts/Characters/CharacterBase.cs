@@ -129,7 +129,7 @@ public class CharacterBase : MonoBehaviour
 		yield return new WaitForSeconds (sec);
 	}
 
-	public IEnumerator flashRed()
+	public virtual IEnumerator flashRed()
 	{
 		float start = Time.time;
 		float end = start + damageInvulnTime;
