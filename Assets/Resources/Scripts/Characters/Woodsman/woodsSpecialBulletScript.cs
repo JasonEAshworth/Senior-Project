@@ -39,7 +39,7 @@ public class woodsSpecialBulletScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position = transform.position + (transform.up * speed * Time.deltaTime);
+		transform.position = transform.position + (playerForward * speed * Time.deltaTime);
 		timer -= Time.deltaTime;
 		if(timer <= 0.0f)
 		{
