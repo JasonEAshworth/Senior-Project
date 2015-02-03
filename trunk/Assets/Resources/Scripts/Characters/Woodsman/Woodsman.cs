@@ -168,7 +168,7 @@ public class Woodsman : PlayerBase
 	public void specialAttackWoods(float time)
 	{
 		anim.SetTrigger("Attack");
-		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
+		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.identity) as GameObject;
 		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
 		scr.heldTime = time;
 		canSpecial = false;

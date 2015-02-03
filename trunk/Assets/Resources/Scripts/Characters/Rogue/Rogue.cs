@@ -122,8 +122,6 @@ public class Rogue : PlayerBase
 				c.SendMessage("Boom");
 			}
 		}
-
-
 	}
 
 	protected override void Update()

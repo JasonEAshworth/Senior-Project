@@ -87,7 +87,7 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public void takeDamage(float amount)
+	public virtual void takeDamage(float amount)
 	{
 		health -= amount;
 

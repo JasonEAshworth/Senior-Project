@@ -8,7 +8,7 @@ public class rewiredControl : MonoBehaviour {
 	
 	public int playerId = 0; // The Rewired player id of this character
 	
-	public float moveSpeed = 3.5f;
+	public float moveSpeed = 5.5f;
 	public float bulletSpeed = 15.0f;
 	public GameObject bulletPrefab;
 

@@ -73,12 +73,17 @@ public class PlayerBase : CharacterBase
 		}
 	}
 
-	public void takeDamage(float amount)
+	public override void takeDamage(float amount)
 	{
 		// Gives the players only an invuln period after being hit
 		if (currentDamageCooldown > 0.0f || dead)
 		{
 			return;
+		}
+
+		if(visibility == 0.0f)
+		{
+			useMana(20.0f);
 		}
 		base.takeDamage(amount);
 	}

@@ -6,20 +6,18 @@ public class SpikeTrap : TrapBase
 	//while the SpikeTrap uses the spawner attribute, it doesn't actually spawn a new SpikeTrap
 	//spawner == true means it's retracting
 	//spawner == false means it's advancing 
-	public float travelDist = 0.0f;
 	private Vector3 startPos = Vector3.zero;
 	private Vector3 endPos = Vector3.zero;
-	public Vector3 travelDir = Vector3.zero;
+	//public Vector3 travelDir = Vector3.zero;
 
 	public void Start()
 	{
-		this.travelDir = this.transform.up;
+		//this.travelDir = this.transform.up;
 		this.transform.up = Vector3.up;
 		this.startPos = this.transform.position;
-		this.endPos = this.startPos + this.travelDir * this.GetComponent<BoxCollider>().bounds.size.y * this.transform.localScale.y * 1.3f;
-		this.transform.up = this.travelDir;
-		Debug.Log (startPos);
-		Debug.Log (endPos);
+		//this.endPos = this.startPos + this.travelDir * this.GetComponent<BoxCollider>().bounds.size.y * this.transform.localScale.y * 1.3f;
+		this.endPos = this.startPos + this.transform.up * this.GetComponent<BoxCollider>().bounds.size.y * this.transform.localScale.y * 1.3f;
+		//this.transform.up = this.travelDir;
 	}
 
 	protected void FixedUpdate()
@@ -27,8 +25,8 @@ public class SpikeTrap : TrapBase
 		Vector3 start = this.transform.position;
 		if(!spawner)
 		{
-			//need to do this better
-			this.transform.position += this.travelDir * 3.0f * Time.deltaTime;
+			//this.transform.position += this.travelDir * 3.0f * Time.deltaTime;
+			this.transform.position += this.transform.up * 3.0f * Time.deltaTime;
 			if((this.transform.position - this.startPos).magnitude > (this.endPos - this.startPos).magnitude)
 			{
 				this.transform.position = this.endPos;
@@ -36,8 +34,8 @@ public class SpikeTrap : TrapBase
 		}
 		else
 		{
-			//need to do this better
-			this.transform.position += this.travelDir * -3.0f * Time.deltaTime;
+			//this.transform.position += this.travelDir * -3.0f * Time.deltaTime;
+			this.transform.position += this.transform.up * -3.0f * Time.deltaTime;
 			if((this.transform.position - this.endPos).magnitude > (this.startPos - this.endPos).magnitude)
 			{
 				this.transform.position = this.startPos;
@@ -77,13 +75,11 @@ public class SpikeTrap : TrapBase
 	{
 		if(t.gameObject.tag == "Player")
 		{
-			//Debug.Log("hit player!!!");
 			t.GetComponent<PlayerBase>().takeDamage(this.damage);
 			this.trapEffect(t.gameObject);
 		}
 		if(t.name.Contains("Wall"))
 		{
-			//Debug.Log("hit something else!!!");
 		}
 	}
 }

@@ -10,7 +10,7 @@ public class ProjectileTrapObj : TrapBase
 	//this value should be assigned when it is created by TimedTrap or TriggerTrap
 	//the traps should face the direction the projectile is going to travel
 	//thus it should be set to the trap's transform.forward
-	public Vector3 travelDir = Vector3.zero;
+	//public Vector3 travelDir = Vector3.zero;
 
 	protected void Start()
 	{
@@ -25,7 +25,8 @@ public class ProjectileTrapObj : TrapBase
 		if(!spawner)
 		{
 			Vector3 start = this.transform.position;
-			this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
+			//this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
+			this.transform.position += this.transform.forward * this.travelSpeed * Time.deltaTime;
 			Vector3 end = this.transform.position;
 		}
 	}
@@ -38,13 +39,17 @@ public class ProjectileTrapObj : TrapBase
 
 	protected override void ActivateTrigger(bool state)
 	{
-		GameObject p = Instantiate(this.gameObject, this.transform.position, Quaternion.identity) as GameObject;
-		ProjectileTrapObj pto = p.GetComponent<ProjectileTrapObj>();
-		pto.travelDir = this.transform.forward;
-		pto.spawner = false;
-		p.GetComponent<MeshRenderer>().enabled = true;
-		p.transform.SetParent(this.transform.parent);
-		p.transform.forward = this.transform.forward;
+		if(spawner)
+		{
+			GameObject p = Instantiate(this.gameObject, this.transform.position, this.transform.rotation) as GameObject;
+			p.GetComponent<MeshRenderer>().enabled = true;
+			p.transform.SetParent(this.transform.parent);
+			ProjectileTrapObj pto = p.GetComponent<ProjectileTrapObj>();
+			//pto.travelDir = this.transform.forward;
+			pto.spawner = false;
+			pto.enabled = true;
+			//p.transform.forward = this.transform.forward;
+		}
 	}
 
 	protected override void OnTriggerEnter(Collider c)
@@ -59,14 +64,12 @@ public class ProjectileTrapObj : TrapBase
 	{
 		if(t.gameObject.tag == "Player")
 		{
-			//Debug.Log("hit player!!!");
 			t.GetComponent<PlayerBase>().takeDamage(this.damage);
 			this.trapEffect(t.gameObject);
 			Destroy(this.gameObject);
 		}
 		if(t.name.Contains("Wall"))
 		{
-			//Debug.Log("hit something else!!!");
 			Destroy(this.gameObject);
 		}
 	}
