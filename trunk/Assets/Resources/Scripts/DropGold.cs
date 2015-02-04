@@ -4,7 +4,7 @@ using System.Collections;
 public class DropGold : MonoBehaviour {
 	
 	public float multiplyer = 1.0f;
-	float numGold = Random.Range(0.0f,5.0f);
+	float numGold = Random.Range(0.0f,3.0f);
 	float numCoins = Random.Range(0.0f,10.0f);
 	public float numGoldOveride = -1.0f;
 	public float numCoinOveride = -1.0f;
