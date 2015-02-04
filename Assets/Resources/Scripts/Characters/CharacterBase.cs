@@ -26,8 +26,6 @@ public class CharacterBase : MonoBehaviour
 	public float healthBarWidth;
 	public float healthBarHeight;
 
-	public Text scoreText;
-
 	public RawImage potionImg;
 
 	public GameObject characterMesh;
@@ -49,8 +47,6 @@ public class CharacterBase : MonoBehaviour
 
 	protected virtual void FixedUpdate()
 	{
-		string tmp = score.ToString () + " GOLD";
-		scoreText.text = tmp;
 		cc.Move(forces * Time.deltaTime * moveMulti);
 		float y = forces.y;
 		forces = Vector3.Lerp(forces, Vector3.zero, forceFriction * Time.deltaTime);
