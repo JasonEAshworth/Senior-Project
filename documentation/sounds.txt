@@ -32,3 +32,6 @@ bomb set
 BG music  (ambient / menu / boss)
 stone grinding (moving platforms)
 death by falling
+generic spellcast
+stomp
+homerun
