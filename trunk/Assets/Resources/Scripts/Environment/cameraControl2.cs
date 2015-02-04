@@ -123,6 +123,7 @@ public class cameraControl2 : MonoBehaviour
         float largestDistance = 0.0f;
 		float xMax = 0.0f;
 		float zMax = 0.0f;
+		Debug.Log (targets);
 		float xMid = targets[0].transform.position.x;  
 		float zMid = targets[0].transform.position.z;
 

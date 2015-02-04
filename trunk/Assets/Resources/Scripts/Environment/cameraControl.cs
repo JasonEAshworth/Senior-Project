@@ -20,6 +20,9 @@ public class cameraControl : MonoBehaviour
 	public float hightMin = 20;
 	public float rotationAngle = 15;
 
+	public float zTweek = 0;
+	public float yTweek = 0;
+
 	private float horFoV;
 	private float virFoV;
 	private const float radConversion = (float)(Math.PI / 180);
@@ -35,8 +38,6 @@ public class cameraControl : MonoBehaviour
 		
 		virFoV = Camera.main.fieldOfView * radConversion;
 		horFoV = 2 * Mathf.Atan(Camera.main.aspect * Mathf.Tan((float)(virFoV)));
-
-		captureBox = GameObject.Find ("CaptureBox");
 
 		Debug.Log (Camera.main.aspect);
     }
@@ -101,18 +102,19 @@ public class cameraControl : MonoBehaviour
 		{
 //			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
 //			Debug.Log (Camera.main.transform.position);
-			float newX = Camera.main.transform.position.x - 2 * Time.deltaTime * (Camera.main.transform.position.x - (xMid + (yOffset * .2f)));
-			float newY = Camera.main.transform.position.y - 2 * Time.deltaTime * (Camera.main.transform.position.y - yOffset - 2);
-			float newZ = Camera.main.transform.position.z - 2 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
-			newCamPos = new Vector3 (newX, newY, newZ);
+			float newX = Camera.main.transform.position.x - 3 * Time.deltaTime * (Camera.main.transform.position.x - (xMid + (yOffset * .2f)));
+			float newY = Camera.main.transform.position.y - 3 * Time.deltaTime * (Camera.main.transform.position.y - yOffset);
+			float newZ = Camera.main.transform.position.z - 3 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
+			newCamPos = new Vector3 (newX, newY + yTweek, newZ + zTweek);
 		}
 		newCamPos = edgeShiftCheck(newCamPos);
-		Camera.main.transform.position = newCamPos;
+		//Camera.main.transform.position = rotation * newCamPos;
 
 		//Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);
 		//Camera.main.transform.LookAt(new Vector3 (xMid, 0, zMid));
 		Camera.main.transform.eulerAngles = new Vector3 (90 - Camera.main.fieldOfView / 2 - shiftAngle / radConversion, 180 + rotationAngle, shiftAngle);
-		captureBox.transform.position = new Vector3(xMid, 0, zMid);
+		Camera.main.transform.position = newCamPos;
+		//Debug.Log ("Camera.main.transform.position: " + Camera.main.transform.position + " rotation * newCamPos: " + rotation * newCamPos);
 
 		// DEBUG STUFF
 		if (debugBool) 
@@ -153,7 +155,7 @@ public class cameraControl : MonoBehaviour
 				}
             }
         }
-		
+
 		float[] toReturn = {largestDistance, xMax, zMax, xMid, zMid};
 		return toReturn;
     }
@@ -166,29 +168,46 @@ public class cameraControl : MonoBehaviour
 		float leftWall = 0;
 		float backWall = 0;
 		float rightWall = 0;
+		float detectionLength = 5.0f;
+		int layerMask = 1 << 14;
+		bool updateNeeded = false;
+		
+		//Debug.DrawRay(shiftedPos, Vector3.forward, Color.red);
+		Debug.DrawRay(shiftedPos, Vector3.left * detectionLength, Color.red);
+		Debug.DrawRay(shiftedPos, Vector3.right * detectionLength, Color.red);
+		//Debug.DrawRay(shiftedPos, Vector3.back, Color.red);
 
-		if (Physics.Raycast(shiftedPos, Vector3.forward, out hit, 2.0F)) 
+		/*if (Physics.Raycast(shiftedPos, Vector3.forward, out hit, detectionLength, layerMask)) 
 		{
 			forwardWall = Vector3.Distance(hit.point, shiftedPos);
 			forwardWall = 2.0f - forwardWall;
-		}
-		if (Physics.Raycast(shiftedPos, Vector3.left, out hit, 2.0F)) 
+			updateNeeded = true;
+		} */
+		if (Physics.Raycast(shiftedPos, Vector3.left, out hit, detectionLength, layerMask)) 
 		{
 			leftWall = Vector3.Distance(hit.point, shiftedPos);
-			leftWall = 2.0f - leftWall;
+			leftWall = detectionLength - leftWall;
+			updateNeeded = true;
 		}
-		if (Physics.Raycast(shiftedPos, Vector3.back, out hit, 2.0F)) 
+		/*if (Physics.Raycast(shiftedPos, Vector3.back, out hit, detectionLength, layerMask)) 
 		{
 			backWall = Vector3.Distance(hit.point, shiftedPos);
 			backWall = 2.0f - backWall;
-		}
-		if (Physics.Raycast(shiftedPos, Vector3.right, out hit, 2.0F)) 
+			updateNeeded = true;
+		} */
+		if (Physics.Raycast(shiftedPos, Vector3.right, out hit, detectionLength, layerMask)) 
 		{
 			rightWall = Vector3.Distance(hit.point, shiftedPos);
-			rightWall = 2.0f - rightWall;
+			rightWall = detectionLength - rightWall;
+			updateNeeded = true;
 		}
-
-		cameraPos = new Vector3(cameraPos.x + leftWall - rightWall, cameraPos.y, cameraPos.z + backWall - forwardWall);
+		
+		if (updateNeeded) 
+		{
+			cameraPos = new Vector3(cameraPos.x + leftWall - rightWall, cameraPos.y, cameraPos.z + backWall - forwardWall);
+			Debug.Log("OLD CAM: x-pos: " + cameraPos.x + " y-pos: " + cameraPos.y + " z-pos: " + cameraPos.z);
+			Debug.Log("Shift: leftWall: " + leftWall + " rightWall: " + rightWall + " backWall: " + backWall + " forwardWall: " + forwardWall); 
+		}
 
 		return cameraPos;
 	}
