@@ -52,16 +52,16 @@ public class woodsBullet : MonoBehaviour {
 		}
 		if (c.gameObject.CompareTag("Enemy"))
 		{
-			Debug.Log ("we hit an enemy");
 			EnemyBase scr = c.gameObject.GetComponent<EnemyBase>();
 			scr.takeDamage(dmg);
-			//scr.damageTaken += dmg;
+			scr.damageTaken += dmg;
 			if(hawkScript.enemiesToAttack.Contains(c.gameObject) == false)
 			{
 				hawkScript.enemiesToAttack.Add (c.gameObject);
 			}
 
 			Woodsman tempScr = woodsPlayer.GetComponent<Woodsman>();
+			tempScr.hitCount+= 1;
 
 
 			Destroy(gameObject);
