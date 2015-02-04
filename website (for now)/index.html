@@ -7,6 +7,7 @@
     <title>Rise of the Restless</title>
     
     <!-- CSS -->
+    <!--<link rel="stylesheet" type="text/css" href="css/foundation.min.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
     
@@ -18,9 +19,9 @@
     
 <body>
     <!--every page should have this-->
-    <div class="brand-top">Rise</div>
-    <div class="address-bar">of the</div>
-    <div class="brand-bottom">Restless</div>
+    <div class="brand-top">
+        <img class="img-responsive img-full" src="media/SimpleLogo.png"/>
+    </div>
 
     <div class="navbar navbar-default">
         <div class="container">
@@ -63,48 +64,92 @@
         <a href="#carousel-example-generic" data-slide="next" class="right carousel-control"><span class="icon-next" role="button"></span></a>
     </div>
 
-    <div class="container">
+    <div class="container" id="posts">
         <!--add a row if we want more content-->
         <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="text-left">First post!!</h2>
-                    <p>
-                        <span class="glyphicon glyphicon-time"></span>
-                        " Posted on January 28, 2015 at 1:28 PM"
-                    </p>    
-                    <hr>
-                    <img class="img-responsive" src="http://placehold.it/900x300" alt/>
-                    <hr>
-                    <p>"Make haste friend Richard the hour is nigh, we must depart and with all speed.” John burst into my office clad in weather mail and wielding a broad sword. He had just thrown me a 3 foot blade and had turned on his heel, obviously expecting me to follow.
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="text-left">First post!!</h2>
+                <p>
+                    <span class="glyphicon glyphicon-time"></span>
+                    Posted on January 28, 2015 at 1:28 PM
+                </p>    
+                <hr>
+                <img class="img-responsive" src="http://placehold.it/900x300" alt/>
+                <hr>
+                <p>"Make haste friend Richard the hour is nigh, we must depart and with all speed.” John burst into my office clad in weather mail and wielding a broad sword. He had just thrown me a 3 foot blade and had turned on his heel, obviously expecting me to follow.
 “Uh, I’m working dude.” I said. “I kind of need this job. Feed the family and all that? I’m the breadwinner you know.” John spun on his heel, drew a knife, and slammed it into my desk. I jumped back, appalled at the spontaneous destruction of office furniture.
 “Compatriot, this was fixed to my door when I departed from my home this morning. I believe it shall explain all.”
 Mortals, fear me and hasten to do my will. For I have imprisoned your spouses and children. They will starve lest you do exactly as I order. My minions will come for you soon. Stay where you are and do nothing to inflame my tempor. Signed, the dark lord of the twilight woods.
 I crumpled the letter in anger, and put the knife sticking out of my desk into my belt.
 “The crossbows are still in my trunk.” I tell John. He smiles.
 “Then we are departed my old friend. Let us make haste!”</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                    <hr>
-                </div>
+                <a href="#" class="btn btn-primary">Read More</a>
+                <hr>
             </div>
         </div>
 
         <div class="row">
-            <div class="box"></div>
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="text-left">Alien's random writing prompt</h2>
+                <p>
+                    <span class="glyphicon glyphicon-time"></span>
+                    Posted on January 30, 2015 at 12:35 PM
+                </p>    
+                <hr>
+                <img class="img-responsive" src="http://placehold.it/900x300" alt/>
+                <hr>
+                <p>Sitting at the planet's space station, he caught a blip on his radar. ting ting something was drifting towards them. He contacted the base station on the planet. Were they expecting an asteroid or a returning satellite? He didn't have anything on the return schedule for the next 5 years. It was moving towards the planet quickly. Faster than a drifting asteroid.
+"Base, this is the orbital 1, are we expecting any satellites?"
+"Negative, orbital, what are you seeing" A voice burst out of the speakers causing him to flinch and lower the volume.
+"Object traveling towards me at...548 miles per hour" He read off this radar.
+Silence
+The lack of response concerned him. What the hell is going on.
+"How long till it reaches you, orbital" the different but calm voice cracked across the speakers, he could hear the mumble of voices behind the speaker.
+"The radar says its going to take four days"
+"Engage capture 6, orbital"
+"Mission received, accepted"</p>
+                <a href="#" class="btn btn-primary">Read More</a>
+                <hr>
+            </div>
         </div>
     </div>
     
     <!--and this-->
-    <div class="navbar navbar-default navbar-fixed-bottom">
+    <footer>
         <div class="container-fluid">
-            <ol class="breadcrumb navbar-header">
-                <li class="active">Home</li>
-            </ol>
-            
-            <span class="label label-default navbar-right">Copyright 2015</span>
+            <div class="row">
+                <div class="col-md-4">
+                    <ol class="breadcrumb">
+                        <li class="active">Home</li>
+                        <li><a href="#">Game</a></li>
+                        <li><a href="#">Art</a></li>
+                        <li><a href="#">About</a></li>
+                    </ol>
+                </div>
+                <div class="col-md-4">
+                    <!--social media buttons-->
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#"><img src="media/social/facebook-b.png" onmouseover="this.src='media/social/facebook.png'" onmouseout="this.src='media/social/facebook-b.png'"/></a>
+                        </div>
+                        <div class="media-left">
+                            <a href="#"><img src="media/social/twitter-b.png" onmouseover="this.src='media/social/twitter.png'" onmouseout="this.src='media/social/twitter-b.png'"/></a>
+                        </div>
+                        <div class="media-left">
+                            <a href="#"><img src="media/social/you_tube-b.png" onmouseover="this.src='media/social/you_tube.png'" onmouseout="this.src='media/social/you_tube-b.png'"/></a>
+                        </div>
+                        <div class="media-left">
+                            <a href="#"><img src="media/social/share-this-b.png" onmouseover="this.src='media/social/share-this.png'" onmouseout="this.src='media/social/share-this-b.png'"/></a>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-4"></div>
+            </div>
         </div>
-    </div>
+    </footer>
 </body>
     
 </html>

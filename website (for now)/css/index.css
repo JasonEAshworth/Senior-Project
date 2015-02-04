@@ -53,16 +53,30 @@ hr {
     letter-spacing: 3px;
 }
 
-.box
+.navbar-default
+{
+    background-color: rgba(51,47,47,0.8);
+}
+
+.row
+{
+    padding: 30px 15px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+#posts .row
 {
 	margin-bottom: 20px;
-	padding: 30px 15px;
-	background: rgba(255, 255, 255, 0.9);
 }
 
 .carousel
 {
 	margin-bottom: 20px;
+}
+
+.navbar-default .navbar-nav li a
+{
+    font-family: title;
 }
 
 
@@ -123,7 +137,7 @@ hr {
     .navbar-default {
         border: none;
         background: #fff;
-        background: rgba(255,255,255,0.9);
+        background-color: rgba(51,47,47,0.8);
     }
 
     .nav>li>a {
@@ -155,4 +169,43 @@ hr {
     background: none;
     border: none;
     top: 0%;
+}
+
+.row img{
+    margin-left: auto;
+    margin-right: auto
+}
+
+.navbar-fixed-bottom
+{
+    margin-top: 10px;
+}
+
+.brand-top img 
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.media
+{
+    justify-content: space-between;
+    width: 100%;
+    text-align: center;
+}
+
+.media-left
+{
+    display: inline-block;
+}
+
+.breadcrumb
+{
+    text-align: center;
+    background-color: rgba(0,0,0,0);
+}
+
+ol, ul
+{
+    margin-top: 14px;
 }
