@@ -1,0 +1,34 @@
+Sound Effects
+------------------
+sword swipes (big and small)
+vixen noise for zombies
+wood smash
+fire blast
+fire burning (furnace)
+ice blast / icicles
+micheal bay (EXPLOSIONS!!!1!)
+arrow shots / hits
+footsteps (walk/dash)
+rock crumble
+earthquake
+hawk noises
+shield bash
+door sound
+gold clang
+use potion
+potion pickup
+key pickup
+damage / attack (general v/o)
+key pickup
+poof of smoke
+tornado woosh
+spikes (extending / retracting)
+activate switch
+shield block
+switch spells
+rogue dash
+charge up (charge complete)
+bomb set
+BG music  (ambient / menu / boss)
+stone grinding (moving platforms)
+death by falling

@@ -12,6 +12,8 @@ public enum playerClass
 
 public class PlayerBase : CharacterBase 
 {
+	public Text scoreText;
+
 	public float respawnTimer = 0.0f;
 	public float timeToRespawn = 0.5f;
 
@@ -62,6 +64,8 @@ public class PlayerBase : CharacterBase
 
 	protected virtual void Update()
 	{
+		string tmp = score.ToString () + " GOLD";
+		scoreText.text = tmp;
 		// Handle respawn timer
 		if (dead)
 		{
