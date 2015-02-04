@@ -42,7 +42,7 @@ public class cameraControl : MonoBehaviour
 		Debug.Log (Camera.main.aspect);
     }
 
-	public void LateUpdate() 
+	public void FixedUpdate() 
 	{
 		Console.WriteLine ("START");
 		// If we can't find a player, we return without altering the camera's position
@@ -96,15 +96,15 @@ public class cameraControl : MonoBehaviour
 		Vector3 newCamPos;
 		if (Time.deltaTime >= 1)
 		{
-			newCamPos = new Vector3 (xMid + (yOffset * .2f), yOffset, zMid + zOffset + constrainedZ / 2);
+			newCamPos = new Vector3 (xMid + (yOffset * .2f), yOffset + zTweek, zMid + zOffset + constrainedZ / 2 + zTweek);
 		}
 		else 
 		{
 //			Debug.Log(new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2));
 //			Debug.Log (Camera.main.transform.position);
 			float newX = Camera.main.transform.position.x - 3 * Time.deltaTime * (Camera.main.transform.position.x - (xMid + (yOffset * .2f)));
-			float newY = Camera.main.transform.position.y - 3 * Time.deltaTime * (Camera.main.transform.position.y - yOffset);
-			float newZ = Camera.main.transform.position.z - 3 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2));
+			float newY = Camera.main.transform.position.y - 3 * Time.deltaTime * (Camera.main.transform.position.y - yOffset + yTweek);
+			float newZ = Camera.main.transform.position.z - 3 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2) + zTweek);
 			newCamPos = new Vector3 (newX, newY + yTweek, newZ + zTweek);
 		}
 		newCamPos = edgeShiftCheck(newCamPos);
