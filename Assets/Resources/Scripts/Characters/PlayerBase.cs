@@ -94,6 +94,11 @@ public class PlayerBase : CharacterBase
 
 	public override void kill()
 	{
+		score -= 25;
+		if (score < 0)
+		{
+			score = 0;
+		}
 		base.kill();
 		health = 0.0f;
 		dead = true;
