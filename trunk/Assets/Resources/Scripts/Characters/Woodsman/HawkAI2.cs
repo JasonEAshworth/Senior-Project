@@ -86,16 +86,30 @@ public class HawkAI2 : MonoBehaviour {
 		// attack the enemy and circle it for five seconds before coming back to the woodsman
 		if (mode == 2) 
 		{
+			if(enemiesToAttack.Count == 0)
+			{
+				mode = 3;
+			}
+
 			GameObject mostDamaged = null;
 			float temp = 0.0f;
 			for(int i=0;i<enemiesToAttack.Count;i++)
 			{
+				if(enemiesToAttack[i] == null)
+				{
+					enemiesToAttack.Remove (enemiesToAttack[i]);
+				}
 				EnemyBase scr = enemiesToAttack[i].GetComponent<EnemyBase>();
-				//if(temp == 0.0f || scr.damageTaken > temp)
-				if (temp == 0.0f)
+				if(temp == 0.0f || scr.damageTaken > temp)
 				{
 					mostDamaged = enemiesToAttack[i];
+					temp = scr.damageTaken;
 				}
+			}
+
+			if(enemiesToAttack.Count == 0)
+			{
+				mode = 3;
 			}
 
 			if(mostDamaged)
@@ -106,11 +120,21 @@ public class HawkAI2 : MonoBehaviour {
 				{
 					transform.position += (towardsEnemy * speed * Time.deltaTime);
 				}
+				else
+				{
+					Vector3 enemyPaddingVector = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (mostDamaged.transform.position.x, 0, mostDamaged.transform.position.z));
+					enemyPaddingVector.Normalize();
+
+					Vector3 enemyFacing = Vector3.Cross(enemyPaddingVector,Vector3.up);
+					transform.up = enemyFacing;
+
+					transform.RotateAround(mostDamaged.transform.position,Vector3.up,120 * Time.deltaTime);
+				}
 				timerEnemy = timerEnemy - Time.deltaTime;
 				if(timerEnemy <= 0.0f)
 				{
-					EnemyBase scr = mostDamaged.GetComponent<EnemyBase>();
-					scr.takeDamage(dmg);
+					mostDamaged.SendMessage("takeDamage",dmg);
+					timerEnemy = 2.0f;
 				}
 
 			}

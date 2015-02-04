@@ -53,9 +53,6 @@ public class PlayerManager : MonoBehaviour
 				rewiredControl ctrl = player1.GetComponent<rewiredControl>();
 				ctrl.playerId = i;
 				woods.playerNum = i;
-				woods.health = 100.0f;
-				woods.maxHealth = 100.0f;
-				woods.mana = 100.0f;
 				woods.healthBar = GameObject.Find("woodsmanHealth").GetComponent<RawImage>();
 				woods.manaBar = GameObject.Find("woodsmanMana").GetComponent<RawImage>();
 				woods.potionImg = GameObject.Find("woodPotionImg").GetComponent<RawImage>();

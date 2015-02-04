@@ -17,6 +17,7 @@ public class EnemyBase : CharacterBase
 	public float respawnTimer = 0.0f;
 	public int enemyNumber = -1;
 	public enemyArchtype enemyType;
+	public float damageTaken = 0.0f;
 
 	// Attack Variables
 	public bool attacking = false;

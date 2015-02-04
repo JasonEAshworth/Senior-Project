@@ -15,12 +15,12 @@ public class Woodsman : PlayerBase
 	// bool inits
 	private bool canFire = true;
 	private bool canSpecial = true;
-	private bool specialAttacking = false;
-	private bool basicAttacking = false;
+	private bool attacking = false;
 	private bool canMove = true;
 	private bool bombActive = false;
 
 	// init variables
+	private float timeBNAttacks = 5.0f;
 	private float basicTimer = 0.5f;
 	private float specialTimer = 3.0f;
 	private float firstButtonPressTime = 0.0f;
@@ -67,10 +67,18 @@ public class Woodsman : PlayerBase
 		// call update of parent class
 		base.Update();
 
+		timeBNAttacks -= Time.deltaTime;
+		if(timeBNAttacks <= 0.0f)
+		{
+			timeBNAttacks = 5.0f;
+			hawkScripts.enemiesToAttack.Clear ();
+		}
 
 		if(hitCount >= 5)
 		{
+			Debug.Log ("Added Mana");
 			addMana(1.0f);
+			hitCount = 0;
 		}
 
 		// Cast out a ray to figure out if the aim assist will hit anything
@@ -142,6 +150,7 @@ public class Woodsman : PlayerBase
 		if (dir == "down" && canFire) 
 		{
 			firstButtonPressTime = Time.time;
+			timeBNAttacks = 5.0f;
 			canMove = false;
 		}
 		if (dir == "up")
@@ -182,15 +191,15 @@ public class Woodsman : PlayerBase
 
 			if(!bombActive && mana >= 1.0f)
 			{
+				mana -= 1.0f;
 				Debug.Log (mana);
 				bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,0.0f,transform.position.z),Quaternion.identity) as GameObject;
-				useMana (1.0f);
 				bombActive = true;
 			}
 			else
 			{
-				//BombBehavior scr = bomb.GetComponent<BombBehavior>();
-				//scr.explode = true;
+				bombBehavior scr = bomb.GetComponent<bombBehavior>();
+				scr.explode = true;
 				bombActive = false;
 			}
 //			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
