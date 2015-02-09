@@ -1,9 +1,9 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32530,y:32649|diff-622-RGB,spec-626-RGB,normal-644-OUT;n:type:ShaderForge.SFN_Tex2d,id:622,x:32965,y:32425,ptlb:node_diffuse,ptin:_node_diffuse,tex:dda7bcbabc8824842a686f9bad27f18c,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:624,x:33380,y:33239,ptlb:Nrm_Structure,ptin:_Nrm_Structure,tex:6e930d6ebb57a9e4ebd4030eb25d23c6,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:626,x:33059,y:32616,ptlb:Node_spec,ptin:_Node_spec,tex:704881cd4e7ebc5438bd74459abbe5f2,ntxv:2,isnm:False;n:type:ShaderForge.SFN_Vector3,id:628,x:33444,y:33009,v1:1,v2:1,v3:2;n:type:ShaderForge.SFN_Multiply,id:630,x:33246,y:32901|A-632-RGB,B-628-OUT;n:type:ShaderForge.SFN_Tex2d,id:632,x:33407,y:32726,ptlb:Nrm_Noise,ptin:_Nrm_Noise,tex:6d4bf8d475fb823459f90225844677b7,ntxv:3,isnm:True|UVIN-640-OUT;n:type:ShaderForge.SFN_TexCoord,id:634,x:33819,y:32790,uv:0;n:type:ShaderForge.SFN_Multiply,id:636,x:33125,y:33268|A-624-RGB,B-638-OUT;n:type:ShaderForge.SFN_Vector3,id:638,x:33380,y:33443,v1:4,v2:4,v3:0.2;n:type:ShaderForge.SFN_Multiply,id:640,x:33584,y:32816|A-634-UVOUT,B-642-OUT;n:type:ShaderForge.SFN_Vector1,id:642,x:33793,y:32960,v1:4;n:type:ShaderForge.SFN_Add,id:644,x:32932,y:33056|A-630-OUT,B-636-OUT;proporder:622-626-624-632;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32542,y:32683|diff-623-RGB,spec-627-RGB,normal-645-OUT;n:type:ShaderForge.SFN_Tex2d,id:623,x:32963,y:32591,ptlb:node_diffuse,ptin:_node_diffuse,tex:2fe6c56f33675254595ed1779489e0b2,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:625,x:33378,y:33405,ptlb:Nrm_Structure,ptin:_Nrm_Structure,tex:3d45e3ef4b0348942a18221b0eaeecfd,ntxv:3,isnm:True;n:type:ShaderForge.SFN_Tex2d,id:627,x:32985,y:32806,ptlb:Node_spec,ptin:_Node_spec,tex:95b2211a607481144b1bbc5598f3968a,ntxv:2,isnm:False;n:type:ShaderForge.SFN_Vector3,id:629,x:33442,y:33175,v1:1,v2:1,v3:2;n:type:ShaderForge.SFN_Multiply,id:631,x:33244,y:33067|A-633-RGB,B-629-OUT;n:type:ShaderForge.SFN_Tex2d,id:633,x:33405,y:32892,ptlb:Nrm_Noise,ptin:_Nrm_Noise,tex:6d4bf8d475fb823459f90225844677b7,ntxv:3,isnm:True|UVIN-641-OUT;n:type:ShaderForge.SFN_TexCoord,id:635,x:33817,y:32956,uv:0;n:type:ShaderForge.SFN_Multiply,id:637,x:33123,y:33434|A-625-RGB,B-639-OUT;n:type:ShaderForge.SFN_Vector3,id:639,x:33378,y:33609,v1:4,v2:4,v3:0.2;n:type:ShaderForge.SFN_Multiply,id:641,x:33582,y:32982|A-635-UVOUT,B-643-OUT;n:type:ShaderForge.SFN_Vector1,id:643,x:33791,y:33126,v1:2;n:type:ShaderForge.SFN_Add,id:645,x:32930,y:33222|A-631-OUT,B-637-OUT;proporder:623-627-625-633;pass:END;sub:END;*/
 
-Shader "Shader Forge/ColumnSquare_1_Mat" {
+Shader "Shader Forge/Mat_Rubble_01" {
     Properties {
         _node_diffuse ("node_diffuse", 2D) = "white" {}
         _Node_spec ("Node_spec", 2D) = "black" {}
@@ -66,9 +66,9 @@ Shader "Shader Forge/ColumnSquare_1_Mat" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_640 = (i.uv0.rg*4.0);
+                float2 node_641 = (i.uv0.rg*2.0);
                 float2 node_661 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_640, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_661.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
+                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_661.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -148,9 +148,9 @@ Shader "Shader Forge/ColumnSquare_1_Mat" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_640 = (i.uv0.rg*4.0);
+                float2 node_641 = (i.uv0.rg*2.0);
                 float2 node_662 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_640, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_662.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
+                float3 normalLocal = ((UnpackNormal(tex2D(_Nrm_Noise,TRANSFORM_TEX(node_641, _Nrm_Noise))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_Nrm_Structure,TRANSFORM_TEX(node_662.rg, _Nrm_Structure))).rgb*float3(4,4,0.2)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
