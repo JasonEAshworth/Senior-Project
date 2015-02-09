@@ -146,15 +146,16 @@
      <None Include="Assets\Shaders\Mat_Log.shader" />
      <None Include="Assets\Shaders\Mat_Padlock.shader" />
      <None Include="Assets\Shaders\Mat_WineRack.shader" />
+     <None Include="Assets\Shaders\Mat_Dust.shader" />
      <None Include="Assets\Shaders\Mat_AM_Key_A.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>C:/Users/SeniorProj/Desktop/etgg4801_2014/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>C:/Users/SeniorProj/Desktop/etgg4801_2014/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
