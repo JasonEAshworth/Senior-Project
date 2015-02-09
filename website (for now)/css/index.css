@@ -14,147 +14,19 @@ body {
     -o-background-size: cover;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    text-transform: uppercase;
-    font-family: "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-p {
-    font-size: 1.25em;
-    line-height: 1.6;
-    color: #000;
-}
-
 hr {
     border-color: #999999;
 }
 
-.brand,
-.address-bar {
-    display: none;
-}
-
-.navbar-brand {
-    text-transform: uppercase;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-
-.navbar-nav {
-    text-transform: uppercase;
-    font-weight: 400;
-    letter-spacing: 3px;
-}
-
-.navbar-default
-{
-    background-color: rgba(51,47,47,0.8);
-}
-
-.row
-{
-    padding: 30px 15px;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-#posts .row
-{
-	margin-bottom: 20px;
-}
 
 .carousel
 {
 	margin-bottom: 20px;
 }
 
-.navbar-default .navbar-nav li a
+.row
 {
-    font-family: title;
-}
-
-
-@media screen and (min-width:768px) {
-    .brand-top, .brand-bottom {
-        display: inherit;
-        margin: 0;
-        padding: 10px 0 10px;
-        text-align: center;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        font-family: title, "Josefin Slab","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 5em;
-        font-weight: 700;
-        line-height: normal;
-        color: #fff;
-    }
-
-    .block {
-        margin-left: -20px;
-        margin-right: -20px;
-    }
-
-    .top-divider {
-        margin-top: 0;
-    }
-
-    .img-left {
-        float: left;
-        margin-right: 25px;
-    }
-
-    .address-bar {
-        display: inherit;
-        margin: 0;
-        padding: 0 0 0px;
-        text-align: center;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        text-transform: uppercase;
-        font-size: 1.25em;
-        font-weight: 400;
-        font-family: title;
-        letter-spacing: 3px;
-        color: #fff;
-    }
-
-    .navbar {
-        border-radius: 0;
-    }
-
-    .navbar-header {
-        display: none;
-    }
-
-    .navbar {
-        min-height: 0;
-    }
-
-    .navbar-default {
-        border: none;
-        background: #fff;
-        background-color: rgba(51,47,47,0.8);
-    }
-
-    .nav>li>a {
-        padding: 35px;
-    }
-
-    .navbar-nav>li>a {
-        line-height: normal;
-    }
-
-    .navbar-nav {
-        display: table;
-        float: none;
-        margin: 0 auto;
-        table-layout: fixed;
-        font-size: 1.25em;
-    }
+    background-color: rgba(255,255,255,0.9);
 }
 
 .carousel .item {
@@ -171,41 +43,8 @@ hr {
     top: 0%;
 }
 
-.row img{
-    margin-left: auto;
-    margin-right: auto
+footer
+{
+    background-color: rgba(255,255,255,0.9);
 }
 
-.navbar-fixed-bottom
-{
-    margin-top: 10px;
-}
-
-.brand-top img 
-{
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.media
-{
-    justify-content: space-between;
-    width: 100%;
-    text-align: center;
-}
-
-.media-left
-{
-    display: inline-block;
-}
-
-.breadcrumb
-{
-    text-align: center;
-    background-color: rgba(0,0,0,0);
-}
-
-ol, ul
-{
-    margin-top: 14px;
-}

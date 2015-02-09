@@ -17,13 +17,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/Threejs/three.min.js"></script>
     <script type="text/javascript" src="js/Threejs/OBJloader.js"></script>
-    <script type="text/javascript" src="js/Threejs/TrackballControls.js"></script>
+    <script type="text/javascript" src="js/Threejs/OrbitControls.js"></script>
     <script type="text/javascript" src="js/Threejs/detector.js"></script>
     <script type="text/javascript" src="js/art.js"></script>
     <script type="text/javascript" src="js/tmp.js"></script>
 </head>
     
-<body onLoad="onLoad();" onresize="change();">
+<body onLoad="onLoad('Char_Am_Zombie', 'Txt_Zombie_Diff_512');" onresize="change();">
     <!--every page should have this-->
     <div class="brand-top">
         <img class="img-responsive img-full" src="media/SimpleLogo.png"/>
@@ -48,23 +48,23 @@
 
     <!--this is where all of the content should go-->
     <div class="container" style="padding-bottom:15px">
+        
+
         <div class="row">
             <div class="dropdown">
+                <h1>3D model viewer</h1>
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                     Choose a model
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" id="Char_Am_Zombie" onclick="do_dis(this.id)">Action</a></li>
+                <ul class="dropdown-menu dropdown-menu-center" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" id="Char_Am_Zombie" onclick="modelSwitch('nude_obj', 'text')">Action</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
               </ul>
             </div>
-        </div>
-
-        <div class="row">
-            <div id="viewer" style="height:500px">
+            <div id="viewer" style="height:500px; padding-top:10px;">
                 <!--This is where the models view will show up-->
             </div>
         </div>

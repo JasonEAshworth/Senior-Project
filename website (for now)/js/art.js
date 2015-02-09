@@ -5,99 +5,54 @@ var mouseX = 0, mouseY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
-function onLoad(){
-	window.oncontextmenu = null;
-
-	init();
+function onLoad(  model, texture ){
+	init( model, texture );
 	animate();
 }
 
- 
 /*** Initialize ***/
-function init() {
+function init( model, texture ) {
   // This <div> will host the canvas for our scene.
   container = document.getElementById( 'viewer' );
-
-  if(container.hasChildNodes()){
-    container.removeChild()
-  }
  
   // You can adjust the cameras distance and set the FOV to something
   // different than 45°. The last two values set the clippling plane.
   camera = new THREE.PerspectiveCamera( 45, container.offsetWidth / container.offsetHeight, 1, 2000 );
-  camera.position.z = 100;
+  camera.position.z = 20;
  
   // These variables set the camera behaviour and sensitivity.
-  controls = new THREE.TrackballControls( camera );
-  controls.rotateSpeed = 5.0;
-  controls.zoomSpeed = 5;
-  controls.panSpeed = 2;
-  controls.noZoom = false;
-  controls.noPan = false;
-  controls.staticMoving = true;
-  controls.dynamicDampingFactor = 0.3;
+  controls = new THREE.OrbitControls( camera );
+  controls.autoRotate = true;
+  controls.addEventListener( 'change', render );
  
   // This is the scene we will add all objects to.
   scene = new THREE.Scene();
- 
+
   // You can set the color of the ambient light to any value.
   // I have chose a completely white light because I want to paint
   // all the shading into my texture. You propably want something darker.
-  var ambient = new THREE.AmbientLight( 0xffffff );
+  var ambient = new THREE.AmbientLight( 0x009933 );
   scene.add( ambient );
  
   // Uncomment these lines to create a simple directional light.
   var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-  directionalLight.position.set( 0, 0, 1 ).normalize();
+  directionalLight.position.set( 1, 1, 1 ).normalize();
   scene.add( directionalLight );
- 
-  /*** Texture Loading ***/
-  var manager = new THREE.LoadingManager();
-  manager.onProgress = function ( item, loaded, total ) {
-    console.log( item, loaded, total );
-  };
-  var texture = new THREE.Texture();
-  var loader = new THREE.ImageLoader( manager );
- 
-  // You can set the texture properties in this function. 
-  // The string has to be the path to your texture file.
-  loader.load( '../media/models/text.png', function ( image ) {
-    texture.image = image;
-    texture.needsUpdate = true;
-    // I wanted a nearest neighbour filtering for my low-poly character,
-    // so that every pixel is crips and sharp. You can delete this lines
-    // if have a larger texture and want a smooth linear filter.
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestMipMapLinearFilter;
-  } );
- 
-  /*** OBJ Loading ***/
-  var loader = new THREE.OBJLoader( manager );
- 
-  // As soon as the OBJ has been loaded this function looks for a mesh
-  // inside the data and applies the texture to it.
-  loader.load( '../media/models/Char_Am_Zombie.obj', function ( event ) {
-    var object = event;
-    object.traverse( function ( child ) {
-      if ( child instanceof THREE.Mesh ) {
-        child.material.map = texture;
-      }
-    } );
- 
-    // My initial model was too small, so I scaled it upwards.
-    object.scale = new THREE.Vector3( 1000, 1000, 1000 );
- 
-    // You can change the position of the object, so that it is not
-    // centered in the view and leaves some space for overlay text.
-    object.position.y -= 2.5;
-    scene.add( object );
-  });
+
+  var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+  directionalLight.position.set( -1, -1, -1 ).normalize();
+  scene.add( directionalLight );
+
+  addToScene(model, texture)
  
   // We set the renderer to the size of the window and
   // append a canvas to our HTML page.
   renderer = new THREE.WebGLRenderer();
+  renderer.setClearColor( 0xeeeeee, 0.5 );
   renderer.setSize( container.offsetWidth, container.offsetHeight );
+  
   container.appendChild( renderer.domElement );
+  
 }
  
 /*** The Loop ***/
@@ -114,11 +69,71 @@ function animate() {
 }
 
 function change() {
-	camera.aspect = (container.offsetWidth/container.offsetHeight)
+  camera.aspect = (container.offsetWidth/container.offsetHeight)
 	camera.updateProjectionMatrix();
 
 	renderer.setSize( container.offsetWidth, container.offsetHeight );
 	container.replaceChild( renderer.domElement );
 
 	animate();
+}
+
+function modelSwitch( newModel, newText ){
+  removeFromScene("current");
+  addToScene( newModel, newText );
+}
+
+/**Helpers Function**/
+function removeFromScene( objName ){
+  var selectedObject = scene.getObjectByName(objName);
+  scene.remove(selectedObject);
+}
+
+function addToScene( model, text ){
+  /*** Texture Loading ***/
+  var manager = new THREE.LoadingManager();
+  manager.onProgress = function ( item, loaded, total ) {
+    console.log( item, loaded, total );
+  };
+  var texture = new THREE.Texture();
+  var loader = new THREE.ImageLoader( manager );
+ 
+  // You can set the texture properties in this function. 
+  // The string has to be the path to your texture file.
+  loader.load( '../media/models/' + text + '.png', function ( image ) {
+    texture.image = image;
+    texture.needsUpdate = true;
+    // I wanted a nearest neighbour filtering for my low-poly character,
+    // so that every pixel is crips and sharp. You can delete this lines
+    // if have a larger texture and want a smooth linear filter.
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestMipMapLinearFilter;
+  } );
+ 
+  /*** OBJ Loading ***/
+  var loader = new THREE.OBJLoader( manager );
+ 
+  // As soon as the OBJ has been loaded this function looks for a mesh
+  // inside the data and applies the texture to it.
+  loader.load( '../media/models/' + model + '.obj', function ( event ) {
+    var object = event;
+    object.traverse( function ( child ) {
+      if ( child instanceof THREE.Mesh ) {
+        child.material.map = texture;
+      }
+    } );
+ 
+    // My initial model was too small, so I scaled it upwards.
+    object.scale = new THREE.Vector3( 1000, 1000, 1000 );
+ 
+    // You can change the position of the object, so that it is not
+    // centered in the view and leaves some space for overlay text.
+    object.position.y -= 2.5;
+    object.name = "current";
+    scene.add( object );
+  });
+}
+
+function render() {
+  renderer.render( scene, camera );
 }
