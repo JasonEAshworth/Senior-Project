@@ -1,0 +1,8 @@
+fileFormatVersion: 2
+guid: 19b38cdf8e26af648add90c651bece34
+ShaderImporter:
+  defaultTextures:
+  - _Diff: {fileID: 2800000, guid: 3bc55b5dec4251349a0f60904c8a5826, type: 3}
+  - _Alpha: {fileID: 2800000, guid: 89f6876beadd3884387c5dba4f5e6ca6, type: 3}
+  - _Ill: {fileID: 2800000, guid: 3bc55b5dec4251349a0f60904c8a5826, type: 3}
+  userData: 
