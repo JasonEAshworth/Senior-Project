@@ -16,6 +16,7 @@ public class DropGold : MonoBehaviour {
 	
 	public void Reward()
 	{
+		//Debug.Log("drop");
 		numGold = Mathf.Floor(numGold * multiplyer);
 		numCoins = Mathf.Floor(numCoins * multiplyer);
 		float yPos = transform.position.y;
@@ -35,7 +36,7 @@ public class DropGold : MonoBehaviour {
 				numCoins = numCoinOveride;
 			}
 			for(int g = 0; g < numCoins; g++)
-				GameObject.Instantiate(Coin, new Vector3(transform.position.x + (Random.Range(-1.0F,1.0F)*(multiplyer)),yPos,transform.position.z - (Random.Range(-1.0F,1.0F)*(multiplyer))), transform.rotation);
+				GameObject.Instantiate(Coin, new Vector3(transform.position.x + (Random.Range(-1.0F,1.0F)*(Mathf.Floor(multiplyer/2))),yPos,transform.position.z - (Random.Range(-1.0F,1.0F)*(Mathf.Floor(multiplyer/2)))), transform.rotation);
 			for(int g = 0; g < numGold; g++)
 				GameObject.Instantiate(gld, new Vector3(transform.position.x + (Random.Range(-1.0F,1.0F)*(multiplyer)),yPos,transform.position.z - (Random.Range(-1.0F,1.0F)*(multiplyer))), transform.rotation);
 		}
