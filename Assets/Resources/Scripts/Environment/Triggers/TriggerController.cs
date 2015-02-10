@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class TriggerController : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class TriggerController : MonoBehaviour
 
 	public void Start()
 	{
+//		foreach(TriggerObject t in trobj)
+//		{
+//			t.funcs = Action<bool>[trobj.Length];
+//		}
 		if(inCD)
 		{
 			StartCoroutine(CoolDownWait());

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class SpikeTrap : TrapBase
 {
+	public bool spawner = false;
 	//while the SpikeTrap uses the spawner attribute, it doesn't actually spawn a new SpikeTrap
 	//spawner == true means it's retracting
 	//spawner == false means it's advancing 

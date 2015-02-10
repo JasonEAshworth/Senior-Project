@@ -122,6 +122,7 @@
      <Compile Include="Assets\Resources\Scripts\Environment\cameraControl2.cs" />
      <Compile Include="Assets\Resources\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Resources\Scripts\Gold.cs" />
+     <Compile Include="Assets\Resources\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
@@ -182,6 +183,7 @@
      <None Include="Assets\Shaders\Bread.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Refraction.shader" />
+     <None Include="Assets\Resources\Prefabs\Environment\Resources\Map_04_T_N.txt" />
      <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Crate_a.shader" />
      <None Include="Assets\Shaders\Mat_JudasCradle3.shader" />

@@ -3,7 +3,6 @@ using System.Collections;
 
 public abstract class TrapBase : MonoBehaviour
 {
-	public bool spawner = false;
 	public float damage = 10.0f;	// amount of damage dealt to the player on contact
 
 	protected abstract void ActivateTrigger(bool state);
