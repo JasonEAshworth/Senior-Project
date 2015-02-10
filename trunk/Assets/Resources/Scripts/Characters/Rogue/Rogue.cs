@@ -62,7 +62,27 @@ public class Rogue : PlayerBase
 			elapsed += Time.deltaTime;
 			Vector3 moveVec = transform.forward * dashSpeed * Time.deltaTime;
 			moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
-			cc.Move(moveVec);
+			//cc.Move(moveVec);
+
+
+			PlayerBase character = this.GetComponent<PlayerBase>();
+			PlayerManager plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+			int maxDist = 20; //hardcoded value - based on maxDist in the rewiredControl script
+			moveVec.y = 0.0f;
+			
+
+			Vector3 newLocation = moveVec * moveSpeed * Time.deltaTime * character.moveMulti;
+			float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
+			//Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
+			// If the player is moving too far away from the center, they are stopped. If they're already
+			// too far away, they are only allowed to move closer to the center.
+			if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 
+			{
+				cc.Move(newLocation);
+				//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
+			}
+
+
 			yield return new WaitForFixedUpdate();
 		}
 		dash = false;

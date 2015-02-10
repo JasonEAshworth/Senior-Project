@@ -99,6 +99,7 @@
      <None Include="Assets\Shaders\Bread.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Refraction.shader" />
+     <None Include="Assets\Resources\Prefabs\Environment\Resources\Map_04_T_N.txt" />
      <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Crate_a.shader" />
      <None Include="Assets\Shaders\Mat_JudasCradle3.shader" />
