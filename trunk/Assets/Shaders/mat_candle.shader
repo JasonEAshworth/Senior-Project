@@ -1,12 +1,12 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32524,y:32733|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:32934,y:32711,ptlb:Candle_Diff,ptin:_Candle_Diff,tex:cde49c8b7b810d94aa1a1f24239833da,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:32931,y:32934,ptlb:Candle_Norm,ptin:_Candle_Norm,tex:b42a173bd4431b14b940a2cf82c74c61,ntxv:3,isnm:True;proporder:2-3;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:0,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:True,ufog:True,aust:True,igpj:False,qofs:0,qpre:1,rntp:1,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32476,y:32665|diff-2-RGB,normal-3-RGB;n:type:ShaderForge.SFN_Tex2d,id:2,x:32802,y:32624,ptlb:node_2,ptin:_node_2,tex:cde49c8b7b810d94aa1a1f24239833da,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:32814,y:32825,ptlb:node_3,ptin:_node_3,tex:b42a173bd4431b14b940a2cf82c74c61,ntxv:3,isnm:True;proporder:3-2;pass:END;sub:END;*/
 
 Shader "Shader Forge/mat_candle" {
     Properties {
-        _Candle_Diff ("Candle_Diff", 2D) = "white" {}
-        _Candle_Norm ("Candle_Norm", 2D) = "bump" {}
+        _node_3 ("node_3", 2D) = "bump" {}
+        _node_2 ("node_2", 2D) = "white" {}
     }
     SubShader {
         Tags {
@@ -29,8 +29,8 @@ Shader "Shader Forge/mat_candle" {
             #pragma exclude_renderers xbox360 ps3 flash d3d11_9x 
             #pragma target 3.0
             uniform float4 _LightColor0;
-            uniform sampler2D _Candle_Diff; uniform float4 _Candle_Diff_ST;
-            uniform sampler2D _Candle_Norm; uniform float4 _Candle_Norm_ST;
+            uniform sampler2D _node_2; uniform float4 _node_2_ST;
+            uniform sampler2D _node_3; uniform float4 _node_3_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -63,18 +63,18 @@ Shader "Shader Forge/mat_candle" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_12 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Candle_Norm,TRANSFORM_TEX(node_12.rg, _Candle_Norm))).rgb;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_12.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
-                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
+                float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Candle_Diff,TRANSFORM_TEX(node_12.rg, _Candle_Diff)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_12.rg, _node_2)).rgb;
 /// Final Color:
                 return fixed4(finalColor,1);
             }
@@ -99,8 +99,8 @@ Shader "Shader Forge/mat_candle" {
             #pragma exclude_renderers xbox360 ps3 flash d3d11_9x 
             #pragma target 3.0
             uniform float4 _LightColor0;
-            uniform sampler2D _Candle_Diff; uniform float4 _Candle_Diff_ST;
-            uniform sampler2D _Candle_Norm; uniform float4 _Candle_Norm_ST;
+            uniform sampler2D _node_2; uniform float4 _node_2_ST;
+            uniform sampler2D _node_3; uniform float4 _node_3_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -133,18 +133,18 @@ Shader "Shader Forge/mat_candle" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_13 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Candle_Norm,TRANSFORM_TEX(node_13.rg, _Candle_Norm))).rgb;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_13.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
-                float attenuation = LIGHT_ATTENUATION(i);
+                float attenuation = LIGHT_ATTENUATION(i)*2;
                 float3 attenColor = attenuation * _LightColor0.xyz;
 /////// Diffuse:
                 float NdotL = dot( normalDirection, lightDirection );
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Candle_Diff,TRANSFORM_TEX(node_13.rg, _Candle_Diff)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_13.rg, _node_2)).rgb;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
             }
