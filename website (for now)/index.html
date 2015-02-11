@@ -1,58 +1,60 @@
-<!-- Rise of the Restless (c)2015 -->
-<!-- v 0.1 -->
-<!-- Don't fucking think about it -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Rise of the Restless</title>
-    
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Rise of the Restless -- Home</title>
+
     <!-- CSS -->
-    <!--<link rel="stylesheet" type="text/css" href="css/foundation.min.css">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
-    
-    <!-- Javascript -->
-    <script src="js/jquery-1.11.2.min.js"></script>
-    <!--<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+    <link href="css/logo-nav.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <!-- JS -->
+     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
 </head>
-    
+
 <body>
-    <!--every page should have this-->
+
+    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="#">
-                    <img src="http://placehold.it/150x50&text=Logo" alt="">
+                    <img src="media/logo.png" alt="" height="90px" width="270px">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
+                <ul class="list-inline">
+                        <li>
+                            <a href="#"><img src="media/social/facebook-b.png" onmouseover="this.src='media/social/facebook.png'" onmouseout="this.src='media/social/facebook-b.png'"/></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="media/social/twitter-b.png" onmouseover="this.src='media/social/twitter.png'" onmouseout="this.src='media/social/twitter-b.png'"/></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="media/social/you_tube-b.png" onmouseover="this.src='media/social/you_tube.png'" onmouseout="this.src='media/social/you_tube-b.png'"/></a>
+                        </li>
+                        <li>
+                            <a href="#"><img src="media/social/share-this-b.png" onmouseover="this.src='media/social/share-this.png'" onmouseout="this.src='media/social/share-this-b.png'"/></a>
+                        </li>
+                    </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
     <!--this is where all of the content should go-->
+    <div class="container-fluid" id="slide">
     <div class="carousel slide" id="carousel-example-generic" data-ride="carousel">
         <ol class="carousel-indicators hidden-xs">
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -75,6 +77,7 @@
         <a href="#carousel-example-generic" data-slide="prev" class="left carousel-control"><span class="icon-prev" role="button"></span></a>
         <a href="#carousel-example-generic" data-slide="next" class="right carousel-control"><span class="icon-next" role="button"></span></a>
     </div>
+</div>
 
     <div class="container" id="posts">
         <!--add a row if we want more content-->
@@ -127,41 +130,37 @@ The lack of response concerned him. What the hell is going on.
             </div>
         </div>
     </div>
-    
-    <!--and this-->
+
+    <!--footer-->
     <footer>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <ol class="breadcrumb">
-                        <li class="active">Home</li>
-                        <li><a href="#">Game</a></li>
-                        <li><a href="#">Art</a></li>
-                        <li><a href="#">About</a></li>
-                    </ol>
-                </div>
-                <div class="col-md-4">
-                    <!--social media buttons-->
-                    <div class="media">
-                        <div class="media-left">
+            <div class="row" id="foot">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Rise of the Restless</strong>
+                    </h4>
+                    <ul class="list-inline">
+                        <li>
                             <a href="#"><img src="media/social/facebook-b.png" onmouseover="this.src='media/social/facebook.png'" onmouseout="this.src='media/social/facebook-b.png'"/></a>
-                        </div>
-                        <div class="media-left">
+                        </li>
+                        <li>
                             <a href="#"><img src="media/social/twitter-b.png" onmouseover="this.src='media/social/twitter.png'" onmouseout="this.src='media/social/twitter-b.png'"/></a>
-                        </div>
-                        <div class="media-left">
+                        </li>
+                        <li>
                             <a href="#"><img src="media/social/you_tube-b.png" onmouseover="this.src='media/social/you_tube.png'" onmouseout="this.src='media/social/you_tube-b.png'"/></a>
-                        </div>
-                        <div class="media-left">
+                        </li>
+                        <li>
                             <a href="#"><img src="media/social/share-this-b.png" onmouseover="this.src='media/social/share-this.png'" onmouseout="this.src='media/social/share-this-b.png'"/></a>
-                        </div>
-                    </div>
-                    
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; 2015</p>
                 </div>
-                <div class="col-md-4"></div>
             </div>
         </div>
     </footer>
-</body>
+
     
+
+</body>
+
 </html>
