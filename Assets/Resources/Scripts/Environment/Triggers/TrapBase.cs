@@ -5,7 +5,7 @@ public abstract class TrapBase : MonoBehaviour
 {
 	public float damage = 10.0f;	// amount of damage dealt to the player on contact
 
-	protected abstract void ActivateTrigger(bool state);
+	protected virtual void ActivateTrigger(bool state) {}
 
 	protected abstract void OnTriggerEnter(Collider c);
 

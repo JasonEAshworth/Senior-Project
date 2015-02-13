@@ -12,7 +12,7 @@ public class ProjectileTrapObj : TrapBase
 	//thus it should be set to the trap's transform.forward
 	//public Vector3 travelDir = Vector3.zero;
 
-	private void OnEnable()
+	protected void OnEnable()
 	{
 		StartCoroutine(WaitToDisable());
 	}
@@ -24,13 +24,13 @@ public class ProjectileTrapObj : TrapBase
 			StartCoroutine(WaitToDisable());
 		}
 	}*/
-	
+
 	protected void FixedUpdate()
 	{
-		Vector3 start = this.transform.position;
+		//Vector3 start = this.transform.position;
 		//this.transform.position += this.travelDir * this.travelSpeed * Time.deltaTime;
 		this.transform.position += this.transform.forward * this.travelSpeed * Time.deltaTime;
-		Vector3 end = this.transform.position;
+		//Vector3 end = this.transform.position;
 	}
 
 	protected IEnumerator WaitToDisable()
@@ -39,8 +39,8 @@ public class ProjectileTrapObj : TrapBase
 		this.gameObject.SetActive(false);
 	}
 
-	protected override void ActivateTrigger(bool state)
-	{
+	//protected override void ActivateTrigger(bool state)
+	//{
 		/*GameObject p = Instantiate(this.gameObject, this.transform.position, this.transform.rotation) as GameObject;
 		p.GetComponent<MeshRenderer>().enabled = true;
 		p.transform.SetParent(this.transform.parent);
@@ -49,7 +49,7 @@ public class ProjectileTrapObj : TrapBase
 		//pto.spawner = false;
 		pto.enabled = true;
 		//p.transform.forward = this.transform.forward;*/
-	}
+	//}
 
 	protected override void OnTriggerEnter(Collider c)
 	{
@@ -64,7 +64,7 @@ public class ProjectileTrapObj : TrapBase
 			this.trapEffect(t.gameObject);
 			this.gameObject.SetActive(false);
 		}
-		if(t.name.Contains("Wall"))
+		else if(t.name.Contains("Wall"))
 		{
 			this.gameObject.SetActive(false);
 		}

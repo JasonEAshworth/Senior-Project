@@ -11,6 +11,7 @@ public class Woodsman : PlayerBase
 	public Animator anim;
 	private LineRenderer lr;
 	private GameObject bomb;
+	public GameObject pool;
 
 	// bool inits
 	private bool canFire = true;
@@ -40,7 +41,7 @@ public class Woodsman : PlayerBase
 		lr.SetWidth(lineWidth, lineWidth);
 
 		// get the animator object
-		anim = GetComponent<Animator> ();
+		anim = GetComponent<Animator>();
 
 		health = 100;
 		maxHealth = health;
@@ -59,7 +60,7 @@ public class Woodsman : PlayerBase
 		canMoveTimer = 0.0f;
 
 		// Get the hawk script to be able to set modes
-		hawkScripts = hawk.GetComponent<HawkAI2> ();
+		hawkScripts = hawk.GetComponent<HawkAI2>();
 	}
 
 	protected override void Update()
@@ -71,7 +72,7 @@ public class Woodsman : PlayerBase
 		if(timeBNAttacks <= 0.0f)
 		{
 			timeBNAttacks = 5.0f;
-			hawkScripts.enemiesToAttack.Clear ();
+			hawkScripts.enemiesToAttack.Clear();
 		}
 
 		if(hitCount >= 5)
@@ -167,8 +168,13 @@ public class Woodsman : PlayerBase
 			else if(canFire)
 			{
 				anim.SetTrigger("Attack");
-				GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
+				//GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
 				//bullet.transform.up = transform.forward;
+				GameObject arrow = pool.GetComponent<ObjectPool>().New();
+				if(arrow != null)
+				{
+					arrow.GetComponent<BasicArrow>().PostEnable(true, 0.0f);
+				}
 				canFire = false;
 			}
 		}
@@ -177,9 +183,14 @@ public class Woodsman : PlayerBase
 	public void specialAttackWoods(float time)
 	{
 		anim.SetTrigger("Attack");
-		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.identity) as GameObject;
-		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
-		scr.heldTime = time;
+		//GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.identity) as GameObject;
+		//woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
+		//scr.heldTime = time;
+		GameObject arrow = pool.GetComponent<ObjectPool>().New();
+		if(arrow != null)
+		{
+			arrow.GetComponent<BasicArrow>().PostEnable(false, time);
+		}
 		canSpecial = false;
 	}
 	
