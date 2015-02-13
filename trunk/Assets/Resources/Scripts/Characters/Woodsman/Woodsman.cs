@@ -173,7 +173,7 @@ public class Woodsman : PlayerBase
 				GameObject arrow = pool.GetComponent<ObjectPool>().New();
 				if(arrow != null)
 				{
-					arrow.GetComponent<BasicArrow>().PostEnable(true, 0.0f);
+					arrow.GetComponent<BasicArrow>().basic = true;
 				}
 				canFire = false;
 			}
@@ -186,10 +186,26 @@ public class Woodsman : PlayerBase
 		//GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.identity) as GameObject;
 		//woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
 		//scr.heldTime = time;
-		GameObject arrow = pool.GetComponent<ObjectPool>().New();
-		if(arrow != null)
+		GameObject[] arrows = new GameObject[3];
+		for(int i = 0; i < arrows.Length; i++)
 		{
-			arrow.GetComponent<BasicArrow>().PostEnable(false, time);
+			arrows[i] = pool.GetComponent<ObjectPool>().New();
+		}
+		if(arrows[0] != null)
+		{
+			arrows[0].GetComponent<BasicArrow>().basic = false;
+		}
+		Vector3 angle = new Vector3 (0.0f, 12.0f, 0.0f);
+		if(arrows[1] != null)
+		{
+			arrows[1].GetComponent<BasicArrow>().basic = false;
+			arrows[1].transform.Rotate(angle);
+		}
+		if(arrows[2] != null)
+		{
+			arrows[2].GetComponent<BasicArrow>().basic = false;
+			arrows[2].transform.Rotate(angle * -1);
+
 		}
 		canSpecial = false;
 	}

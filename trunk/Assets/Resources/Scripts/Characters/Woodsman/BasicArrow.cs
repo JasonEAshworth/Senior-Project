@@ -8,26 +8,11 @@ public class BasicArrow : ProjectileTrapObj
 	private Woodsman woodsman;
 	private GameObject hawk;
 	private HawkAI2 hawkScript;
-	public bool infinitePierce = false;
 	public  int numPierces = 0;
-	public float heldTime = 0.0f;
 
-	public void PostEnable(bool basicA, float time)
+	public void PostEnable(bool basicA)
 	{
 		basic = basicA;
-		heldTime = time;
-
-		if (!basic)
-		{
-			if (heldTime > 5.0f)
-			{
-				infinitePierce = true;
-			}
-			else
-			{
-				numPierces = Mathf.FloorToInt(heldTime);
-			}
-		}
 	}
 
 	private void Start()
@@ -46,33 +31,18 @@ public class BasicArrow : ProjectileTrapObj
 		if(t.gameObject.CompareTag("Enemy"))
 		{
 			EnemyBase scr = t.gameObject.GetComponent<EnemyBase>();
-			scr.takeDamage(damage);
-			scr.damageTaken += damage;
+			float bonus = 1.0f;
+			if(!basic)
+			{
+				bonus = 1.2f;
+			}
+			scr.takeDamage(damage * bonus);
+			scr.damageTaken += damage * bonus;
 			if(hawkScript.enemiesToAttack.Contains(t.gameObject) == false)
 			{
 				hawkScript.enemiesToAttack.Add (t.gameObject);
 			}
-				
-			if(basic)
-			{
-				gameObject.SetActive(false);
-			}
-			else
-			{
-				woodsman.hitCount += 1;
-				
-				if(infinitePierce == false)
-				{
-					if(numPierces > 0)
-					{
-						numPierces -= 1;
-					}
-					else
-					{
-						gameObject.SetActive(false);
-					}
-				}
-			}
+			woodsman.hitCount += 1;
 		}
 		else if(t.gameObject.CompareTag("wall"))
 		{
