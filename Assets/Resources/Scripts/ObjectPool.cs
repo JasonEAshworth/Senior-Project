@@ -17,8 +17,6 @@ public class ObjectPool : MonoBehaviour
 	
 	public GameObject New()
 	{
-		Debug.LogWarning ("pos: " + transform.position);
-		Debug.LogWarning ("loc: " + transform.localPosition);
 		GameObject t = null;
 
 		List<GameObject> unused = objectList.FindAll(i => i.activeSelf == false);
