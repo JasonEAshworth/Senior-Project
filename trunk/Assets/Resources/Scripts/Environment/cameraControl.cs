@@ -107,7 +107,7 @@ public class cameraControl : MonoBehaviour
 			float newZ = Camera.main.transform.position.z - 3 * Time.deltaTime * (Camera.main.transform.position.z - (zMid + zOffset + constrainedZ / 2) + zTweek);
 			newCamPos = new Vector3 (newX, newY + yTweek, newZ + zTweek);
 		}
-		newCamPos = edgeShiftCheck(newCamPos);
+		//newCamPos = edgeShiftCheck(newCamPos);
 		//Camera.main.transform.position = rotation * newCamPos;
 
 		//Camera.main.transform.position = new Vector3 (xMid, yOffset, zMid + zOffset + constrainedZ / 2);

@@ -50,6 +50,7 @@
      <Compile Include="Assets\Plugins\ShaderForge\Example Assets\Scripts\EnableCameraDepthInForward.cs" />
      <Compile Include="Assets\Plugins\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <None Include="Assets\Shaders\Mat_SM_OpenBarrel.shader" />
+     <None Include="Assets\Shaders\Mat_GoldBar_1.shader" />
      <None Include="Assets\Shaders\Mat_SM_Turkey.shader" />
      <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
      <None Include="Assets\Shaders\IceShader.shader" />
@@ -71,6 +72,7 @@
      <None Include="Assets\Shaders\Mat_Fireplace.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightCone.shader" />
      <None Include="Assets\Shaders\Mat_JudasCradle1.shader" />
+     <None Include="Assets\Shaders\Mat_FireOuter.shader" />
      <None Include="Assets\Shaders\Chain.shader" />
      <None Include="Assets\Shaders\Mat_Tapestry_01.shader" />
      <None Include="Assets\Plugins\ShaderForge\Readme.txt" />
@@ -99,7 +101,7 @@
      <None Include="Assets\Shaders\Bread.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Cubemaps.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\Refraction.shader" />
-     <None Include="Assets\Resources\Prefabs\Environment\Resources\Map_04_T_N.txt" />
+     <None Include="Assets\Shaders\Mat_Chandelier_1.shader" />
      <None Include="Assets\Shaders\StoneSingles_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Crate_a.shader" />
      <None Include="Assets\Shaders\Mat_JudasCradle3.shader" />
@@ -149,14 +151,17 @@
      <None Include="Assets\Shaders\Mat_WineRack.shader" />
      <None Include="Assets\Shaders\Mat_Dust.shader" />
      <None Include="Assets\Shaders\Mat_AM_Key_A.shader" />
+     <None Include="Assets\Shaders\Mat_Coins_1.shader" />
+     <None Include="Assets\Shaders\Mat_Fire.shader" />
+     <None Include="Assets\Shaders\Mat_Rubble_01.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>Z:/profiledata/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
