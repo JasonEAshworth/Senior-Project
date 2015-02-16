@@ -5,6 +5,7 @@ public class LightFlicker : MonoBehaviour {
 	
 	public float minIntensity = 0.25f;
 	public float maxIntensity = 0.75f;
+	public float speed = 1.0f;
 	private float random;
 	void Start()
 	{
@@ -13,7 +14,7 @@ public class LightFlicker : MonoBehaviour {
 		
 	void Update()
 	{
-		float noise = Mathf.PerlinNoise (random, Time.time);
+		float noise = Mathf.PerlinNoise (random, Time.time * speed);
 		light.intensity = Mathf.Lerp (minIntensity, maxIntensity, noise);
 	}
 }
