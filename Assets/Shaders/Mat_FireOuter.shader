@@ -1,7 +1,7 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:2,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:False,ufog:True,aust:True,igpj:True,qofs:0,qpre:3,rntp:2,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32593,y:32648|diff-29-OUT,emission-81-OUT,alpha-8-A;n:type:ShaderForge.SFN_Tex2d,id:2,x:33071,y:32408,ptlb:node_2,ptin:_node_2,tex:3bc55b5dec4251349a0f60904c8a5826,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8,x:32947,y:33075,ptlb:node_8,ptin:_node_8,tex:89f6876beadd3884387c5dba4f5e6ca6,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:29,x:32773,y:32470|A-2-G,B-30-OUT;n:type:ShaderForge.SFN_Vector3,id:30,x:32959,y:32624,v1:0.5955882,v2:0.1351248,v3:0.04379326;n:type:ShaderForge.SFN_Tex2d,id:68,x:33164,y:32691,ptlb:Diff_copy,ptin:_Diff_copy,tex:3bc55b5dec4251349a0f60904c8a5826,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:75,x:33111,y:32957,v1:0.8602941,v2:0.05339755,v3:0;n:type:ShaderForge.SFN_Multiply,id:81,x:32902,y:32815|A-68-RGB,B-75-OUT;proporder:2-8-68;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:True,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:2,bsrc:0,bdst:0,culm:0,dpts:2,wrdp:False,ufog:True,aust:True,igpj:True,qofs:0,qpre:3,rntp:2,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32593,y:32648|diff-29-OUT,emission-81-OUT,alpha-8-A;n:type:ShaderForge.SFN_Tex2d,id:2,x:33071,y:32408,ptlb:node_2,ptin:_node_2,tex:5ad472f4cdd67444fa5dd21419783ac5,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:8,x:32947,y:33075,ptlb:node_8,ptin:_node_8,tex:68eb4e87997d6364d92eb4dc0f17a1ae,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:29,x:32773,y:32470|A-2-G,B-30-OUT;n:type:ShaderForge.SFN_Vector3,id:30,x:32959,y:32624,v1:0.5220588,v2:0.2781843,v3:0.1458694;n:type:ShaderForge.SFN_Tex2d,id:68,x:33164,y:32691,ptlb:Diff_copy,ptin:_Diff_copy,tex:5ad472f4cdd67444fa5dd21419783ac5,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Vector3,id:75,x:33111,y:32957,v1:0.5514706,v2:0.2746167,v3:0.1500324;n:type:ShaderForge.SFN_Multiply,id:81,x:32902,y:32815|A-68-RGB,B-75-OUT;proporder:2-8-68;pass:END;sub:END;*/
 
 Shader "Shader Forge/Mat_FireOuter" {
     Properties {
@@ -67,14 +67,14 @@ Shader "Shader Forge/Mat_FireOuter" {
                 float NdotL = dot( normalDirection, lightDirection );
                 float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
 ////// Emissive:
-                float2 node_117 = i.uv0;
-                float3 emissive = (tex2D(_Diff_copy,TRANSFORM_TEX(node_117.rg, _Diff_copy)).rgb*float3(0.8602941,0.05339755,0));
+                float2 node_102 = i.uv0;
+                float3 emissive = (tex2D(_Diff_copy,TRANSFORM_TEX(node_102.rg, _Diff_copy)).rgb*float3(0.5514706,0.2746167,0.1500324));
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_117.rg, _node_2)).g*float3(0.5955882,0.1351248,0.04379326));
+                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_102.rg, _node_2)).g*float3(0.5220588,0.2781843,0.1458694));
                 finalColor += emissive;
 /// Final Color:
-                return fixed4(finalColor,tex2D(_node_8,TRANSFORM_TEX(node_117.rg, _node_8)).a);
+                return fixed4(finalColor,tex2D(_node_8,TRANSFORM_TEX(node_102.rg, _node_8)).a);
             }
             ENDCG
         }
@@ -134,10 +134,10 @@ Shader "Shader Forge/Mat_FireOuter" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                float2 node_118 = i.uv0;
-                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_118.rg, _node_2)).g*float3(0.5955882,0.1351248,0.04379326));
+                float2 node_103 = i.uv0;
+                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_103.rg, _node_2)).g*float3(0.5220588,0.2781843,0.1458694));
 /// Final Color:
-                return fixed4(finalColor * tex2D(_node_8,TRANSFORM_TEX(node_118.rg, _node_8)).a,0);
+                return fixed4(finalColor * tex2D(_node_8,TRANSFORM_TEX(node_103.rg, _node_8)).a,0);
             }
             ENDCG
         }
