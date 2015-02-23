@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
 // Used to label the main room types
 public enum RoomType
 {
+	STARTER,
 	HORDE,
 	PUZZLE,
 	BOSS,
@@ -18,7 +20,8 @@ public enum Direction
 	NORTH,
 	SOUTH,
 	EAST,
-	WEST
+	WEST,
+	NONE
 }
 
 // This graph makes up all of the connected rooms in a dungeon
@@ -71,6 +74,9 @@ public class RoomGraph
 		case Direction.WEST:
 			roomOne.west = roomTwo;
 			roomTwo.east = roomOne;
+			break;
+		default:
+			Debug.Log("Error connecting rooms " + roomOne.name + " and " + roomTwo.name + ": no direction");
 			break;
 		}
 	}
@@ -142,7 +148,11 @@ public class RoomNode
 		playerRespawns = new List<GameObject>();
 		enemySpawners = new List<EnemySpawner>();
 		// set up room type
-		if (n.Contains("_H_"))
+		if (n.Contains("_S_"))
+		{
+			type = RoomType.STARTER;
+		}
+		else if (n.Contains("_H_"))
 		{
 			type = RoomType.HORDE;
 		}
@@ -167,8 +177,27 @@ public class RoomNode
 
 public class MapManager : MonoBehaviour 
 {
+	public struct RoomPrefab
+	{
+		public string prefabName;
+		public int[] position;
+		public Direction exit;
+
+		public RoomPrefab(string name, int[] pos, Direction ex)
+		{
+			prefabName = name;
+			position = pos;
+			exit = ex;
+		}
+	};
+
 	private RoomGraph map;
-	public string[] roomsToLoad = new string[3];
+	private int numRooms = 9;
+	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
+
+	private string RoomPrefabFilePath = "Assets/Resources/Prefabs/Environment/Resources/";
+	DirectoryInfo dir;
+	FileInfo[] info;
 
 	private int playerSpawnRoom = 0;
 
@@ -178,6 +207,53 @@ public class MapManager : MonoBehaviour
 	{
 		// Set up the map and the rooms that will be used in the dungeon
 		map = new RoomGraph();
+		generateDungeon();
+	}
+
+	void Start()
+	{
+		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
+		{
+			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
+		}
+	}
+
+	// Called on awake. Procedurally generates the dungeon and sets the players in the first room
+	private void generateDungeon()
+	{
+		// Get references to all of the room prefab files
+		/*dir = new DirectoryInfo(RoomPrefabFilePath);
+		info = dir.GetFiles("*.prefab");
+
+		// Generate the dungeon with a recursive function that works one room at a time
+		List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
+		generateRoom(roomsToUse, new List<string>(), "");
+
+		// Log an error message if the generation failed
+		if (roomsToUse.Count == 0)
+		{
+			Debug.Log ("Error generating dungeon, could not generate dungeon from given room prefabs");
+		}
+
+		// Once all of the rooms have been selected, set up the map and connect the rooms
+		foreach (RoomPrefab rp in roomsToUse)
+		{
+			string rName = rp.prefabName.Substring(0, rp.prefabName.Length - 7);
+			map.addRoom(rName);
+		}
+		for (int i = 0; i < map.rooms.Count - 1; i++)
+		{
+			Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
+			map.connectRooms(map.rooms[i], map.rooms[i+1], roomsToUse[i].exit);
+		}
+		// Load the first room and its neighbors
+		loadRoom(map.rooms[0]);
+		loadNeighbors(map.rooms[0]);
+		// Give the player manager the first room's spawn points
+		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());*/
+
+		// OLD CODE FOR HARDCODED DUNGEONS
 		for (int i = 0; i < roomsToLoad.Length; i++)
 		{
 			map.addRoom(roomsToLoad[i]);
@@ -195,12 +271,154 @@ public class MapManager : MonoBehaviour
 		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
 	}
 
-	void Start()
+	private bool generateRoom(List<RoomPrefab> rooms, List<string> roomsNotToUse, string lastDirection)
 	{
-		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
+		// Figure out which entrance the next room has to have to connect with the previous room
+		string lookingFor = "";
+		int[] nextRoomPos = new int[2];
+		if (rooms.Count > 0)
 		{
-			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
+			nextRoomPos[0] = rooms[rooms.Count-1].position[0];
+			nextRoomPos[1] = rooms[rooms.Count-1].position[1];
 		}
+		else
+		{
+			nextRoomPos[0] = 0;
+			nextRoomPos[1] = 0;
+		}
+		switch (lastDirection)
+		{
+		case "N":
+			lookingFor = "S";
+			nextRoomPos[1]++;
+			break;
+		case "W":
+			lookingFor = "E";
+			nextRoomPos[0]--;
+			break;
+		case "E":
+			lookingFor = "W";
+			nextRoomPos[0]++;
+			break;
+		case "S":
+			lookingFor = "N";
+			nextRoomPos[1]--;
+			break;
+		}
+
+		// Make sure this room won't overlap with the others
+		foreach (RoomPrefab rp in rooms)
+		{
+			if (rp.position[0] == nextRoomPos[0] && rp.position[1] == nextRoomPos[1])
+			{
+				roomsNotToUse.Add(rooms[rooms.Count-1].prefabName);
+				rooms.RemoveAt(rooms.Count-1);
+				return false;
+			}
+		}
+
+		bool roomSet = false; // becomes true when the room is safe to use
+
+		// Continue trying to pick a room until either a suitable one is found or all options are exhausted, upon which we scrap this room and back out to the previous one
+		while (!roomSet)
+		{
+			// Look through all room prefabs and select all of the rooms that can connect with the previous one that haven't been used yet
+			List<string> potentialRooms = new List<string>();
+			foreach (FileInfo f in info)
+			{
+				if (roomsNotToUse.Contains(f.Name))
+				{
+					continue;
+				}
+
+				string fileName = f.Name.Substring(0, f.Name.Length - 7); // remove ".prefab"
+				string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+
+				// currently only supports rooms with two entrances
+				if (e.Length > 2)
+				{
+					continue;
+				}
+
+				// First room
+				if (rooms.Count == 0)
+				{
+					// first room must be starter type
+					if (f.Name.Contains("_S_"))
+					{
+						potentialRooms.Add(fileName);
+					}
+				}
+				// Final room
+				else if (rooms.Count == numRooms - 1)
+				{
+					// using a starter room as the final room for now, will eventually use a boss room instead
+					if (f.Name.Contains("_S_") && e.Contains(lookingFor))	
+					{
+						potentialRooms.Add(fileName);
+					}
+				}
+				// Middle rooms
+				else
+				{
+					// Room must have the required entrance to connect with the previous room, must have another exit in addition to that, and can't have been used already
+					if (e.Contains(lookingFor) && e.Length > 1) //&& !rooms.Contains(f.Name))
+					{
+						potentialRooms.Add(fileName);	
+					}
+				}
+			}
+			// If no rooms work for branching from this one, then we have to scrap this one
+			if (potentialRooms.Count == 0)
+			{
+				// If we have a room to go back to, scrap this room and continue generation from the previous one
+				if (rooms.Count > 0)
+				{
+					roomsNotToUse.Add(rooms[rooms.Count-1].prefabName);
+					rooms.RemoveAt(rooms.Count-1);
+					return false;
+				}
+				// Otherwise, we are at the starter room, and generation has failed for all possible room combos, so we give up :(
+				else
+				{
+					break;
+				}
+			}
+			// Select one of these rooms at random and create the room
+			int idx = Random.Range(0, potentialRooms.Count);
+			string roomName = potentialRooms[idx];
+			string thisExit = roomName.Substring(roomName.LastIndexOf("_") + 1);
+			Direction exitDir = Direction.NONE;
+			if (lookingFor != "")
+			{
+				thisExit = thisExit.Replace(lookingFor, "");	// currently only supports rooms with 2 entrances
+			}
+			switch (thisExit)
+			{
+			case "N":
+				exitDir = Direction.NORTH;
+				break;
+			case "W":
+				exitDir = Direction.WEST;
+				break;
+			case "E":
+				exitDir = Direction.EAST;
+				break;
+			case "S":
+				exitDir = Direction.SOUTH;
+				break;
+			}
+			RoomPrefab newRoom = new RoomPrefab(roomName + ".prefab", nextRoomPos, exitDir);
+			rooms.Add(newRoom);
+			// If we have all rooms of the dungeon, return a success
+			if (rooms.Count == numRooms)
+			{
+				return true;
+			}
+			// Set up generation of the next room if not done
+			roomSet = generateRoom(rooms, new List<string>(), thisExit);
+		}
+		return true;
 	}
 
 	// Loads room and returns true if loading for first time
