@@ -62,8 +62,8 @@ Shader "Shader Forge/Mat_SM_Cutlery" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_17 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Cutlery_Norm,TRANSFORM_TEX(node_17.rg, _Cutlery_Norm))).rgb;
+                float2 node_7 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_Cutlery_Norm,TRANSFORM_TEX(node_7.rg, _Cutlery_Norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
@@ -74,7 +74,7 @@ Shader "Shader Forge/Mat_SM_Cutlery" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Cutlery_diff,TRANSFORM_TEX(node_17.rg, _Cutlery_diff)).rgb;
+                finalColor += diffuseLight * tex2D(_Cutlery_diff,TRANSFORM_TEX(node_7.rg, _Cutlery_diff)).rgb;
 /// Final Color:
                 return fixed4(finalColor,1);
             }
@@ -132,8 +132,8 @@ Shader "Shader Forge/Mat_SM_Cutlery" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_18 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_Cutlery_Norm,TRANSFORM_TEX(node_18.rg, _Cutlery_Norm))).rgb;
+                float2 node_8 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_Cutlery_Norm,TRANSFORM_TEX(node_8.rg, _Cutlery_Norm))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
@@ -144,7 +144,7 @@ Shader "Shader Forge/Mat_SM_Cutlery" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_Cutlery_diff,TRANSFORM_TEX(node_18.rg, _Cutlery_diff)).rgb;
+                finalColor += diffuseLight * tex2D(_Cutlery_diff,TRANSFORM_TEX(node_8.rg, _Cutlery_diff)).rgb;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
             }
