@@ -255,7 +255,11 @@ public class MapManager : MonoBehaviour
 			}
 			// Load the first room and its neighbors
 			loadRoom(map.rooms[0]);
-			loadNeighbors(map.rooms[0]);
+			//loadNeighbors(map.rooms[0]);
+			for (int i = 0; i < map.rooms.Count; i++)
+			{
+				loadNeighbors(map.rooms[i]);
+			}
 			// Give the player manager the first room's spawn points
 			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 			pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
