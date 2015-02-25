@@ -53,7 +53,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	// Set to true to disable this control
 	this.noPan = false;
-	this.keyPanSpeed = 7.0;	// pixels moved per arrow key push
+	this.keyPanSpeed = 200.0;	// pixels moved per arrow key push
 
 	// Set to true to automatically rotate around the target
 	this.autoRotate = false;
@@ -155,30 +155,30 @@ THREE.OrbitControls = function ( object, domElement ) {
 	};
 
 	// pass in distance in world space to move left
-	this.panLeft = function ( distance ) {
+this.panLeft = function ( distance ) {
 
-		var te = this.object.matrix.elements;
+    var te = this.object.matrix.elements;
 
-		// get X column of matrix
-		panOffset.set( te[ 0 ], te[ 1 ], te[ 2 ] );
-		panOffset.multiplyScalar( - distance );
+    // get elements from the X-column of matrix
+    panOffset.set( te[ 0 ], 0, te[ 2 ] ).normalize();
+    panOffset.multiplyScalar( - distance );
 
-		pan.add( panOffset );
+    pan.add( panOffset );
 
-	};
+};
 
-	// pass in distance in world space to move up
-	this.panUp = function ( distance ) {
+// pass in distance in world space to move forward
+this.panUp = function ( distance ) {
 
-		var te = this.object.matrix.elements;
+    var te = this.object.matrix.elements;
 
-		// get Y column of matrix
-		panOffset.set( te[ 4 ], te[ 5 ], te[ 6 ] );
-		panOffset.multiplyScalar( distance );
+    // get elements from the Z-column of matrix
+    panOffset.set( te[ 8 ], 0, te[ 10 ] ).normalize();
+    panOffset.multiplyScalar( - distance );
 
-		pan.add( panOffset );
+    pan.add( panOffset );
 
-	};
+};
 
 	// pass in x,y of change desired in pixel space,
 	// right and down are positive

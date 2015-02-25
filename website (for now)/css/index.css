@@ -1,13 +1,13 @@
 @font-face
 {
 	font-family: title;
-	src: url(../fonts/evanescent.ttf);
+	src: url(../fonts/gothic_ultra_ot.otf);
 }
 
 
 body {
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background: url('../media/mtg.jpg') no-repeat center center fixed;
+    font-family: title, "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url('../media/background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -15,7 +15,8 @@ body {
 }
 
 hr {
-    border-color: #999999;
+    border-color: rgb(157,121,83);
+    /*border: 0px solid rgb(157,121,83);*/
 }
 
 
@@ -24,10 +25,25 @@ hr {
 	margin-bottom: 20px;
 }
 
+#blog
+{
+    background-color: rgba(39,36,34,0.5);
+    margin-top: 10px;
+    border: 3px outset rgb(157, 121, 83);
+    border-radius: 10px;
+    color: rgb(255,204,116);
+    /*box-shadow: 0px 0px 5px #222222;*/
+}
+
 .row
 {
-    background-color: rgba(255,255,255,0.9);
     margin-top: 10px;
+}
+
+#blog img
+{
+    text-align: center;
+    display: block;
 }
 
 .carousel .item {
@@ -52,7 +68,7 @@ hr {
 
 .navbar-inverse
 {
-    background-image: url("../media/background.png");
+    background-image: url("../media/head_foot.png");
     background-color: transparent;
 }
 
@@ -75,15 +91,17 @@ hr {
 
 #foot
 {
-    background-image: url("../media/background.png");
+    background-image: url("../media/head_foot.png");
+    background-size: 1920px 100%;
+    position: absolute;
+    bottom: -1;
+    left: 0;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 #bs-example-navbar-collapse-1
 {
     float: right;
-}
-
-.list-inline
-{
-    padding-top: 36px
 }

@@ -6,7 +6,6 @@
 
 
 body {
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     background: url('../media/background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -15,7 +14,7 @@ body {
 }
 
 hr {
-    border-color: rgb(157,121,83);
+    border-color: #999999;
 }
 
 
@@ -24,17 +23,9 @@ hr {
 	margin-bottom: 20px;
 }
 
-#content
-{
-    background-color: rgba(39,36,34,0.5);
-    margin-top: 10px;
-    border: 3px outset rgb(157, 121, 83);
-    border-radius: 10px;
-    color: rgb(255,204,116);
-}
-
 .row
 {
+    background-color: rgba(255,255,255,0.9);
     margin-top: 10px;
 }
 
@@ -93,8 +84,16 @@ hr {
 }
 
 
-
-#content
+.text-muted
 {
-    margin-top: 30px;
+    font-family: "Trajan Pro"
+}
+
+#art
+{
+    background-color: rgba(39,36,34,0.5);
+    margin-top: 10px;
+    border: 3px outset rgb(157, 121, 83);
+    border-radius: 10px;
+    color: rgb(255,204,116);
 }

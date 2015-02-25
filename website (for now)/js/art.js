@@ -49,7 +49,7 @@ function init( model, texture ) {
   // append a canvas to our HTML page.
   renderer = new THREE.WebGLRenderer();
   renderer.setClearColor( 0xeeeeee, 0.5 );
-  renderer.setSize( container.offsetWidth, container.offsetHeight );
+  renderer.setSize( container.offsetWidth-30.0, container.offsetHeight-30.0 );
   
   container.appendChild( renderer.domElement );
   
@@ -72,7 +72,7 @@ function change() {
   camera.aspect = (container.offsetWidth/container.offsetHeight)
 	camera.updateProjectionMatrix();
 
-	renderer.setSize( container.offsetWidth, container.offsetHeight );
+	renderer.setSize( container.offsetWidth-30.0, container.offsetHeight-30.0 );
 	container.replaceChild( renderer.domElement );
 
 	animate();
@@ -95,31 +95,65 @@ function addToScene( model, text ){
   manager.onProgress = function ( item, loaded, total ) {
     console.log( item, loaded, total );
   };
-  var texture = new THREE.Texture();
+
+  var regular = new THREE.Texture();
+  var normal = new THREE.Texture();
+  var spec = new THREE.Texture();
+
   var loader = new THREE.ImageLoader( manager );
  
   // You can set the texture properties in this function. 
   // The string has to be the path to your texture file.
   loader.load( '../media/models/' + text + '.png', function ( image ) {
-    texture.image = image;
-    texture.needsUpdate = true;
+    regular.image = image;
+    regular.needsUpdate = true;
     // I wanted a nearest neighbour filtering for my low-poly character,
     // so that every pixel is crips and sharp. You can delete this lines
     // if have a larger texture and want a smooth linear filter.
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestMipMapLinearFilter;
+    regular.magFilter = THREE.NearestFilter;
+    regular.minFilter = THREE.NearestMipMapLinearFilter;
+    regular.wrapS = THREE.RepeatWrapping;
+  } );
+
+  /*NORMAL MAP*/
+  loader.load( '../media/models/zombie_norm.png', function ( image ) {
+    normal.image = image;
+    normal.needsUpdate = true;
+    // I wanted a nearest neighbour filtering for my low-poly character,
+    // so that every pixel is crips and sharp. You can delete this lines
+    // if have a larger texture and want a smooth linear filter.
+    normal.magFilter = THREE.NearestFilter;
+    normal.minFilter = THREE.NearestMipMapLinearFilter;
+    normal.wrapS = THREE.RepeatWrapping;
+  } );
+
+  /*SPECULAR MAP*/
+  loader.load( '../media/models/zombie_spec.png', function ( image ) {
+    spec.image = image;
+    spec.needsUpdate = true;
+    // I wanted a nearest neighbour filtering for my low-poly character,
+    // so that every pixel is crips and sharp. You can delete this lines
+    // if have a larger texture and want a smooth linear filter.
+    spec.magFilter = THREE.NearestFilter;
+    spec.minFilter = THREE.NearestMipMapLinearFilter;
+    spec.wrapS = THREE.RepeatWrapping;
   } );
  
   /*** OBJ Loading ***/
   var loader = new THREE.OBJLoader( manager );
- 
+  var material = new THREE.MeshPhongMaterial({
+    map: regular,
+    normalMap: normal,
+    specularMap: spec
+  });
+
   // As soon as the OBJ has been loaded this function looks for a mesh
   // inside the data and applies the texture to it.
   loader.load( '../media/models/' + model + '.obj', function ( event ) {
     var object = event;
     object.traverse( function ( child ) {
       if ( child instanceof THREE.Mesh ) {
-        child.material.map = texture;
+        child.material = material;
       }
     } );
  

@@ -17,8 +17,9 @@
     <link rel="stylesheet" type="text/css" href="css/contact.css">
 
     <!-- JS -->
-     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/contact.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,13 +37,13 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="index.html">
                     <img src="media/logo.png" alt="" height="90px" width="270px">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="list-inline">
+                <ul class="list-inline" style="padding-top:36px">
                         <li>
                             <a href="#"><img src="media/social/facebook-b.png" onmouseover="this.src='media/social/facebook.png'" onmouseout="this.src='media/social/facebook-b.png'"/></a>
                         </li>
@@ -69,20 +70,39 @@
                 <div class="col-lg-12">
                     <h2>Contact Us</h2>
                     <hr>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="First Name" aria-describedby="basic-addon1">
-                        <span class="input-group-addon" id="basic-addon1">&nbsp&nbsp&nbsp</span>
-                        <input type="text" class="form-control" placeholder="Last Name" aria-describedby="basic-addon1">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="text" class="form-control" placeholder="Enter email" id="email">
+                      </div>
+                      <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter First and Last name" id="name">
+                      </div>
+                      <div class="form-group">
+                            <textarea class="form-control" id="question" rows="3" placeholder="Enter question or comment here"></textarea>
+                      </div>
+                    <div class="form-group">
+                        <button type="submit" value="Submit" class="btn btn-default" id="submit">Submit</button>
+                        
                     </div>
-                    <br>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
-                     <span class="input-group-addon" id="basic-addon1">@</span>
-                     <input type="text" class="form-control" placeholder="Domain" aria-describedby="basic-addon2">
-                    </div>
-                    <br>
                 </div>
+
             </form>
+        </div>
+        <div class="row" id="content">
+            <div class="col-lg-12">
+                <br>
+                <address>
+                    <strong>Shawnee State</strong><br>
+                    940 2nd St. <br>
+                    Portsmouth, OH 45662<br>
+                </address>
+                
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6224.622086741754!2d-82.993286!3d38.733624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88468c7f35b6ffad%3A0xb83419c9284973f!2s940+2nd+St%2C+Shawnee+State+University%2C+Portsmouth%2C+OH+45662!5e0!3m2!1sen!2sus!4v1423680906457" width="800" height="600" frameborder="0" style="border:0"></iframe>
+                </div>
+                <br>
+            </div>
         </div>
     </div>
     
