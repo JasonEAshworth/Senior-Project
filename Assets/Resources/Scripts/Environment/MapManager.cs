@@ -191,6 +191,11 @@ public class MapManager : MonoBehaviour
 		}
 	};
 
+	// set to true for procedural map generation, false to use a preset order of rooms
+	// note: preset order of rooms has to use the public roomsToLoad array and manually have the rooms
+	// connected with map.connectRooms() after the map has been created
+	public bool proceduralGeneration = false;	
+
 	private RoomGraph map;
 	private int numRooms = 9;
 	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
@@ -218,57 +223,60 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	// Called on awake. Procedurally generates the dungeon and sets the players in the first room
+	// Called on awake. Generates the dungeon and sets the players in the first room
 	private void generateDungeon()
 	{
-		// Get references to all of the room prefab files
-		/*dir = new DirectoryInfo(RoomPrefabFilePath);
-		info = dir.GetFiles("*.prefab");
-
-		// Generate the dungeon with a recursive function that works one room at a time
-		List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
-		generateRoom(roomsToUse, new List<string>(), "");
-
-		// Log an error message if the generation failed
-		if (roomsToUse.Count == 0)
+		if (proceduralGeneration)
 		{
-			Debug.Log ("Error generating dungeon, could not generate dungeon from given room prefabs");
-		}
+			// Get references to all of the room prefab files
+			dir = new DirectoryInfo(RoomPrefabFilePath);
+			info = dir.GetFiles("*.prefab");
 
-		// Once all of the rooms have been selected, set up the map and connect the rooms
-		foreach (RoomPrefab rp in roomsToUse)
-		{
-			string rName = rp.prefabName.Substring(0, rp.prefabName.Length - 7);
-			map.addRoom(rName);
-		}
-		for (int i = 0; i < map.rooms.Count - 1; i++)
-		{
-			Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
-			map.connectRooms(map.rooms[i], map.rooms[i+1], roomsToUse[i].exit);
-		}
-		// Load the first room and its neighbors
-		loadRoom(map.rooms[0]);
-		loadNeighbors(map.rooms[0]);
-		// Give the player manager the first room's spawn points
-		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());*/
+			// Generate the dungeon with a recursive function that works one room at a time
+			List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
+			generateRoom(roomsToUse, new List<string>(), "");
 
-		// OLD CODE FOR HARDCODED DUNGEONS
-		for (int i = 0; i < roomsToLoad.Length; i++)
-		{
-			map.addRoom(roomsToLoad[i]);
+			// Log an error message if the generation failed
+			if (roomsToUse.Count == 0)
+			{
+				Debug.Log ("Error generating dungeon, could not generate dungeon from given room prefabs");
+			}
+
+			// Once all of the rooms have been selected, set up the map and connect the rooms
+			foreach (RoomPrefab rp in roomsToUse)
+			{
+				string rName = rp.prefabName.Substring(0, rp.prefabName.Length - 7);
+				map.addRoom(rName);
+			}
+			for (int i = 0; i < map.rooms.Count - 1; i++)
+			{
+				Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
+				map.connectRooms(map.rooms[i], map.rooms[i+1], roomsToUse[i].exit);
+			}
+			// Load the first room and its neighbors
+			loadRoom(map.rooms[0]);
+			loadNeighbors(map.rooms[0]);
+			// Give the player manager the first room's spawn points
+			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+			pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
 		}
-		// Set up the first room of the dungeon
-		loadRoom(map.rooms[0]);
-		// TEMP: hardcoded room neighbors, will be set up by file read or randomization or something later
-		map.connectRooms(map.rooms[0], map.rooms[1], Direction.NORTH);
-		map.connectRooms(map.rooms[1], map.rooms[2], Direction.NORTH);
-		map.connectRooms(map.rooms[2], map.rooms[3], Direction.WEST);
-		// Look at the first room's neighbors and set them up
-		loadNeighbors(map.rooms[0]);
-		// Give the player manager the first room's spawn points
-		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
+		else
+		{
+			for (int i = 0; i < roomsToLoad.Length; i++)
+			{
+				map.addRoom(roomsToLoad[i]);
+			}
+			// Set up the first room of the dungeon
+			loadRoom(map.rooms[0]);
+			// TEMP: hardcoded room neighbors, will be set up by file read or randomization or something later
+			map.connectRooms(map.rooms[0], map.rooms[1], Direction.NORTH);
+			map.connectRooms(map.rooms[1], map.rooms[2], Direction.WEST);
+			// Look at the first room's neighbors and set them up
+			loadNeighbors(map.rooms[0]);
+			// Give the player manager the first room's spawn points
+			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+			pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
+		}
 	}
 
 	private bool generateRoom(List<RoomPrefab> rooms, List<string> roomsNotToUse, string lastDirection)
@@ -352,8 +360,8 @@ public class MapManager : MonoBehaviour
 				// Final room
 				else if (rooms.Count == numRooms - 1)
 				{
-					// using a starter room as the final room for now, will eventually use a boss room instead
-					if (f.Name.Contains("_S_") && e.Contains(lookingFor))	
+					// makes sure the final room is a boss room
+					if (f.Name.Contains("_B_") && e.Contains(lookingFor))
 					{
 						potentialRooms.Add(fileName);
 					}
