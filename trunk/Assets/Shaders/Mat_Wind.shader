@@ -1,12 +1,12 @@
 // Shader created with Shader Forge Beta 0.36 
 // Shader Forge (c) Joachim Holmer - http://www.acegikmo.com/shaderforge/
 // Note: Manually altering this data may prevent you from opening it in Shader Forge
-/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:3,bsrc:0,bdst:6,culm:0,dpts:2,wrdp:False,ufog:True,aust:True,igpj:True,qofs:0,qpre:3,rntp:2,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32603,y:32714|diff-24-OUT,alpha-3-A;n:type:ShaderForge.SFN_Tex2d,id:2,x:33061,y:32551,ptlb:Diff,ptin:_Diff,tex:cf23fcd20a8968145b6136a49bd3c00a,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:33021,y:32834,ptlb:Alpha,ptin:_Alpha,tex:c2c9de13fe67c494db04527d18424533,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Multiply,id:24,x:32836,y:32712|A-2-RGB,B-25-OUT;n:type:ShaderForge.SFN_Vector3,id:25,x:33061,y:32712,v1:0.6470588,v2:0.5114884,v3:0.3568339;proporder:2-3;pass:END;sub:END;*/
+/*SF_DATA;ver:0.36;sub:START;pass:START;ps:flbk:,lico:1,lgpr:1,nrmq:1,limd:1,uamb:True,mssp:True,lmpd:False,lprd:False,enco:False,frtr:True,vitr:True,dbil:False,rmgx:True,rpth:0,hqsc:True,hqlp:False,tesm:0,blpr:3,bsrc:0,bdst:6,culm:2,dpts:2,wrdp:False,ufog:True,aust:True,igpj:True,qofs:0,qpre:3,rntp:2,fgom:False,fgoc:False,fgod:False,fgor:False,fgmd:0,fgcr:0.5,fgcg:0.5,fgcb:0.5,fgca:1,fgde:0.01,fgrn:0,fgrf:300,ofsf:0,ofsu:0,f2p0:False;n:type:ShaderForge.SFN_Final,id:1,x:32657,y:32697|diff-2-RGB,alpha-3-A;n:type:ShaderForge.SFN_Tex2d,id:2,x:32982,y:32615,ptlb:Diff,ptin:_Diff,tex:1655e1efb550fd942bb6e911c99a0f6c,ntxv:0,isnm:False;n:type:ShaderForge.SFN_Tex2d,id:3,x:32982,y:32909,ptlb:Alpa,ptin:_Alpa,tex:c94715c1142b9fd469dbe295b90eecca,ntxv:0,isnm:False;proporder:2-3;pass:END;sub:END;*/
 
-Shader "Shader Forge/Mat_Dust" {
+Shader "Shader Forge/Mat_Wind" {
     Properties {
         _Diff ("Diff", 2D) = "white" {}
-        _Alpha ("Alpha", 2D) = "white" {}
+        _Alpa ("Alpa", 2D) = "white" {}
         [HideInInspector]_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
     }
     SubShader {
@@ -21,6 +21,7 @@ Shader "Shader Forge/Mat_Dust" {
                 "LightMode"="ForwardBase"
             }
             Blend One OneMinusSrcColor
+            Cull Off
             ZWrite Off
             
             CGPROGRAM
@@ -33,7 +34,7 @@ Shader "Shader Forge/Mat_Dust" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _Diff; uniform float4 _Diff_ST;
-            uniform sampler2D _Alpha; uniform float4 _Alpha_ST;
+            uniform sampler2D _Alpa; uniform float4 _Alpa_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -55,8 +56,14 @@ Shader "Shader Forge/Mat_Dust" {
             }
             fixed4 frag(VertexOutput i) : COLOR {
                 i.normalDir = normalize(i.normalDir);
+                float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float3 normalDirection =  i.normalDir;
+                
+                float nSign = sign( dot( viewDirection, i.normalDir ) ); // Reverse normal if this is a backface
+                i.normalDir *= nSign;
+                normalDirection *= nSign;
+                
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
                 float attenuation = 1;
@@ -66,10 +73,10 @@ Shader "Shader Forge/Mat_Dust" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                float2 node_30 = i.uv0;
-                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_30.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
+                float2 node_68 = i.uv0;
+                finalColor += diffuseLight * tex2D(_Diff,TRANSFORM_TEX(node_68.rg, _Diff)).rgb;
 /// Final Color:
-                return fixed4(finalColor,tex2D(_Alpha,TRANSFORM_TEX(node_30.rg, _Alpha)).a);
+                return fixed4(finalColor,tex2D(_Alpa,TRANSFORM_TEX(node_68.rg, _Alpa)).a);
             }
             ENDCG
         }
@@ -79,6 +86,7 @@ Shader "Shader Forge/Mat_Dust" {
                 "LightMode"="ForwardAdd"
             }
             Blend One One
+            Cull Off
             ZWrite Off
             
             Fog { Color (0,0,0,0) }
@@ -93,7 +101,7 @@ Shader "Shader Forge/Mat_Dust" {
             #pragma target 3.0
             uniform float4 _LightColor0;
             uniform sampler2D _Diff; uniform float4 _Diff_ST;
-            uniform sampler2D _Alpha; uniform float4 _Alpha_ST;
+            uniform sampler2D _Alpa; uniform float4 _Alpa_ST;
             struct VertexInput {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
@@ -117,8 +125,14 @@ Shader "Shader Forge/Mat_Dust" {
             }
             fixed4 frag(VertexOutput i) : COLOR {
                 i.normalDir = normalize(i.normalDir);
+                float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float3 normalDirection =  i.normalDir;
+                
+                float nSign = sign( dot( viewDirection, i.normalDir ) ); // Reverse normal if this is a backface
+                i.normalDir *= nSign;
+                normalDirection *= nSign;
+                
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
                 float attenuation = LIGHT_ATTENUATION(i);
@@ -128,10 +142,10 @@ Shader "Shader Forge/Mat_Dust" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                float2 node_31 = i.uv0;
-                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_31.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
+                float2 node_69 = i.uv0;
+                finalColor += diffuseLight * tex2D(_Diff,TRANSFORM_TEX(node_69.rg, _Diff)).rgb;
 /// Final Color:
-                return fixed4(finalColor * tex2D(_Alpha,TRANSFORM_TEX(node_31.rg, _Alpha)).a,0);
+                return fixed4(finalColor * tex2D(_Alpa,TRANSFORM_TEX(node_69.rg, _Alpa)).a,0);
             }
             ENDCG
         }
