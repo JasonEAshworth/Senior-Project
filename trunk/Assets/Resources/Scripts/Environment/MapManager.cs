@@ -250,7 +250,7 @@ public class MapManager : MonoBehaviour
 			}
 			for (int i = 0; i < map.rooms.Count - 1; i++)
 			{
-				Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
+				//Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
 				map.connectRooms(map.rooms[i], map.rooms[i+1], roomsToUse[i].exit);
 			}
 			// Load the first room and its neighbors
@@ -268,9 +268,10 @@ public class MapManager : MonoBehaviour
 			}
 			// Set up the first room of the dungeon
 			loadRoom(map.rooms[0]);
-			// TEMP: hardcoded room neighbors, will be set up by file read or randomization or something later
+			// hardcoded room neighbors, this must be done by hand to get rooms to connect for this method 
 			map.connectRooms(map.rooms[0], map.rooms[1], Direction.NORTH);
-			map.connectRooms(map.rooms[1], map.rooms[2], Direction.WEST);
+			map.connectRooms(map.rooms[1], map.rooms[2], Direction.NORTH);
+			map.connectRooms(map.rooms[2], map.rooms[3], Direction.WEST);
 			// Look at the first room's neighbors and set them up
 			loadNeighbors(map.rooms[0]);
 			// Give the player manager the first room's spawn points
