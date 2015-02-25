@@ -66,10 +66,10 @@ Shader "Shader Forge/Mat_Dust" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                float2 node_40 = i.uv0;
-                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_40.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
+                float2 node_30 = i.uv0;
+                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_30.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
 /// Final Color:
-                return fixed4(finalColor,tex2D(_Alpha,TRANSFORM_TEX(node_40.rg, _Alpha)).a);
+                return fixed4(finalColor,tex2D(_Alpha,TRANSFORM_TEX(node_30.rg, _Alpha)).a);
             }
             ENDCG
         }
@@ -128,10 +128,10 @@ Shader "Shader Forge/Mat_Dust" {
                 float3 diffuse = max( 0.0, NdotL) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                float2 node_41 = i.uv0;
-                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_41.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
+                float2 node_31 = i.uv0;
+                finalColor += diffuseLight * (tex2D(_Diff,TRANSFORM_TEX(node_31.rg, _Diff)).rgb*float3(0.6470588,0.5114884,0.3568339));
 /// Final Color:
-                return fixed4(finalColor * tex2D(_Alpha,TRANSFORM_TEX(node_41.rg, _Alpha)).a,0);
+                return fixed4(finalColor * tex2D(_Alpha,TRANSFORM_TEX(node_31.rg, _Alpha)).a,0);
             }
             ENDCG
         }
