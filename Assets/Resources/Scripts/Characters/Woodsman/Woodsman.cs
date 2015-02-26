@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Woodsman : PlayerBase
 {
@@ -215,18 +216,28 @@ public class Woodsman : PlayerBase
 		//Debug.Log ("warrior class ability");
 		if (dir == "down") 
 		{
+			GameObject go = GameObject.Find ("Prop_SM_Table_A");
+			if(go)
+			{
+				go.GetComponent<Explodable>().SendMessage("Boom");
+				Debug.LogWarning("BOOOOOOOOOM!!!!!!!!!!");
+			}
+			else
+			{
+				Debug.LogWarning("No BOOOOOOOOOM!!!!!!!!!!");
+			}
 
 			if(!bombActive && mana >= 1.0f)
 			{
 				mana -= 1.0f;
 				Debug.Log (mana);
-				bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,0.0f,transform.position.z),Quaternion.identity) as GameObject;
+				//bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,0.0f,transform.position.z),Quaternion.identity) as GameObject;
 				bombActive = true;
 			}
 			else
 			{
-				bombBehavior scr = bomb.GetComponent<bombBehavior>();
-				scr.explode = true;
+				//bombBehavior scr = bomb.GetComponent<bombBehavior>();
+				//scr.explode = true;
 				bombActive = false;
 			}
 //			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
