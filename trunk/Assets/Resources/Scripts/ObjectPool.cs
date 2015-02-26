@@ -12,6 +12,8 @@ public class ObjectPool : MonoBehaviour
 	{
 		objectList = new List<GameObject>(maxSize);
 		objectList.Add(model);
+		transform.rotation = model.transform.rotation;
+		model.transform.parent = null;
 		model.SetActive(false);
 	}
 	
@@ -31,7 +33,6 @@ public class ObjectPool : MonoBehaviour
 		else if(objectList.Count < objectList.Capacity)
 		{
 			t = Instantiate(model, transform.position, transform.rotation) as GameObject;
-			t.transform.parent = model.transform.parent;
 
 			objectList.Add(t);
 		}

@@ -124,6 +124,7 @@
      <Compile Include="Assets\Resources\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Resources\Scripts\Gold.cs" />
      <Compile Include="Assets\Resources\Scripts\ObjectPool.cs" />
+     <Compile Include="Assets\Resources\Scripts\rotation.cs" />
      <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
@@ -140,6 +141,7 @@
      <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
      <None Include="Assets\Shaders\IceShader.shader" />
      <None Include="Assets\Shaders\Mat_IronMaiden.shader" />
+     <None Include="Assets\Shaders\Mat_TortureWheel_Wood.shader" />
      <None Include="Assets\Shaders\ReaperStatue_1_Mat.shader" />
      <None Include="Assets\Shaders\Table_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Torture_IronChair_Iron.shader" />
@@ -152,6 +154,7 @@
      <None Include="Assets\Shaders\Floor_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_AM_Leverbase.shader" />
      <None Include="Assets\Shaders\Mat_SM_Pitcher.shader" />
+     <None Include="Assets\Shaders\Mat_WeaponSet_1.shader" />
      <None Include="Assets\Shaders\Mat_SM_Padlock.shader" />
      <None Include="Assets\Shaders\Mat_Books_01.shader" />
      <None Include="Assets\Shaders\Mat_Fireplace.shader" />
@@ -164,6 +167,7 @@
      <None Include="Assets\Shaders\Mat_SM_CopperSkillet.shader" />
      <None Include="Assets\Shaders\Mat_SM_DutchOven.shader" />
      <None Include="Assets\Shaders\ColumnRound_1_Mat_B.shader" />
+     <None Include="Assets\Shaders\Mat_Coins_1.shader" />
      <None Include="Assets\Shaders\Mat_SM_Axe.shader" />
      <None Include="Assets\Shaders\Wall_Doorway_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_SM_Cheese.shader" />
@@ -180,6 +184,7 @@
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
      <None Include="Assets\Shaders\Mat_Torture_Wheel.shader" />
      <None Include="Assets\Shaders\Mat_SM_WoodenChair.shader" />
+     <None Include="Assets\Shaders\Mat_Stocks_wood.shader" />
      <None Include="Assets\Shaders\Mat_SM_FireTrap.shader" />
      <None Include="Assets\Shaders\Mat_Chest.shader" />
      <None Include="Assets\Shaders\ColumnsRuined_1_Mat.shader" />
@@ -198,6 +203,7 @@
      <None Include="Assets\Shaders\Mat_SM_MoldyBread.shader" />
      <None Include="Assets\Shaders\Mat_JudasCradle2.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightWrapping.shader" />
+     <None Include="Assets\Shaders\Mat_Candle_1.shader" />
      <None Include="Assets\Shaders\Wall_4_Cutout_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_SM_CopperPot.shader" />
      <None Include="Assets\Shaders\Bones_1_Mat.shader" />
@@ -230,13 +236,14 @@
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\PixelRotator.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\CustomLighting.shader" />
      <None Include="Assets\Shaders\Mat_SM_Cutlery.shader" />
+     <None Include="Assets\Shaders\Mat_Wind.shader" />
      <None Include="Assets\Shaders\Mat_Baskets.shader" />
      <None Include="Assets\Shaders\Mat_Log.shader" />
      <None Include="Assets\Shaders\Mat_Padlock.shader" />
      <None Include="Assets\Shaders\Mat_WineRack.shader" />
      <None Include="Assets\Shaders\Mat_Dust.shader" />
+     <None Include="Assets\Shaders\Mat_Stocks_Iron.shader" />
      <None Include="Assets\Shaders\Mat_AM_Key_A.shader" />
-     <None Include="Assets\Shaders\Mat_Coins_1.shader" />
      <None Include="Assets\Shaders\Mat_Fire.shader" />
      <None Include="Assets\Shaders\Mat_Rubble_01.shader" />
  <Reference Include="UnityEngine.UI">

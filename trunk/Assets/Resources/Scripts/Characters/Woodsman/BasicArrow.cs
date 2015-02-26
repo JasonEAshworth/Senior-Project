@@ -6,20 +6,12 @@ public class BasicArrow : ProjectileTrapObj
 {
 	public bool basic = true;
 	private Woodsman woodsman;
-	private GameObject hawk;
 	private HawkAI2 hawkScript;
-	public  int numPierces = 0;
-
-	public void PostEnable(bool basicA)
-	{
-		basic = basicA;
-	}
 
 	private void Start()
 	{
 		woodsman = GameObject.Find("Woodsman(Clone)").GetComponent<Woodsman>();
-		hawk = GameObject.FindGameObjectWithTag("Hawk");
-		hawkScript = hawk.GetComponent<HawkAI2>();
+		hawkScript = GameObject.FindGameObjectWithTag("Hawk").GetComponent<HawkAI2>();
 	}
 	
 	protected override void HitObject (Transform t)
