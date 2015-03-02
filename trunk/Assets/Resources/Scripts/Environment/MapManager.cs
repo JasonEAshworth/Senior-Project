@@ -148,11 +148,7 @@ public class RoomNode
 		playerRespawns = new List<GameObject>();
 		enemySpawners = new List<EnemySpawner>();
 		// set up room type
-		if (n.Contains("_S_"))
-		{
-			type = RoomType.STARTER;
-		}
-		else if (n.Contains("_H_"))
+		if (n.Contains("_H_"))
 		{
 			type = RoomType.HORDE;
 		}
@@ -172,6 +168,10 @@ public class RoomNode
 		{
 			type = RoomType.REACTION;
 		}
+		else
+		{
+			type = RoomType.STARTER;
+		}
 	}
 }
 
@@ -182,12 +182,14 @@ public class MapManager : MonoBehaviour
 		public string prefabName;
 		public int[] position;
 		public Direction exit;
+		public string type;
 
-		public RoomPrefab(string name, int[] pos, Direction ex)
+		public RoomPrefab(string name, int[] pos, Direction ex, string rt)
 		{
 			prefabName = name;
 			position = pos;
 			exit = ex;
+			type = rt;
 		}
 	};
 
@@ -195,10 +197,18 @@ public class MapManager : MonoBehaviour
 	// note: preset order of rooms has to use the public roomsToLoad array and manually have the rooms
 	// connected with map.connectRooms() after the map has been created
 	public bool proceduralGeneration = false;	
+	// (for procedural map generation) set to true to balance the types of rooms that are being loaded
+	public bool roomBalance = true;
+	// (for procedural map generation) set to true for every room in the dungeon to be unique
+	public bool noRoomRepeats = false;
 
 	private RoomGraph map;
 	private int numRooms = 9;
 	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
+
+	private int goalHordeRooms;
+	private int goalPuzzleRooms;
+	private int goalReactionRooms;
 
 	private string RoomPrefabFilePath = "Assets/Resources/Prefabs/Environment/Resources/";
 	DirectoryInfo dir;
@@ -228,13 +238,23 @@ public class MapManager : MonoBehaviour
 	{
 		if (proceduralGeneration)
 		{
+			// Figure out how many of each room we want for a balanced dungeon
+			// (Half horde rooms, quarter puzzle rooms, quarter reaction rooms, favor puzzle rooms if odd number)
+			if (roomBalance)
+			{
+				int goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
+				int goalPuzzleRooms = Mathf.CeilToInt((float)goalHordeRooms / 2.0f);
+				int goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
+			}
+
 			// Get references to all of the room prefab files
 			dir = new DirectoryInfo(RoomPrefabFilePath);
 			info = dir.GetFiles("*.prefab");
 
 			// Generate the dungeon with a recursive function that works one room at a time
 			List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
-			generateRoom(roomsToUse, new List<string>(), "");
+			Dictionary<string, int> numRoomTypes = new Dictionary<string, int>(){{"_H_", 0}, {"_P_", 0}, {"_R_", 0}, {"_T_", 0}, {"_S_", 0}, {"_B_", 0}};
+			generateRoom(roomsToUse, new List<string>(), numRoomTypes);
 
 			// Log an error message if the generation failed
 			if (roomsToUse.Count == 0)
@@ -284,7 +304,7 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	private bool generateRoom(List<RoomPrefab> rooms, List<string> roomsNotToUse, string lastDirection)
+	private bool generateRoom(List<RoomPrefab> rooms, List<string> roomsNotToUse, Dictionary<string, int> numRoomTypes)
 	{
 		// Figure out which entrance the next room has to have to connect with the previous room
 		string lookingFor = "";
@@ -293,30 +313,31 @@ public class MapManager : MonoBehaviour
 		{
 			nextRoomPos[0] = rooms[rooms.Count-1].position[0];
 			nextRoomPos[1] = rooms[rooms.Count-1].position[1];
+
+			switch (rooms[rooms.Count-1].exit)
+			{
+			case Direction.NORTH:
+				lookingFor = "S";
+				nextRoomPos[1]++;
+				break;
+			case Direction.WEST:
+				lookingFor = "E";
+				nextRoomPos[0]--;
+				break;
+			case Direction.EAST:
+				lookingFor = "W";
+				nextRoomPos[0]++;
+				break;
+			case Direction.SOUTH:
+				lookingFor = "N";
+				nextRoomPos[1]--;
+				break;
+			}
 		}
 		else
 		{
 			nextRoomPos[0] = 0;
 			nextRoomPos[1] = 0;
-		}
-		switch (lastDirection)
-		{
-		case "N":
-			lookingFor = "S";
-			nextRoomPos[1]++;
-			break;
-		case "W":
-			lookingFor = "E";
-			nextRoomPos[0]--;
-			break;
-		case "E":
-			lookingFor = "W";
-			nextRoomPos[0]++;
-			break;
-		case "S":
-			lookingFor = "N";
-			nextRoomPos[1]--;
-			break;
 		}
 
 		// Make sure this room won't overlap with the others
@@ -350,6 +371,7 @@ public class MapManager : MonoBehaviour
 				// currently only supports rooms with two entrances
 				if (e.Length > 2)
 				{
+					roomsNotToUse.Add(f.Name);
 					continue;
 				}
 
@@ -357,7 +379,7 @@ public class MapManager : MonoBehaviour
 				if (rooms.Count == 0)
 				{
 					// first room must be starter type
-					if (f.Name.Contains("_S_"))
+					if (fileName.Contains("_S_"))
 					{
 						potentialRooms.Add(fileName);
 					}
@@ -366,7 +388,7 @@ public class MapManager : MonoBehaviour
 				else if (rooms.Count == numRooms - 1)
 				{
 					// makes sure the final room is a boss room
-					if (f.Name.Contains("_B_") && e.Contains(lookingFor))
+					if (fileName.Contains("_B_") && e.Contains(lookingFor))
 					{
 						potentialRooms.Add(fileName);
 					}
@@ -374,10 +396,61 @@ public class MapManager : MonoBehaviour
 				// Middle rooms
 				else
 				{
-					// Room must have the required entrance to connect with the previous room, must have another exit in addition to that, and can't have been used already
-					if (e.Contains(lookingFor) && e.Length > 1) //&& !rooms.Contains(f.Name))
+					// Room must have the required entrance to connect with the previous room and must have another exit in addition to that
+					if (e.Contains(lookingFor) && e.Length > 1)
 					{
-						potentialRooms.Add(fileName);	
+						if (noRoomRepeats)	// don't include rooms we have used previously
+						{
+							bool foundRepeat = false;
+
+							foreach (RoomPrefab rp in rooms)
+							{
+								if (rp.prefabName == f.Name)
+								{
+									foundRepeat = true;
+									break;
+								}
+							}
+
+							if (foundRepeat)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+						}
+
+						if (roomBalance)	// carry out various actions to balance the room selection
+						{
+							if (fileName.Contains(rooms[rooms.Count-1].type))	// don't do the same type of room twice in a row
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+
+							if (fileName.Contains("_H_") && numRoomTypes["_H_"] == goalHordeRooms)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;;
+							}
+							if (fileName.Contains("_P_") && numRoomTypes["_P_"] == goalPuzzleRooms)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+							if (fileName.Contains("_R_") && numRoomTypes["_R_"] == goalReactionRooms)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+						}
+
+						// If we made it through the optional checks, then go ahead and add the room
+						potentialRooms.Add(fileName);
+
+						/*if (roomBalance && fileName.Contains("_H_"))
+						{
+							potentialRooms.Add(fileName);	// makes horde rooms twice as likely to be selected
+						}*/
 					}
 				}
 			}
@@ -421,7 +494,30 @@ public class MapManager : MonoBehaviour
 				exitDir = Direction.SOUTH;
 				break;
 			}
-			RoomPrefab newRoom = new RoomPrefab(roomName + ".prefab", nextRoomPos, exitDir);
+			string type = "_S_";
+			if (roomName.Contains("_H_"))
+			{
+				type = "_H_";
+			}
+			else if (roomName.Contains("_P_"))
+			{
+				type = "_P_";
+			}
+			else if (roomName.Contains("_B_"))
+			{
+				type = "_B_";
+			}
+			else if (roomName.Contains("_T_"))
+			{
+				type = "_T_";
+			}
+			else if (roomName.Contains("_R_"))
+			{
+				type = "_R_";
+			}
+			Dictionary<string, int> newNumRoomTypes = new Dictionary<string, int>(numRoomTypes);
+			newNumRoomTypes[type]++;
+			RoomPrefab newRoom = new RoomPrefab(roomName + ".prefab", nextRoomPos, exitDir, type);
 			rooms.Add(newRoom);
 			// If we have all rooms of the dungeon, return a success
 			if (rooms.Count == numRooms)
@@ -429,7 +525,7 @@ public class MapManager : MonoBehaviour
 				return true;
 			}
 			// Set up generation of the next room if not done
-			roomSet = generateRoom(rooms, new List<string>(), thisExit);
+			roomSet = generateRoom(rooms, new List<string>(), newNumRoomTypes);
 		}
 		return true;
 	}
