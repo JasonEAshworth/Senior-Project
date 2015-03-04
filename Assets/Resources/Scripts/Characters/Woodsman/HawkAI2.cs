@@ -9,6 +9,7 @@ public class HawkAI2 : MonoBehaviour {
 	public GameObject woodsman;
 	public Woodsman script;
 	public float dmg = 10.0f;
+	public GameObject hawkTarget;
 
 	// vectors needed 
 	private Vector3 paddingVector;
@@ -75,10 +76,32 @@ public class HawkAI2 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (enemiesToAttack.Count > 0) 
+		if (enemiesToAttack.Count > 0 && !hawkTarget) 
 		{
 			mode = 2;
 		}
+
+		if(hawkTarget)
+		{
+			mode = 4;
+		}
+
+		// This mode will take the hawk to a trigger and activate it then return to the woodsman
+		if(mode == 4)
+		{
+			Vector3 targetVec = hawkTarget.transform.position - transform.position;
+			if(Vector3.Distance(transform.position,hawkTarget.transform.position) > 0.1f)
+			{
+				transform.position += (targetVec * speed * Time.deltaTime);
+
+			}
+			else
+			{
+				mode = 3;
+				hawkTarget = null;
+			}
+		}
+
 
 		// Mode 2 is the hawk being sent out by the player using the woodsman
 		// class ability, It goes towards the initial point which is just a set distance
@@ -91,13 +114,21 @@ public class HawkAI2 : MonoBehaviour {
 				mode = 3;
 			}
 
+			for(int i=0;i<enemiesToAttack.Count;i++)
+			{
+				if(enemiesToAttack[i] == null)
+				{
+					enemiesToAttack.Remove(enemiesToAttack[i]);
+				}
+			}
+
 			GameObject mostDamaged = null;
 			float temp = 0.0f;
 			for(int i=0;i<enemiesToAttack.Count;i++)
 			{
 				if(enemiesToAttack[i] == null)
 				{
-					enemiesToAttack.Remove (enemiesToAttack[i]);
+					continue;
 				}
 				EnemyBase scr = enemiesToAttack[i].GetComponent<EnemyBase>();
 				if(temp == 0.0f || scr.damageTaken > temp)
@@ -115,21 +146,23 @@ public class HawkAI2 : MonoBehaviour {
 			if(mostDamaged)
 			{
 				Vector3 towardsEnemy = mostDamaged.transform.position - transform.position;
+				towardsEnemy.Normalize();
 				transform.up = new Vector3(towardsEnemy.x,0.0f,towardsEnemy.z);
 				if(Vector3.Distance(transform.position,mostDamaged.transform.position) > 2.0f)
 				{
 					transform.position += (towardsEnemy * speed * Time.deltaTime);
 				}
-				else
-				{
-					Vector3 enemyPaddingVector = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (mostDamaged.transform.position.x, 0, mostDamaged.transform.position.z));
-					enemyPaddingVector.Normalize();
-
-					Vector3 enemyFacing = Vector3.Cross(enemyPaddingVector,Vector3.up);
-					transform.up = enemyFacing;
-
-					transform.RotateAround(mostDamaged.transform.position,Vector3.up,120 * Time.deltaTime);
-				}
+//				else
+//				{
+//					Vector3 enemyPaddingVector = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (mostDamaged.transform.position.x, 0, mostDamaged.transform.position.z));
+//					enemyPaddingVector.Normalize();
+//					
+//					Vector3 enemyFacing = Vector3.Cross(enemyPaddingVector,Vector3.up);
+//					transform.up = enemyFacing;
+//					
+//					transform.RotateAround(mostDamaged.transform.position,Vector3.up,120 * Time.deltaTime);
+//
+//				}
 				timerEnemy = timerEnemy - Time.deltaTime;
 				if(timerEnemy <= 0.0f)
 				{
@@ -270,12 +303,12 @@ public class HawkAI2 : MonoBehaviour {
 		if (mode == 1) 
 		{
 			transform.parent = null;
-			timerPerch = timerPerch - Time.deltaTime;
-			if(timerPerch <= 0.0f)
-			{
-				mode = 0;
-				timerPerch = Random.Range(15.0f,22.0f);
-			}
+//			timerPerch = timerPerch - Time.deltaTime;
+//			if(timerPerch <= 0.0f)
+//			{
+//				mode = 0;
+//				timerPerch = Random.Range(15.0f,22.0f);
+//			}
 			paddingVector = (new Vector3 (transform.position.x, 0, transform.position.z)) - (new Vector3 (woodsman.transform.position.x, 0, woodsman.transform.position.z));
 			paddingVector.Normalize();
 			
@@ -290,7 +323,7 @@ public class HawkAI2 : MonoBehaviour {
 			}
 			else if(dist  > 2.2f)
 			{
-				transform.position += -paddingVector * 3.0f * Time.deltaTime;
+				transform.position += -paddingVector * 4.7f * Time.deltaTime;
 			}
 			else if(dist > 3.5f)
 			{
@@ -319,40 +352,41 @@ public class HawkAI2 : MonoBehaviour {
 		// Mode 0 is the perch mode, which just makes it go towards the local transform
 		// of perchPos(which is a child of woodsman) and make itself a child of the woodsman to make sure it follows 
 		// along with the woodsman as it moves.
-		if (mode == 0) 
-		{
-			if(Vector3.Distance(perchPos.position,transform.position) < 0.3f)
-			{
-				arrivedPerch = true;
-			}
-			if(!arrivedPerch)
-			{
-				Vector3 movement = perchPos.position - transform.position;
-				movement.Normalize();
-				transform.up = movement;
-				transform.position = transform.position + (movement * speed * Time.deltaTime);
-			}
-			if (arrivedPerch)
-			{
-				transform.position = perchPos.position;
-				transform.forward = woodsman.transform.forward;
-				transform.parent = woodsman.transform;
-			}
-			timerIdle = timerIdle - Time.deltaTime;
-			if(timerIdle <= 0.0f)
-			{
-				mode = 1;
-				timerIdle = Random.Range(15.0f,22.0f);
-				transform.parent = null;
-				arrivedPerch = false;
-			}
-
-			float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (woodsman.transform.position.x, 0, woodsman.transform.position.z));
-			if (dist > 3.0f)
-			{
-				mode = 3;
-			}
-		}
+//		if (mode == 0) 
+//		{
+//			if(Vector3.Distance(perchPos.position,transform.position) < 0.3f)
+//			{
+//				Debug.Log ("Arrived at perch position.");
+//				arrivedPerch = true;
+//			}
+//			if(!arrivedPerch)
+//			{
+//				Vector3 movement = perchPos.position - transform.position;
+//				movement.Normalize();
+//				transform.up = movement;
+//				transform.position = transform.position + (movement * speed * Time.deltaTime);
+//			}
+//			if (arrivedPerch)
+//			{
+//				transform.position = perchPos.position;
+//				transform.forward = woodsman.transform.forward;
+//				transform.parent = woodsman.transform;
+//			}
+//			timerIdle = timerIdle - Time.deltaTime;
+//			if(timerIdle <= 0.0f)
+//			{
+//				mode = 1;
+//				timerIdle = Random.Range(15.0f,22.0f);
+//				transform.parent = null;
+//				arrivedPerch = false;
+//			}
+//
+//			float dist = Vector3.Distance(new Vector3 (transform.position.x, 0, transform.position.z),new Vector3 (woodsman.transform.position.x, 0, woodsman.transform.position.z));
+//			if (dist > 3.0f)
+//			{
+//				mode = 3;
+//			}
+//		}
 		
 	}
 	
@@ -362,7 +396,6 @@ public class HawkAI2 : MonoBehaviour {
 		// by setting the mode to 3.
 		if(c.gameObject.CompareTag("wall") || c.gameObject.CompareTag("door"))
 		{
-			Debug.Log ("We hit");
 			if(mode == 2)
 			{
 				mode = 3;
@@ -374,12 +407,9 @@ public class HawkAI2 : MonoBehaviour {
 
 	// Helper function used by the sphere collider of the hawk to set 
 	// the enemyToAttack.
-	void setEnemy(GameObject c)
+	void setTarget(GameObject c)
 	{
-//		if(enemyToAttack == null && mode == 2)
-//		{
-//			enemyToAttack = c;
-//		}
+		hawkTarget = c;
 	}
 	
 }

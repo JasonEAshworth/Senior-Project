@@ -250,10 +250,10 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>Z:/Senior Project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>Z:/Senior Project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
