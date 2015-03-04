@@ -65,8 +65,8 @@ Shader "Shader Forge/Mat_Coins_1" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_149 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_149.rg, _node_3))).rgb;
+                float2 node_101 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_101.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
 ////// Lighting:
@@ -78,9 +78,9 @@ Shader "Shader Forge/Mat_Coins_1" {
                 float3 diffuse = pow(max( 0.0, NdotL), node_23) * attenColor + UNITY_LIGHTMODEL_AMBIENT.rgb*2;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_149.rg, _node_2)).rgb*node_23);
+                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_101.rg, _node_2)).rgb*node_23);
 /// Final Color:
-                return fixed4(finalColor,tex2D(_node_67,TRANSFORM_TEX(node_149.rg, _node_67)).r);
+                return fixed4(finalColor,tex2D(_node_67,TRANSFORM_TEX(node_101.rg, _node_67)).r);
             }
             ENDCG
         }
@@ -137,8 +137,8 @@ Shader "Shader Forge/Mat_Coins_1" {
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.binormalDir, i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
-                float2 node_150 = i.uv0;
-                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_150.rg, _node_3))).rgb;
+                float2 node_102 = i.uv0;
+                float3 normalLocal = UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_102.rg, _node_3))).rgb;
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
 ////// Lighting:
@@ -150,9 +150,9 @@ Shader "Shader Forge/Mat_Coins_1" {
                 float3 diffuse = pow(max( 0.0, NdotL), node_23) * attenColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_150.rg, _node_2)).rgb*node_23);
+                finalColor += diffuseLight * (tex2D(_node_2,TRANSFORM_TEX(node_102.rg, _node_2)).rgb*node_23);
 /// Final Color:
-                return fixed4(finalColor * tex2D(_node_67,TRANSFORM_TEX(node_150.rg, _node_67)).r,0);
+                return fixed4(finalColor * tex2D(_node_67,TRANSFORM_TEX(node_102.rg, _node_67)).r,0);
             }
             ENDCG
         }
