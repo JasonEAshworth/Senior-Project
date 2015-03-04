@@ -67,8 +67,8 @@ Shader "Shader Forge/Floor_1_Mat" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_155 = (i.uv0.rg*3.0);
-                float2 node_576 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_node_11m,TRANSFORM_TEX(node_155, _node_11m))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_576.rg, _node_3))).rgb*float3(3,3,0.1)));
+                float2 node_316 = i.uv0;
+                float3 normalLocal = ((UnpackNormal(tex2D(_node_11m,TRANSFORM_TEX(node_155, _node_11m))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_316.rg, _node_3))).rgb*float3(3,3,0.1)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -83,11 +83,11 @@ Shader "Shader Forge/Floor_1_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_576.rg, _node_4)).rgb;
+                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_316.rg, _node_4)).rgb;
                 float3 specular = (floor(attenuation) * _LightColor0.xyz) * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_576.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_316.rg, _node_2)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor,1);
@@ -149,8 +149,8 @@ Shader "Shader Forge/Floor_1_Mat" {
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 /////// Normals:
                 float2 node_155 = (i.uv0.rg*3.0);
-                float2 node_577 = i.uv0;
-                float3 normalLocal = ((UnpackNormal(tex2D(_node_11m,TRANSFORM_TEX(node_155, _node_11m))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_577.rg, _node_3))).rgb*float3(3,3,0.1)));
+                float2 node_317 = i.uv0;
+                float3 normalLocal = ((UnpackNormal(tex2D(_node_11m,TRANSFORM_TEX(node_155, _node_11m))).rgb*float3(1,1,2))+(UnpackNormal(tex2D(_node_3,TRANSFORM_TEX(node_317.rg, _node_3))).rgb*float3(3,3,0.1)));
                 float3 normalDirection =  normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
                 float3 lightDirection = normalize(lerp(_WorldSpaceLightPos0.xyz, _WorldSpaceLightPos0.xyz - i.posWorld.xyz,_WorldSpaceLightPos0.w));
                 float3 halfDirection = normalize(viewDirection+lightDirection);
@@ -165,11 +165,11 @@ Shader "Shader Forge/Floor_1_Mat" {
                 float specPow = exp2( gloss * 10.0+1.0);
 ////// Specular:
                 NdotL = max(0.0, NdotL);
-                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_577.rg, _node_4)).rgb;
+                float3 specularColor = tex2D(_node_4,TRANSFORM_TEX(node_317.rg, _node_4)).rgb;
                 float3 specular = attenColor * pow(max(0,dot(halfDirection,normalDirection)),specPow) * specularColor;
                 float3 finalColor = 0;
                 float3 diffuseLight = diffuse;
-                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_577.rg, _node_2)).rgb;
+                finalColor += diffuseLight * tex2D(_node_2,TRANSFORM_TEX(node_317.rg, _node_2)).rgb;
                 finalColor += specular;
 /// Final Color:
                 return fixed4(finalColor * 1,0);
