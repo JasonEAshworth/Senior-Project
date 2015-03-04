@@ -121,7 +121,7 @@ public class Sorcerer : PlayerBase
 
 		for(int i=0; i<enemies.Count; i++)
 		{
-			enemies[i].SendMessage("takeDamage", blizzardDamage);
+			enemies[i].SendMessage("takeDamage", blizzardDamage *attackMultiplier);
 			enemies[i].SendMessage("freeze");
 		}
 

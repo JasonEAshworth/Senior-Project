@@ -5,7 +5,9 @@ public enum PotionType
 {
 	NONE,
 	HEALTH,
-	HASTE
+	HASTE,
+	ATTACK
+
 }
 
 public class PotionBase : MonoBehaviour 

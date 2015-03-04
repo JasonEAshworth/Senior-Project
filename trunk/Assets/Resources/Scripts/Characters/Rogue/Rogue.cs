@@ -135,7 +135,7 @@ public class Rogue : PlayerBase
 				}
 				//restore more on back attack
 				addMana(4.0f * bonus);
-				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage * bonus);
+				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage * bonus*attackMultiplier);
 			}
 			if (c.GetComponent<Explodable>() != null)
 			{

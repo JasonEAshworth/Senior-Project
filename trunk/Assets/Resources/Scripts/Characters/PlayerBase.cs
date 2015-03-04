@@ -139,15 +139,22 @@ public class PlayerBase : CharacterBase
 	{
 		item = p;
 
-		if (p == PotionType.HEALTH)
+		if (p == PotionType.HEALTH) 
 		{
 			potionImg.enabled = true;
-			gameObject.AddComponent<HealthPotion>();
-		}
-		else if (p == PotionType.HASTE)
+			gameObject.AddComponent<HealthPotion> ();
+		} 
+		else if (p == PotionType.HASTE) 
 		{
 			potionImg.enabled = true;
-			gameObject.AddComponent<HastePotion>();
+			gameObject.AddComponent<HastePotion> ();
+		} 
+		else if (p == PotionType.ATTACK) 
+		{
+			potionImg.enabled = true;
+			gameObject.AddComponent<AttackUpPotion> ();
+
+
 		}
 	}
 

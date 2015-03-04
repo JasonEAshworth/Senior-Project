@@ -101,6 +101,7 @@
      <None Include="Assets\Shaders\Scrolls_1_Mat.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\VertexAnimation.shader" />
      <None Include="Assets\Shaders\Mat_Torture_Wheel.shader" />
+     <None Include="Assets\Shaders\Mat_FireMount_1.shader" />
      <None Include="Assets\Shaders\Mat_SM_WoodenChair.shader" />
      <None Include="Assets\Shaders\Mat_Stocks_wood.shader" />
      <None Include="Assets\Shaders\Mat_SM_FireTrap.shader" />
@@ -143,6 +144,7 @@
      <None Include="Assets\Shaders\Mat_Potion_01.shader" />
      <None Include="Assets\Shaders\TombFancy_1_Mat.shader" />
      <None Include="Assets\Shaders\Zombie_Mat.shader" />
+     <None Include="Assets\Shaders\Mat_Barrel_1.shader" />
      <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_CoatOfArms.shader" />
      <None Include="Assets\Shaders\MultiTexture.shader" />
@@ -171,16 +173,16 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="ShaderForge">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Plugins/ShaderForge/Editor/Code/ShaderForge.dll</HintPath>
- </Reference>
- <Reference Include="Rewired_Editor">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
+ <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Plugins/ShaderForge/Editor/Code/ShaderForge.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ </Reference>
+ <Reference Include="Rewired_Editor">
+ <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Rewired/Internal/Libraries/Editor/Rewired_Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
