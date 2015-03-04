@@ -22,6 +22,7 @@ public class CharacterBase : MonoBehaviour
 	protected float damageInvulnTime = 0.5f; 		// after taking damage, the character is invulnerable for this many seconds
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
+	public float attackMultiplier = 1.0f;
 	public RawImage healthBar;
 	public float healthBarWidth;
 	public float healthBarHeight;

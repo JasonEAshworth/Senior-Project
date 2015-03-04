@@ -172,7 +172,7 @@ public class Woodsman : PlayerBase
 				anim.SetTrigger("Attack");
 				if(objectHit.CompareTag("Enemy"))
 				{
-					objectHit.SendMessage("takeDamage",dmg);
+					objectHit.SendMessage("takeDamage",dmg *attackMultiplier);
 					hawkScripts.enemiesToAttack.Add (objectHit.gameObject);
 					hitCount += 1;
 					EnemyBase scr = objectHit.GetComponent<EnemyBase>();

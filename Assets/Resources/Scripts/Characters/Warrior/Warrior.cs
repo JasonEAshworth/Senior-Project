@@ -108,7 +108,7 @@ public class Warrior : PlayerBase
 			if (c.tag == "Enemy")
 			{
 				addMana(5.0f);
-				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage);
+				c.GetComponent<EnemyBase>().takeDamage(normalAttackDamage * attackMultiplier);
 			}
 			if (c.GetComponent<Explodable>() != null)
 			{
@@ -126,7 +126,7 @@ public class Warrior : PlayerBase
 			if (c.tag == "Enemy")
 			{
 				addMana(5.0f);
-				c.GetComponent<EnemyBase>().takeDamage(comboAttackDamage);
+				c.GetComponent<EnemyBase>().takeDamage(comboAttackDamage * attackMultiplier);
 				Vector3 forceDir = (c.transform.position - transform.position);
 				forceDir = new Vector3(forceDir.x, 0.0f, forceDir.z).normalized;
 				c.GetComponent<EnemyBase>().addForce(forceDir * comboAttackForce);
