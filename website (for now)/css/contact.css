@@ -1,17 +1,19 @@
 @font-face
 {
-	font-family: title;
-	src: url(../fonts/evanescent.ttf);
+    font-family: title;
+    src: url(../fonts/PathwayGothicOne-Regular.ttf);
 }
 
-
 body {
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: title, "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
     background: url('../media/background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    color: rgb(255,204,116);
 }
 
 hr {
@@ -28,7 +30,7 @@ hr {
 {
     background-color: rgba(39,36,34,0.5);
     margin-top: 10px;
-    border: 3px outset rgb(157, 121, 83);
+    border: 3px solid rgb(157, 121, 83);
     border-radius: 10px;
     color: rgb(255,204,116);
 }
@@ -92,9 +94,12 @@ hr {
     float: right;
 }
 
-
-
 #content
 {
     margin-top: 30px;
+}
+
+.text-muted {
+    color: rgb(255,204,116);
+    font-size: 14px;
 }

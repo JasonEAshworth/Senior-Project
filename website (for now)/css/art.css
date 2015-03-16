@@ -1,11 +1,14 @@
 @font-face
 {
-	font-family: title;
-	src: url(../fonts/evanescent.ttf);
+    font-family: title;
+    src: url(../fonts/PathwayGothicOne-Regular.ttf);
 }
 
 
 body {
+    font-family: title, "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
     background: url('../media/background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -75,7 +78,8 @@ hr {
 #foot
 {
     background-image: url("../media/head_foot.png");
-    background-size: 1920px 100%
+    background-size: 1920px 100%;
+    color: rgb(255,204,116);
 }
 
 #bs-example-navbar-collapse-1
@@ -83,17 +87,16 @@ hr {
     float: right;
 }
 
-
-.text-muted
-{
-    font-family: "Trajan Pro"
-}
-
 #art
 {
     background-color: rgba(39,36,34,0.5);
     margin-top: 10px;
-    border: 3px outset rgb(157, 121, 83);
+    border: 3px solid rgb(157, 121, 83);
     border-radius: 10px;
     color: rgb(255,204,116);
+}
+
+.text-muted {
+    color: rgb(255,204,116);
+    font-size: 14px;
 }

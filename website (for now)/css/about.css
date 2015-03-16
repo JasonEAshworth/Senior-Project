@@ -1,12 +1,14 @@
 @font-face
 {
 	font-family: title;
-	src: url(../fonts/evanescent.ttf);
+	src: url(../fonts/PathwayGothicOne-Regular.ttf);
 }
 
 
 body {
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: title, "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
     background: url('../media/background.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -28,7 +30,7 @@ hr {
 {
     background-color: rgba(39,36,34,0.5);
     margin-top: 10px;
-    border: 3px outset rgb(157, 121, 83);
+    border: 3px solid rgb(157, 121, 83);
     border-radius: 10px;
     color: rgb(255,204,116);
 }
@@ -91,6 +93,7 @@ hr {
     width: 100%;
     margin-right: 0;
     margin-left: 0;
+    color: rgb(255,204,116);
 }
 
 #bs-example-navbar-collapse-1
@@ -98,9 +101,38 @@ hr {
     float: right;
 }
 
-
-
 #content
 {
     margin-top: 30px;
+}
+
+.thumbnail
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.media
+{
+    padding: 10px;
+}
+
+hr
+{
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#foot hr {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.text-muted {
+    color: rgb(255,204,116);
+    font-size: 14px;
 }
