@@ -1,0 +1,113 @@
+<!-- Rise of the Restless (c)2015 -->
+<!-- v 0.1 -->
+<!-- Don't fucking think about it -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rise of the Restless -- Art</title>
+
+    <meta http-equiv="cache-control" content="no-cache">
+    
+    <!-- CSS -->
+    <!--<link rel="stylesheet" type="text/css" href="css/foundation.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link href="css/logo-nav.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/art.css">
+
+    <!-- jQuery -->
+     <script src="js/jquery-1.11.2.min.js"></script>
+    <!--<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/Threejs/three.min.js"></script>
+    <script type="text/javascript" src="js/Threejs/OBJloader.js"></script>
+    <script type="text/javascript" src="js/Threejs/OrbitControls.js"></script>
+    <script type="text/javascript" src="js/Threejs/detector.js"></script>
+    <script type="text/javascript" src="js/art.js"></script>
+    <script type="text/javascript" src="js/tmp.js"></script>
+</head>
+    
+<body onLoad="onLoad('Char_Am_Zombie', 'Txt_Zombie_Diff_512');" onresize="change();">
+    <!--every page should have this-->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">
+                    <img src="media/logo.png" alt="" height="90px" width="270px">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="list-inline" style="padding-top:10px;">
+                    <li>
+                        <a href="game.html"><img src="media/Menu_Bar/button_game.png"/></a>
+                    </li>
+                    <li>
+                        <a href="about.html"><img src="media/Menu_Bar/button_about.png"/></a>
+                    </li>
+                    <li>
+                        <a href="art.html"><img src="media/Menu_Bar/button_art.png"/></a>
+                    </li>
+                    <li>
+                        <a href="contact.html"><img src="media/Menu_Bar/button_contact.png"/></a>>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!--this is where all of the content should go-->
+    <div class="container" style="padding-bottom:15px; padding-top: 40px">
+        
+
+        <div class="row" style="padding-left:15px;" id="art">
+            <div class="dropdown">
+                <h1>3D model viewer</h1>
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    Choose a model
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-center" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" id="Char_Am_Zombie" onclick="modelSwitch('nude_obj', 'text')">Action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <div id="viewer" style="height:600px; padding-top:10px;">
+                <!--This is where the models view will show up-->
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--and this-->
+    <footer>
+        <div class="container-fluid">
+            <div class="row" id="foot">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <br>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="http://facebook.com/rotrgame" target="_blank"><img src="media/social/facebook-b.png" onmouseover="this.src='media/social/facebook.png'" onmouseout="this.src='media/social/facebook-b.png'"/></a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/RiseRestless" target="_blank"><img src="media/social/twitter-b.png" onmouseover="this.src='media/social/twitter.png'" onmouseout="this.src='media/social/twitter-b.png'"/></a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UCwFZLB4Go5_3lkyfIH6dIFg" target="_blank"><img src="media/social/you_tube-b.png" onmouseover="this.src='media/social/you_tube.png'" onmouseout="this.src='media/social/you_tube-b.png'"/></a>
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Rise of the Restless Copyright &copy; 2015</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+    
+</html>
