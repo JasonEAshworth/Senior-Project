@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f8f1bbd59ad75a944bf32eeafae360d8
+guid: c2855571e8587d744ba4af310a611cee
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Prop_SM_FirePit_Lid_1_1
+    4300000: LongSword_1
     9500000: //RootNode
   materials:
     importMaterials: 1
