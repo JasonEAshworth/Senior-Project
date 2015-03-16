@@ -203,7 +203,7 @@ public class MapManager : MonoBehaviour
 	public bool noRoomRepeats = false;
 
 	private RoomGraph map;
-	private int numRooms = 9;
+	public int numRooms = 9;
 	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
 
 	private int goalHordeRooms;
@@ -238,13 +238,19 @@ public class MapManager : MonoBehaviour
 	{
 		if (proceduralGeneration)
 		{
+			// Don't even try to generate the dungeon if we have less than 2 rooms
+			if (numRooms < 2)
+			{
+				Debug.Log ("Error generating dungeon, too few numRooms specified");
+				return;
+			}
 			// Figure out how many of each room we want for a balanced dungeon
 			// (Half horde rooms, quarter puzzle rooms, quarter reaction rooms, favor puzzle rooms if odd number)
 			if (roomBalance)
 			{
-				int goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
-				int goalPuzzleRooms = Mathf.CeilToInt((float)goalHordeRooms / 2.0f);
-				int goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
+				goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
+				goalPuzzleRooms = Mathf.CeilToInt((float)(numRooms - 2 - goalHordeRooms) / 2.0f);
+				goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
 			}
 
 			// Get references to all of the room prefab files
@@ -254,12 +260,13 @@ public class MapManager : MonoBehaviour
 			// Generate the dungeon with a recursive function that works one room at a time
 			List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
 			Dictionary<string, int> numRoomTypes = new Dictionary<string, int>(){{"_H_", 0}, {"_P_", 0}, {"_R_", 0}, {"_T_", 0}, {"_S_", 0}, {"_B_", 0}};
-			generateRoom(roomsToUse, new List<string>(), numRoomTypes);
+			generateRoom(roomsToUse, numRoomTypes);
 
 			// Log an error message if the generation failed
 			if (roomsToUse.Count == 0)
 			{
 				Debug.Log ("Error generating dungeon, could not generate dungeon from given room prefabs");
+				return;
 			}
 
 			// Once all of the rooms have been selected, set up the map and connect the rooms
@@ -270,16 +277,15 @@ public class MapManager : MonoBehaviour
 			}
 			for (int i = 0; i < map.rooms.Count - 1; i++)
 			{
-				//Debug.Log (map.rooms[i].name + " " + roomsToUse[i].exit);
 				map.connectRooms(map.rooms[i], map.rooms[i+1], roomsToUse[i].exit);
 			}
 			// Load the first room and its neighbors
 			loadRoom(map.rooms[0]);
-			//loadNeighbors(map.rooms[0]);
-			for (int i = 0; i < map.rooms.Count; i++)
+			loadNeighbors(map.rooms[0]);
+			/*for (int i = 0; i < map.rooms.Count; i++)
 			{
 				loadNeighbors(map.rooms[i]);
-			}
+			}*/
 			// Give the player manager the first room's spawn points
 			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 			pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
@@ -304,50 +310,27 @@ public class MapManager : MonoBehaviour
 		}
 	}
 
-	private bool generateRoom(List<RoomPrefab> rooms, List<string> roomsNotToUse, Dictionary<string, int> numRoomTypes)
+	private bool generateRoom(List<RoomPrefab> rooms, Dictionary<string, int> numRoomTypes)
 	{
+		List<string> roomsNotToUse = new List<string>();
 		// Figure out which entrance the next room has to have to connect with the previous room
 		string lookingFor = "";
-		int[] nextRoomPos = new int[2];
 		if (rooms.Count > 0)
 		{
-			nextRoomPos[0] = rooms[rooms.Count-1].position[0];
-			nextRoomPos[1] = rooms[rooms.Count-1].position[1];
-
 			switch (rooms[rooms.Count-1].exit)
 			{
 			case Direction.NORTH:
 				lookingFor = "S";
-				nextRoomPos[1]++;
 				break;
 			case Direction.WEST:
 				lookingFor = "E";
-				nextRoomPos[0]--;
 				break;
 			case Direction.EAST:
 				lookingFor = "W";
-				nextRoomPos[0]++;
 				break;
 			case Direction.SOUTH:
 				lookingFor = "N";
-				nextRoomPos[1]--;
 				break;
-			}
-		}
-		else
-		{
-			nextRoomPos[0] = 0;
-			nextRoomPos[1] = 0;
-		}
-
-		// Make sure this room won't overlap with the others
-		foreach (RoomPrefab rp in rooms)
-		{
-			if (rp.position[0] == nextRoomPos[0] && rp.position[1] == nextRoomPos[1])
-			{
-				roomsNotToUse.Add(rooms[rooms.Count-1].prefabName);
-				rooms.RemoveAt(rooms.Count-1);
-				return false;
 			}
 		}
 
@@ -357,6 +340,7 @@ public class MapManager : MonoBehaviour
 		while (!roomSet)
 		{
 			// Look through all room prefabs and select all of the rooms that can connect with the previous one that haven't been used yet
+			int[] nextRoomPos = new int[2];
 			List<string> potentialRooms = new List<string>();
 			foreach (FileInfo f in info)
 			{
@@ -373,6 +357,48 @@ public class MapManager : MonoBehaviour
 				{
 					roomsNotToUse.Add(f.Name);
 					continue;
+				}
+
+				// Make sure that this room won't overlap with any existing rooms
+				if (rooms.Count > 0)
+				{
+					nextRoomPos[0] = rooms[rooms.Count-1].position[0];
+					nextRoomPos[1] = rooms[rooms.Count-1].position[1];
+					
+					switch (rooms[rooms.Count-1].exit)
+					{
+					case Direction.NORTH:
+						lookingFor = "S";
+						nextRoomPos[1]++;
+						break;
+					case Direction.WEST:
+						lookingFor = "E";
+						nextRoomPos[0]--;
+						break;
+					case Direction.EAST:
+						lookingFor = "W";
+						nextRoomPos[0]++;
+						break;
+					case Direction.SOUTH:
+						lookingFor = "N";
+						nextRoomPos[1]--;
+						break;
+					}
+
+					bool willOverlap = false;
+					foreach (RoomPrefab rp in rooms)
+					{
+						if (rp.position[0] == nextRoomPos[0] && rp.position[1] == nextRoomPos[1])
+						{
+							willOverlap = true;
+							break;
+						}
+					}
+					if (willOverlap)
+					{
+						roomsNotToUse.Add(f.Name);
+						continue;
+					}
 				}
 
 				// First room
@@ -430,7 +456,7 @@ public class MapManager : MonoBehaviour
 							if (fileName.Contains("_H_") && numRoomTypes["_H_"] == goalHordeRooms)
 							{
 								roomsNotToUse.Add(f.Name);
-								continue;;
+								continue;
 							}
 							if (fileName.Contains("_P_") && numRoomTypes["_P_"] == goalPuzzleRooms)
 							{
@@ -460,7 +486,6 @@ public class MapManager : MonoBehaviour
 				// If we have a room to go back to, scrap this room and continue generation from the previous one
 				if (rooms.Count > 0)
 				{
-					roomsNotToUse.Add(rooms[rooms.Count-1].prefabName);
 					rooms.RemoveAt(rooms.Count-1);
 					return false;
 				}
@@ -519,13 +544,14 @@ public class MapManager : MonoBehaviour
 			newNumRoomTypes[type]++;
 			RoomPrefab newRoom = new RoomPrefab(roomName + ".prefab", nextRoomPos, exitDir, type);
 			rooms.Add(newRoom);
+			roomsNotToUse.Add(roomName + ".prefab");
 			// If we have all rooms of the dungeon, return a success
 			if (rooms.Count == numRooms)
 			{
 				return true;
 			}
 			// Set up generation of the next room if not done
-			roomSet = generateRoom(rooms, new List<string>(), newNumRoomTypes);
+			roomSet = generateRoom(rooms, newNumRoomTypes);
 		}
 		return true;
 	}
