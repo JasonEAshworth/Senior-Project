@@ -203,12 +203,14 @@ public class MapManager : MonoBehaviour
 	public bool noRoomRepeats = false;
 
 	private RoomGraph map;
-	public int numRooms = 9;
+	public int numRooms;							// the number of rooms used along the main path, not counting branches
+	public int numPathBranches;
 	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
 
 	private int goalHordeRooms;
 	private int goalPuzzleRooms;
 	private int goalReactionRooms;
+	private int goalTreasureRooms;
 
 	private string RoomPrefabFilePath = "Assets/Resources/Prefabs/Environment/Resources/";
 	DirectoryInfo dir;
@@ -251,6 +253,7 @@ public class MapManager : MonoBehaviour
 				goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
 				goalPuzzleRooms = Mathf.CeilToInt((float)(numRooms - 2 - goalHordeRooms) / 2.0f);
 				goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
+				goalTreasureRooms = Random.Range(goalReactionRooms, goalPuzzleRooms);
 			}
 
 			// Get references to all of the room prefab files
