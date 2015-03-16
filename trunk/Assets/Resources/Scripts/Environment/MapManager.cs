@@ -281,11 +281,11 @@ public class MapManager : MonoBehaviour
 			}
 			// Load the first room and its neighbors
 			loadRoom(map.rooms[0]);
-			loadNeighbors(map.rooms[0]);
-			/*for (int i = 0; i < map.rooms.Count; i++)
+			//loadNeighbors(map.rooms[0]);
+			for (int i = 0; i < map.rooms.Count; i++)
 			{
 				loadNeighbors(map.rooms[i]);
-			}*/
+			}
 			// Give the player manager the first room's spawn points
 			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
 			pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
@@ -470,13 +470,19 @@ public class MapManager : MonoBehaviour
 							}
 						}
 
+						// If a puzzle or reaction room, make sure that we are using the right entrance to the room
+						// (the required entrance will be the first character in e)
+						if (fileName.Contains("_P_") || fileName.Contains("_R_"))
+						{
+							if (e[0].ToString() != lookingFor)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+						}
+
 						// If we made it through the optional checks, then go ahead and add the room
 						potentialRooms.Add(fileName);
-
-						/*if (roomBalance && fileName.Contains("_H_"))
-						{
-							potentialRooms.Add(fileName);	// makes horde rooms twice as likely to be selected
-						}*/
 					}
 				}
 			}
