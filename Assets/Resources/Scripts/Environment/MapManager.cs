@@ -204,13 +204,11 @@ public class MapManager : MonoBehaviour
 
 	private RoomGraph map;
 	public int numRooms;							// the number of rooms used along the main path, not counting branches
-	public int numPathBranches;
 	public string[] roomsToLoad = new string[3];	// temp array used for loading premade dungeons
 
 	private int goalHordeRooms;
 	private int goalPuzzleRooms;
 	private int goalReactionRooms;
-	private int goalTreasureRooms;
 
 	private string RoomPrefabFilePath = "Assets/Resources/Prefabs/Environment/Resources/";
 	DirectoryInfo dir;
@@ -253,7 +251,6 @@ public class MapManager : MonoBehaviour
 				goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
 				goalPuzzleRooms = Mathf.CeilToInt((float)(numRooms - 2 - goalHordeRooms) / 2.0f);
 				goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
-				goalTreasureRooms = Random.Range(goalReactionRooms, goalPuzzleRooms);
 			}
 
 			// Get references to all of the room prefab files
@@ -315,7 +312,6 @@ public class MapManager : MonoBehaviour
 
 	private bool generateRoom(List<RoomPrefab> rooms, Dictionary<string, int> numRoomTypes)
 	{
-		List<string> roomsNotToUse = new List<string>();
 		// Figure out which entrance the next room has to have to connect with the previous room
 		string lookingFor = "";
 		if (rooms.Count > 0)
@@ -337,7 +333,22 @@ public class MapManager : MonoBehaviour
 			}
 		}
 
-		bool roomSet = false; // becomes true when the room is safe to use
+		// Determine if we want to branch with this room. Chance to branch goes up the further that we are in the dungeon
+		bool willBranch = false;
+
+		/*if (rooms.Count > 0 && rooms.Count < numRooms - 1) // never branch on first or final rooms
+		{
+			float branchChance = (float)rooms.Count / (float)(numRooms - 2);
+			float r = Random.Range(0.0f, 1.0f);
+
+			if (branchChance >= r)
+			{
+				willBranch = true;
+			}
+		}*/
+
+		bool roomSet = false; 								// becomes true when the room is safe to use
+		List<string> roomsNotToUse = new List<string>(); 	// a list of all the rooms that we have tried that did not work
 
 		// Continue trying to pick a room until either a suitable one is found or all options are exhausted, upon which we scrap this room and back out to the previous one
 		while (!roomSet)
@@ -354,13 +365,6 @@ public class MapManager : MonoBehaviour
 
 				string fileName = f.Name.Substring(0, f.Name.Length - 7); // remove ".prefab"
 				string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
-
-				// currently only supports rooms with two entrances
-				if (e.Length > 2)
-				{
-					roomsNotToUse.Add(f.Name);
-					continue;
-				}
 
 				// Make sure that this room won't overlap with any existing rooms
 				if (rooms.Count > 0)
@@ -478,6 +482,16 @@ public class MapManager : MonoBehaviour
 						if (fileName.Contains("_P_") || fileName.Contains("_R_"))
 						{
 							if (e[0].ToString() != lookingFor)
+							{
+								roomsNotToUse.Add(f.Name);
+								continue;
+							}
+						}
+
+						// If this room is supposed to branch, then make sure we pick a room with at least 3 entrances
+						if (willBranch)
+						{
+							if (e.Length < 3)
 							{
 								roomsNotToUse.Add(f.Name);
 								continue;
