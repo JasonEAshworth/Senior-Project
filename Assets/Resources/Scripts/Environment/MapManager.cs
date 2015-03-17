@@ -269,6 +269,9 @@ public class MapManager : MonoBehaviour
 				return;
 			}
 
+			// Once the main path through the dungeon has been generated, replace a few of the rooms with rooms that can branch
+			generateSidePaths(roomsToUse);
+
 			// Once all of the rooms have been selected, set up the map and connect the rooms
 			foreach (RoomPrefab rp in roomsToUse)
 			{
@@ -332,20 +335,6 @@ public class MapManager : MonoBehaviour
 				break;
 			}
 		}
-
-		// Determine if we want to branch with this room. Chance to branch goes up the further that we are in the dungeon
-		bool willBranch = false;
-
-		/*if (rooms.Count > 0 && rooms.Count < numRooms - 1) // never branch on first or final rooms
-		{
-			float branchChance = (float)rooms.Count / (float)(numRooms - 2);
-			float r = Random.Range(0.0f, 1.0f);
-
-			if (branchChance >= r)
-			{
-				willBranch = true;
-			}
-		}*/
 
 		bool roomSet = false; 								// becomes true when the room is safe to use
 		List<string> roomsNotToUse = new List<string>(); 	// a list of all the rooms that we have tried that did not work
@@ -430,7 +419,7 @@ public class MapManager : MonoBehaviour
 				else
 				{
 					// Room must have the required entrance to connect with the previous room and must have another exit in addition to that
-					if (e.Contains(lookingFor) && e.Length > 1)
+					if (e.Contains(lookingFor) && e.Length == 2)
 					{
 						if (noRoomRepeats)	// don't include rooms we have used previously
 						{
@@ -482,16 +471,6 @@ public class MapManager : MonoBehaviour
 						if (fileName.Contains("_P_") || fileName.Contains("_R_"))
 						{
 							if (e[0].ToString() != lookingFor)
-							{
-								roomsNotToUse.Add(f.Name);
-								continue;
-							}
-						}
-
-						// If this room is supposed to branch, then make sure we pick a room with at least 3 entrances
-						if (willBranch)
-						{
-							if (e.Length < 3)
 							{
 								roomsNotToUse.Add(f.Name);
 								continue;
@@ -577,6 +556,33 @@ public class MapManager : MonoBehaviour
 			roomSet = generateRoom(rooms, newNumRoomTypes);
 		}
 		return true;
+	}
+
+	private void generateSidePaths(List<RoomPrefab> rooms)
+	{
+		// Get a list of all rooms that can be used for branching
+		List<string> potentialRooms = new List<string>();
+		foreach (FileInfo f in info)
+		{
+			string fileName = f.Name.Substring(0, f.Name.Length - 7); 	// remove ".prefab"
+			string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+
+			if (e.Length >= 3)
+			{
+				potentialRooms.Add(f.Name);
+			}
+		}
+
+		// Pick a random room from the dungeon aside from the start and boss room to replace with the branching room
+		int roomToBranch = Random.Range(1, rooms.Count - 1);
+		int i = roomToBranch;
+		do 
+		{
+
+
+			// Continue on to the next room in the range of 1 thru rooms.Count - 1
+			i = i == rooms.Count - 1 ? 1 : i + 1;
+		} while (i != roomToBranch);
 	}
 
 	// Loads room and returns true if loading for first time
