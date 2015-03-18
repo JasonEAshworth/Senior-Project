@@ -152,9 +152,7 @@ public class PlayerBase : CharacterBase
 		else if (p == PotionType.ATTACK) 
 		{
 			potionImg.enabled = true;
-			gameObject.AddComponent<AttackUpPotion> ();
-
-
+			//gameObject.AddComponent<AttackUpPotion> ();
 		}
 	}
 

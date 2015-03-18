@@ -97,7 +97,6 @@
      <Compile Include="Assets\Resources\Scripts\Enemy\EnemySpawner.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\MapManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\Arrow.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\AttackUpPotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\DoorController.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HastePotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HealthPotion.cs" />
@@ -126,6 +125,7 @@
      <Compile Include="Assets\Resources\Scripts\Gold.cs" />
      <Compile Include="Assets\Resources\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Resources\Scripts\rotation.cs" />
+     <Compile Include="Assets\Resources\Scripts\takePic.cs" />
      <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
      <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo_Player.cs" />
@@ -226,6 +226,7 @@
      <None Include="Assets\Rewired\Documentation\ReleaseNotes.txt" />
      <None Include="Assets\Shaders\Mat_Potion_01.shader" />
      <None Include="Assets\Shaders\TombFancy_1_Mat.shader" />
+     <None Include="Assets\Shaders\Mat_WallPlaster_1.shader" />
      <None Include="Assets\Shaders\Zombie_Mat.shader" />
      <None Include="Assets\Shaders\Mat_Barrel_1.shader" />
      <None Include="Assets\Shaders\Wall_8_1_Mat.shader" />
@@ -253,10 +254,10 @@
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P2T">
- <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
+ <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Exploder/3rd/P2T.dll</HintPath>
  </Reference>
  <Reference Include="Rewired_Core">
- <HintPath>Z:/profiledata/Desktop/SP2/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
+ <HintPath>C:/Users/SeniorProj/Desktop/senior project/trunk/Assets/Rewired/Internal/Libraries/Runtime/Rewired_Core.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

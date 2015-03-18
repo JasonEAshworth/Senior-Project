@@ -71,7 +71,8 @@ public class CharacterBase : MonoBehaviour
 		dead = true;
 		if (healthBar)
 		{
-			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
+			//the x value of sizeDelta is being set to 0.1f since an error will occur if it's set to 0.0f
+			healthBar.rectTransform.sizeDelta = new Vector2(0.1f, healthBarHeight);
 		}
 	}
 
@@ -80,7 +81,7 @@ public class CharacterBase : MonoBehaviour
 		health = maxHealth;
 		if (healthBar)
 		{
-			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta + (new Vector2 (healthBarWidth*1, 0.0f));
+			healthBar.rectTransform.sizeDelta = new Vector2(healthBarWidth, healthBarHeight);
 		}
 	}
 

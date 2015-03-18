@@ -12,6 +12,11 @@ public class Rogue : PlayerBase
 	private bool canAttack = true;
 	private float normalAttackDamage = 10.0f;
 
+	public void Awake()
+	{
+		classType = playerClass.ROGUE;
+	}
+
 	public override void basicAttack(string dir)
 	{
 		Debug.Log ("attacking");
@@ -53,6 +58,46 @@ public class Rogue : PlayerBase
 		useMana(30.0f);
 		StartCoroutine(Dash());
 	}
+
+
+
+	public IEnumerator Dash2()
+	{
+		yield return new WaitForSeconds (dashDur);
+		dash = false;
+		controllable = true;
+		GetComponent<Animator>().SetTrigger("Idle");
+	}
+
+	public void FixedUpdate2()
+	{
+		if(dash)
+		{
+			Debug.Log ("dashing");
+			elapsed += Time.deltaTime;
+			Vector3 moveVec = transform.forward * dashSpeed * Time.deltaTime;
+			moveVec = new Vector3(moveVec.x, verticalVelocity, moveVec.z);
+			//cc.Move(moveVec);
+			
+			
+			PlayerBase character = this.GetComponent<PlayerBase>();
+			PlayerManager plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+			int maxDist = 20; //hardcoded value - based on maxDist in the rewiredControl script
+			moveVec.y = 0.0f;
+			
+			
+			Vector3 newLocation = moveVec * character.moveMulti;
+			float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
+			//Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
+			// If the player is moving too far away from the center, they are stopped. If they're already
+			// too far away, they are only allowed to move closer to the center.
+			if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 
+			{
+				cc.Move(newLocation);
+				//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
+			}
+		}
+	}
 	
 	public IEnumerator Dash()
 	{
@@ -71,17 +116,14 @@ public class Rogue : PlayerBase
 			moveVec.y = 0.0f;
 			
 
-			Vector3 newLocation = moveVec * moveSpeed * Time.deltaTime * character.moveMulti;
+			Vector3 newLocation = moveVec * character.moveMulti;
 			float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
-			//Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
 			// If the player is moving too far away from the center, they are stopped. If they're already
 			// too far away, they are only allowed to move closer to the center.
 			if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 
 			{
 				cc.Move(newLocation);
-				//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
 			}
-
 
 			yield return new WaitForFixedUpdate();
 		}
