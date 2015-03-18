@@ -6,7 +6,8 @@ public enum PotionType
 	NONE,
 	HEALTH,
 	HASTE,
-	ATTACK
+	ATTACK,
+	BIG
 
 }
 
