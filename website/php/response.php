@@ -23,11 +23,6 @@
 		echo '<hr>';
 		echo '</div>';
 		echo '</div>';
-
-		echo $row["title"].'hello world';
-		echo $row["time"];
-		echo $row["pictureReference"];
-		echo $row["description"];
 	}
 	
 	$conn->close();
