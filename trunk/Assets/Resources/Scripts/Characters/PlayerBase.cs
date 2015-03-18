@@ -203,7 +203,7 @@ public class PlayerBase : CharacterBase
 
 	private bool checkForMana(float amt){
 	//takes in an amount of mana to check if attack can occur
-		if (mana - amt > 0)
+		if (mana - amt >= 0)
 			return true;
 		else
 			return false;

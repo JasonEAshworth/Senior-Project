@@ -19,6 +19,7 @@ public class HawkAI2 : MonoBehaviour {
 	private bool arrived = false;
 	public bool arrivedPerch = false;
 	private bool attacking = false;
+	private bool woodsDead = false;
 
 	// Transform needed where to perch on woodsman shoulder
 	private Transform perchPos;
@@ -76,6 +77,22 @@ public class HawkAI2 : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if(script.dead)
+		{
+			MeshRenderer wmr = transform.GetComponent<MeshRenderer>();
+			wmr.enabled = false;
+			woodsDead = true;
+		}
+
+		if(!script.dead && woodsDead)
+		{
+			transform.position = woodsman.transform.Find("hawkSpawn").position;
+			MeshRenderer wmr = transform.GetComponent<MeshRenderer>();
+			wmr.enabled = true;
+			woodsDead = false;
+
+		}
+
 		if (enemiesToAttack.Count > 0 && !hawkTarget) 
 		{
 			mode = 2;
@@ -89,8 +106,11 @@ public class HawkAI2 : MonoBehaviour {
 		// This mode will take the hawk to a trigger and activate it then return to the woodsman
 		if(mode == 4)
 		{
-			Vector3 targetVec = hawkTarget.transform.position - transform.position;
-			if(Vector3.Distance(transform.position,hawkTarget.transform.position) > 0.1f)
+			Vector3 targetXZ = new Vector3(hawkTarget.transform.position.x,transform.position.y,hawkTarget.transform.position.z);
+			Vector3 targetVec = targetXZ - transform.position;
+			targetVec.Normalize ();
+			transform.up = targetVec;
+			if(Vector3.Distance(transform.position,targetXZ) > 0.1f)
 			{
 				transform.position += (targetVec * speed * Time.deltaTime);
 
@@ -389,21 +409,7 @@ public class HawkAI2 : MonoBehaviour {
 //		}
 		
 	}
-	
-	void OnTriggerEnter(Collider c)
-	{
-		// If we hit a wall or door and in mode 2 then we must come back to the woodsman
-		// by setting the mode to 3.
-		if(c.gameObject.CompareTag("wall") || c.gameObject.CompareTag("door"))
-		{
-			if(mode == 2)
-			{
-				mode = 3;
-				initialPoint = Vector3.zero;
-				arrived = false;
-			}
-		}
-	}
+
 
 	// Helper function used by the sphere collider of the hawk to set 
 	// the enemyToAttack.
