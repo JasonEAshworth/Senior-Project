@@ -270,7 +270,7 @@ public class MapManager : MonoBehaviour
 			}
 
 			// Once the main path through the dungeon has been generated, replace a few of the rooms with rooms that can branch
-			generateSidePaths(roomsToUse);
+			List<RoomPrefab> sideRooms = setupSidePaths(roomsToUse);
 
 			// Once all of the rooms have been selected, set up the map and connect the rooms
 			foreach (RoomPrefab rp in roomsToUse)
@@ -558,33 +558,238 @@ public class MapManager : MonoBehaviour
 		return true;
 	}
 
-	private void generateSidePaths(List<RoomPrefab> rooms)
+	private List<RoomPrefab> setupSidePaths(List<RoomPrefab> rooms)
 	{
+		List<RoomPrefab> sideRooms = new List<RoomPrefab>();
+
 		// Get a list of all rooms that can be used for branching
 		List<string> potentialRooms = new List<string>();
 		foreach (FileInfo f in info)
 		{
 			string fileName = f.Name.Substring(0, f.Name.Length - 7); 	// remove ".prefab"
 			string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
-
+			
 			if (e.Length >= 3)
 			{
-				potentialRooms.Add(f.Name);
+				potentialRooms.Add(fileName);
 			}
 		}
-
-		// Pick a random room from the dungeon aside from the start and boss room to replace with the branching room
+		
+		// Pick a random room from the dungeon aside from the start and boss room to replace with a branching room
 		int roomToBranch = Random.Range(1, rooms.Count - 1);
 		int i = roomToBranch;
 		do 
 		{
+			// Figure out which branching rooms could be used for replacing this room
+			string pName = rooms[i].prefabName.Substring(0, rooms[i].prefabName.Length - 7);
+			string se = pName.Substring(pName.LastIndexOf("_") + 1);		// room to replace entrances
+			List<string> roomChoices = new List<string>();
+			
+			foreach (string roomName in potentialRooms)
+			{
+				string pe = roomName.Substring(roomName.LastIndexOf("_") + 1); 	// branching room entrances
+				
+				// Make sure that the branching room has the same two entrances that the room it's replacing does
+				if (pe.Contains(se[0].ToString()) && pe.Contains(se[1].ToString()))
+				{
+					roomChoices.Add(roomName);
+				}
+			}
 
+			bool success = false;
+			string branchName = "";
 
-			// Continue on to the next room in the range of 1 thru rooms.Count - 1
-			i = i == rooms.Count - 1 ? 1 : i + 1;
+			Debug.Log (rooms[i].position[0] + " " + rooms[i].position[1]);
+			Debug.Log ("\n");
+			
+			foreach (string roomName in roomChoices)
+			{
+				string pe = roomName.Substring(roomName.LastIndexOf("_") + 1);
+				pe = pe.Replace(se[0].ToString(), "");
+				pe = pe.Replace(se[1].ToString(), "");
+				
+				foreach (char e in pe)
+				{
+					if (generateSidePaths(rooms, sideRooms, e.ToString(), rooms[i].position))
+					{
+						branchName = roomName + ".prefab";
+						success = true;
+						break;
+					}
+				}
+
+				if (success)
+				{
+					break;
+				}
+			}
+
+			if (success)
+			{
+				Debug.Log ("work");
+				rooms[i] = new RoomPrefab(branchName, rooms[i].position, rooms[i].exit, rooms[i].type);
+				break;
+			}
+			else
+			{
+				break;
+			}
+			
+			// Continue on to the next room in the range of 1 thru rooms.Count - 2
+			i = i == rooms.Count - 2 ? 1 : i + 1;
 		} while (i != roomToBranch);
+
+		// Take the created side path and add it to the dungeon
+
+
+		return sideRooms;
 	}
 
+	private bool generateSidePaths(List<RoomPrefab> mainPath, List<RoomPrefab> sidePath, string lastExit, int[] position)
+	{
+		// Figure out which entrance the next room has to have to connect with the previous room
+		bool roomSet = false; 								// becomes true when the room is safe to use
+		List<string> roomsNotToUse = new List<string>(); 	// a list of all the rooms that we have tried that did not work
+
+		if (noRoomRepeats)
+		{
+			foreach (RoomPrefab rp in mainPath)
+			{
+				roomsNotToUse.Add(rp.prefabName);
+			}
+		}
+
+		string lookingFor = "";
+		switch (lastExit)
+		{
+		case "N":
+			lookingFor = "S";
+			position[1]++;
+			break;
+		case "W":
+			lookingFor = "E";
+			position[0]--;
+			break;
+		case "E":
+			lookingFor = "W";
+			position[0]++;
+			break;
+		case "S":
+			lookingFor = "N";
+			position[1]--;
+			break;
+		}
+
+		Debug.Log (position [0] + " " + position [1]);
+		
+		while (!roomSet)
+		{
+			// Look through all room prefabs and select all of the rooms that can connect with the previous one that haven't been used yet
+			List<string> potentialRooms = new List<string>();
+			foreach (FileInfo f in info)
+			{
+				if (roomsNotToUse.Contains(f.Name))
+				{
+					continue;
+				}
+				
+				string fileName = f.Name.Substring(0, f.Name.Length - 7); // remove ".prefab"
+				string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+				
+				bool willOverlap = false;
+				foreach (RoomPrefab rp in mainPath)
+				{
+					if (rp.position[0] == position[0] && rp.position[1] == position[1])
+					{
+						willOverlap = true;
+						break;
+					}
+				}
+				if (willOverlap)
+				{
+					roomsNotToUse.Add(f.Name);
+					continue;
+				}
+
+				if (sidePath.Count == 0 && !fileName.Contains("_H_"))
+				{
+					roomsNotToUse.Add(f.Name);
+					continue;
+				}
+				else if (sidePath.Count == 1 && !fileName.Contains("_T_"))
+				{
+					roomsNotToUse.Add(f.Name);
+					continue;
+				}
+
+				// If we got here, the room is good to use
+				potentialRooms.Add(fileName);
+			}
+
+			// If no rooms work for branching from this one, then we have to scrap this one
+			if (potentialRooms.Count == 0)
+			{
+				// If we have a room to go back to, scrap this room and continue generation from the previous one
+				if (sidePath.Count > 0)
+				{
+					sidePath.RemoveAt(sidePath.Count-1);
+					return false;
+				}
+				// Otherwise, we are at the starter room, and generation has failed for all possible room combos, so we give up :(
+				else
+				{
+					break;
+				}
+			}
+			else
+			{
+				Debug.Log ("found potential");
+			}
+
+			// Select one of these rooms at random and create the room
+			int idx = Random.Range(0, potentialRooms.Count);
+			string roomName = potentialRooms[idx];
+			string thisExit = roomName.Substring(roomName.LastIndexOf("_") + 1);
+			Direction exitDir = Direction.NONE;
+			if (lookingFor != "")
+			{
+				thisExit = thisExit.Replace(lookingFor, "");
+			}
+			switch (thisExit)
+			{
+			case "N":
+				exitDir = Direction.NORTH;
+				break;
+			case "W":
+				exitDir = Direction.WEST;
+				break;
+			case "E":
+				exitDir = Direction.EAST;
+				break;
+			case "S":
+				exitDir = Direction.SOUTH;
+				break;
+			}
+			string type = "_H_";
+			if (sidePath.Count > 0)
+			{
+				type = "_T_";
+			}
+			RoomPrefab newRoom = new RoomPrefab(roomName + ".prefab", position, exitDir, type);
+			sidePath.Add(newRoom);
+			roomsNotToUse.Add(roomName + ".prefab");
+			// If we have all rooms of the dungeon, return a success
+			if (sidePath.Count == 2)
+			{
+				return true;
+			}
+			// Set up generation of the next room if not done
+
+			roomSet = generateSidePaths(mainPath, sidePath, thisExit, position);
+		}
+		return false;
+	}
+	
 	// Loads room and returns true if loading for first time
 	private bool loadRoom(RoomNode roomNode)
 	{
