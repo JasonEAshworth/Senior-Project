@@ -9,10 +9,8 @@ public class rewiredControl : MonoBehaviour {
 	public int playerId = 0; // The Rewired player id of this character
 	
 	public float moveSpeed = 5.5f;
-	public float bulletSpeed = 15.0f;
-	public GameObject bulletPrefab;
 
-	public int maxDist = 20; // Distance the players can be seperated from one another
+	public int maxDist = 10; // Distance the players can be seperated from one another
 	
 	private Player player; // The Rewired Player
 	private CharacterController cc;
@@ -25,19 +23,25 @@ public class rewiredControl : MonoBehaviour {
 	private bool utilityUp;
 	private bool utilityDown;
 	
-	PlayerManager plyrMgr;
+	private static PlayerManager plyrMgr;
 	
 	private PlayerBase character;
 	//for jumping and rotating torwards direction of travel
 	//public float jumpForce = 0.50f;
 	//public float verticalVelocity = 0.0f;
-	public float rotationSpeed = 1600.0f;
+	public float rotationSpeed = 360.0f;
 	
 	[System.NonSerialized] // Don't serialize this so the value is lost on an editor script recompile.
 	private bool initialized;
 	
 	void Awake() {
 		cc = GetComponent<CharacterController>();
+		character = GetComponent<PlayerBase>();
+		playerId = character.playerNum;
+		if(!plyrMgr)
+		{
+			plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+		}
 	}
 	
 	private void Initialize() {
@@ -70,33 +74,11 @@ public class rewiredControl : MonoBehaviour {
 		jump = player.GetButtonDown ("A");
 		//utilityUp = player.GetButtonUp ("Y");
 		utilityDown = player.GetButtonDown ("Y");
-		//Utility = Y
-		
 	}
 	
 	private void ProcessInput() {
-		
-		plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-		
-		
-		//Debug.Log (plyrMgr.players[0]);
-		//Debug.Log (playerId);
-		//Determine which character we are controlling.
-		switch (playerId) {
-		case 0:
-			character = plyrMgr.woods;
-			break;
-		case 2:
-			character = plyrMgr.sorc;
-			break;
-		case 1:
-			character = plyrMgr.rogue;
-			break;
-		case 3:
-			character = plyrMgr.war;
-			break;
-		}
-		//Debug.Log (character);
+		moveVector.y = 0.0f;
+
 		//Handle jumping and add it to the movement vector
 		if (jump && !character.dead)
 		{
@@ -116,16 +98,13 @@ public class rewiredControl : MonoBehaviour {
 		}		
 
 		character.addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
-		//character.addForce(new Vector3(0.0f, Physics.gravity.y  * Time.deltaTime, 0.0f));
-
 
 		if (!character.dead)
 		{
 			// Rotate the character to face in the direction that they will move
-			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.01f)
+			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.0f)
 			{
 				transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)), rotationSpeed * Time.deltaTime);
-				//transform.rotation = Quaternion.RotateTowards (transform.rotation, Quaternion.LookRotation (new Vector3 (moveVector.x, 0.0f, moveVector.z)),  Time.deltaTime);
 			}
 
 			// Process fire button down
@@ -160,27 +139,34 @@ public class rewiredControl : MonoBehaviour {
 			}
 
 			// Process movement
-			moveVector.y = 0.0f;
-			
 			if(moveVector.x != 0.0f || moveVector.z != 0.0f || moveVector.y != 0.0f) 
 			{
-				Vector3 newLocation = moveVector * moveSpeed * Time.deltaTime * character.moveMulti;
-				float newDistFromCenter = Vector3.Distance(newLocation + character.transform.position, plyrMgr.playersCenter);
-				//Debug.Log("New Dist: " + newDistFromCenter + " Cur Dist: " + Vector3.Distance(character.transform.position, plyrMgr.playersCenter) + "Max Dist: " + maxDist);
-				// If the player is moving too far away from the center, they are stopped. If they're already
-				// too far away, they are only allowed to move closer to the center.
-				if (newDistFromCenter <= maxDist || newDistFromCenter < Vector3.Distance(character.transform.position, plyrMgr.playersCenter)) 
+				//if the player's distance from the group's center exceeds maxDist on the x or z
+				//axis, they are stopped from moving on that axis. If they're already too far away,
+				//they are only allowed to move closer to the center.
+				Vector3 movement = moveVector * moveSpeed * Time.deltaTime * character.moveMulti;
+				Vector3 oldDistVec = character.transform.position - plyrMgr.playersCenter;
+				Vector3 newDistVec = oldDistVec + movement;
+
+				float newX = Mathf.Abs(newDistVec.x);
+				float oldX = Mathf.Abs(oldDistVec.x);
+
+				float newZ = Mathf.Abs(newDistVec.z);
+				float oldZ = Mathf.Abs(oldDistVec.z);
+
+				if(newX > maxDist && newX > oldX)
 				{
-					cc.Move(newLocation);
-					//character.addForce(moveVector);// * moveSpeed * Time.deltaTime * character.moveMulti);
-				} 
-				else
-				{
-					Debug.Log(player.descriptiveName + " couldn't move!");
+					movement.x = 0.0f;
 				}
+				if(newZ > maxDist && newZ > oldZ)
+				{
+					movement.z = 0.0f;
+				}
+
+				cc.Move(movement);
 			}
 
-			if (new Vector3(moveVector.x, 0.0f, moveVector.z).magnitude > 0.2f)
+			if(moveVector.magnitude > 0.0f)
 			{
 				character.GetComponent<Animator>().SetBool("Run", true);
 			}

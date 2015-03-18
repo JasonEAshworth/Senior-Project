@@ -23,6 +23,17 @@ public class Warrior : PlayerBase
 
 	private float whirlwindDamageDelay = 0.2f;
 
+	public void Awake()
+	{
+		classType = playerClass.WARRIOR;
+	}
+
+//	public void Start()
+//	{
+////		Vector2 mb = manaBar.rectTransform.sizeDelta;
+////		mb.x = 0.0f;
+////		manaBar.rectTransform.sizeDelta = mb;
+//	}
 
 	public override void basicAttack(string dir)
 	{
