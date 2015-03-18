@@ -97,6 +97,7 @@
      <Compile Include="Assets\Resources\Scripts\Enemy\EnemySpawner.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\MapManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\Arrow.cs" />
+     <Compile Include="Assets\Resources\Scripts\Environment\Props\BigPotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\DoorController.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HastePotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HealthPotion.cs" />
