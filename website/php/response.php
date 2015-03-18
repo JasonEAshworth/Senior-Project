@@ -2,10 +2,8 @@
 	include_once("config.php");
 	
 	if (!$conn) {
-		echo "not connected";
+		die;
 	}
-	
-	echo "connected successfully\r\n";
 	
 	$results = $conn->query("SELECT title, time, pictureReference, description FROM blogs");
 
