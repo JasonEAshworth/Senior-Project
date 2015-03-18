@@ -10,7 +10,7 @@
 	$results = $conn->query("SELECT title, time FROM blogs");
 
 	while($row = $results->fetch_assoc()) {
-		echo $row["title"]; . "\r\n"
+		echo $row["title"] . "\r\n";
 		echo $row["time"];
 	}
 	
