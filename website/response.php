@@ -8,8 +8,11 @@
 	echo "connected successfully";
 	
 	$results = $conn->query("SELECT title, time FROM blogs");
-	
-	echo $results;
+
+	while($row = $results->fetch_assoc()) {
+		echo $row["title"];
+
+	}
 	
 	$conn->close();
 
