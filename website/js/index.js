@@ -3,7 +3,7 @@
 $(document).ready(function(){
 	jQuery.ajax({
 		type: "POST",
-		url: "php/reponse.php",
+		url: "../php/response.php",
 		success:function(response){
 			$("#posts").append(response);
 		},
