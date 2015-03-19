@@ -97,7 +97,7 @@
      <Compile Include="Assets\Resources\Scripts\Enemy\EnemySpawner.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\MapManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\Arrow.cs" />
-     <Compile Include="Assets\Resources\Scripts\Environment\Props\BigPotion.cs" />
+     <Compile Include="Assets\Resources\Scripts\Environment\Props\AttackUpPotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\DoorController.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HastePotion.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\Props\HealthPotion.cs" />
@@ -122,6 +122,7 @@
      <Compile Include="Assets\Resources\Scripts\Environment\Triggers\TriggerTrap.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\cameraControl.cs" />
      <Compile Include="Assets\Resources\Scripts\Environment\cameraControl2.cs" />
+     <Compile Include="Assets\Resources\Scripts\GUI\CharacterStats.cs" />
      <Compile Include="Assets\Resources\Scripts\GUI\HealthScaling.cs" />
      <Compile Include="Assets\Resources\Scripts\Gold.cs" />
      <Compile Include="Assets\Resources\Scripts\ObjectPool.cs" />
@@ -175,6 +176,7 @@
      <None Include="Assets\Shaders\Mat_SM_Cheese.shader" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
+     <None Include="Assets\Shaders\Mat_Firestorm.shader" />
      <None Include="Assets\Shaders\Mat_Bench.shader" />
      <None Include="Assets\Shaders\NewShader.shader" />
      <None Include="Assets\Shaders\Mat_Chair.shader" />

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Exploder;
 
 public class Woodsman : PlayerBase
 {
@@ -11,7 +12,7 @@ public class Woodsman : PlayerBase
 	public Animator anim;
 	private LineRenderer lr;
 	private GameObject bomb;
-	public GameObject objectHit;
+	public GameObject pool;
 
 	// bool inits
 	private bool canFire = true;
@@ -32,36 +33,25 @@ public class Woodsman : PlayerBase
 	private float lineLength = 35.0f;
 	private Vector3 lineEndPoint = Vector3.zero;
 	public int hitCount = 0;
-	private float dmg = 20.0f;
 
-	public void init()
+	public void Awake()
 	{
-		// initialize the linerenderer to hold only 2 positions
-		lr = gameObject.GetComponent<LineRenderer> ();
-		lr.SetVertexCount (lineSegments);
-		lr.SetWidth(lineWidth, lineWidth);
+		classType = playerClass.WOODSMAN;
 
-		// get the animator object
-		anim = GetComponent<Animator> ();
-
-		health = 100;
-		maxHealth = health;
-
-		maxMana = 3.0f;
-		mana = 0.0f;
-
+		anim = GetComponent<Animator>();
+		
 		// instantiate the hawk at the hawkspawn position
 		hawkPos = transform.Find("hawkSpawn");
 		hawk = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Hawk"),hawkPos.position,Quaternion.identity) as GameObject;
-
+		
 		// acquire the position from where to shoot arrows
 		shootPosition = transform.Find("shootPos");
-
+		
 		// set the moveTimer to 0 at the beginning
 		canMoveTimer = 0.0f;
-
+		
 		// Get the hawk script to be able to set modes
-		hawkScripts = hawk.GetComponent<HawkAI2> ();
+		hawkScripts = hawk.GetComponent<HawkAI2>();
 	}
 
 	protected override void Update()
@@ -73,7 +63,7 @@ public class Woodsman : PlayerBase
 		if(timeBNAttacks <= 0.0f)
 		{
 			timeBNAttacks = 5.0f;
-			hawkScripts.enemiesToAttack.Clear ();
+			hawkScripts.enemiesToAttack.Clear();
 		}
 
 		if(hitCount >= 5)
@@ -82,34 +72,6 @@ public class Woodsman : PlayerBase
 			addMana(1.0f);
 			hitCount = 0;
 		}
-
-		// Cast out a ray to figure out if the aim assist will hit anything
-		// if so make it the contact point of the collision for the end of the line
-		RaycastHit hit;
-		Ray rayCast = new Ray (transform.position, transform.forward);
-		if(Physics.Raycast(rayCast,out hit, lineLength,~LayerMask.GetMask ("CaptureBox")))
-		{
-			lineEndPoint = new Vector3(hit.point.x,shootPosition.position.y,hit.point.z);
-			objectHit = hit.collider.gameObject; 
-		}
-		else
-		{
-			lineEndPoint = (shootPosition.forward*lineLength)+new Vector3(transform.position.x,shootPosition.position.y,transform.position.z);
-		}
-
-		// render line
-		for(int i=0;i<lineSegments;i++)
-		{
-			if(i == 0)
-			{
-				lr.SetPosition(i,shootPosition.position);
-			}
-			if(i == 1)
-			{
-				lr.SetPosition(i,lineEndPoint);
-			}
-		}
-
 
 		hawk.transform.position = new Vector3 (hawk.transform.position.x, hawkPos.position.y, hawk.transform.position.z);
 		if (!canFire) 
@@ -170,22 +132,12 @@ public class Woodsman : PlayerBase
 			else if(canFire)
 			{
 				anim.SetTrigger("Attack");
-				if(objectHit.CompareTag("Enemy"))
+				GameObject arrow = pool.GetComponent<ObjectPool>().New();
+				if(arrow != null)
 				{
-					objectHit.SendMessage("takeDamage",dmg *attackMultiplier);
-					hawkScripts.enemiesToAttack.Add (objectHit.gameObject);
-					hitCount += 1;
-					EnemyBase scr = objectHit.GetComponent<EnemyBase>();
-					scr.damageTaken += dmg;
+					arrow.GetComponent<BasicArrow>().basic = true;
 				}
-				else if(objectHit.CompareTag("HawkTrigger"))
-				{
-					Debug.Log ("added a target");
-					hawk.SendMessage("setTarget",objectHit);
-				}
-//				GameObject bullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManBullet"), shootPosition.position, Quaternion.LookRotation(transform.forward)) as GameObject;
-//				//bullet.transform.up = transform.forward;
-//				canFire = false;
+				canFire = false;
 			}
 		}
 	}
@@ -193,11 +145,28 @@ public class Woodsman : PlayerBase
 	public void specialAttackWoods(float time)
 	{
 		anim.SetTrigger("Attack");
-//		GameObject specialBullet = Instantiate (Resources.Load ("Prefabs/Character/WoodsMan/woodsManSpecial"), shootPosition.position, Quaternion.identity) as GameObject;
-//		woodsSpecialBulletScript scr = specialBullet.GetComponent<woodsSpecialBulletScript>();
-//		scr.heldTime = time;
 
+		GameObject[] arrows = new GameObject[3];
+		for(int i = 0; i < arrows.Length; i++)
+		{
+			arrows[i] = pool.GetComponent<ObjectPool>().New();
+		}
+		if(arrows[0] != null)
+		{
+			arrows[0].GetComponent<BasicArrow>().basic = false;
+		}
+		Vector3 angle = new Vector3 (0.0f, 12.0f, 0.0f);
+		if(arrows[1] != null)
+		{
+			arrows[1].GetComponent<BasicArrow>().basic = false;
+			arrows[1].transform.Rotate(angle);
+		}
+		if(arrows[2] != null)
+		{
+			arrows[2].GetComponent<BasicArrow>().basic = false;
+			arrows[2].transform.Rotate(angle * -1);
 
+		}
 		canSpecial = false;
 	}
 	
@@ -206,33 +175,29 @@ public class Woodsman : PlayerBase
 		//Debug.Log ("warrior class ability");
 		if (dir == "down") 
 		{
+			GameObject go = GameObject.Find ("Prop_SM_Table_A");
+			if(go)
+			{
+				go.GetComponent<Explodable>().SendMessage("Boom");
+				Debug.LogWarning("BOOOOOOOOOM!!!!!!!!!!");
+			}
+			else
+			{
+				Debug.LogWarning("No BOOOOOOOOOM!!!!!!!!!!");
+			}
 
 			if(!bombActive && mana >= 1.0f)
 			{
-				useMana(1.0f);
-
-				Vector3 bombPos = Vector3.zero;
-				Vector3 bombUP = Vector3.zero;
-				RaycastHit hit;
-				Ray rayCast = new Ray (transform.position, -Vector3.up);
-				if(Physics.Raycast(rayCast,out hit, 5.0f))
-				{
-					bombPos = hit.point; 
-					bombUP = hit.transform.up;
-				}
-				bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,bombPos.y + 0.261836f,transform.position.z),Quaternion.identity) as GameObject;
-				bomb.transform.up = bombUP;
+				mana -= 1.0f;
+				Debug.Log (mana);
+				//bomb = Instantiate(Resources.Load ("Prefabs/Character/WoodsMan/bomb"),new Vector3(transform.position.x,0.0f,transform.position.z),Quaternion.identity) as GameObject;
 				bombActive = true;
 			}
 			else
 			{
-				if(bomb)
-				{
-					bombBehavior scr = bomb.GetComponent<bombBehavior>();
-					scr.explode = true;
-					bombActive = false;
-				}
-
+				//bombBehavior scr = bomb.GetComponent<bombBehavior>();
+				//scr.explode = true;
+				bombActive = false;
 			}
 //			if (hawkScripts.mode != 2 && hawkScripts.mode != 3  && mana > hawkCost) 
 //			{
