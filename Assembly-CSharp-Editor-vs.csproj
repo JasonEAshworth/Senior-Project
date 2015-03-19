@@ -91,6 +91,7 @@
      <None Include="Assets\Shaders\Mat_SM_Cheese.shader" />
      <None Include="Assets\Rewired\Documentation\licences.txt" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\MaterialPlatform.shader" />
+     <None Include="Assets\Shaders\Mat_Firestorm.shader" />
      <None Include="Assets\Shaders\Mat_Bench.shader" />
      <None Include="Assets\Shaders\NewShader.shader" />
      <None Include="Assets\Shaders\Mat_Chair.shader" />

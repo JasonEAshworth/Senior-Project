@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum PotionType
 {
@@ -14,6 +15,10 @@ public enum PotionType
 public class PotionBase : MonoBehaviour 
 {	
 	public PotionType type;	// set in the inspector to assign potion type
+
+	public void Start()
+	{
+	}
 
 	void Update()
 	{

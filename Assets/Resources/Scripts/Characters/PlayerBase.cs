@@ -31,7 +31,7 @@ public class PlayerBase : CharacterBase
 	//public RawImage healthBar;
 	public RawImage manaBar;
 
-	public float mana;
+	public float mana = 100.0f;
 	public float maxMana = 100.0f;
 
 	protected bool special = false;
@@ -152,7 +152,7 @@ public class PlayerBase : CharacterBase
 		else if (p == PotionType.ATTACK) 
 		{
 			potionImg.enabled = true;
-			//gameObject.AddComponent<AttackUpPotion> ();
+			gameObject.AddComponent<AttackUpPotion> ();
 		}
 	}
 

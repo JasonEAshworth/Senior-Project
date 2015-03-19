@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-[RequireComponent (typeof(CharacterController))]
-
 public class cameraControl : MonoBehaviour
 {	
 	private bool isOrthographic;

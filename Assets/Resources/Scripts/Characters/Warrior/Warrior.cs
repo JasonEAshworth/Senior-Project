@@ -28,13 +28,6 @@ public class Warrior : PlayerBase
 		classType = playerClass.WARRIOR;
 	}
 
-//	public void Start()
-//	{
-////		Vector2 mb = manaBar.rectTransform.sizeDelta;
-////		mb.x = 0.0f;
-////		manaBar.rectTransform.sizeDelta = mb;
-//	}
-
 	public override void basicAttack(string dir)
 	{
 		if (dir == "down")
