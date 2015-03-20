@@ -9,10 +9,10 @@ public class Sorcerer : PlayerBase
 	private float timeButtonHeld;
 	private float blizzardDamage = 20.0f;
 
-	/*void Start(){
-		base.Start ();
-		GetComponentInChildren<Light>().color = new Color(1.0f, 0.6f, 0.6f);
-	}*/
+	public float iceSpikeMana = 2.0f;
+	public float fireballMana = 5.0f;
+	public float blizzardMana = 25.0f;
+	public float meteorMana = 25.0f;
 
 	public void Awake()
 	{
@@ -21,7 +21,7 @@ public class Sorcerer : PlayerBase
 
 	protected override void Update(){
 		base.Update();
-		manaRegen (2.5f);
+		manaRegen(2.5f);
 	}
 
 	public override void basicAttack(string dir)
@@ -35,49 +35,39 @@ public class Sorcerer : PlayerBase
 		float timeSinceAttack = Time.time - attackStarted;
 		if (dir == "up")
 		{
-			//When the attack key is released, check to see how long it was
-			//held to determin what attack to do.
-			if(timeSinceAttack < 1.0f / attackSpeed || mana < 25.0f)
+			//Check with attackType to see which element to use
+			if(attackType == 0)
 			{
-				//Check with attackType to see which basic attack to use
-				if(attackType == 1)
+				//When the attack key is released, check to see how long it was
+				//held to determine what attack to do.
+				if(timeSinceAttack >= 1.0f / attackSpeed && checkForMana(blizzardMana))
 				{
-					if(!normal)
-						StartCoroutine(Fireball());
+					if(!special)
+						StartCoroutine(Blizzard());
 				}
-				else
+				else if(checkForMana(iceSpikeMana))
 				{
 					if(!normal)
 						StartCoroutine(IceSpike());
 				}
 			}
-			else
+			else if(attackType == 1)
 			{
-				//Check with attackType to see which basic attack to use
-				//mana -= 25.0f;
-				if(attackType == 1)
+				//When the attack key is released, check to see how long it was
+				//held to determin what attack to do.
+				if(timeSinceAttack >= 1.0f / attackSpeed && checkForMana(meteorMana))
 				{
 					if(!special)
 						StartCoroutine(Meteor());
 				}
-				else
+				else if(checkForMana(fireballMana))
 				{
-					if(!special)
-						StartCoroutine(Blizzard());
+					if(!normal)
+						StartCoroutine(Fireball());
 				}
-				Debug.Log("sorceress special attack");
 			}
 		}
 	}
-	
-	/*public override void itemAbility()
-	{
-		if(Input.GetKeyDown(itemAbilityKey))
-		{
-			Debug.Log ("sorceress item");
-			//Use Item
-		}
-	}*/
 
 	public override void classAbility(string dir)
 	{
@@ -103,7 +93,7 @@ public class Sorcerer : PlayerBase
 	private IEnumerator Blizzard(){
 		special = true;
 
-		useMana (25.0f);
+		useMana (blizzardMana);
 		GetComponent<Animator> ().SetTrigger ("IceHeavy");
 		Quaternion startAngle = Quaternion.AngleAxis (-30, Vector3.up);
 		Quaternion stepAngle = Quaternion.AngleAxis (5, Vector3.up);
@@ -156,7 +146,7 @@ public class Sorcerer : PlayerBase
 	private IEnumerator Fireball(){
 		normal = true;
 
-		useMana(5.0f);
+		useMana(fireballMana);
 		GetComponent<Animator> ().SetTrigger ("FireLight");
 		Transform pos = transform.Find("shootPos");
 		GameObject Fireball = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Fireball"), pos.position, transform.rotation) as GameObject;
@@ -168,7 +158,7 @@ public class Sorcerer : PlayerBase
 	private IEnumerator Meteor(){
 		special = true;
 
-		useMana (25.0f);
+		useMana (meteorMana);
 		GetComponent<Animator> ().SetTrigger ("FireHeavy");
 		Vector3 pos = transform.position;
 		GameObject Meteor = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Meteor"), pos, transform.rotation) as GameObject;
@@ -185,7 +175,7 @@ public class Sorcerer : PlayerBase
 	private IEnumerator IceSpike(){
 		normal = true;
 
-		useMana(2.0f);
+		useMana(iceSpikeMana);
 		GetComponent<Animator> ().SetTrigger ("IceLight");
 		Transform pos = transform.Find("shootPos");
 		GameObject icicle = Instantiate (Resources.Load ("Prefabs/Character/Sorceress/SorceressAbilities/Icicle_Shot"), pos.position, transform.rotation) as GameObject;

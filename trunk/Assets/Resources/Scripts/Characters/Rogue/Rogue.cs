@@ -8,6 +8,8 @@ public class Rogue : PlayerBase
 	private bool dash = false;
 	public float dashDur = 0.3f;
 	public float dashSpeed = 30.0f;
+	public float dashMana = 30.0f;
+	public float stealthMana = 8.0f;
 	private float elapsed = 0.0f;
 	private bool canAttack = true;
 	private float normalAttackDamage = 10.0f;
@@ -32,7 +34,7 @@ public class Rogue : PlayerBase
 		//held to determine what attack to do.
 		if (dir == "up" && canAttack)
 		{
-			if(timeSinceAttack < 1.0f / attackSpeed)
+			if(timeSinceAttack < 1.0f / attackSpeed || !checkForMana(dashMana))
 			{
 				Debug.Log ("rogue basic attack");
 				//Basic Attack
@@ -55,7 +57,7 @@ public class Rogue : PlayerBase
 
 	public override void specialAttack()
 	{
-		useMana(30.0f);
+		useMana(dashMana);
 		StartCoroutine(Dash());
 	}
 
@@ -193,20 +195,18 @@ public class Rogue : PlayerBase
 		//Increase the rogue's energy if it is not full and he is visible
 		if(visibility == 1.0f && mana < 100.0f)
 		{
-			addMana(8.0f * Time.deltaTime);
-			if(mana > 100.0f)
-			{
-				mana = 100.0f;
-			}
+			manaRegen(8.0f);
 		}
 		//Deplete the rogue's energy if he is invisible
-		else if(mana > 0.0f && visibility == 0.0f)
+		else if(visibility == 0.0f)
 		{
-			useMana(8.0f * Time.deltaTime);
-			//If the rogue runs out of energy, he becomes visible
-			if(mana <= 0.0f)
+			if(checkForMana(stealthMana * Time.deltaTime))
 			{
-				mana = 0.0f;
+				useMana(stealthMana * Time.deltaTime);
+			}
+			else
+			{
+				//If the rogue runs out of energy, he becomes visible
 				visibility = 1.0f;
 				canAttack = true;
 				GetComponent<Animator>().SetTrigger("Idle");
@@ -217,11 +217,6 @@ public class Rogue : PlayerBase
 	protected override void FixedUpdate()
 	{
 		base.FixedUpdate();
-//		AnimationInfo[] asi = GetComponent<Animator>().GetCurrentAnimationClipState(0);
-//		for(int i = 0; i < asi.Length; i++)
-//		{
-//			Debug.LogError(asi[i].clip.name);
-//		}
 	}
 	
 	protected void OnTriggerEnter(Collider collider)

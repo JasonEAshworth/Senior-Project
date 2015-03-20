@@ -12,8 +12,6 @@ public enum playerClass
 
 public class PlayerBase : CharacterBase 
 {
-	public Text scoreText;
-
 	public float respawnTimer = 0.0f;
 	public float timeToRespawn = 0.5f;
 
@@ -27,12 +25,12 @@ public class PlayerBase : CharacterBase
 	public float verticalVelocity = 0.0f;
 	public playerClass classType;
 
-	protected PotionType item;
-	//public RawImage healthBar;
-	public RawImage manaBar;
+	public PotionType item;
 
 	public float mana = 100.0f;
 	public float maxMana = 100.0f;
+
+	public int score = 0;
 
 	protected bool special = false;
 	protected bool normal = false;
@@ -64,8 +62,6 @@ public class PlayerBase : CharacterBase
 
 	protected virtual void Update()
 	{
-		string tmp = score.ToString () + " GOLD";
-		scoreText.text = tmp;
 		// Handle respawn timer
 		if (dead)
 		{
@@ -85,10 +81,6 @@ public class PlayerBase : CharacterBase
 			return;
 		}
 
-		if(visibility == 0.0f)
-		{
-			useMana(20.0f);
-		}
 		base.takeDamage(amount);
 	}
 
@@ -100,8 +92,6 @@ public class PlayerBase : CharacterBase
 			score = 0;
 		}
 		base.kill();
-		health = 0.0f;
-		dead = true;
 		respawnTimer = timeToRespawn;
 	}
 
@@ -141,18 +131,27 @@ public class PlayerBase : CharacterBase
 
 		if (p == PotionType.HEALTH) 
 		{
-			potionImg.enabled = true;
 			gameObject.AddComponent<HealthPotion> ();
 		} 
 		else if (p == PotionType.HASTE) 
 		{
-			potionImg.enabled = true;
 			gameObject.AddComponent<HastePotion> ();
 		} 
 		else if (p == PotionType.ATTACK) 
 		{
-			potionImg.enabled = true;
 			gameObject.AddComponent<AttackUpPotion> ();
+		}
+	}
+
+	public void addScore(GameObject p)
+	{
+		if (p.tag == "Coin")
+		{
+			score += 1;
+		}
+		if (p.tag == "Gold")
+		{
+			score += 10;
 		}
 	}
 
@@ -165,77 +164,37 @@ public class PlayerBase : CharacterBase
 	{
 		if (item != PotionType.NONE) 
 		{
-			potionImg.enabled = false;
 			SendMessage("usePotion", this);
 			item = PotionType.NONE;
 		}
 	}
 
-	public void useMana(float amt){
-	//checks and then subtracts mana from pool
-		if (checkForMana (amt))
-			mana -= amt;
-		else
-			return;
-
-		amt = amt / maxMana;
-		if (manaBar != null)
-		{
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta - (new Vector2 (322*amt, 0.0f));
-		}
-
+	public void useMana(float amt)
+	{
+		mana -= amt;
+		mana = Mathf.Clamp(mana, 0, maxMana);
 	}
 
-	public void addMana(float amt){
+	public void addMana(float amt)
+	{
 		mana += amt;
-
-		if(mana + amt > maxMana)
-			mana = maxMana;
-
-		amt = amt / maxMana;
-		if (manaBar) {
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322 * amt, 0.0f));
-			if(manaBar.rectTransform.sizeDelta.x > 0){
-				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
-			}
-		}
+		mana = Mathf.Clamp(mana, 0, maxMana);
 	}
 
-	private bool checkForMana(float amt){
-	//takes in an amount of mana to check if attack can occur
-		if (mana - amt >= 0)
+	public bool checkForMana(float amt)
+	{
+		//takes in an amount of mana to check if attack can occur
+		if(mana - amt >= 0)
 			return true;
 		else
 			return false;
 	}
 
-	public void manaRegen(float perSec){
-		//mana regeneration function for any players with
-		//mana regenerate.
-		if (manaBar == null || manaBar.rectTransform.sizeDelta.x > 0)
-			return;
-
-		perSec = perSec * Time.deltaTime;
-		mana += perSec;
-		Mathf.Clamp (mana, 0, maxMana);
-		float amt = perSec / maxMana;
-
-		if (manaBar != null)
-		{
-			manaBar.rectTransform.sizeDelta = manaBar.rectTransform.sizeDelta + (new Vector2 (322*amt, 0.0f));
-			if(manaBar.rectTransform.sizeDelta.x > 0){
-				manaBar.rectTransform.sizeDelta = new Vector2(0, manaBar.rectTransform.sizeDelta.y);
-			}
-		}
-	}
-
-	public void formMana(int size){
-	//when the player starts, either fill his mana bar or not
-		Debug.Log ("making the mana bar");
-		if(size == 1 && manaBar != null)
-			manaBar.rectTransform.sizeDelta = new Vector2 (0, manaBar.rectTransform.sizeDelta.y);
-		else if(size == 0 && manaBar != null)
-			manaBar.rectTransform.sizeDelta = new Vector2 (-322, manaBar.rectTransform.sizeDelta.y);
+	public void manaRegen(float perSec)
+	{
+		//mana regeneration function for any players with mana regenerate.
+		mana += perSec * Time.deltaTime;
+		mana = Mathf.Clamp(mana, 0, maxMana);
 	}
 
 	public virtual void basicAttack(string dir){}

@@ -141,6 +141,7 @@
      <None Include="Assets\Shaders\Mat_SM_OpenBarrel.shader" />
      <None Include="Assets\Shaders\Mat_GoldBar_1.shader" />
      <None Include="Assets\Shaders\Mat_SM_Turkey.shader" />
+     <None Include="Assets\Shaders\Mat_SM_Barrel_B.shader" />
      <None Include="Assets\Shaders\Bookshelf_1_Mat.shader" />
      <None Include="Assets\Shaders\IceShader.shader" />
      <None Include="Assets\Shaders\Mat_IronMaiden.shader" />
@@ -209,6 +210,7 @@
      <None Include="Assets\Shaders\Mat_JudasCradle2.shader" />
      <None Include="Assets\Plugins\ShaderForge\Example Assets\Shaders\LightWrapping.shader" />
      <None Include="Assets\Shaders\Mat_Candle_1.shader" />
+     <None Include="Assets\Shaders\Mat_WeaponRack.shader" />
      <None Include="Assets\Shaders\Wall_4_Cutout_1_Mat.shader" />
      <None Include="Assets\Shaders\Mat_SM_CopperPot.shader" />
      <None Include="Assets\Shaders\Bones_1_Mat.shader" />
