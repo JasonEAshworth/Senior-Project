@@ -6,7 +6,6 @@ public class CharacterBase : MonoBehaviour
 {
 	public float health = 100.0f;
 	public float maxHealth = 100.0f;
-	public float score = 0.0f;
 	public bool dead = false;
 
 	public float moveSpeed = 10.0f;
@@ -23,27 +22,12 @@ public class CharacterBase : MonoBehaviour
 	protected float currentDamageCooldown = 0.0f;	// the character has this many seconds before they can take damage again
 
 	public float attackMultiplier = 1.0f;
-	public RawImage healthBar;
-	public float healthBarWidth;
-	public float healthBarHeight;
-
-	public RawImage potionImg;
-
+	
 	public GameObject characterMesh;
-
+	
 	protected virtual void Start()
 	{
 		cc = GetComponent<CharacterController>();
-
-		if (healthBar)
-		{
-			if (potionImg)
-			{
-				potionImg.enabled = false;
-			}
-			healthBarWidth = healthBar.rectTransform.rect.width;
-			healthBarHeight = healthBar.rectTransform.rect.height;
-		}
 	}
 
 	protected virtual void FixedUpdate()
@@ -67,22 +51,13 @@ public class CharacterBase : MonoBehaviour
 
 	public virtual void kill()
 	{
-		float amt4Health = health / maxHealth;
+		health = 0.0f;
 		dead = true;
-		if (healthBar)
-		{
-			//the x value of sizeDelta is being set to 0.1f since an error will occur if it's set to 0.0f
-			healthBar.rectTransform.sizeDelta = new Vector2(0.1f, healthBarHeight);
-		}
 	}
 
 	public virtual void respawn()
 	{
 		health = maxHealth;
-		if (healthBar)
-		{
-			healthBar.rectTransform.sizeDelta = new Vector2(healthBarWidth, healthBarHeight);
-		}
 	}
 
 	public virtual void takeDamage(float amount)
@@ -96,13 +71,9 @@ public class CharacterBase : MonoBehaviour
 			StartCoroutine("flashRed");
 		}
 
-		float amt4Health = amount / maxHealth;
-		if (healthBar != null)
-		{
-			healthBar.rectTransform.sizeDelta = healthBar.rectTransform.sizeDelta - (new Vector2 (healthBarWidth*amt4Health, 0.0f));
-		}
 		if (health <= 0)
 		{
+			health = 0.0f;
 			kill();
 		}
 		else
@@ -111,20 +82,9 @@ public class CharacterBase : MonoBehaviour
 		}
 	}
 
-	public virtual void addScore(GameObject p)
+	public IEnumerator Wait(float sec)
 	{
-		if (p.tag == "Coin")
-		{
-			score += 1;
-		}
-		if (p.tag == "Gold")
-		{
-			score += 10;
-		}
-	}
-
-	public IEnumerator Wait(float sec){
-		yield return new WaitForSeconds (sec);
+		yield return new WaitForSeconds(sec);
 	}
 
 	public IEnumerator flashRed()

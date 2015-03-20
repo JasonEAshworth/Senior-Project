@@ -12,7 +12,7 @@ public class Woodsman : PlayerBase
 	public Animator anim;
 	private LineRenderer lr;
 	private GameObject bomb;
-	public GameObject pool;
+	public ObjectPool pool;
 
 	// bool inits
 	private bool canFire = true;
@@ -132,7 +132,7 @@ public class Woodsman : PlayerBase
 			else if(canFire)
 			{
 				anim.SetTrigger("Attack");
-				GameObject arrow = pool.GetComponent<ObjectPool>().New();
+				GameObject arrow = pool.New();
 				if(arrow != null)
 				{
 					arrow.GetComponent<BasicArrow>().basic = true;
@@ -149,7 +149,7 @@ public class Woodsman : PlayerBase
 		GameObject[] arrows = new GameObject[3];
 		for(int i = 0; i < arrows.Length; i++)
 		{
-			arrows[i] = pool.GetComponent<ObjectPool>().New();
+			arrows[i] = pool.New();
 		}
 		if(arrows[0] != null)
 		{
@@ -172,7 +172,6 @@ public class Woodsman : PlayerBase
 	
 	public override void classAbility(string dir)
 	{
-		//Debug.Log ("warrior class ability");
 		if (dir == "down") 
 		{
 			GameObject go = GameObject.Find ("Prop_SM_Table_A");

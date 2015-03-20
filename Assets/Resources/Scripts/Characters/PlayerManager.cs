@@ -77,17 +77,16 @@ public class PlayerManager : MonoBehaviour
 			stats.name = pBase.classType.ToString();
 
 			CharacterStats cStat = stats.GetComponent<CharacterStats>();
+			cStat.player = pBase;
 
-			pBase.healthBar = stats.transform.Find("HealthBar").GetComponent<RawImage>();
-			cStat.healthBar = pBase.healthBar;
-			pBase.manaBar = stats.transform.Find("ManaBar").GetComponent<RawImage>();
-			pBase.manaBar.texture = manaTex;
-			//cStat.manaBar = pBase.manaBar;
-			pBase.potionImg = stats.transform.Find("Potion").GetComponent<RawImage>();
-			cStat.potion = pBase.potionImg;
-			stats.transform.Find("Emblem/Character").GetComponent<RawImage>().texture = profTex;
-			pBase.scoreText = stats.transform.Find("Score").GetComponent<Text>();
-			cStat.score = pBase.scoreText;
+			cStat.healthBar.enabled = true;
+			cStat.manaBar.texture = manaTex;
+			cStat.manaBar.enabled = true;
+			cStat.potion.enabled = true;
+			RawImage prof = stats.transform.Find("Emblem/Character").GetComponent<RawImage>();
+			prof.texture = profTex;
+			prof.enabled = true;
+			cStat.scoreText.enabled = true;
 		}
 	}
 

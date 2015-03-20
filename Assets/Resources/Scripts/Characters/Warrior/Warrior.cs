@@ -17,7 +17,7 @@ public class Warrior : PlayerBase
 	private float normalAttackDamage = 25.0f;
 	private float comboAttackDamage = 50.0f;
 	private float comboAttackForce = 15.0f;
-	private float specialAttackCost = 25.0f;
+	private float whirlwindMana = 25.0f;
 	private float specialAttackDuration = 2.0f;
 	private float specialAttackForce = 20.0f;
 
@@ -41,9 +41,9 @@ public class Warrior : PlayerBase
 		if (dir == "up" && canAttack) {
 			//When the attack key is released, check to see how long it was
 			//held to determine what attack to do.
-			if (timeSinceAttack > specialChargeTime / attackSpeed && mana >= specialAttackCost){
+			if (timeSinceAttack > specialChargeTime / attackSpeed && checkForMana(whirlwindMana)){
 				// special attack
-				useMana(specialAttackCost);
+				useMana(whirlwindMana);
 				GetComponent<Animator>().SetTrigger("Whirlwind");
 			}
 			else {
