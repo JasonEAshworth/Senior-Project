@@ -26,8 +26,6 @@ public class PlayerManager : MonoBehaviour
 	readonly GameObject[] bySlot = new GameObject[GameSession.MaxPlayers];
 	Transform centerMarker;
 
-	static readonly string[] arrowMaterials = { "FacingArrowRedMat", "FacingArrowBlueMat", "FacingArrowGreenMat", "FacingArrowYellowMat" };
-
 	void Awake()
 	{
 		Instance = this;
@@ -37,6 +35,10 @@ public class PlayerManager : MonoBehaviour
 			hud[i] = GameObject.Find("Player" + (i + 1));
 		GameObject c = GameObject.Find("Center");
 		centerMarker = c != null ? c.transform : null;
+		// The marker's cube was a 2015 debug aid: it showed as a gray box at the party's feet.
+		if (c != null)
+			foreach (Renderer r in c.GetComponentsInChildren<Renderer>())
+				r.enabled = false;
 	}
 
 	void Start()
@@ -114,10 +116,16 @@ public class PlayerManager : MonoBehaviour
 		pBase.attackMultiplier *= 1.0f + 0.15f * slot.attackLevel;
 		pBase.score = slot.gold;
 
-		Transform arrow = player.transform.Find("FacingArrow");
-		Material ring = Resources.Load<Material>("Materials/Characters/" + arrowMaterials[slot.index]);
-		if (arrow != null && ring != null)
+		// The Rogue names this child FacingArrow and the other heroes ArrowFacing. The 2015
+		// materials draw it as a solid gray square in Unity 6, so it gets an unlit one in the
+		// slot color that keeps the texture's transparency.
+		Transform arrow = player.transform.Find("FacingArrow") ?? player.transform.Find("ArrowFacing");
+		if (arrow != null)
+		{
+			Material ring = Fx.Unlit(slot.Color);
+			ring.mainTexture = Resources.Load<Texture2D>("Textures/Characters/FacingArrowTemp");
 			arrow.GetComponent<Renderer>().sharedMaterial = ring;
+		}
 
 		// A late joiner starts in the room the rest of the party is in.
 		foreach (GameObject other in players)

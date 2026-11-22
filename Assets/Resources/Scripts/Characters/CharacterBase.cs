@@ -24,6 +24,8 @@ public class CharacterBase : MonoBehaviour
 	public float attackMultiplier = 1.0f;
 	
 	public GameObject characterMesh;
+	// Set when the visible model is not characterMesh, as on an enemy wearing a skeleton skin.
+	[System.NonSerialized] public Renderer[] flashRenderers;
 	Color[] baseColors;
 	
 	protected virtual void Start()
@@ -88,11 +90,22 @@ public class CharacterBase : MonoBehaviour
 		yield return new WaitForSeconds(sec);
 	}
 
+	Material[] FlashMaterials()
+	{
+		if (flashRenderers == null)
+			return characterMesh.GetComponent<Renderer>().materials;
+		var mats = new System.Collections.Generic.List<Material>();
+		foreach (Renderer r in flashRenderers)
+			if (r != null)
+				mats.AddRange(r.materials);
+		return mats.ToArray();
+	}
+
 	public IEnumerator flashRed()
 	{
 		float start = Time.time;
 		float end = start + damageInvulnTime;
-		Material[] modelMats = characterMesh.GetComponent<Renderer>().materials;
+		Material[] modelMats = FlashMaterials();
 		// Flash relative to each material's own color, so tinted enemy variants keep their tint.
 		if (baseColors == null || baseColors.Length != modelMats.Length)
 		{

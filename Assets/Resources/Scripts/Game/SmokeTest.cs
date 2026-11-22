@@ -88,6 +88,7 @@ public class SmokeTest : MonoBehaviour
 		yield return WaitScene("Title");
 		yield return new WaitForSecondsRealtime(1.0f);
 		yield return Shot("01_title");
+		yield return ControlsTest();
 		GameSession.ResetSeals();
 		Check(GameSession.Join(new InputBinding { keyboardLayout = 0 }) != null, "player 1 joins on the keyboard");
 		GameSession.NewRun();
@@ -145,8 +146,13 @@ public class SmokeTest : MonoBehaviour
 				Check(pm.PlayerFor(1) != null && pm.PlayerFor(1).GetComponent<PlayerBase>().slot == p2, "player 2's hero has its slot");
 			}
 		}
+		if (index == 0)
+			foreach (PlayerSlot s in GameSession.Joined)
+				Check(RingColor(pm.PlayerFor(s.index)) == s.Color, s.Label + "'s facing ring shows the slot color");
 		if (index == 1 && pm.players.Count >= 2)
 			yield return DownedTest(pm);
+		if (ch.variants.Any(v => !string.IsNullOrEmpty(v.skin)))
+			yield return SkinTest(ch, pm, rooms);
 
 		// Walk the party room to room, entering each the way a doorway would.
 		for (int r = 1; r < rooms.Count; r++)
@@ -173,6 +179,8 @@ public class SmokeTest : MonoBehaviour
 		EnemyBase boss = EnemyBase.All.FirstOrDefault(e => e != null && e.IsBoss && !e.dead);
 		string want = ch.isFinal ? "King Restless" : ch.miniBoss.name;
 		Check(boss != null && boss.bossName == want, ch.id + ": boss is " + (boss != null ? boss.bossName : "missing") + " (want " + want + ")");
+		if (!ch.isFinal && SkinSwap.Exists(ch.miniBoss.skin))
+			Check(boss != null && boss.GetComponent<SkinSwap>() != null, ch.id + ": boss wears " + ch.miniBoss.skin);
 		// Let the fight run so the boss uses its special attacks against the party.
 		foreach (GameObject p in pm.players)
 			if (p != null) p.GetComponent<PlayerBase>().shieldUntil = Time.time + 30;
@@ -199,6 +207,130 @@ public class SmokeTest : MonoBehaviour
 			yield return WaitScene("Hub");
 			Check(GameSession.HasSeal(ch.sealIndex), ch.id + ": seal awarded");
 		}
+	}
+
+	/// Every skinned variant wears its skin, swings or shoots at a hero, and leaves its skin
+	/// behind to collapse when killed.
+	IEnumerator SkinTest(ChapterDefinition ch, PlayerManager pm, List<RoomNode> rooms)
+	{
+		GameObject hero = pm.players.FirstOrDefault(p => p != null && p.activeInHierarchy);
+		if (hero == null || rooms.Count == 0 || rooms[0].obj == null)
+			yield break;
+		foreach (GameObject p in pm.players)
+			if (p != null) p.GetComponent<PlayerBase>().shieldUntil = Time.time + 60;
+		// Aim ranged spawns into the room, not through a wall into the void.
+		Vector3 toCenter = RoomCenter(rooms[0].obj) - hero.transform.position;
+		toCenter.y = 0.0f;
+		Vector3 dir = toCenter.sqrMagnitude > 1.0f ? toCenter.normalized : Vector3.forward;
+		foreach (EnemyVariant v in ch.variants.Where(v => !string.IsNullOrEmpty(v.skin)))
+		{
+			// Skins come from store packs that a fresh clone does not have.
+			if (!SkinSwap.Exists(v.skin))
+			{
+				Note(v.skin + " is not installed; " + v.name + " stays a zombie");
+				continue;
+			}
+			bool ranged = v.replaces == enemyArchtype.RANGED;
+			// A shot left over from the last archer would pass this check by itself.
+			foreach (BossProjectile old in UnityEngine.Object.FindObjectsByType<BossProjectile>(FindObjectsSortMode.None))
+				Destroy(old.gameObject);
+			Vector3 at = hero.transform.position + dir * (ranged ? 8.0f : 1.3f) + Vector3.up * 0.3f;
+			EnemyBase e = ChapterDirector.SpawnVariant(v, at, rooms[0].obj.transform);
+			SkinSwap skin = e != null ? e.GetComponent<SkinSwap>() : null;
+			Animator anim = skin != null && skin.skin != null ? skin.skin.GetComponent<Animator>() : null;
+			Check(anim != null && anim.runtimeAnimatorController != null, ch.id + ": " + v.name + " wears " + v.skin);
+			if (e == null)
+				continue;
+			float start = Time.time;
+			float until = Time.realtimeSinceStartup + 6.0f;
+			bool acted = false;
+			while (!acted && Time.realtimeSinceStartup < until && e != null)
+			{
+				acted = ranged ? UnityEngine.Object.FindAnyObjectByType<BossProjectile>() != null : e.attackStartedTime > start;
+				yield return null;
+			}
+			Check(acted, ch.id + ": " + v.name + (ranged ? " shoots" : " swings") + " at a hero in range");
+			yield return CloseUp(ch.id + "_skin_" + v.name.Replace(" ", "_"), e != null ? e.transform : null, hero.transform);
+			if (e == null)
+				continue;
+			GameObject body = skin != null ? skin.skin : null;
+			e.takeDamage(e.health + 100000);
+			yield return null;
+			Check(body != null && body.transform.parent == null, ch.id + ": " + v.name + " collapses when killed");
+		}
+	}
+
+	/// Four frames of a skin in action with the camera pulled in, to check that it animates, faces
+	/// its target, and holds its gear. The follow camera is paused for the burst.
+	IEnumerator CloseUp(string name, Transform subject, Transform hero)
+	{
+		Camera cam = Camera.main;
+		if (cam == null || subject == null || hero == null)
+		{
+			yield return Shot(name);
+			yield break;
+		}
+		cameraControl follow = cam.GetComponent<cameraControl>();
+		bool following = follow != null && follow.enabled;
+		if (follow != null)
+			follow.enabled = false;
+		Vector3 pos = cam.transform.position;
+		Quaternion rot = cam.transform.rotation;
+		for (int i = 0; i < 4 && subject != null; i++)
+		{
+			Vector3 mid = (subject.position + hero.position) * 0.5f;
+			cam.transform.position = mid + new Vector3(0.0f, 3.5f, -4.5f);
+			cam.transform.LookAt(mid + Vector3.up);
+			yield return Shot(name + "_" + i);
+			yield return new WaitForSeconds(0.2f);
+		}
+		cam.transform.SetPositionAndRotation(pos, rot);
+		if (follow != null)
+			follow.enabled = following;
+	}
+
+	static Vector3 RoomCenter(GameObject room)
+	{
+		Renderer[] rs = room.GetComponentsInChildren<Renderer>();
+		if (rs.Length == 0)
+			return room.transform.position;
+		Bounds b = rs[0].bounds;
+		foreach (Renderer r in rs)
+			b.Encapsulate(r.bounds);
+		return b.center;
+	}
+
+	/// Rebinding swaps keys instead of doubling them up, saves, resets, and the screen opens.
+	IEnumerator ControlsTest()
+	{
+		PlayerControls.ResetToDefaults();
+		string space = PlayerControls.KeysName(0, BindSlot.Jump);
+		PlayerControls.BindKey(0, BindSlot.Jump, UnityEngine.InputSystem.Key.J);
+		Check(PlayerControls.KeysName(0, BindSlot.Jump) == PlayerControls.KeyName(UnityEngine.InputSystem.Key.J)
+			&& PlayerControls.KeysName(0, BindSlot.Attack) == space, "rebinding jump to J moves attack to the old jump key");
+		PlayerControls.BindKey(0, BindSlot.Pause, UnityEngine.InputSystem.Key.Numpad0);
+		Check(PlayerControls.KeysName(1, BindSlot.Jump) == PlayerControls.KeyName(UnityEngine.InputSystem.Key.RightShift),
+			"a key taken by the other layout leaves that layout's other keys alone");
+		PlayerControls.BindPad(PlayerAction.Attack, UnityEngine.InputSystem.LowLevel.GamepadButton.South);
+		Check(PlayerControls.PadName(PlayerAction.Attack) == "A" && PlayerControls.PadName(PlayerAction.Jump) == "X",
+			"rebinding a gamepad button swaps it with the action that had it");
+		PlayerControls.ResetToDefaults();
+		Check(PlayerControls.KeysName(0, BindSlot.Jump) == space && PlayerControls.PadName(PlayerAction.Jump) == "A",
+			"reset restores the default controls");
+		ControlsMenu.Show();
+		yield return null;
+		Check(ControlsMenu.IsOpen, "the controls screen opens");
+		yield return Shot("01_controls");
+		Destroy(FindAnyObjectByType<ControlsMenu>().gameObject);
+		yield return null;
+	}
+
+	static Color RingColor(GameObject hero)
+	{
+		if (hero == null)
+			return Color.clear;
+		Transform ring = hero.transform.Find("FacingArrow") ?? hero.transform.Find("ArrowFacing");
+		return ring != null ? ring.GetComponent<Renderer>().sharedMaterial.color : Color.clear;
 	}
 
 	IEnumerator DownedTest(PlayerManager pm)

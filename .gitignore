@@ -43,3 +43,14 @@ crashlytics-build.properties
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Asset Store packs and the skins built from them. Their license forbids sharing the files,
+# so they stay on the build machine; the game falls back to the zombies without them.
+/[Aa]ssets/[Ss]tore/
+/[Aa]ssets/[Ss]tore.meta
+/[Aa]ssets/DungeonCharacters/
+/[Aa]ssets/DungeonCharacters.meta
+/[Aa]ssets/GiantSpider/
+/[Aa]ssets/GiantSpider.meta
+/[Aa]ssets/LowPoly Fantasy Monsters Pack*/
+/[Aa]ssets/LowPoly Fantasy Monsters Pack*.meta

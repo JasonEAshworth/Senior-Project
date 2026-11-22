@@ -38,7 +38,7 @@ public class EnemyArchtypeMelee : EnemyBase
 
 				if(!attacking && pDistance <= attackDistance)
 				{
-					GetComponent<Animator>().SetTrigger("attack");
+					PlayAttack(GetComponent<Animator>());
 					attacking = true;
 				}
 				else

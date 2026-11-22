@@ -1,12 +1,12 @@
 using UnityEngine;
 
-/// Pause: any joined player's pause button (Esc, Backspace, or start). Offers resume, restart,
-/// volume, dropping a player out, and leaving to the hub or the title.
+/// Pause: any joined player's pause button (Esc, Backspace, or start by default). Offers resume,
+/// the controls, restart, volume, dropping a player out, and leaving to the hub or the title.
 public class PauseMenu : MonoBehaviour
 {
 	public static bool Paused { get; private set; }
 	int highlight;
-	const int Items = 4;
+	const int Items = 5;
 
 	void OnDestroy()
 	{
@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
 	void Update()
 	{
-		if (SceneFlow.Busy || (Time.timeScale == 0.0f && !Paused))
+		if (SceneFlow.Busy || ControlsMenu.IsOpen || (Time.timeScale == 0.0f && !Paused))
 			return;   // results or game over own the screen
 		foreach (PlayerSlot s in GameSession.Joined)
 		{
@@ -52,9 +52,10 @@ public class PauseMenu : MonoBehaviour
 		switch (i)
 		{
 			case 0: Toggle(); break;
-			case 1: Leave("MainScene", true); break;
-			case 2: Leave("Hub", true); break;
-			case 3: Leave("Title", true); break;
+			case 1: ControlsMenu.Show(); break;
+			case 2: Leave("MainScene", true); break;
+			case 3: Leave("Hub", true); break;
+			case 4: Leave("Title", true); break;
 		}
 	}
 
@@ -73,23 +74,23 @@ public class PauseMenu : MonoBehaviour
 
 	void OnGUI()
 	{
-		if (!Paused)
+		if (!Paused || ControlsMenu.IsOpen)
 			return;
 		GUI.depth = -100;
 		ArcadeUI.Begin();
 		float w = ArcadeUI.Width;
 		ArcadeUI.Panel(new Rect(0, 0, w, ArcadeUI.VirtualHeight), new Color(0, 0, 0, 0.55f));
-		var r = new Rect(w / 2 - 260, 90, 520, 540);
+		var r = new Rect(w / 2 - 260, 50, 520, 610);
 		ArcadeUI.Panel(r, new Color(0.05f, 0.04f, 0.04f, 0.95f));
 		ArcadeUI.Frame(r, ArcadeUI.Gold);
 		ArcadeUI.Text(new Rect(r.x, r.y + 14, r.width, 50), "PAUSED", 44, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
 
-		string[] labels = { "Resume", "Restart chapter", "Quit to hub", "Quit to title" };
+		string[] labels = { "Resume", "Controls", "Restart chapter", "Quit to hub", "Quit to title" };
 		for (int i = 0; i < labels.Length; i++)
 			if (ArcadeUI.Button(new Rect(r.x + 110, r.y + 80 + i * 56, 300, 46), labels[i], 20, i == highlight))
 				Choose(i);
 
-		float y = r.y + 316;
+		float y = r.y + 372;
 		ArcadeUI.Text(new Rect(r.x + 40, y, 140, 24), "Music", 18, Color.white);
 		MusicPlayer.MusicVolume = GUI.HorizontalSlider(new Rect(r.x + 180, y + 6, 280, 20), MusicPlayer.MusicVolume, 0.0f, 1.0f);
 		ArcadeUI.Text(new Rect(r.x + 40, y + 34, 140, 24), "Sound", 18, Color.white);

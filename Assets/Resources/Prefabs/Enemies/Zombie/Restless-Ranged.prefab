@@ -224,7 +224,7 @@ MonoBehaviour:
   attacking: 0
   attackDistance: 7
   giveUpThreshold: 30
-  attackDamage: 1
+  attackDamage: 7
   partOfHorde: 0
   manager: {fileID: 0}
   target: {fileID: 0}

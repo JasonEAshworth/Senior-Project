@@ -38,6 +38,7 @@ public class EnemyBase : CharacterBase
 	public string displayName = "";
 	[System.NonSerialized] public float lastHitTime = -100.0f;
 	[System.NonSerialized] public bool scaled;
+	[System.NonSerialized] public float attackStartedTime = -100.0f;
 
 	public bool IsBoss { get { return !string.IsNullOrEmpty(bossName); } }
 
@@ -121,11 +122,23 @@ public class EnemyBase : CharacterBase
 			VariantBehavior vb = GetComponent<VariantBehavior>();
 			if (vb != null)
 				vb.OnDeath();
+			SkinSwap skin = GetComponent<SkinSwap>();
+			if (skin != null)
+				skin.OnDeath();
 			PowerUp.MaybeDrop(transform.position, IsBoss ? 1.0f : 0.08f);
 			if (IsBoss && ChapterDirector.Instance != null)
 				ChapterDirector.Instance.OnBossDefeated(this);
 		}
 		Destroy(gameObject);
+	}
+
+	/// Starts the swing on the enemy's own rig and tells its skin, if it wears one, to swing too.
+	protected void PlayAttack(Animator anim)
+	{
+		attackStartedTime = Time.time;
+		// The unarmed and ranged zombies have no controller; triggering one only logs a warning.
+		if (anim != null && anim.runtimeAnimatorController != null)
+			anim.SetTrigger("attack");
 	}
 
 	protected void moveToPosition(Vector3 pos, float dt)

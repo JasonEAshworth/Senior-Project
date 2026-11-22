@@ -15,9 +15,10 @@ public class EnemyVariant
 	public float healthMultiplier = 1.0f;
 	public float damageMultiplier = 1.0f;
 	public float speedMultiplier = 1.0f;
-	public Color glowColor = Color.black;   // black = no glow light
+	public Color glowColor = Color.black;   // the color of its shots; black uses the default
 	public VariantTrait trait = VariantTrait.None;
 	public int points = 100;
+	public string skin = "";               // a prefab in a Resources/Skins folder; empty or not installed keeps the zombie
 }
 
 [System.Serializable]
@@ -31,6 +32,7 @@ public class MiniBossConfig
 	public float damage = 18.0f;
 	public float speed = 3.2f;
 	public MiniBossAttack[] attacks = { MiniBossAttack.Slam };
+	public string skin = "";
 }
 
 /// One chapter of the run: its dungeon, look, enemies, mini-boss, and music. The final level

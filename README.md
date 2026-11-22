@@ -49,6 +49,11 @@ middle of a chapter. Two players can share one keyboard; everyone else uses a ga
 Each player picks a hero with left and right in the lobby. A player can drop out from the pause
 menu, or by holding the ability button in the hub.
 
+These are the defaults. **Controls (F1)** on the title screen and in the hub, **Controls** in the
+pause menu, or a gamepad's Back button opens a screen that rebinds every key for both keyboard
+layouts and every gamepad button. A key already in use swaps with the one it replaces, and the
+choices are saved.
+
 | Action | Keyboard, left (WASD) | Keyboard, right (arrows) | Any gamepad |
 | --- | --- | --- | --- |
 | Move | W A S D | Arrow keys | Left stick or d-pad |
@@ -76,6 +81,21 @@ Every build first runs **Prepare Game Content**, which rebuilds the room catalog
 missing chapter assets and scenes. The WebGL build goes to `Build/WebGL`; the live site is that
 folder, published on the `gh-pages` branch.
 
+### Store art (optional)
+
+Some enemies wear models from the Asset Store. Their license forbids sharing the files, so they
+are not in this repo. Without them, those enemies stay zombies and everything else works.
+
+| Pack | Publisher | Used for |
+| --- | --- | --- |
+| Dungeon Skeletons Pack | Polygon Blacksmith | Skeleton enemies and the Gravewarden |
+| Giant Spiders Animated | Starsupial | Cellars spiders and tarantulas |
+| LowPoly Fantasy Monsters Pack (free demo) | TS WORK | Goblins, the hobgoblin Jailer, wolves, the troll Butcher |
+
+Get each pack on the Asset Store, download it in **Window > Package Manager > My Assets**, and
+import it. The next build moves it to `Assets/Store` (git-ignored), shrinks its textures for the
+web build, and builds the skins. **Rebuild Enemy Skins** does the same on demand.
+
 **Automated check:** the Windows build (`Build/Windows/RiseOfTheRestless.exe`) run with `-smoketest <folder>` plays the whole game by itself
 (every chapter, drop-in, revive, every boss, the ending, and a game over) and writes `report.txt`
 and screenshots to the folder.
@@ -88,6 +108,9 @@ and screenshots to the folder.
 - `MapManager` (the team's room-graph generator) builds each chapter from the `RoomCatalog`.
 - `GameSession` keeps the players, lives, score, seals, and high scores between scenes.
 - `ChapterDirector` runs a chapter: look, variants, the mini-boss, continues, game over, results.
+- A variant or mini-boss can name a **skin**. `SkinSwap` hides the zombie and shows that model
+  over it; the zombie's AI and attack timing stay in charge, and the skin copies its walk, run,
+  attacks, flinches, and death. `SkinContent` (editor) builds the skins from store packs.
 - Scenes: `Title` (lobby and attract mode), `Hub`, `MainScene` (every chapter), `Ending`.
 - Music is original, written by `Tools/compose_music.py` (needs numpy and soundfile).
 
@@ -104,17 +127,20 @@ and screenshots to the folder.
   the ranged zombie threw an exception every physics tick when no player was in range; King
   Restless's health bar was never assigned, so his setup threw; enemies crashed when no player was
   alive; the attack potion wiped out other damage bonuses; the camera logged on every physics
-  tick; the dungeon generator listed room files on disk, which only works in the editor.
+  tick; the dungeon generator listed room files on disk, which only works in the editor; the
+  heroes' facing rings drew as solid gray squares, and a debug cube followed the party around.
 - **Cleanup:** 319 components that pointed at deleted scripts, a corrupt scene (`Map_4_2.unity`,
   still in the history), empty prefabs, generated project files, and empty folders are gone.
 - **WebGL:** textures use Crunch compression for WebGL only, keeping the download under 100 MB.
+- **Ranged enemies attack.** In 2015 their shot timer was commented out and their bullet prefab
+  was missing, so archers and spitters never fired.
 
 ## Known gaps from 2015
 
 - The **Rogue** and **Woodsman** textures were never committed; they use plain placeholder colors.
 - The **potions** are untextured white models; their halo color shows the type.
-- All enemies share the one zombie model; chapter variants differ by color, size, glow, stats, and
-  behavior.
+- Without the store art, all enemies share the one zombie model; chapter variants differ by
+  color, size, glow, stats, and behavior.
 
 ## License
 

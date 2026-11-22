@@ -25,7 +25,9 @@ public class EnemyArchtypeRanged : EnemyBase {
 	{
 		mTransform = transform;
 		shootPos = transform.Find ("shootPos");
-		aR = 2f;
+		aR = 2.2f;
+		// Stagger the first shot so a group does not fire in one volley.
+		attackTime = Random.Range(0.0f, aR);
 	}
 	// Update is called once per frame
 	protected override void FixedUpdate() 
@@ -54,9 +56,8 @@ public class EnemyArchtypeRanged : EnemyBase {
 				attackTime = Time.deltaTime + attackTime;
 				if(attackTime >= aR)
 				{
-					//Debug.Log ("Firing Arrows!");
-					//Attack(aR);
 					attackTime = 0.0f;
+					StartCoroutine(Shoot());
 				}
 				moveMulti = 0.2f;
 			}
@@ -81,9 +82,25 @@ public class EnemyArchtypeRanged : EnemyBase {
 		}
 	}
 
-	public void Attack ()
+	/// The 2015 version never fired: its timer was commented out and its bullet prefab is gone.
+	IEnumerator Shoot()
 	{
-		GameObject bullet = Instantiate(Resources.Load ("Prefabs/Enemies/RestlessBullet"),shootPos.position,Quaternion.identity) as GameObject;
-		bullet.transform.up = transform.forward;
+		attackStartedTime = Time.time;
+		// Let the draw or cast animation lead the shot.
+		yield return new WaitForSeconds(0.35f);
+		if (dead || player == null)
+			yield break;
+		Vector3 from = transform.position + Vector3.up * 1.1f + transform.forward * 0.6f;
+		Vector3 dir = player.transform.position - transform.position;
+		dir.y = 0.0f;
+		BossProjectile.Fire(from, dir.normalized * 11.0f, attackDamage, ShotColor());
+	}
+
+	Color ShotColor()
+	{
+		VariantBehavior vb = GetComponent<VariantBehavior>();
+		if (vb != null && vb.variant != null && vb.variant.glowColor.maxColorComponent > 0.01f)
+			return vb.variant.glowColor;
+		return new Color(0.6f, 1.0f, 0.4f);
 	}
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/// Turns a stock zombie into a chapter variant (tint, size, stats, glow) and runs its trait:
+/// Turns a stock zombie into a chapter variant (skin, tint, size, stats) and runs its trait:
 /// exploding or splitting on death, or charging at players.
 public class VariantBehavior : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class VariantBehavior : MonoBehaviour
 		vb.variant = v;
 		vb.enemy = e;
 		vb.isSplit = split;
+		// Before scaling, so the skin knows the enemy's base size.
+		SkinSwap.Apply(e, v.skin);
 		float size = split ? v.scale * 0.6f : v.scale;
 		e.transform.localScale *= size;
 		e.displayName = v.name;
@@ -30,16 +32,6 @@ public class VariantBehavior : MonoBehaviour
 			foreach (Material m in r.materials)
 				if (m.HasProperty("_Color"))
 					m.color = m.color * v.tint;
-		}
-		if (v.glowColor.maxColorComponent > 0.01f)
-		{
-			var glow = new GameObject("Glow");
-			glow.transform.SetParent(e.transform, false);
-			glow.transform.localPosition = new Vector3(0, 1.2f, 0);
-			Light l = glow.AddComponent<Light>();
-			l.color = v.glowColor;
-			l.range = 3.5f * size;
-			l.intensity = 1.6f;
 		}
 	}
 

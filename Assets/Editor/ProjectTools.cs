@@ -73,11 +73,17 @@ public static class ProjectTools
 	[MenuItem("Tools/Rise of the Restless/Crunch WebGL Textures")]
 	public static void CrunchWebGLTextures()
 	{
+		CrunchWebGLTextures("Assets");
+	}
+
+	/// Textures already set this way are skipped, so running it before every build is cheap.
+	public static int CrunchWebGLTextures(string folder)
+	{
 		int changed = 0;
 		AssetDatabase.StartAssetEditing();
 		try
 		{
-			foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets" }))
+			foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { folder }))
 			{
 				string path = AssetDatabase.GUIDToAssetPath(guid);
 				if (!(AssetImporter.GetAtPath(path) is TextureImporter importer))
@@ -85,6 +91,8 @@ public static class ProjectTools
 				if (importer.textureCompression == TextureImporterCompression.Uncompressed)
 					continue;
 				TextureImporterPlatformSettings web = importer.GetPlatformTextureSettings("WebGL");
+				if (web.overridden && web.crunchedCompression && web.maxTextureSize <= 1024)
+					continue;
 				web.overridden = true;
 				web.maxTextureSize = Mathf.Min(importer.maxTextureSize, 1024);
 				web.format = TextureImporterFormat.Automatic;
@@ -100,7 +108,8 @@ public static class ProjectTools
 		{
 			AssetDatabase.StopAssetEditing();
 		}
-		Debug.Log($"[crunch] set WebGL crunch on {changed} textures");
+		Debug.Log($"[crunch] set WebGL crunch on {changed} textures in {folder}");
+		return changed;
 	}
 
 	[MenuItem("Tools/Rise of the Restless/Build WebGL")]

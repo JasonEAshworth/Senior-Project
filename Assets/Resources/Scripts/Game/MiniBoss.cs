@@ -37,18 +37,12 @@ public class MiniBoss : EnemyBase
 		mb.points = 2500;
 		mb.size = config.scale;
 		go.name = config.name;
+		SkinSwap.Apply(mb, config.skin);
 		go.transform.localScale *= config.scale;
 		foreach (Renderer r in go.GetComponentsInChildren<Renderer>())
 			foreach (Material m in r.materials)
 				if (m.HasProperty("_Color"))
 					m.color = m.color * config.tint;
-		var glow = new GameObject("Glow");
-		glow.transform.SetParent(go.transform, false);
-		glow.transform.localPosition = new Vector3(0, 1.4f, 0);
-		Light l = glow.AddComponent<Light>();
-		l.color = config.glowColor;
-		l.range = 7.0f;
-		l.intensity = 2.2f;
 		return mb;
 	}
 
@@ -99,7 +93,7 @@ public class MiniBoss : EnemyBase
 			rotateTowardsPlayer(target, Time.deltaTime);
 			if (!attacking)
 			{
-				anim.SetTrigger("attack");
+				PlayAttack(anim);
 				attacking = true;
 				attackStartedAt = Time.time;
 			}
@@ -162,7 +156,7 @@ public class MiniBoss : EnemyBase
 	{
 		float radius = 4.5f;
 		Fx.WarningDisc(transform.position, radius, 0.9f, Warn);
-		anim.SetTrigger("attack");
+		PlayAttack(anim);
 		yield return new WaitForSeconds(0.9f);
 		HurtPlayersAround(transform.position, radius, attackDamage * 1.6f, 9.0f);
 		Fx.Flash(transform.position + Vector3.up * 0.5f, radius, new Color(1.0f, 0.6f, 0.3f, 0.6f));

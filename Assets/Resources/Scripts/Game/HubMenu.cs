@@ -59,8 +59,13 @@ public class HubMenu : MonoBehaviour
 
 	void Update()
 	{
-		if (SceneFlow.Busy)
+		if (SceneFlow.Busy || ControlsMenu.IsOpen)
 			return;
+		if (ControlsMenu.OpenRequested())
+		{
+			ControlsMenu.Show();
+			return;
+		}
 
 		InputBinding joining = PlayerControls.DetectJoin();
 		if (joining != null)
@@ -152,6 +157,8 @@ public class HubMenu : MonoBehaviour
 
 	void OnGUI()
 	{
+		if (ControlsMenu.IsOpen)
+			return;
 		ArcadeUI.Begin();
 		float w = ArcadeUI.Width;
 
@@ -176,6 +183,8 @@ public class HubMenu : MonoBehaviour
 
 		if (ArcadeUI.Button(new Rect(20, 672, 170, 36), "Back to title", 16))
 			SceneFlow.Load("Title");
+		if (ArcadeUI.Button(new Rect(200, 672, 170, 36), "Controls (F1)", 16))
+			ControlsMenu.Show();
 		if (!confirmReset)
 		{
 			if (ArcadeUI.Button(new Rect(w - 190, 672, 170, 36), "Reset seals", 16))
