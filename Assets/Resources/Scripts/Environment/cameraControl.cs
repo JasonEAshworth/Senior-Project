@@ -42,7 +42,6 @@ public class cameraControl : MonoBehaviour
 
 	public void FixedUpdate() 
 	{
-		Console.WriteLine ("START");
 		// If we can't find a player, we return without altering the camera's position
 		if (!GameObject.FindWithTag ("Player")) {
 			return;

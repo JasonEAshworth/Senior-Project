@@ -4,8 +4,6 @@ using System.Collections;
 public class DropGold : MonoBehaviour {
 	
 	public float multiplyer = 1.0f;
-	float numGold = Random.Range(0.0f,3.0f);
-	float numCoins = Random.Range(0.0f,10.0f);
 	public float numGoldOveride = -1.0f;
 	public float numCoinOveride = -1.0f;
 	public int goldDropRate;
@@ -16,9 +14,10 @@ public class DropGold : MonoBehaviour {
 	
 	public void Reward()
 	{
-		//Debug.Log("drop");
-		numGold = Mathf.Floor(numGold * multiplyer);
-		numCoins = Mathf.Floor(numCoins * multiplyer);
+		// Rolled here, not in field initializers: Unity does not allow Random there, so the
+		// call threw and left both counts at 0, and enemies dropped no gold.
+		float numGold = Mathf.Floor(Random.Range(0.0f, 3.0f) * multiplyer);
+		float numCoins = Mathf.Floor(Random.Range(0.0f, 10.0f) * multiplyer);
 		float yPos = transform.position.y;
 		if(yPos < 0.5f)
 		{

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class Icicle_Shot : MonoBehaviour 
 {

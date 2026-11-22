@@ -1,369 +1,1069 @@
 fileFormatVersion: 2
 guid: f7500f3f66b264cb8aeaa702f0fa92ef
 ModelImporter:
-  serializedVersion: 16
-  fileIDToRecycleName:
-    100000: Archer2:Mesh
-    100002: Archer2:Mesh1
-    100004: Archer2:Mesh2
-    100006: Archer2:Mesh3
-    100008: Archer2:pSphere1
-    100010: Archer2:pSphere2
-    100012: Archer2:transform1
-    100014: Archer2:transform2
-    100016: Archer2:transform3
-    100018: Archer_Ctrl:ChestEndEffector
-    100020: Archer_Ctrl:ChestOriginEffector
-    100022: Archer_Ctrl:Head
-    100024: Archer_Ctrl:HeadEffector
-    100026: Archer_Ctrl:Hips
-    100028: Archer_Ctrl:HipsEffector
-    100030: Archer_Ctrl:LeftAnkleEffector
-    100032: Archer_Ctrl:LeftArm
-    100034: Archer_Ctrl:LeftElbowEffector
-    100036: Archer_Ctrl:LeftFoot
-    100038: Archer_Ctrl:LeftFootEffector
-    100040: Archer_Ctrl:LeftForeArm
-    100042: Archer_Ctrl:LeftHand
-    100044: Archer_Ctrl:LeftHandIndex1
-    100046: Archer_Ctrl:LeftHandIndex2
-    100048: Archer_Ctrl:LeftHandIndex3
-    100050: Archer_Ctrl:LeftHandIndex4
-    100052: Archer_Ctrl:LeftHandIndexEffector
-    100054: Archer_Ctrl:LeftHandMiddle1
-    100056: Archer_Ctrl:LeftHandMiddle2
-    100058: Archer_Ctrl:LeftHandMiddle3
-    100060: Archer_Ctrl:LeftHandMiddle4
-    100062: Archer_Ctrl:LeftHandMiddleEffector
-    100064: Archer_Ctrl:LeftHandPinky1
-    100066: Archer_Ctrl:LeftHandPinky2
-    100068: Archer_Ctrl:LeftHandPinky3
-    100070: Archer_Ctrl:LeftHandPinky4
-    100072: Archer_Ctrl:LeftHandPinkyEffector
-    100074: Archer_Ctrl:LeftHandRing1
-    100076: Archer_Ctrl:LeftHandRing2
-    100078: Archer_Ctrl:LeftHandRing3
-    100080: Archer_Ctrl:LeftHandRing4
-    100082: Archer_Ctrl:LeftHandRingEffector
-    100084: Archer_Ctrl:LeftHandThumb1
-    100086: Archer_Ctrl:LeftHandThumb2
-    100088: Archer_Ctrl:LeftHandThumb3
-    100090: Archer_Ctrl:LeftHandThumb4
-    100092: Archer_Ctrl:LeftHandThumbEffector
-    100094: Archer_Ctrl:LeftHipEffector
-    100096: Archer_Ctrl:LeftKneeEffector
-    100098: Archer_Ctrl:LeftLeg
-    100100: Archer_Ctrl:LeftShoulderEffector
-    100102: Archer_Ctrl:LeftToeBase
-    100104: Archer_Ctrl:LeftUpLeg
-    100106: Archer_Ctrl:LeftWristEffector
-    100108: Archer_Ctrl:Neck
-    100110: Archer_Ctrl:Reference
-    100112: Archer_Ctrl:RightAnkleEffector
-    100114: Archer_Ctrl:RightArm
-    100116: Archer_Ctrl:RightElbowEffector
-    100118: Archer_Ctrl:RightFoot
-    100120: Archer_Ctrl:RightFootEffector
-    100122: Archer_Ctrl:RightForeArm
-    100124: Archer_Ctrl:RightHand
-    100126: Archer_Ctrl:RightHandIndex1
-    100128: Archer_Ctrl:RightHandIndex2
-    100130: Archer_Ctrl:RightHandIndex3
-    100132: Archer_Ctrl:RightHandIndex4
-    100134: Archer_Ctrl:RightHandIndexEffector
-    100136: Archer_Ctrl:RightHandMiddle1
-    100138: Archer_Ctrl:RightHandMiddle2
-    100140: Archer_Ctrl:RightHandMiddle3
-    100142: Archer_Ctrl:RightHandMiddle4
-    100144: Archer_Ctrl:RightHandMiddleEffector
-    100146: Archer_Ctrl:RightHandPinky1
-    100148: Archer_Ctrl:RightHandPinky2
-    100150: Archer_Ctrl:RightHandPinky3
-    100152: Archer_Ctrl:RightHandPinky4
-    100154: Archer_Ctrl:RightHandPinkyEffector
-    100156: Archer_Ctrl:RightHandRing1
-    100158: Archer_Ctrl:RightHandRing2
-    100160: Archer_Ctrl:RightHandRing3
-    100162: Archer_Ctrl:RightHandRing4
-    100164: Archer_Ctrl:RightHandRingEffector
-    100166: Archer_Ctrl:RightHandThumb1
-    100168: Archer_Ctrl:RightHandThumb2
-    100170: Archer_Ctrl:RightHandThumb3
-    100172: Archer_Ctrl:RightHandThumb4
-    100174: Archer_Ctrl:RightHandThumbEffector
-    100176: Archer_Ctrl:RightHipEffector
-    100178: Archer_Ctrl:RightKneeEffector
-    100180: Archer_Ctrl:RightLeg
-    100182: Archer_Ctrl:RightShoulderEffector
-    100184: Archer_Ctrl:RightToeBase
-    100186: Archer_Ctrl:RightUpLeg
-    100188: Archer_Ctrl:RightWristEffector
-    100190: Archer_Ctrl:Spine
-    100192: Archer_Ctrl:Spine1
-    100194: Archer_Ctrl:Spine2
-    100196: Belt
-    100198: //RootNode
-    100200: Head
-    100202: HeadEnd
-    100204: Hips
-    100206: LeftArm
-    100208: LeftFoot
-    100210: LeftForeArm
-    100212: LeftHand
-    100214: LeftHandIndex1
-    100216: LeftHandIndex2
-    100218: LeftHandIndex3
-    100220: LeftHandIndex4
-    100222: LeftHandMiddle1
-    100224: LeftHandMiddle2
-    100226: LeftHandMiddle3
-    100228: LeftHandMiddle4
-    100230: LeftHandPinky1
-    100232: LeftHandPinky2
-    100234: LeftHandPinky3
-    100236: LeftHandPinky4
-    100238: LeftHandRing1
-    100240: LeftHandRing2
-    100242: LeftHandRing3
-    100244: LeftHandRing4
-    100246: LeftHandThumb1
-    100248: LeftHandThumb2
-    100250: LeftHandThumb3
-    100252: LeftHandThumb4
-    100254: LeftLeg
-    100256: LeftToeBase
-    100258: LeftToeBaseEnd
-    100260: LeftUpLeg
-    100262: Neck
-    100264: Quiver
-    100266: RightArm
-    100268: RightFoot
-    100270: RightForeArm
-    100272: RightHand
-    100274: RightHandIndex1
-    100276: RightHandIndex2
-    100278: RightHandIndex3
-    100280: RightHandIndex4
-    100282: RightHandMiddle1
-    100284: RightHandMiddle2
-    100286: RightHandMiddle3
-    100288: RightHandMiddle4
-    100290: RightHandPinky1
-    100292: RightHandPinky2
-    100294: RightHandPinky3
-    100296: RightHandPinky4
-    100298: RightHandRing1
-    100300: RightHandRing2
-    100302: RightHandRing3
-    100304: RightHandRing4
-    100306: RightHandThumb1
-    100308: RightHandThumb2
-    100310: RightHandThumb3
-    100312: RightHandThumb4
-    100314: RightLeg
-    100316: RightToeBase
-    100318: RightToeBaseEnd
-    100320: RightUpLeg
-    100322: Spine
-    100324: Spine1
-    100326: Spine2
-    400000: Archer2:Mesh
-    400002: Archer2:Mesh1
-    400004: Archer2:Mesh2
-    400006: Archer2:Mesh3
-    400008: Archer2:pSphere1
-    400010: Archer2:pSphere2
-    400012: Archer2:transform1
-    400014: Archer2:transform2
-    400016: Archer2:transform3
-    400018: Archer_Ctrl:ChestEndEffector
-    400020: Archer_Ctrl:ChestOriginEffector
-    400022: Archer_Ctrl:Head
-    400024: Archer_Ctrl:HeadEffector
-    400026: Archer_Ctrl:Hips
-    400028: Archer_Ctrl:HipsEffector
-    400030: Archer_Ctrl:LeftAnkleEffector
-    400032: Archer_Ctrl:LeftArm
-    400034: Archer_Ctrl:LeftElbowEffector
-    400036: Archer_Ctrl:LeftFoot
-    400038: Archer_Ctrl:LeftFootEffector
-    400040: Archer_Ctrl:LeftForeArm
-    400042: Archer_Ctrl:LeftHand
-    400044: Archer_Ctrl:LeftHandIndex1
-    400046: Archer_Ctrl:LeftHandIndex2
-    400048: Archer_Ctrl:LeftHandIndex3
-    400050: Archer_Ctrl:LeftHandIndex4
-    400052: Archer_Ctrl:LeftHandIndexEffector
-    400054: Archer_Ctrl:LeftHandMiddle1
-    400056: Archer_Ctrl:LeftHandMiddle2
-    400058: Archer_Ctrl:LeftHandMiddle3
-    400060: Archer_Ctrl:LeftHandMiddle4
-    400062: Archer_Ctrl:LeftHandMiddleEffector
-    400064: Archer_Ctrl:LeftHandPinky1
-    400066: Archer_Ctrl:LeftHandPinky2
-    400068: Archer_Ctrl:LeftHandPinky3
-    400070: Archer_Ctrl:LeftHandPinky4
-    400072: Archer_Ctrl:LeftHandPinkyEffector
-    400074: Archer_Ctrl:LeftHandRing1
-    400076: Archer_Ctrl:LeftHandRing2
-    400078: Archer_Ctrl:LeftHandRing3
-    400080: Archer_Ctrl:LeftHandRing4
-    400082: Archer_Ctrl:LeftHandRingEffector
-    400084: Archer_Ctrl:LeftHandThumb1
-    400086: Archer_Ctrl:LeftHandThumb2
-    400088: Archer_Ctrl:LeftHandThumb3
-    400090: Archer_Ctrl:LeftHandThumb4
-    400092: Archer_Ctrl:LeftHandThumbEffector
-    400094: Archer_Ctrl:LeftHipEffector
-    400096: Archer_Ctrl:LeftKneeEffector
-    400098: Archer_Ctrl:LeftLeg
-    400100: Archer_Ctrl:LeftShoulderEffector
-    400102: Archer_Ctrl:LeftToeBase
-    400104: Archer_Ctrl:LeftUpLeg
-    400106: Archer_Ctrl:LeftWristEffector
-    400108: Archer_Ctrl:Neck
-    400110: Archer_Ctrl:Reference
-    400112: Archer_Ctrl:RightAnkleEffector
-    400114: Archer_Ctrl:RightArm
-    400116: Archer_Ctrl:RightElbowEffector
-    400118: Archer_Ctrl:RightFoot
-    400120: Archer_Ctrl:RightFootEffector
-    400122: Archer_Ctrl:RightForeArm
-    400124: Archer_Ctrl:RightHand
-    400126: Archer_Ctrl:RightHandIndex1
-    400128: Archer_Ctrl:RightHandIndex2
-    400130: Archer_Ctrl:RightHandIndex3
-    400132: Archer_Ctrl:RightHandIndex4
-    400134: Archer_Ctrl:RightHandIndexEffector
-    400136: Archer_Ctrl:RightHandMiddle1
-    400138: Archer_Ctrl:RightHandMiddle2
-    400140: Archer_Ctrl:RightHandMiddle3
-    400142: Archer_Ctrl:RightHandMiddle4
-    400144: Archer_Ctrl:RightHandMiddleEffector
-    400146: Archer_Ctrl:RightHandPinky1
-    400148: Archer_Ctrl:RightHandPinky2
-    400150: Archer_Ctrl:RightHandPinky3
-    400152: Archer_Ctrl:RightHandPinky4
-    400154: Archer_Ctrl:RightHandPinkyEffector
-    400156: Archer_Ctrl:RightHandRing1
-    400158: Archer_Ctrl:RightHandRing2
-    400160: Archer_Ctrl:RightHandRing3
-    400162: Archer_Ctrl:RightHandRing4
-    400164: Archer_Ctrl:RightHandRingEffector
-    400166: Archer_Ctrl:RightHandThumb1
-    400168: Archer_Ctrl:RightHandThumb2
-    400170: Archer_Ctrl:RightHandThumb3
-    400172: Archer_Ctrl:RightHandThumb4
-    400174: Archer_Ctrl:RightHandThumbEffector
-    400176: Archer_Ctrl:RightHipEffector
-    400178: Archer_Ctrl:RightKneeEffector
-    400180: Archer_Ctrl:RightLeg
-    400182: Archer_Ctrl:RightShoulderEffector
-    400184: Archer_Ctrl:RightToeBase
-    400186: Archer_Ctrl:RightUpLeg
-    400188: Archer_Ctrl:RightWristEffector
-    400190: Archer_Ctrl:Spine
-    400192: Archer_Ctrl:Spine1
-    400194: Archer_Ctrl:Spine2
-    400196: Belt
-    400198: //RootNode
-    400200: Head
-    400202: HeadEnd
-    400204: Hips
-    400206: LeftArm
-    400208: LeftFoot
-    400210: LeftForeArm
-    400212: LeftHand
-    400214: LeftHandIndex1
-    400216: LeftHandIndex2
-    400218: LeftHandIndex3
-    400220: LeftHandIndex4
-    400222: LeftHandMiddle1
-    400224: LeftHandMiddle2
-    400226: LeftHandMiddle3
-    400228: LeftHandMiddle4
-    400230: LeftHandPinky1
-    400232: LeftHandPinky2
-    400234: LeftHandPinky3
-    400236: LeftHandPinky4
-    400238: LeftHandRing1
-    400240: LeftHandRing2
-    400242: LeftHandRing3
-    400244: LeftHandRing4
-    400246: LeftHandThumb1
-    400248: LeftHandThumb2
-    400250: LeftHandThumb3
-    400252: LeftHandThumb4
-    400254: LeftLeg
-    400256: LeftToeBase
-    400258: LeftToeBaseEnd
-    400260: LeftUpLeg
-    400262: Neck
-    400264: Quiver
-    400266: RightArm
-    400268: RightFoot
-    400270: RightForeArm
-    400272: RightHand
-    400274: RightHandIndex1
-    400276: RightHandIndex2
-    400278: RightHandIndex3
-    400280: RightHandIndex4
-    400282: RightHandMiddle1
-    400284: RightHandMiddle2
-    400286: RightHandMiddle3
-    400288: RightHandMiddle4
-    400290: RightHandPinky1
-    400292: RightHandPinky2
-    400294: RightHandPinky3
-    400296: RightHandPinky4
-    400298: RightHandRing1
-    400300: RightHandRing2
-    400302: RightHandRing3
-    400304: RightHandRing4
-    400306: RightHandThumb1
-    400308: RightHandThumb2
-    400310: RightHandThumb3
-    400312: RightHandThumb4
-    400314: RightLeg
-    400316: RightToeBase
-    400318: RightToeBaseEnd
-    400320: RightUpLeg
-    400322: Spine
-    400324: Spine1
-    400326: Spine2
-    4300000: Archer2:Mesh1
-    4300002: Archer2:Mesh2
-    4300004: Archer2:Mesh3
-    7400000: Take 001
-    7400002: Walk
-    7400004: Run
-    7400006: Jump
-    7400008: Combat_Idle
-    7400010: Shoot
-    7400012: Hawk
-    9500000: //RootNode
-    13700000: Archer2:Mesh1
-    13700002: Archer2:Mesh2
-    13700004: Archer2:Mesh3
+  serializedVersion: 24300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Archer2:Mesh
+  - first:
+      1: 100002
+    second: Archer2:Mesh1
+  - first:
+      1: 100004
+    second: Archer2:Mesh2
+  - first:
+      1: 100006
+    second: Archer2:Mesh3
+  - first:
+      1: 100008
+    second: Archer2:pSphere1
+  - first:
+      1: 100010
+    second: Archer2:pSphere2
+  - first:
+      1: 100012
+    second: Archer2:transform1
+  - first:
+      1: 100014
+    second: Archer2:transform2
+  - first:
+      1: 100016
+    second: Archer2:transform3
+  - first:
+      1: 100018
+    second: Archer_Ctrl:ChestEndEffector
+  - first:
+      1: 100020
+    second: Archer_Ctrl:ChestOriginEffector
+  - first:
+      1: 100022
+    second: Archer_Ctrl:Head
+  - first:
+      1: 100024
+    second: Archer_Ctrl:HeadEffector
+  - first:
+      1: 100026
+    second: Archer_Ctrl:Hips
+  - first:
+      1: 100028
+    second: Archer_Ctrl:HipsEffector
+  - first:
+      1: 100030
+    second: Archer_Ctrl:LeftAnkleEffector
+  - first:
+      1: 100032
+    second: Archer_Ctrl:LeftArm
+  - first:
+      1: 100034
+    second: Archer_Ctrl:LeftElbowEffector
+  - first:
+      1: 100036
+    second: Archer_Ctrl:LeftFoot
+  - first:
+      1: 100038
+    second: Archer_Ctrl:LeftFootEffector
+  - first:
+      1: 100040
+    second: Archer_Ctrl:LeftForeArm
+  - first:
+      1: 100042
+    second: Archer_Ctrl:LeftHand
+  - first:
+      1: 100044
+    second: Archer_Ctrl:LeftHandIndex1
+  - first:
+      1: 100046
+    second: Archer_Ctrl:LeftHandIndex2
+  - first:
+      1: 100048
+    second: Archer_Ctrl:LeftHandIndex3
+  - first:
+      1: 100050
+    second: Archer_Ctrl:LeftHandIndex4
+  - first:
+      1: 100052
+    second: Archer_Ctrl:LeftHandIndexEffector
+  - first:
+      1: 100054
+    second: Archer_Ctrl:LeftHandMiddle1
+  - first:
+      1: 100056
+    second: Archer_Ctrl:LeftHandMiddle2
+  - first:
+      1: 100058
+    second: Archer_Ctrl:LeftHandMiddle3
+  - first:
+      1: 100060
+    second: Archer_Ctrl:LeftHandMiddle4
+  - first:
+      1: 100062
+    second: Archer_Ctrl:LeftHandMiddleEffector
+  - first:
+      1: 100064
+    second: Archer_Ctrl:LeftHandPinky1
+  - first:
+      1: 100066
+    second: Archer_Ctrl:LeftHandPinky2
+  - first:
+      1: 100068
+    second: Archer_Ctrl:LeftHandPinky3
+  - first:
+      1: 100070
+    second: Archer_Ctrl:LeftHandPinky4
+  - first:
+      1: 100072
+    second: Archer_Ctrl:LeftHandPinkyEffector
+  - first:
+      1: 100074
+    second: Archer_Ctrl:LeftHandRing1
+  - first:
+      1: 100076
+    second: Archer_Ctrl:LeftHandRing2
+  - first:
+      1: 100078
+    second: Archer_Ctrl:LeftHandRing3
+  - first:
+      1: 100080
+    second: Archer_Ctrl:LeftHandRing4
+  - first:
+      1: 100082
+    second: Archer_Ctrl:LeftHandRingEffector
+  - first:
+      1: 100084
+    second: Archer_Ctrl:LeftHandThumb1
+  - first:
+      1: 100086
+    second: Archer_Ctrl:LeftHandThumb2
+  - first:
+      1: 100088
+    second: Archer_Ctrl:LeftHandThumb3
+  - first:
+      1: 100090
+    second: Archer_Ctrl:LeftHandThumb4
+  - first:
+      1: 100092
+    second: Archer_Ctrl:LeftHandThumbEffector
+  - first:
+      1: 100094
+    second: Archer_Ctrl:LeftHipEffector
+  - first:
+      1: 100096
+    second: Archer_Ctrl:LeftKneeEffector
+  - first:
+      1: 100098
+    second: Archer_Ctrl:LeftLeg
+  - first:
+      1: 100100
+    second: Archer_Ctrl:LeftShoulderEffector
+  - first:
+      1: 100102
+    second: Archer_Ctrl:LeftToeBase
+  - first:
+      1: 100104
+    second: Archer_Ctrl:LeftUpLeg
+  - first:
+      1: 100106
+    second: Archer_Ctrl:LeftWristEffector
+  - first:
+      1: 100108
+    second: Archer_Ctrl:Neck
+  - first:
+      1: 100110
+    second: Archer_Ctrl:Reference
+  - first:
+      1: 100112
+    second: Archer_Ctrl:RightAnkleEffector
+  - first:
+      1: 100114
+    second: Archer_Ctrl:RightArm
+  - first:
+      1: 100116
+    second: Archer_Ctrl:RightElbowEffector
+  - first:
+      1: 100118
+    second: Archer_Ctrl:RightFoot
+  - first:
+      1: 100120
+    second: Archer_Ctrl:RightFootEffector
+  - first:
+      1: 100122
+    second: Archer_Ctrl:RightForeArm
+  - first:
+      1: 100124
+    second: Archer_Ctrl:RightHand
+  - first:
+      1: 100126
+    second: Archer_Ctrl:RightHandIndex1
+  - first:
+      1: 100128
+    second: Archer_Ctrl:RightHandIndex2
+  - first:
+      1: 100130
+    second: Archer_Ctrl:RightHandIndex3
+  - first:
+      1: 100132
+    second: Archer_Ctrl:RightHandIndex4
+  - first:
+      1: 100134
+    second: Archer_Ctrl:RightHandIndexEffector
+  - first:
+      1: 100136
+    second: Archer_Ctrl:RightHandMiddle1
+  - first:
+      1: 100138
+    second: Archer_Ctrl:RightHandMiddle2
+  - first:
+      1: 100140
+    second: Archer_Ctrl:RightHandMiddle3
+  - first:
+      1: 100142
+    second: Archer_Ctrl:RightHandMiddle4
+  - first:
+      1: 100144
+    second: Archer_Ctrl:RightHandMiddleEffector
+  - first:
+      1: 100146
+    second: Archer_Ctrl:RightHandPinky1
+  - first:
+      1: 100148
+    second: Archer_Ctrl:RightHandPinky2
+  - first:
+      1: 100150
+    second: Archer_Ctrl:RightHandPinky3
+  - first:
+      1: 100152
+    second: Archer_Ctrl:RightHandPinky4
+  - first:
+      1: 100154
+    second: Archer_Ctrl:RightHandPinkyEffector
+  - first:
+      1: 100156
+    second: Archer_Ctrl:RightHandRing1
+  - first:
+      1: 100158
+    second: Archer_Ctrl:RightHandRing2
+  - first:
+      1: 100160
+    second: Archer_Ctrl:RightHandRing3
+  - first:
+      1: 100162
+    second: Archer_Ctrl:RightHandRing4
+  - first:
+      1: 100164
+    second: Archer_Ctrl:RightHandRingEffector
+  - first:
+      1: 100166
+    second: Archer_Ctrl:RightHandThumb1
+  - first:
+      1: 100168
+    second: Archer_Ctrl:RightHandThumb2
+  - first:
+      1: 100170
+    second: Archer_Ctrl:RightHandThumb3
+  - first:
+      1: 100172
+    second: Archer_Ctrl:RightHandThumb4
+  - first:
+      1: 100174
+    second: Archer_Ctrl:RightHandThumbEffector
+  - first:
+      1: 100176
+    second: Archer_Ctrl:RightHipEffector
+  - first:
+      1: 100178
+    second: Archer_Ctrl:RightKneeEffector
+  - first:
+      1: 100180
+    second: Archer_Ctrl:RightLeg
+  - first:
+      1: 100182
+    second: Archer_Ctrl:RightShoulderEffector
+  - first:
+      1: 100184
+    second: Archer_Ctrl:RightToeBase
+  - first:
+      1: 100186
+    second: Archer_Ctrl:RightUpLeg
+  - first:
+      1: 100188
+    second: Archer_Ctrl:RightWristEffector
+  - first:
+      1: 100190
+    second: Archer_Ctrl:Spine
+  - first:
+      1: 100192
+    second: Archer_Ctrl:Spine1
+  - first:
+      1: 100194
+    second: Archer_Ctrl:Spine2
+  - first:
+      1: 100196
+    second: Belt
+  - first:
+      1: 100198
+    second: //RootNode
+  - first:
+      1: 100200
+    second: Head
+  - first:
+      1: 100202
+    second: HeadEnd
+  - first:
+      1: 100204
+    second: Hips
+  - first:
+      1: 100206
+    second: LeftArm
+  - first:
+      1: 100208
+    second: LeftFoot
+  - first:
+      1: 100210
+    second: LeftForeArm
+  - first:
+      1: 100212
+    second: LeftHand
+  - first:
+      1: 100214
+    second: LeftHandIndex1
+  - first:
+      1: 100216
+    second: LeftHandIndex2
+  - first:
+      1: 100218
+    second: LeftHandIndex3
+  - first:
+      1: 100220
+    second: LeftHandIndex4
+  - first:
+      1: 100222
+    second: LeftHandMiddle1
+  - first:
+      1: 100224
+    second: LeftHandMiddle2
+  - first:
+      1: 100226
+    second: LeftHandMiddle3
+  - first:
+      1: 100228
+    second: LeftHandMiddle4
+  - first:
+      1: 100230
+    second: LeftHandPinky1
+  - first:
+      1: 100232
+    second: LeftHandPinky2
+  - first:
+      1: 100234
+    second: LeftHandPinky3
+  - first:
+      1: 100236
+    second: LeftHandPinky4
+  - first:
+      1: 100238
+    second: LeftHandRing1
+  - first:
+      1: 100240
+    second: LeftHandRing2
+  - first:
+      1: 100242
+    second: LeftHandRing3
+  - first:
+      1: 100244
+    second: LeftHandRing4
+  - first:
+      1: 100246
+    second: LeftHandThumb1
+  - first:
+      1: 100248
+    second: LeftHandThumb2
+  - first:
+      1: 100250
+    second: LeftHandThumb3
+  - first:
+      1: 100252
+    second: LeftHandThumb4
+  - first:
+      1: 100254
+    second: LeftLeg
+  - first:
+      1: 100256
+    second: LeftToeBase
+  - first:
+      1: 100258
+    second: LeftToeBaseEnd
+  - first:
+      1: 100260
+    second: LeftUpLeg
+  - first:
+      1: 100262
+    second: Neck
+  - first:
+      1: 100264
+    second: Quiver
+  - first:
+      1: 100266
+    second: RightArm
+  - first:
+      1: 100268
+    second: RightFoot
+  - first:
+      1: 100270
+    second: RightForeArm
+  - first:
+      1: 100272
+    second: RightHand
+  - first:
+      1: 100274
+    second: RightHandIndex1
+  - first:
+      1: 100276
+    second: RightHandIndex2
+  - first:
+      1: 100278
+    second: RightHandIndex3
+  - first:
+      1: 100280
+    second: RightHandIndex4
+  - first:
+      1: 100282
+    second: RightHandMiddle1
+  - first:
+      1: 100284
+    second: RightHandMiddle2
+  - first:
+      1: 100286
+    second: RightHandMiddle3
+  - first:
+      1: 100288
+    second: RightHandMiddle4
+  - first:
+      1: 100290
+    second: RightHandPinky1
+  - first:
+      1: 100292
+    second: RightHandPinky2
+  - first:
+      1: 100294
+    second: RightHandPinky3
+  - first:
+      1: 100296
+    second: RightHandPinky4
+  - first:
+      1: 100298
+    second: RightHandRing1
+  - first:
+      1: 100300
+    second: RightHandRing2
+  - first:
+      1: 100302
+    second: RightHandRing3
+  - first:
+      1: 100304
+    second: RightHandRing4
+  - first:
+      1: 100306
+    second: RightHandThumb1
+  - first:
+      1: 100308
+    second: RightHandThumb2
+  - first:
+      1: 100310
+    second: RightHandThumb3
+  - first:
+      1: 100312
+    second: RightHandThumb4
+  - first:
+      1: 100314
+    second: RightLeg
+  - first:
+      1: 100316
+    second: RightToeBase
+  - first:
+      1: 100318
+    second: RightToeBaseEnd
+  - first:
+      1: 100320
+    second: RightUpLeg
+  - first:
+      1: 100322
+    second: Spine
+  - first:
+      1: 100324
+    second: Spine1
+  - first:
+      1: 100326
+    second: Spine2
+  - first:
+      4: 400000
+    second: Archer2:Mesh
+  - first:
+      4: 400002
+    second: Archer2:Mesh1
+  - first:
+      4: 400004
+    second: Archer2:Mesh2
+  - first:
+      4: 400006
+    second: Archer2:Mesh3
+  - first:
+      4: 400008
+    second: Archer2:pSphere1
+  - first:
+      4: 400010
+    second: Archer2:pSphere2
+  - first:
+      4: 400012
+    second: Archer2:transform1
+  - first:
+      4: 400014
+    second: Archer2:transform2
+  - first:
+      4: 400016
+    second: Archer2:transform3
+  - first:
+      4: 400018
+    second: Archer_Ctrl:ChestEndEffector
+  - first:
+      4: 400020
+    second: Archer_Ctrl:ChestOriginEffector
+  - first:
+      4: 400022
+    second: Archer_Ctrl:Head
+  - first:
+      4: 400024
+    second: Archer_Ctrl:HeadEffector
+  - first:
+      4: 400026
+    second: Archer_Ctrl:Hips
+  - first:
+      4: 400028
+    second: Archer_Ctrl:HipsEffector
+  - first:
+      4: 400030
+    second: Archer_Ctrl:LeftAnkleEffector
+  - first:
+      4: 400032
+    second: Archer_Ctrl:LeftArm
+  - first:
+      4: 400034
+    second: Archer_Ctrl:LeftElbowEffector
+  - first:
+      4: 400036
+    second: Archer_Ctrl:LeftFoot
+  - first:
+      4: 400038
+    second: Archer_Ctrl:LeftFootEffector
+  - first:
+      4: 400040
+    second: Archer_Ctrl:LeftForeArm
+  - first:
+      4: 400042
+    second: Archer_Ctrl:LeftHand
+  - first:
+      4: 400044
+    second: Archer_Ctrl:LeftHandIndex1
+  - first:
+      4: 400046
+    second: Archer_Ctrl:LeftHandIndex2
+  - first:
+      4: 400048
+    second: Archer_Ctrl:LeftHandIndex3
+  - first:
+      4: 400050
+    second: Archer_Ctrl:LeftHandIndex4
+  - first:
+      4: 400052
+    second: Archer_Ctrl:LeftHandIndexEffector
+  - first:
+      4: 400054
+    second: Archer_Ctrl:LeftHandMiddle1
+  - first:
+      4: 400056
+    second: Archer_Ctrl:LeftHandMiddle2
+  - first:
+      4: 400058
+    second: Archer_Ctrl:LeftHandMiddle3
+  - first:
+      4: 400060
+    second: Archer_Ctrl:LeftHandMiddle4
+  - first:
+      4: 400062
+    second: Archer_Ctrl:LeftHandMiddleEffector
+  - first:
+      4: 400064
+    second: Archer_Ctrl:LeftHandPinky1
+  - first:
+      4: 400066
+    second: Archer_Ctrl:LeftHandPinky2
+  - first:
+      4: 400068
+    second: Archer_Ctrl:LeftHandPinky3
+  - first:
+      4: 400070
+    second: Archer_Ctrl:LeftHandPinky4
+  - first:
+      4: 400072
+    second: Archer_Ctrl:LeftHandPinkyEffector
+  - first:
+      4: 400074
+    second: Archer_Ctrl:LeftHandRing1
+  - first:
+      4: 400076
+    second: Archer_Ctrl:LeftHandRing2
+  - first:
+      4: 400078
+    second: Archer_Ctrl:LeftHandRing3
+  - first:
+      4: 400080
+    second: Archer_Ctrl:LeftHandRing4
+  - first:
+      4: 400082
+    second: Archer_Ctrl:LeftHandRingEffector
+  - first:
+      4: 400084
+    second: Archer_Ctrl:LeftHandThumb1
+  - first:
+      4: 400086
+    second: Archer_Ctrl:LeftHandThumb2
+  - first:
+      4: 400088
+    second: Archer_Ctrl:LeftHandThumb3
+  - first:
+      4: 400090
+    second: Archer_Ctrl:LeftHandThumb4
+  - first:
+      4: 400092
+    second: Archer_Ctrl:LeftHandThumbEffector
+  - first:
+      4: 400094
+    second: Archer_Ctrl:LeftHipEffector
+  - first:
+      4: 400096
+    second: Archer_Ctrl:LeftKneeEffector
+  - first:
+      4: 400098
+    second: Archer_Ctrl:LeftLeg
+  - first:
+      4: 400100
+    second: Archer_Ctrl:LeftShoulderEffector
+  - first:
+      4: 400102
+    second: Archer_Ctrl:LeftToeBase
+  - first:
+      4: 400104
+    second: Archer_Ctrl:LeftUpLeg
+  - first:
+      4: 400106
+    second: Archer_Ctrl:LeftWristEffector
+  - first:
+      4: 400108
+    second: Archer_Ctrl:Neck
+  - first:
+      4: 400110
+    second: Archer_Ctrl:Reference
+  - first:
+      4: 400112
+    second: Archer_Ctrl:RightAnkleEffector
+  - first:
+      4: 400114
+    second: Archer_Ctrl:RightArm
+  - first:
+      4: 400116
+    second: Archer_Ctrl:RightElbowEffector
+  - first:
+      4: 400118
+    second: Archer_Ctrl:RightFoot
+  - first:
+      4: 400120
+    second: Archer_Ctrl:RightFootEffector
+  - first:
+      4: 400122
+    second: Archer_Ctrl:RightForeArm
+  - first:
+      4: 400124
+    second: Archer_Ctrl:RightHand
+  - first:
+      4: 400126
+    second: Archer_Ctrl:RightHandIndex1
+  - first:
+      4: 400128
+    second: Archer_Ctrl:RightHandIndex2
+  - first:
+      4: 400130
+    second: Archer_Ctrl:RightHandIndex3
+  - first:
+      4: 400132
+    second: Archer_Ctrl:RightHandIndex4
+  - first:
+      4: 400134
+    second: Archer_Ctrl:RightHandIndexEffector
+  - first:
+      4: 400136
+    second: Archer_Ctrl:RightHandMiddle1
+  - first:
+      4: 400138
+    second: Archer_Ctrl:RightHandMiddle2
+  - first:
+      4: 400140
+    second: Archer_Ctrl:RightHandMiddle3
+  - first:
+      4: 400142
+    second: Archer_Ctrl:RightHandMiddle4
+  - first:
+      4: 400144
+    second: Archer_Ctrl:RightHandMiddleEffector
+  - first:
+      4: 400146
+    second: Archer_Ctrl:RightHandPinky1
+  - first:
+      4: 400148
+    second: Archer_Ctrl:RightHandPinky2
+  - first:
+      4: 400150
+    second: Archer_Ctrl:RightHandPinky3
+  - first:
+      4: 400152
+    second: Archer_Ctrl:RightHandPinky4
+  - first:
+      4: 400154
+    second: Archer_Ctrl:RightHandPinkyEffector
+  - first:
+      4: 400156
+    second: Archer_Ctrl:RightHandRing1
+  - first:
+      4: 400158
+    second: Archer_Ctrl:RightHandRing2
+  - first:
+      4: 400160
+    second: Archer_Ctrl:RightHandRing3
+  - first:
+      4: 400162
+    second: Archer_Ctrl:RightHandRing4
+  - first:
+      4: 400164
+    second: Archer_Ctrl:RightHandRingEffector
+  - first:
+      4: 400166
+    second: Archer_Ctrl:RightHandThumb1
+  - first:
+      4: 400168
+    second: Archer_Ctrl:RightHandThumb2
+  - first:
+      4: 400170
+    second: Archer_Ctrl:RightHandThumb3
+  - first:
+      4: 400172
+    second: Archer_Ctrl:RightHandThumb4
+  - first:
+      4: 400174
+    second: Archer_Ctrl:RightHandThumbEffector
+  - first:
+      4: 400176
+    second: Archer_Ctrl:RightHipEffector
+  - first:
+      4: 400178
+    second: Archer_Ctrl:RightKneeEffector
+  - first:
+      4: 400180
+    second: Archer_Ctrl:RightLeg
+  - first:
+      4: 400182
+    second: Archer_Ctrl:RightShoulderEffector
+  - first:
+      4: 400184
+    second: Archer_Ctrl:RightToeBase
+  - first:
+      4: 400186
+    second: Archer_Ctrl:RightUpLeg
+  - first:
+      4: 400188
+    second: Archer_Ctrl:RightWristEffector
+  - first:
+      4: 400190
+    second: Archer_Ctrl:Spine
+  - first:
+      4: 400192
+    second: Archer_Ctrl:Spine1
+  - first:
+      4: 400194
+    second: Archer_Ctrl:Spine2
+  - first:
+      4: 400196
+    second: Belt
+  - first:
+      4: 400198
+    second: //RootNode
+  - first:
+      4: 400200
+    second: Head
+  - first:
+      4: 400202
+    second: HeadEnd
+  - first:
+      4: 400204
+    second: Hips
+  - first:
+      4: 400206
+    second: LeftArm
+  - first:
+      4: 400208
+    second: LeftFoot
+  - first:
+      4: 400210
+    second: LeftForeArm
+  - first:
+      4: 400212
+    second: LeftHand
+  - first:
+      4: 400214
+    second: LeftHandIndex1
+  - first:
+      4: 400216
+    second: LeftHandIndex2
+  - first:
+      4: 400218
+    second: LeftHandIndex3
+  - first:
+      4: 400220
+    second: LeftHandIndex4
+  - first:
+      4: 400222
+    second: LeftHandMiddle1
+  - first:
+      4: 400224
+    second: LeftHandMiddle2
+  - first:
+      4: 400226
+    second: LeftHandMiddle3
+  - first:
+      4: 400228
+    second: LeftHandMiddle4
+  - first:
+      4: 400230
+    second: LeftHandPinky1
+  - first:
+      4: 400232
+    second: LeftHandPinky2
+  - first:
+      4: 400234
+    second: LeftHandPinky3
+  - first:
+      4: 400236
+    second: LeftHandPinky4
+  - first:
+      4: 400238
+    second: LeftHandRing1
+  - first:
+      4: 400240
+    second: LeftHandRing2
+  - first:
+      4: 400242
+    second: LeftHandRing3
+  - first:
+      4: 400244
+    second: LeftHandRing4
+  - first:
+      4: 400246
+    second: LeftHandThumb1
+  - first:
+      4: 400248
+    second: LeftHandThumb2
+  - first:
+      4: 400250
+    second: LeftHandThumb3
+  - first:
+      4: 400252
+    second: LeftHandThumb4
+  - first:
+      4: 400254
+    second: LeftLeg
+  - first:
+      4: 400256
+    second: LeftToeBase
+  - first:
+      4: 400258
+    second: LeftToeBaseEnd
+  - first:
+      4: 400260
+    second: LeftUpLeg
+  - first:
+      4: 400262
+    second: Neck
+  - first:
+      4: 400264
+    second: Quiver
+  - first:
+      4: 400266
+    second: RightArm
+  - first:
+      4: 400268
+    second: RightFoot
+  - first:
+      4: 400270
+    second: RightForeArm
+  - first:
+      4: 400272
+    second: RightHand
+  - first:
+      4: 400274
+    second: RightHandIndex1
+  - first:
+      4: 400276
+    second: RightHandIndex2
+  - first:
+      4: 400278
+    second: RightHandIndex3
+  - first:
+      4: 400280
+    second: RightHandIndex4
+  - first:
+      4: 400282
+    second: RightHandMiddle1
+  - first:
+      4: 400284
+    second: RightHandMiddle2
+  - first:
+      4: 400286
+    second: RightHandMiddle3
+  - first:
+      4: 400288
+    second: RightHandMiddle4
+  - first:
+      4: 400290
+    second: RightHandPinky1
+  - first:
+      4: 400292
+    second: RightHandPinky2
+  - first:
+      4: 400294
+    second: RightHandPinky3
+  - first:
+      4: 400296
+    second: RightHandPinky4
+  - first:
+      4: 400298
+    second: RightHandRing1
+  - first:
+      4: 400300
+    second: RightHandRing2
+  - first:
+      4: 400302
+    second: RightHandRing3
+  - first:
+      4: 400304
+    second: RightHandRing4
+  - first:
+      4: 400306
+    second: RightHandThumb1
+  - first:
+      4: 400308
+    second: RightHandThumb2
+  - first:
+      4: 400310
+    second: RightHandThumb3
+  - first:
+      4: 400312
+    second: RightHandThumb4
+  - first:
+      4: 400314
+    second: RightLeg
+  - first:
+      4: 400316
+    second: RightToeBase
+  - first:
+      4: 400318
+    second: RightToeBaseEnd
+  - first:
+      4: 400320
+    second: RightUpLeg
+  - first:
+      4: 400322
+    second: Spine
+  - first:
+      4: 400324
+    second: Spine1
+  - first:
+      4: 400326
+    second: Spine2
+  - first:
+      43: 4300000
+    second: Archer2:Mesh1
+  - first:
+      43: 4300002
+    second: Archer2:Mesh2
+  - first:
+      43: 4300004
+    second: Archer2:Mesh3
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      74: 7400002
+    second: Walk
+  - first:
+      74: 7400004
+    second: Run
+  - first:
+      74: 7400006
+    second: Jump
+  - first:
+      74: 7400008
+    second: Combat_Idle
+  - first:
+      74: 7400010
+    second: Shoot
+  - first:
+      74: 7400012
+    second: Hawk
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Archer2:Mesh1
+  - first:
+      137: 13700002
+    second: Archer2:Mesh2
+  - first:
+      137: 13700004
+    second: Archer2:Mesh3
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
+    searchTexturesGlobally: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Spine1' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 535
       wrapMode: 0
@@ -371,6 +1071,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -715,16 +1416,19 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Walk
       takeName: Take 001
+      internalID: 0
       firstFrame: 0
       lastFrame: 29
       wrapMode: 0
-      orientationOffsetY: -9.27999973
+      orientationOffsetY: -9.28
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -1069,16 +1773,19 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Run
       takeName: Take 001
+      internalID: 0
       firstFrame: 50
       lastFrame: 79
       wrapMode: 0
-      orientationOffsetY: 17.0400009
+      orientationOffsetY: 17.04
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -1423,9 +2130,11 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Jump
       takeName: Take 001
+      internalID: 0
       firstFrame: 124
       lastFrame: 159
       wrapMode: 0
@@ -1433,6 +2142,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -1777,9 +2487,11 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Combat_Idle
       takeName: Take 001
+      internalID: 0
       firstFrame: 195
       lastFrame: 224
       wrapMode: 0
@@ -1787,6 +2499,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -2131,9 +2844,11 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Shoot
       takeName: Take 001
+      internalID: 0
       firstFrame: 329
       lastFrame: 394
       wrapMode: 0
@@ -2141,6 +2856,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -2485,9 +3201,11 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Hawk
       takeName: Take 001
+      internalID: 0
       firstFrame: 434
       lastFrame: 535
       wrapMode: 0
@@ -2495,6 +3213,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -2839,30 +3558,59 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .00999999978
+    globalScale: 0.01
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
+    useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -3258,834 +4006,854 @@ ModelImporter:
         modified: 0
     skeleton:
     - name: Char_AM_Archer_Unity(Clone)
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Hips
-      position: {x: -.00137271534, y: .813175917, z: .00705262646}
-      rotation: {x: 2.9103826e-09, y: 4.65661287e-08, z: -1.35525245e-16, w: 1}
-      scale: {x: .999999821, y: 1, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.0013727153, y: 0.8131759, z: 0.0070526265}
+      rotation: {x: 0.0000000029103826, y: 0.00000004656613, z: -1.3552525e-16, w: 1}
+      scale: {x: 0.9999998, y: 1, z: 0.9999999}
     - name: LeftUpLeg
-      position: {x: -.111971654, y: 0, z: 0}
-      rotation: {x: .481135666, y: .513540149, z: .448210716, w: .551264226}
-      scale: {x: .999999821, y: .999999881, z: .999999821}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.111971654, y: 0, z: 0}
+      rotation: {x: 0.48113567, y: 0.51354015, z: 0.44821072, w: 0.5512642}
+      scale: {x: 0.9999998, y: 0.9999999, z: 0.9999998}
     - name: LeftLeg
-      position: {x: -.280208766, y: -1.7051164e-08, z: 6.44150555e-09}
-      rotation: {x: -.986817956, y: -.161834255, z: -1.49011594e-08, w: -2.98023188e-08}
-      scale: {x: .99999994, y: 1.00000024, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.28020877, y: -0.000000017051164, z: 0.0000000064415056}
+      rotation: {x: -0.98681796, y: -0.16183425, z: -0.000000014901159, w: -0.000000029802319}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1.0000001}
     - name: LeftFoot
-      position: {x: -.474704742, y: -.00211319583, z: 6.89664992e-09}
-      rotation: {x: .399575502, y: .483474076, z: -.496164739, w: .600344002}
-      scale: {x: 1, y: .999999821, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.47470474, y: -0.0021131958, z: 0.00000000689665}
+      rotation: {x: 0.3995755, y: 0.48347408, z: -0.49616474, w: 0.600344}
+      scale: {x: 1, y: 0.9999998, z: 1}
     - name: LeftToeBase
-      position: {x: .0115421414, y: -.0476585962, z: .0830529854}
-      rotation: {x: .0148485918, y: .754058838, z: .0129277753, w: .656511724}
-      scale: {x: 1.00000012, y: 1.00000012, z: .999999821}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.011542141, y: -0.047658596, z: 0.083052985}
+      rotation: {x: 0.014848592, y: 0.75405884, z: 0.012927775, w: 0.6565117}
+      scale: {x: 1.0000001, y: 1.0000001, z: 0.9999998}
     - name: LeftToeBaseEnd
-      position: {x: -.108512126, y: -7.2164494e-18, z: 1.3322676e-17}
-      rotation: {x: -.00945360027, y: -.0683388785, z: .0976928622, w: .992822528}
-      scale: {x: .999999881, y: 1, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.108512126, y: -7.216449e-18, z: 1.3322676e-17}
+      rotation: {x: -0.0094536, y: -0.06833888, z: 0.09769286, w: 0.9928225}
+      scale: {x: 0.9999999, y: 1, z: 1.0000001}
     - name: Spine
-      position: {x: -0, y: .164876938, z: 0}
-      rotation: {x: 3.4985181e-08, y: -3.08692769e-08, z: -.707106829, w: .707106829}
-      scale: {x: .999999762, y: .999999881, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0, y: 0.16487694, z: 0}
+      rotation: {x: 0.00000003498518, y: -0.000000030869277, z: -0.7071068, w: 0.7071068}
+      scale: {x: 0.99999976, y: 0.9999999, z: 1}
     - name: Spine1
-      position: {x: -.175165474, y: 1.51108841e-24, z: 0}
-      rotation: {x: -4.65661287e-08, y: 2.66453505e-15, z: -2.7105057e-16, w: 1}
-      scale: {x: 1.00000012, y: 1, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.17516547, y: 1.5110884e-24, z: 0}
+      rotation: {x: -0.00000004656613, y: 2.664535e-15, z: -2.7105057e-16, w: 1}
+      scale: {x: 1.0000001, y: 1, z: 1}
     - name: Spine2
-      position: {x: -.165213004, y: -1.14748165e-23, z: 3.94430627e-33}
-      rotation: {x: .0798632205, y: -.0289718267, z: .339788884, w: .936656833}
-      scale: {x: 1, y: .99999994, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.165213, y: -1.14748165e-23, z: 3.9443063e-33}
+      rotation: {x: 0.07986322, y: -0.028971827, z: 0.33978888, w: 0.93665683}
+      scale: {x: 1, y: 0.99999994, z: 1}
     - name: LeftArm
-      position: {x: -.308649987, y: .0390733965, z: .00137750164}
-      rotation: {x: -.033823397, y: .102480233, z: .412825614, w: .90439415}
-      scale: {x: .999999702, y: .999999881, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.30865, y: 0.039073396, z: 0.0013775016}
+      rotation: {x: -0.033823397, y: 0.10248023, z: 0.4128256, w: 0.90439415}
+      scale: {x: 0.9999997, y: 0.9999999, z: 1}
     - name: LeftForeArm
-      position: {x: -.43447113, y: -.0204930119, z: -.0196184255}
-      rotation: {x: .305302739, y: .0150440214, z: .00866505876, w: .952097058}
-      scale: {x: 1.00000012, y: 1.00000012, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.43447113, y: -0.020493012, z: -0.019618426}
+      rotation: {x: 0.30530274, y: 0.015044021, z: 0.008665059, w: 0.95209706}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
     - name: LeftHand
-      position: {x: -.270127594, y: -5.03313231e-08, z: 4.61867913e-08}
-      rotation: {x: .317907482, y: .403812706, z: -.319889724, w: .795952737}
-      scale: {x: 1.00000012, y: .999999762, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.2701276, y: -0.000000050331323, z: 0.00000004618679}
+      rotation: {x: 0.31790748, y: 0.4038127, z: -0.31988972, w: 0.79595274}
+      scale: {x: 1.0000001, y: 0.99999976, z: 1.0000002}
     - name: LeftHandThumb1
-      position: {x: -.0482244305, y: -3.06379633e-09, z: -1.13722407e-07}
-      rotation: {x: .114368699, y: -.0973933712, z: .179937497, w: .972140312}
-      scale: {x: 1.00000012, y: 1, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.04822443, y: -0.0000000030637963, z: -0.00000011372241}
+      rotation: {x: 0.1143687, y: -0.09739337, z: 0.1799375, w: 0.9721403}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
     - name: LeftHandThumb2
-      position: {x: -.0318930559, y: 1.49989372e-08, z: 4.80843143e-09}
-      rotation: {x: .0166372191, y: .010965867, z: .0321940444, w: .999283016}
-      scale: {x: 1, y: 1, z: .999999762}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.031893056, y: 0.000000014998937, z: 0.0000000048084314}
+      rotation: {x: 0.01663722, y: 0.010965867, z: 0.032194044, w: 0.999283}
+      scale: {x: 1, y: 1, z: 0.99999976}
     - name: LeftHandThumb3
-      position: {x: -.0506841205, y: 7.01865366e-09, z: 7.17952346e-08}
-      rotation: {x: -.0352475159, y: -.0200052317, z: .0342831574, w: .998590052}
-      scale: {x: 1.00000012, y: .999999881, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.05068412, y: 0.0000000070186537, z: 0.000000071795235}
+      rotation: {x: -0.035247516, y: -0.020005232, z: 0.034283157, w: 0.99859005}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1.0000001}
     - name: LeftHandThumb4
-      position: {x: -.0205511544, y: -2.05955999e-08, z: -5.90039617e-09}
-      rotation: {x: -.740549445, y: -.0158227682, z: -.00680490583, w: .671781182}
-      scale: {x: .999999762, y: .999999702, z: .999999821}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.020551154, y: -0.0000000205956, z: -0.000000005900396}
+      rotation: {x: -0.74054945, y: -0.015822768, z: -0.006804906, w: 0.6717812}
+      scale: {x: 0.99999976, y: 0.9999997, z: 0.9999998}
     - name: LeftHandIndex1
-      position: {x: -.0767507926, y: -.0790228993, z: -.0459446758}
-      rotation: {x: -.0589498132, y: -.156369075, z: .454238117, w: .875066578}
-      scale: {x: .999999762, y: 1, z: .99999994}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.07675079, y: -0.0790229, z: -0.045944676}
+      rotation: {x: -0.058949813, y: -0.15636908, z: 0.45423812, w: 0.8750666}
+      scale: {x: 0.99999976, y: 1, z: 0.99999994}
     - name: LeftHandIndex2
-      position: {x: -.0358951055, y: -4.75215689e-09, z: -5.11144478e-08}
-      rotation: {x: .429417759, y: .0345588364, z: -.00161680544, w: .902443111}
-      scale: {x: .99999994, y: 1.00000012, z: .999999821}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.035895105, y: -0.000000004752157, z: -0.000000051114448}
+      rotation: {x: 0.42941776, y: 0.034558836, z: -0.0016168054, w: 0.9024431}
+      scale: {x: 0.99999994, y: 1.0000001, z: 0.9999998}
     - name: LeftHandIndex3
-      position: {x: -.0328831375, y: -3.59803956e-08, z: -2.81081469e-08}
-      rotation: {x: .0819296837, y: .0347622707, z: -.0224278308, w: .995779157}
-      scale: {x: 1, y: .999999881, z: .999999642}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.032883137, y: -0.000000035980396, z: -0.000000028108147}
+      rotation: {x: 0.08192968, y: 0.03476227, z: -0.02242783, w: 0.99577916}
+      scale: {x: 1, y: 0.9999999, z: 0.99999964}
     - name: LeftHandIndex4
-      position: {x: -.0182784721, y: -1.66216463e-09, z: 4.51759874e-09}
-      rotation: {x: -.923505127, y: -.0417118892, z: -.0540543124, w: .377460688}
-      scale: {x: 1.00000024, y: 1.00000048, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.018278472, y: -0.0000000016621646, z: 0.0000000045175987}
+      rotation: {x: -0.9235051, y: -0.04171189, z: -0.054054312, w: 0.3774607}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1.0000002}
     - name: LeftHandMiddle1
-      position: {x: -.049522467, y: -.0915759578, z: -.0387760662}
-      rotation: {x: -.268837184, y: -.269534349, z: .452403486, w: .806479335}
-      scale: {x: 1, y: 1, z: .99999994}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.049522467, y: -0.09157596, z: -0.038776066}
+      rotation: {x: -0.26883718, y: -0.26953435, z: 0.4524035, w: 0.80647933}
+      scale: {x: 1, y: 1, z: 0.99999994}
     - name: LeftHandMiddle2
-      position: {x: -.0471597314, y: -1.35090461e-09, z: 1.93872349e-08}
-      rotation: {x: .654347181, y: .0309815891, z: -.00794803444, w: .755517602}
-      scale: {x: .999999583, y: .999999881, z: .999999523}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.04715973, y: -0.0000000013509046, z: 0.000000019387235}
+      rotation: {x: 0.6543472, y: 0.03098159, z: -0.007948034, w: 0.7555176}
+      scale: {x: 0.9999996, y: 0.9999999, z: 0.9999995}
     - name: LeftHandMiddle3
-      position: {x: -.0463247225, y: -3.17251221e-08, z: -1.29981022e-08}
-      rotation: {x: .0496368371, y: .0218355376, z: -.0351227596, w: .997910798}
-      scale: {x: 1.00000024, y: 1.00000048, z: 1.00000048}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.046324722, y: -0.000000031725122, z: -0.000000012998102}
+      rotation: {x: 0.049636837, y: 0.021835538, z: -0.03512276, w: 0.9979108}
+      scale: {x: 1.0000002, y: 1.0000005, z: 1.0000005}
     - name: LeftHandMiddle4
-      position: {x: -.0126762604, y: 7.94689043e-08, z: 6.34673967e-08}
-      rotation: {x: -.928424001, y: -.0592081323, z: .000317210215, w: .366773933}
-      scale: {x: 1.00000012, y: 1, z: .999999583}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.01267626, y: 0.000000079468904, z: 0.0000000634674}
+      rotation: {x: -0.928424, y: -0.059208132, z: 0.00031721022, w: 0.36677393}
+      scale: {x: 1.0000001, y: 1, z: 0.9999996}
     - name: LeftHandRing1
-      position: {x: -.0188759733, y: -.100547567, z: -.0320954807}
-      rotation: {x: .0948624909, y: -.0599371232, z: .517544091, w: .8482669}
-      scale: {x: .999999821, y: 1.00000012, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.018875973, y: -0.10054757, z: -0.03209548}
+      rotation: {x: 0.09486249, y: -0.059937123, z: 0.5175441, w: 0.8482669}
+      scale: {x: 0.9999998, y: 1.0000001, z: 0.9999999}
     - name: LeftHandRing2
-      position: {x: -.0471598282, y: -1.57632563e-09, z: 3.94878548e-08}
-      rotation: {x: .246336728, y: .0186556, z: -.0303590782, w: .968529105}
-      scale: {x: 1.00000048, y: 1, z: 1.00000036}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.04715983, y: -0.0000000015763256, z: 0.000000039487855}
+      rotation: {x: 0.24633673, y: 0.0186556, z: -0.030359078, w: 0.9685291}
+      scale: {x: 1.0000005, y: 1, z: 1.0000004}
     - name: LeftHandRing3
-      position: {x: -.0567798093, y: 5.44046443e-08, z: 4.91933569e-08}
-      rotation: {x: .0434680991, y: .00986248162, z: -.0369172804, w: .998323858}
-      scale: {x: .999999821, y: 1.00000012, z: .999999702}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.05677981, y: 0.000000054404644, z: 0.000000049193357}
+      rotation: {x: 0.0434681, y: 0.009862482, z: -0.03691728, w: 0.99832386}
+      scale: {x: 0.9999998, y: 1.0000001, z: 0.9999997}
     - name: LeftHandRing4
-      position: {x: -.00958414096, y: -5.37435092e-08, z: -4.34803447e-08}
-      rotation: {x: -.881026387, y: -.0613896325, z: .0232011899, w: .468492985}
-      scale: {x: 1.00000012, y: 1.00000024, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.009584141, y: -0.00000005374351, z: -0.000000043480345}
+      rotation: {x: -0.8810264, y: -0.061389633, z: 0.02320119, w: 0.46849298}
+      scale: {x: 1.0000001, y: 1.0000002, z: 0.9999999}
     - name: LeftHandPinky1
-      position: {x: -.000270029297, y: -.105994411, z: -.0116759203}
-      rotation: {x: .472236633, y: .188536152, z: .504005849, w: .698158205}
-      scale: {x: .99999994, y: 1.00000012, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.0002700293, y: -0.10599441, z: -0.01167592}
+      rotation: {x: 0.47223663, y: 0.18853615, z: 0.50400585, w: 0.6981582}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
     - name: LeftHandPinky2
-      position: {x: -.0341990031, y: -3.65531179e-08, z: -1.42445238e-08}
-      rotation: {x: -.0487231165, y: -.00292510842, z: -.034986794, w: .998195112}
-      scale: {x: 1.00000024, y: 1.00000012, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.034199003, y: -0.000000036553118, z: -0.000000014244524}
+      rotation: {x: -0.048723117, y: -0.0029251084, z: -0.034986794, w: 0.9981951}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
     - name: LeftHandPinky3
-      position: {x: -.0494206473, y: 5.93893557e-09, z: 1.07154392e-08}
-      rotation: {x: -.00342434715, y: -.00109131599, z: -.0400126129, w: .999192774}
-      scale: {x: .999999821, y: 1, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.049420647, y: 0.0000000059389356, z: 0.000000010715439}
+      rotation: {x: -0.0034243471, y: -0.001091316, z: -0.040012613, w: 0.9991928}
+      scale: {x: 0.9999998, y: 1, z: 1}
     - name: LeftHandPinky4
-      position: {x: -.00469153421, y: 1.38071794e-08, z: 1.49014632e-08}
-      rotation: {x: -.922241747, y: -.00501373271, z: -.0254808124, w: .385740668}
-      scale: {x: 1, y: .99999994, z: .999999464}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.004691534, y: 0.000000013807179, z: 0.000000014901463}
+      rotation: {x: -0.92224175, y: -0.0050137327, z: -0.025480812, w: 0.38574067}
+      scale: {x: 1, y: 0.99999994, z: 0.99999946}
     - name: Neck
-      position: {x: -.239468858, y: .20007278, z: 9.65792557e-10}
-      rotation: {x: -5.02914119e-08, y: 4.09781897e-08, z: -.341021776, w: .94005537}
-      scale: {x: .999999881, y: 1.00000036, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.23946886, y: 0.20007278, z: 9.657926e-10}
+      rotation: {x: -0.000000050291412, y: 0.00000004097819, z: -0.34102178, w: 0.9400554}
+      scale: {x: 0.9999999, y: 1.0000004, z: 0.9999999}
     - name: Head
-      position: {x: -.148358151, y: -4.45963012e-17, z: 7.86367356e-18}
-      rotation: {x: 5.96046377e-08, y: 1.49011594e-08, z: -1.16415311e-09, w: 1}
-      scale: {x: 1, y: .99999994, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.14835815, y: -4.45963e-17, z: 7.8636736e-18}
+      rotation: {x: 0.000000059604638, y: 0.000000014901159, z: -0.0000000011641531,
+        w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
     - name: HeadEnd
-      position: {x: -.140281737, y: -8.70594161e-17, z: -8.47702343e-19}
-      rotation: {x: -.0600728616, y: .0600728355, z: .704550445, w: .704550445}
-      scale: {x: .999999762, y: 1, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.14028174, y: -8.7059416e-17, z: -8.4770234e-19}
+      rotation: {x: -0.06007286, y: 0.060072836, z: 0.70455045, w: 0.70455045}
+      scale: {x: 0.99999976, y: 1, z: 0.9999999}
     - name: RightArm
-      position: {x: -.0992143005, y: .289748311, z: -.0547336899}
-      rotation: {x: .901072741, y: .428880602, z: -.0627721325, w: .0137543436}
-      scale: {x: .999999881, y: 1.00000024, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.0992143, y: 0.2897483, z: -0.05473369}
+      rotation: {x: 0.90107274, y: 0.4288806, z: -0.06277213, w: 0.013754344}
+      scale: {x: 0.9999999, y: 1.0000002, z: 1.0000001}
     - name: RightForeArm
-      position: {x: .434468597, y: .0204922482, z: .0196184982}
-      rotation: {x: .305303007, y: .0150446165, z: .00866289064, w: .952097058}
-      scale: {x: .99999994, y: .99999994, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.4344686, y: 0.020492248, z: 0.019618498}
+      rotation: {x: 0.305303, y: 0.015044617, z: 0.008662891, w: 0.95209706}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1.0000002}
     - name: RightHand
-      position: {x: .270130008, y: 1.10930614e-06, z: 1.43154438e-07}
-      rotation: {x: .317907363, y: .403812706, z: -.319889724, w: .795952737}
-      scale: {x: .999999821, y: .999999821, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.27013, y: 0.0000011093061, z: 0.00000014315444}
+      rotation: {x: 0.31790736, y: 0.4038127, z: -0.31988972, w: 0.79595274}
+      scale: {x: 0.9999998, y: 0.9999998, z: 0.9999999}
     - name: RightHandThumb1
-      position: {x: .0482243225, y: -8.79250422e-07, z: -4.99332771e-07}
-      rotation: {x: .114372201, y: -.0973951966, z: .179928288, w: .972141504}
-      scale: {x: 1.00000024, y: 1.00000036, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.048224322, y: -0.0000008792504, z: -0.00000049933277}
+      rotation: {x: 0.1143722, y: -0.0973952, z: 0.17992829, w: 0.9721415}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000001}
     - name: RightHandThumb2
-      position: {x: .0318935849, y: 6.45853504e-07, z: 1.69669434e-07}
-      rotation: {x: .0166371614, y: .0109657049, z: .0321942493, w: .999283016}
-      scale: {x: .99999994, y: 1, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.031893585, y: 0.0000006458535, z: 0.00000016966943}
+      rotation: {x: 0.016637161, y: 0.010965705, z: 0.03219425, w: 0.999283}
+      scale: {x: 0.99999994, y: 1, z: 0.9999999}
     - name: RightHandThumb3
-      position: {x: .0506841354, y: -1.83667666e-07, z: 7.27209454e-07}
-      rotation: {x: -.0352474935, y: -.0200051684, z: .0342830457, w: .998590052}
-      scale: {x: .99999994, y: .999999762, z: .999999702}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.050684135, y: -0.00000018366767, z: 0.00000072720945}
+      rotation: {x: -0.035247494, y: -0.020005168, z: 0.034283046, w: 0.99859005}
+      scale: {x: 0.99999994, y: 0.99999976, z: 0.9999997}
     - name: RightHandThumb4
-      position: {x: .0205503069, y: 3.17082339e-07, z: -4.13012117e-07}
-      rotation: {x: .740549445, y: .0158227086, z: .00680504739, w: -.671781182}
-      scale: {x: .999999821, y: .999999762, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.020550307, y: 0.00000031708234, z: -0.00000041301212}
+      rotation: {x: 0.74054945, y: 0.015822709, z: 0.0068050474, w: -0.6717812}
+      scale: {x: 0.9999998, y: 0.99999976, z: 1.0000001}
     - name: RightHandIndex1
-      position: {x: .0767506361, y: .0790225118, z: .0459449701}
-      rotation: {x: -.0589437112, y: -.15637745, z: .45423612, w: .875066459}
-      scale: {x: 1, y: .999999762, z: .99999994}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.076750636, y: 0.07902251, z: 0.04594497}
+      rotation: {x: -0.05894371, y: -0.15637745, z: 0.45423612, w: 0.87506646}
+      scale: {x: 1, y: 0.99999976, z: 0.99999994}
     - name: RightHandIndex2
-      position: {x: .0358950533, y: 5.33075195e-07, z: -7.04194861e-07}
-      rotation: {x: -.429416567, y: -.0345831849, z: .00160852575, w: -.902442694}
-      scale: {x: 1.00000012, y: 1, z: 1.00000036}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.035895053, y: 0.0000005330752, z: -0.00000070419486}
+      rotation: {x: -0.42941657, y: -0.034583185, z: 0.0016085258, w: -0.9024427}
+      scale: {x: 1.0000001, y: 1, z: 1.0000004}
     - name: RightHandIndex3
-      position: {x: .0328833833, y: -3.58984522e-07, z: 6.61934223e-07}
-      rotation: {x: .0819296688, y: .0347535722, z: -.0224243775, w: .995779514}
-      scale: {x: .999999821, y: 1, z: .999999762}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.032883383, y: -0.00000035898452, z: 0.0000006619342}
+      rotation: {x: 0.08192967, y: 0.034753572, z: -0.022424378, w: 0.9957795}
+      scale: {x: 0.9999998, y: 1, z: 0.99999976}
     - name: RightHandIndex4
-      position: {x: .0182785038, y: 2.54508421e-07, z: -6.14954672e-07}
-      rotation: {x: -.923505127, y: -.0417118892, z: -.0540543608, w: .377460808}
-      scale: {x: 1.00000024, y: 1.00000036, z: 1.00000072}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.018278504, y: 0.00000025450842, z: -0.0000006149547}
+      rotation: {x: -0.9235051, y: -0.04171189, z: -0.05405436, w: 0.3774608}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000007}
     - name: RightHandMiddle1
-      position: {x: .0495222844, y: .0915750191, z: .038775757}
-      rotation: {x: -.268837124, y: -.269534379, z: .452403367, w: .806479335}
-      scale: {x: 1.00000024, y: 1, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.049522284, y: 0.09157502, z: 0.038775757}
+      rotation: {x: -0.26883712, y: -0.26953438, z: 0.45240337, w: 0.80647933}
+      scale: {x: 1.0000002, y: 1, z: 1.0000001}
     - name: RightHandMiddle2
-      position: {x: .0471599996, y: 6.24971861e-08, z: -5.91646199e-08}
-      rotation: {x: -.654346704, y: -.0309893787, z: .00794867426, w: -.755517662}
-      scale: {x: .99999994, y: .999999881, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.04716, y: 0.000000062497186, z: -0.00000005916462}
+      rotation: {x: -0.6543467, y: -0.030989379, z: 0.007948674, w: -0.75551766}
+      scale: {x: 0.99999994, y: 0.9999999, z: 1}
     - name: RightHandMiddle3
-      position: {x: .0463245064, y: 3.47907587e-07, z: 3.02741142e-07}
-      rotation: {x: -.0496369191, y: -.0218314007, z: .0351174437, w: -.997910976}
-      scale: {x: 1, y: 1.00000024, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.046324506, y: 0.0000003479076, z: 0.00000030274114}
+      rotation: {x: -0.04963692, y: -0.0218314, z: 0.035117444, w: -0.997911}
+      scale: {x: 1, y: 1.0000002, z: 1.0000001}
     - name: RightHandMiddle4
-      position: {x: .0126768919, y: -9.0067978e-08, z: -3.29748786e-07}
-      rotation: {x: .928424001, y: .0592079461, z: -.000317119033, w: -.366773993}
-      scale: {x: .999999642, y: .999999881, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.012676892, y: -0.00000009006798, z: -0.0000003297488}
+      rotation: {x: 0.928424, y: 0.059207946, z: -0.00031711903, w: -0.366774}
+      scale: {x: 0.99999964, y: 0.9999999, z: 1}
     - name: RightHandRing1
-      position: {x: .0188758243, y: .100546628, z: .0320951752}
-      rotation: {x: -.0948633924, y: .0599387847, z: -.517543495, w: -.848267078}
-      scale: {x: 1.00000012, y: .99999994, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.018875824, y: 0.10054663, z: 0.032095175}
+      rotation: {x: -0.09486339, y: 0.059938785, z: -0.5175435, w: -0.8482671}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
     - name: RightHandRing2
-      position: {x: .047160048, y: -1.85273841e-08, z: -2.66393243e-07}
-      rotation: {x: -.246336803, y: -.0186599009, z: .0303604156, w: -.968528926}
-      scale: {x: .99999994, y: .99999994, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.047160048, y: -0.000000018527384, z: -0.00000026639324}
+      rotation: {x: -0.2463368, y: -0.0186599, z: 0.030360416, w: -0.9685289}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1.0000002}
     - name: RightHandRing3
-      position: {x: .056779474, y: 1.36690645e-07, z: 2.00388797e-07}
-      rotation: {x: .0434683897, y: .0098603759, z: -.0369236767, w: .99832356}
-      scale: {x: .99999994, y: 1, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.056779474, y: 0.00000013669064, z: 0.0000002003888}
+      rotation: {x: 0.04346839, y: 0.009860376, z: -0.036923677, w: 0.99832356}
+      scale: {x: 0.99999994, y: 1, z: 0.9999999}
     - name: RightHandRing4
-      position: {x: .00958432816, y: 1.49076143e-07, z: -6.39989128e-09}
-      rotation: {x: .881026328, y: .0613895431, z: -.0232011527, w: -.468492925}
-      scale: {x: .999999881, y: .99999994, z: 1.00000048}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.009584328, y: 0.00000014907614, z: -0.0000000063998913}
+      rotation: {x: 0.8810263, y: 0.061389543, z: -0.023201153, w: -0.46849293}
+      scale: {x: 0.9999999, y: 0.99999994, z: 1.0000005}
     - name: RightHandPinky1
-      position: {x: .000269840239, y: .105993479, z: .0116754314}
-      rotation: {x: -.472234517, y: -.188540444, z: -.504003108, w: -.69816047}
-      scale: {x: 1.00000048, y: 1.00000012, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.00026984024, y: 0.10599348, z: 0.011675431}
+      rotation: {x: -0.47223452, y: -0.18854044, z: -0.5040031, w: -0.69816047}
+      scale: {x: 1.0000005, y: 1.0000001, z: 1.0000002}
     - name: RightHandPinky2
-      position: {x: .0341997035, y: 4.66922643e-07, z: 2.06077246e-07}
-      rotation: {x: -.0487237051, y: -.00292899017, z: -.0349762253, w: .998195469}
-      scale: {x: .999999702, y: .999999881, z: .999999881}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.034199703, y: 0.00000046692264, z: 0.00000020607725}
+      rotation: {x: -0.048723705, y: -0.0029289902, z: -0.034976225, w: 0.99819547}
+      scale: {x: 0.9999997, y: 0.9999999, z: 0.9999999}
     - name: RightHandPinky3
-      position: {x: .0494203903, y: -9.67656959e-08, z: -1.13838592e-08}
-      rotation: {x: .0034244156, y: .00109377084, z: .0399912223, w: -.999193609}
-      scale: {x: .999999821, y: .999999821, z: 1}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.04942039, y: -0.000000096765696, z: -0.000000011383859}
+      rotation: {x: 0.0034244156, y: 0.0010937708, z: 0.039991222, w: -0.9991936}
+      scale: {x: 0.9999998, y: 0.9999998, z: 1}
     - name: RightHandPinky4
-      position: {x: .00469112257, y: -1.40744859e-07, z: 1.82202999e-08}
-      rotation: {x: .922241747, y: .00501371501, z: .025480736, w: -.385740578}
-      scale: {x: 1, y: .999999881, z: .999999821}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.0046911226, y: -0.00000014074486, z: 0.0000000182203}
+      rotation: {x: 0.92224175, y: 0.005013715, z: 0.025480736, w: -0.38574058}
+      scale: {x: 1, y: 0.9999999, z: 0.9999998}
     - name: Quiver
-      position: {x: -.0533303469, y: .0869728848, z: .189492792}
-      rotation: {x: -.0359856449, y: .0769579634, z: .422049433, w: .90258348}
+      parentName: 
+      position: {x: -0.053330347, y: 0.086972885, z: 0.18949279}
+      rotation: {x: -0.035985645, y: 0.07695796, z: 0.42204943, w: 0.9025835}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Belt
-      position: {x: -.0374535993, y: 8.31636965e-18, z: .196403697}
-      rotation: {x: 9.86293802e-09, y: -1.49883377e-08, z: .707106829, w: .707106829}
+      parentName: 
+      position: {x: -0.0374536, y: 8.31637e-18, z: 0.1964037}
+      rotation: {x: 0.000000009862938, y: -0.000000014988338, z: 0.7071068, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: RightUpLeg
-      position: {x: .111971997, y: 7.62939436e-08, z: 0}
-      rotation: {x: .551264167, y: -.448210657, z: .513540089, w: -.481135756}
-      scale: {x: .99999994, y: 1, z: .999999702}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.111972, y: 0.000000076293944, z: 0}
+      rotation: {x: 0.55126417, y: -0.44821066, z: 0.5135401, w: -0.48113576}
+      scale: {x: 0.99999994, y: 1, z: 0.9999997}
     - name: RightLeg
-      position: {x: .280209035, y: 1.08362528e-07, z: -7.05492027e-07}
-      rotation: {x: -.986817956, y: -.16183424, z: 0, w: -2.98023224e-08}
-      scale: {x: 1.00000024, y: 1.00000024, z: 1.00000024}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.28020903, y: 0.00000010836253, z: -0.000000705492}
+      rotation: {x: -0.98681796, y: -0.16183424, z: 0, w: -0.000000029802322}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
     - name: RightFoot
-      position: {x: .474704474, y: .00211318582, z: -2.44072908e-07}
-      rotation: {x: .399575531, y: .483473927, z: -.49616468, w: .600344062}
-      scale: {x: 1, y: 1, z: 1.00000012}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.47470447, y: 0.0021131858, z: -0.0000002440729}
+      rotation: {x: 0.39957553, y: 0.48347393, z: -0.49616468, w: 0.60034406}
+      scale: {x: 1, y: 1, z: 1.0000001}
     - name: RightToeBase
-      position: {x: -.011541645, y: .0476586968, z: -.0830530971}
-      rotation: {x: .0148486365, y: .754058838, z: .0129277483, w: .656511724}
-      scale: {x: 1, y: 1.00000048, z: 1.00000072}
-      transformModified: 1
+      parentName: 
+      position: {x: -0.011541645, y: 0.047658697, z: -0.0830531}
+      rotation: {x: 0.014848636, y: 0.75405884, z: 0.012927748, w: 0.6565117}
+      scale: {x: 1, y: 1.0000005, z: 1.0000007}
     - name: RightToeBaseEnd
-      position: {x: .108512081, y: -2.5444975e-09, z: -3.86654506e-07}
-      rotation: {x: -.00945354998, y: -.0683386922, z: .0976929069, w: .992822587}
-      scale: {x: .99999994, y: .999999642, z: .999999642}
-      transformModified: 1
+      parentName: 
+      position: {x: 0.10851208, y: -0.0000000025444975, z: -0.0000003866545}
+      rotation: {x: -0.00945355, y: -0.06833869, z: 0.09769291, w: 0.9928226}
+      scale: {x: 0.99999994, y: 0.99999964, z: 0.99999964}
     - name: Archer2:Mesh
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
-      scale: {x: 21.1995449, y: 21.1995449, z: 21.1995449}
-      transformModified: 1
+      scale: {x: 21.199545, y: 21.199545, z: 21.199545}
     - name: Archer2:transform3
+      parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer2:Mesh1
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
-      scale: {x: 21.1995449, y: 21.1995449, z: 21.1995449}
-      transformModified: 1
+      scale: {x: 21.199545, y: 21.199545, z: 21.199545}
     - name: Archer2:Mesh2
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
-      scale: {x: 21.1995449, y: 21.1995449, z: 21.1995449}
-      transformModified: 1
+      scale: {x: 21.199545, y: 21.199545, z: 21.199545}
     - name: Archer2:pSphere1
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
-      scale: {x: 21.1995449, y: 21.1995449, z: 21.1995449}
-      transformModified: 1
+      scale: {x: 21.199545, y: 21.199545, z: 21.199545}
     - name: Archer2:transform2
+      parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer2:pSphere2
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
-      scale: {x: 21.1995449, y: 21.1995449, z: 21.1995449}
-      transformModified: 1
+      scale: {x: 21.199545, y: 21.199545, z: 21.199545}
     - name: Archer2:transform1
+      parentName: 
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer2:Mesh3
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Reference
+      parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Hips
-      position: {x: -0, y: .833782017, z: 0}
+      parentName: 
+      position: {x: -0, y: 0.833782, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftUpLeg
-      position: {x: -.111971654, y: 0, z: 0}
-      rotation: {x: 4.83032491e-18, y: -2.05079877e-12, z: 2.74303602e-09, w: 1}
+      parentName: 
+      position: {x: -0.111971654, y: 0, z: 0}
+      rotation: {x: 4.830325e-18, y: -2.0507988e-12, z: 0.000000002743036, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftLeg
-      position: {x: -.0198296737, y: -.276938707, z: .0377979428}
-      rotation: {x: -1.73721693e-17, y: 2.05089591e-12, z: 1.21581252e-08, w: 1}
+      parentName: 
+      position: {x: -0.019829674, y: -0.2769387, z: 0.037797943}
+      rotation: {x: -1.737217e-17, y: 2.050896e-12, z: 0.000000012158125, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftFoot
-      position: {x: -.0318817943, y: -.465489984, z: -.0874738395}
-      rotation: {x: -2.32830644e-10, y: -3.6525305e-09, z: -1.49011612e-08, w: 1}
+      parentName: 
+      position: {x: -0.031881794, y: -0.46548998, z: -0.08747384}
+      rotation: {x: -2.3283064e-10, y: -0.0000000036525305, z: -0.000000014901161,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftToeBase
-      position: {x: -.0105544841, y: -.0470624343, z: .0835229978}
-      rotation: {x: 2.32830644e-10, y: 1.81171345e-08, z: 9.31322575e-10, w: 1}
+      parentName: 
+      position: {x: -0.010554484, y: -0.047062434, z: 0.083523}
+      rotation: {x: 2.3283064e-10, y: 0.000000018117134, z: 9.313226e-10, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightUpLeg
-      position: {x: .111971997, y: 7.62939436e-08, z: 0}
-      rotation: {x: -1.1492543e-17, y: 8.12372392e-12, z: -6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.111972, y: 0.000000076293944, z: 0}
+      rotation: {x: -1.1492543e-17, y: 8.123724e-12, z: -6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightLeg
-      position: {x: .0198289957, y: -.276939034, z: .0377978981}
-      rotation: {x: -1.00830802e-17, y: -8.12372565e-12, z: 6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.019828996, y: -0.27693903, z: 0.037797898}
+      rotation: {x: -1.008308e-17, y: -8.123726e-12, z: 6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightFoot
-      position: {x: .0318819992, y: -.465489715, z: -.0874738023}
-      rotation: {x: -2.32830574e-10, y: 2.7328671e-17, z: 1.83354132e-09, w: 1}
+      parentName: 
+      position: {x: 0.031882, y: -0.46548972, z: -0.0874738}
+      rotation: {x: -2.3283057e-10, y: 2.7328671e-17, z: 0.0000000018335413, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightToeBase
-      position: {x: .010555, y: -.0470625013, z: .0835229978}
-      rotation: {x: 2.32830644e-10, y: 4.33680636e-19, z: -3.69618647e-09, w: 1}
+      parentName: 
+      position: {x: 0.010555, y: -0.0470625, z: 0.083523}
+      rotation: {x: 2.3283064e-10, y: 4.3368064e-19, z: -0.0000000036961865, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Spine
-      position: {x: -0, y: .164876938, z: 0}
+      parentName: 
+      position: {x: -0, y: 0.16487694, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Spine1
-      position: {x: -1.07257904e-17, y: .175165474, z: 0}
+      parentName: 
+      position: {x: -1.07257904e-17, y: 0.17516547, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Spine2
-      position: {x: -1.01163908e-17, y: .165213004, z: 3.94430627e-33}
-      rotation: {x: 3.65309665e-33, y: 0, z: -0, w: 1}
+      parentName: 
+      position: {x: -1.0116391e-17, y: 0.165213, z: 3.9443063e-33}
+      rotation: {x: 3.6530967e-33, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftArm
-      position: {x: -.16571781, y: .261912823, z: -.0270688329}
-      rotation: {x: -1.36078822e-29, y: -1.30740167e-12, z: -1.04083409e-17, w: 1}
+      parentName: 
+      position: {x: -0.16571781, y: 0.26191282, z: -0.027068833}
+      rotation: {x: -1.3607882e-29, y: -1.3074017e-12, z: -1.0408341e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftForeArm
-      position: {x: -.43447113, y: -.0204930119, z: -.0196184255}
-      rotation: {x: -3.46944695e-18, y: -9.31322519e-10, z: 3.46944695e-18, w: 1}
+      parentName: 
+      position: {x: -0.43447113, y: -0.020493012, z: -0.019618426}
+      rotation: {x: -3.469447e-18, y: -9.313225e-10, z: 3.469447e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHand
-      position: {x: -.255325586, y: -.0173371881, z: .0864707679}
-      rotation: {x: 2.00971423e-40, y: -1.39698386e-08, z: 1.43860672e-32, w: 1}
+      parentName: 
+      position: {x: -0.2553256, y: -0.017337188, z: 0.08647077}
+      rotation: {x: 2.00971e-40, y: -0.000000013969839, z: 1.4386067e-32, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandThumb1
-      position: {x: -.00760009652, y: -.0146842953, z: .0453012735}
-      rotation: {x: -2.56739074e-16, y: 1.11758709e-08, z: -9.31322575e-09, w: 1}
+      parentName: 
+      position: {x: -0.0076000965, y: -0.014684295, z: 0.045301273}
+      rotation: {x: -2.5673907e-16, y: 0.000000011175871, z: -0.000000009313226, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandThumb2
-      position: {x: -.0195982363, y: -.0187222287, z: .016809348}
-      rotation: {x: -2.51534838e-17, y: 4.65661243e-09, z: 2.32830644e-08, w: 1}
+      parentName: 
+      position: {x: -0.019598236, y: -0.018722229, z: 0.016809348}
+      rotation: {x: -2.5153484e-17, y: 0.0000000046566124, z: 0.000000023283064, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandThumb3
-      position: {x: -.0328067765, y: -.0304527283, z: .0237744991}
-      rotation: {x: 6.15753142e-16, y: -1.48429546e-09, z: -2.45927367e-08, w: 1}
+      parentName: 
+      position: {x: -0.032806776, y: -0.030452728, z: 0.0237745}
+      rotation: {x: 6.1575314e-16, y: -0.0000000014842955, z: -0.000000024592737,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandThumb4
-      position: {x: -.0144985961, y: -.0115650939, z: .00885376893}
-      rotation: {x: -3.15034423e-16, y: 6.14090823e-09, z: 1.06228981e-08, w: 1}
+      parentName: 
+      position: {x: -0.014498596, y: -0.011565094, z: 0.008853769}
+      rotation: {x: -3.1503442e-16, y: 0.0000000061409082, z: 0.000000010622898, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandIndex1
-      position: {x: -.102256164, y: -.0147236632, z: .0597754791}
-      rotation: {x: 2.81025203e-16, y: 2.04890966e-08, z: 1.86264537e-09, w: 1}
+      parentName: 
+      position: {x: -0.102256164, y: -0.014723663, z: 0.05977548}
+      rotation: {x: 2.810252e-16, y: 0.000000020489097, z: 0.0000000018626454, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandIndex2
-      position: {x: -.029767761, y: -.0147709651, z: .0135704707}
-      rotation: {x: 1.68021074e-25, y: -7.45058149e-09, z: 2.25514052e-17, w: 1}
+      parentName: 
+      position: {x: -0.029767761, y: -0.014770965, z: 0.013570471}
+      rotation: {x: 1.6802107e-25, y: -0.0000000074505815, z: 2.2551405e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandIndex3
-      position: {x: -.022016678, y: -.0230403133, z: .00810621213}
-      rotation: {x: -1.96376118e-17, y: 1.16415322e-09, z: 4.94765118e-09, w: 1}
+      parentName: 
+      position: {x: -0.022016678, y: -0.023040313, z: 0.008106212}
+      rotation: {x: -1.9637612e-17, y: 0.0000000011641532, z: 0.000000004947651, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandIndex4
-      position: {x: -.0112423701, y: -.0139025878, z: .00379864685}
-      rotation: {x: -2.18060162e-17, y: -1.16415322e-09, z: -6.81029633e-09, w: 1}
+      parentName: 
+      position: {x: -0.01124237, y: -0.013902588, z: 0.0037986469}
+      rotation: {x: -2.1806016e-17, y: -0.0000000011641532, z: -0.0000000068102963,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandMiddle1
-      position: {x: -.10571304, y: -.0176008604, z: .0292775799}
-      rotation: {x: -3.05311305e-16, y: 1.49011612e-08, z: -7.45058149e-09, w: 1}
+      parentName: 
+      position: {x: -0.10571304, y: -0.01760086, z: 0.02927758}
+      rotation: {x: -3.053113e-16, y: 0.000000014901161, z: -0.0000000074505815, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandMiddle2
-      position: {x: -.0434115604, y: -.0154508976, z: .0100372694}
-      rotation: {x: -5.81132364e-17, y: 1.86264504e-09, z: -6.05359674e-09, w: 1}
+      parentName: 
+      position: {x: -0.04341156, y: -0.015450898, z: 0.010037269}
+      rotation: {x: -5.8113236e-17, y: 0.000000001862645, z: -0.0000000060535967,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandMiddle3
-      position: {x: -.0308964532, y: -.0326000974, z: .0113412039}
-      rotation: {x: -2.90566182e-17, y: -9.31322575e-10, z: 2.84053367e-08, w: 1}
+      parentName: 
+      position: {x: -0.030896453, y: -0.032600097, z: 0.011341204}
+      rotation: {x: -2.9056618e-17, y: -9.313226e-10, z: 0.000000028405337, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandMiddle4
-      position: {x: -.00758750876, y: -.00966735836, z: .00310796732}
-      rotation: {x: -8.53030007e-25, y: 9.31322519e-10, z: -1.49011612e-08, w: 1}
+      parentName: 
+      position: {x: -0.0075875088, y: -0.009667358, z: 0.0031079673}
+      rotation: {x: -8.5303e-25, y: 9.313225e-10, z: -0.000000014901161, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandRing1
-      position: {x: -.10571304, y: -.0176008604, z: -.00334645179}
-      rotation: {x: 1.04083402e-16, y: 1.49011612e-08, z: -7.4505806e-09, w: 1}
+      parentName: 
+      position: {x: -0.10571304, y: -0.01760086, z: -0.0033464518}
+      rotation: {x: 1.040834e-16, y: 0.000000014901161, z: -0.000000007450581, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandRing2
-      position: {x: -.0397962928, y: -.0238728318, z: .0083900094}
-      rotation: {x: 1.21972744e-17, y: -2.32830644e-09, z: 5.23868948e-09, w: 1}
+      parentName: 
+      position: {x: -0.039796293, y: -0.023872832, z: 0.008390009}
+      rotation: {x: 1.21972744e-17, y: -0.0000000023283064, z: 0.0000000052386895,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandRing3
-      position: {x: -.0361584462, y: -.040215604, z: .017297931}
-      rotation: {x: -9.92044988e-18, y: -1.39698386e-09, z: -7.10133463e-09, w: 1}
+      parentName: 
+      position: {x: -0.036158446, y: -0.040215604, z: 0.017297931}
+      rotation: {x: -9.92045e-18, y: -0.0000000013969839, z: -0.0000000071013346,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandRing4
-      position: {x: -.00438819826, y: -.00773101812, z: .00358201494}
-      rotation: {x: 1.94289029e-16, y: 9.71445147e-17, z: 9.31322575e-09, w: 1}
+      parentName: 
+      position: {x: -0.0043881983, y: -0.007731018, z: 0.003582015}
+      rotation: {x: 1.9428903e-16, y: 9.7144515e-17, z: 0.000000009313226, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandPinky1
-      position: {x: -.0982768983, y: -.0317869559, z: -.026503874}
-      rotation: {x: 6.24500518e-17, y: 1.49011612e-08, z: -6.98491975e-09, w: 1}
+      parentName: 
+      position: {x: -0.0982769, y: -0.031786956, z: -0.026503874}
+      rotation: {x: 6.245005e-17, y: 0.000000014901161, z: -0.0000000069849198, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandPinky2
-      position: {x: -.0283575431, y: -.0190776065, z: .00121102447}
-      rotation: {x: 2.05320803e-17, y: -1.16415333e-09, z: 1.76369213e-08, w: 1}
+      parentName: 
+      position: {x: -0.028357543, y: -0.019077606, z: 0.0012110245}
+      rotation: {x: 2.053208e-17, y: -0.0000000011641533, z: 0.000000017636921, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandPinky3
-      position: {x: -.0302091967, y: -.0381376632, z: .00867891219}
-      rotation: {x: -6.28430684e-17, y: 3.02679837e-09, z: -2.50875019e-08, w: 1}
+      parentName: 
+      position: {x: -0.030209197, y: -0.038137663, z: 0.008678912}
+      rotation: {x: -6.284307e-17, y: 0.0000000030267984, z: -0.000000025087502, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandPinky4
-      position: {x: -.00232292153, y: -.00393081643, z: .00107852218}
-      rotation: {x: 1.13624388e-16, y: 5.58793545e-09, z: 1.44354999e-08, w: 1}
+      parentName: 
+      position: {x: -0.0023229215, y: -0.0039308164, z: 0.0010785222}
+      rotation: {x: 1.1362439e-16, y: 0.0000000055879354, z: 0.0000000144355, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightArm
-      position: {x: .165718004, y: .261912525, z: -.0270687975}
-      rotation: {x: -4.33680869e-19, y: -6.82121352e-13, z: 6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.165718, y: 0.26191252, z: -0.027068797}
+      rotation: {x: -4.3368087e-19, y: -6.8212135e-13, z: 6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightForeArm
-      position: {x: .434468597, y: -.0204922482, z: -.0196184982}
-      rotation: {x: 1.54977175e-34, y: -4.46691295e-17, z: 3.46944695e-18, w: 1}
+      parentName: 
+      position: {x: 0.4344686, y: -0.020492248, z: -0.019618498}
+      rotation: {x: 1.5497718e-34, y: -4.466913e-17, z: 3.469447e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHand
-      position: {x: .255328059, y: -.0173381045, z: .0864708051}
-      rotation: {x: 1.31979381e-31, y: 2.98023224e-08, z: -3.93329205e-39, w: 1}
+      parentName: 
+      position: {x: 0.25532806, y: -0.017338105, z: 0.086470805}
+      rotation: {x: 1.3197938e-31, y: 0.000000029802322, z: -3.933292e-39, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandThumb1
-      position: {x: .00759902643, y: -.014684448, z: .0453012921}
-      rotation: {x: 4.71844785e-16, y: -2.98023224e-08, z: 4.16333661e-16, w: 1}
+      parentName: 
+      position: {x: 0.0075990264, y: -0.014684448, z: 0.045301292}
+      rotation: {x: 4.718448e-16, y: -0.000000029802322, z: 4.1633366e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandThumb2
-      position: {x: .0195990745, y: -.0187223814, z: .0168092065}
-      rotation: {x: 8.32667268e-17, y: 1.38777878e-17, z: 1.94289029e-16, w: 1}
+      parentName: 
+      position: {x: 0.019599074, y: -0.018722381, z: 0.016809206}
+      rotation: {x: 8.326673e-17, y: 1.3877788e-17, z: 1.9428903e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandThumb3
-      position: {x: .0328070074, y: -.0304521173, z: .0237749945}
-      rotation: {x: 1.38777878e-17, y: -4.16333634e-17, z: 2.77555756e-17, w: 1}
+      parentName: 
+      position: {x: 0.032807007, y: -0.030452117, z: 0.023774995}
+      rotation: {x: 1.3877788e-17, y: -4.1633363e-17, z: 2.7755576e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandThumb4
-      position: {x: .0144979851, y: -.0115649411, z: .00885300618}
-      rotation: {x: -1.2490009e-16, y: -4.16333634e-17, z: 5.58793589e-09, w: 1}
+      parentName: 
+      position: {x: 0.014497985, y: -0.011564941, z: 0.008853006}
+      rotation: {x: -1.2490009e-16, y: -4.1633363e-17, z: 0.000000005587936, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandIndex1
-      position: {x: .102255933, y: -.014723205, z: .0597754978}
-      rotation: {x: -1.38777878e-16, y: -2.98023224e-08, z: -1.38777911e-17, w: 1}
+      parentName: 
+      position: {x: 0.10225593, y: -0.014723205, z: 0.059775498}
+      rotation: {x: -1.3877788e-16, y: -0.000000029802322, z: -1.3877791e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandIndex2
-      position: {x: .0297675319, y: -.0147717278, z: .0135700032}
-      rotation: {x: -5.55111512e-17, y: -5.55111512e-17, z: -3.81639165e-17, w: 1}
+      parentName: 
+      position: {x: 0.029767532, y: -0.014771728, z: 0.013570003}
+      rotation: {x: -5.551115e-17, y: -5.551115e-17, z: -3.8163916e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandIndex3
-      position: {x: .0220167544, y: -.0230403133, z: .00810699444}
-      rotation: {x: -1.38777878e-17, y: -1.38777878e-17, z: -1.09287579e-16, w: 1}
+      parentName: 
+      position: {x: 0.022016754, y: -0.023040313, z: 0.008106994}
+      rotation: {x: -1.3877788e-17, y: -1.3877788e-17, z: -1.0928758e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandIndex4
-      position: {x: .0112424465, y: -.0139027406, z: .00379800797}
-      rotation: {x: -6.9388939e-17, y: -1.38777878e-17, z: 6.51925802e-09, w: 1}
+      parentName: 
+      position: {x: 0.0112424465, y: -0.013902741, z: 0.003798008}
+      rotation: {x: -6.938894e-17, y: -1.3877788e-17, z: 0.000000006519258, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandMiddle1
-      position: {x: .105712049, y: -.0176007077, z: .0292776078}
-      rotation: {x: -1.94289029e-16, y: -2.98023224e-08, z: 7.4505806e-09, w: 1}
+      parentName: 
+      position: {x: 0.10571205, y: -0.017600708, z: 0.029277608}
+      rotation: {x: -1.9428903e-16, y: -0.000000029802322, z: 0.000000007450581, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandMiddle2
-      position: {x: .0434117876, y: -.0154510504, z: .0100372983}
-      rotation: {x: -5.55111512e-17, y: 4.16333634e-17, z: -7.4505806e-09, w: 1}
+      parentName: 
+      position: {x: 0.043411788, y: -0.01545105, z: 0.010037298}
+      rotation: {x: -5.551115e-17, y: 4.1633363e-17, z: -0.000000007450581, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandMiddle3
-      position: {x: .0308966059, y: -.0325996391, z: .0113411993}
-      rotation: {x: -4.16333634e-17, y: -4.16333634e-17, z: -2.94902991e-17, w: 1}
+      parentName: 
+      position: {x: 0.030896606, y: -0.03259964, z: 0.011341199}
+      rotation: {x: -4.1633363e-17, y: -4.1633363e-17, z: -2.94903e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandMiddle4
-      position: {x: .00758781424, y: -.00966796838, z: .0031079005}
-      rotation: {x: 2.77555756e-17, y: -7.75481824e-26, z: -2.79396772e-09, w: 1}
+      parentName: 
+      position: {x: 0.0075878142, y: -0.009667968, z: 0.0031079005}
+      rotation: {x: 2.7755576e-17, y: -7.754818e-26, z: -0.0000000027939677, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandRing1
-      position: {x: .105712049, y: -.0176007077, z: -.00334639382}
-      rotation: {x: -1.31838984e-16, y: -2.98023224e-08, z: 9.54097846e-17, w: 1}
+      parentName: 
+      position: {x: 0.10571205, y: -0.017600708, z: -0.0033463938}
+      rotation: {x: -1.3183898e-16, y: -0.000000029802322, z: 9.5409785e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandRing2
-      position: {x: .039796371, y: -.0238731373, z: .0083899973}
-      rotation: {x: 6.9388939e-17, y: 5.55111512e-17, z: -6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.03979637, y: -0.023873137, z: 0.008389997}
+      rotation: {x: 6.938894e-17, y: 5.551115e-17, z: -6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandRing3
-      position: {x: .0361584462, y: -.0402151495, z: .0172978975}
-      rotation: {x: 4.81482486e-34, y: 2.77555756e-17, z: -1.73472348e-17, w: 1}
+      parentName: 
+      position: {x: 0.036158446, y: -0.04021515, z: 0.017297897}
+      rotation: {x: 4.814825e-34, y: 2.7755576e-17, z: -1.7347235e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandRing4
-      position: {x: .00438835146, y: -.00773117039, z: .00358200073}
-      rotation: {x: 5.55111512e-17, y: -8.32667268e-17, z: 1.3038516e-08, w: 1}
+      parentName: 
+      position: {x: 0.0043883515, y: -0.0077311704, z: 0.0035820007}
+      rotation: {x: 5.551115e-17, y: -8.326673e-17, z: 0.000000013038516, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandPinky1
-      position: {x: .0982758328, y: -.0317869559, z: -.0265038963}
-      rotation: {x: -4.73579509e-16, y: -2.98023224e-08, z: -1.05276044e-16, w: 1}
+      parentName: 
+      position: {x: 0.09827583, y: -0.031786956, z: -0.026503896}
+      rotation: {x: -4.735795e-16, y: -0.000000029802322, z: -1.05276044e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandPinky2
-      position: {x: .0283583831, y: -.0190776065, z: .00121109956}
-      rotation: {x: -1.32407684e-34, y: 6.9388939e-18, z: 1.90819582e-17, w: 1}
+      parentName: 
+      position: {x: 0.028358383, y: -0.019077606, z: 0.0012110996}
+      rotation: {x: -1.3240768e-34, y: 6.938894e-18, z: 1.9081958e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandPinky3
-      position: {x: .0302089676, y: -.0381375104, z: .00867889822}
-      rotation: {x: -1.38777878e-17, y: -3.46944695e-17, z: 2.60208521e-17, w: 1}
+      parentName: 
+      position: {x: 0.030208968, y: -0.03813751, z: 0.008678898}
+      rotation: {x: -1.3877788e-17, y: -3.469447e-17, z: 2.6020852e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandPinky4
-      position: {x: .00232261652, y: -.00393051142, z: .00107850076}
-      rotation: {x: -4.16333634e-17, y: 1.38777878e-17, z: 5.58793545e-09, w: 1}
+      parentName: 
+      position: {x: 0.0023226165, y: -0.0039305114, z: 0.0010785008}
+      rotation: {x: -4.1633363e-17, y: 1.3877788e-17, z: 0.0000000055879354, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Neck
-      position: {x: 1.12333893e-08, y: .312048793, z: 1.92963823e-09}
-      rotation: {x: -1.33392996e-33, y: 0, z: -0, w: 1}
+      parentName: 
+      position: {x: 0.000000011233389, y: 0.3120488, z: 0.0000000019296382}
+      rotation: {x: -1.33393e-33, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:Head
-      position: {x: -0, y: .148358151, z: 0}
+      parentName: 
+      position: {x: -0, y: 0.14835815, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:HipsEffector
-      position: {x: 1.7166137e-07, y: .833782017, z: 0}
+      parentName: 
+      position: {x: 0.00000017166137, y: 0.833782, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftAnkleEffector
-      position: {x: -.163683102, y: .0913533345, z: -.049675893}
-      rotation: {x: -2.32830616e-10, y: -3.65253072e-09, z: -2.86059967e-17, w: 1}
+      parentName: 
+      position: {x: -0.1636831, y: 0.091353334, z: -0.049675893}
+      rotation: {x: -2.3283062e-10, y: -0.0000000036525307, z: -2.8605997e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightAnkleEffector
-      position: {x: .163682997, y: .0913533345, z: -.0496759005}
-      rotation: {x: -2.32830602e-10, y: 8.28398222e-17, z: 1.83354132e-09, w: 1}
+      parentName: 
+      position: {x: 0.163683, y: 0.091353334, z: -0.0496759}
+      rotation: {x: -2.328306e-10, y: 8.283982e-17, z: 0.0000000018335413, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftWristEffector
-      position: {x: -.855514526, y: 1.56312013, z: .0397835039}
-      rotation: {x: 7.17583924e-40, y: -1.49024686e-08, z: 4.81519896e-32, w: 1}
+      parentName: 
+      position: {x: -0.8555145, y: 1.5631201, z: 0.039783504}
+      rotation: {x: 7.17584e-40, y: -0.000000014902469, z: 4.815199e-32, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightWristEffector
-      position: {x: .855514646, y: 1.56311965, z: .0397835039}
-      rotation: {x: 3.19806609e-32, y: 2.98016403e-08, z: -9.53076335e-40, w: 1}
+      parentName: 
+      position: {x: 0.85551465, y: 1.5631196, z: 0.039783504}
+      rotation: {x: 3.198066e-32, y: 0.00000002980164, z: -9.53076e-40, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftKneeEffector
-      position: {x: -.131801322, y: .55684334, z: .0377979428}
-      rotation: {x: -5.51316805e-17, y: -6.33174069e-17, z: 1.49011612e-08, w: 1}
+      parentName: 
+      position: {x: -0.13180132, y: 0.55684334, z: 0.037797943}
+      rotation: {x: -5.513168e-17, y: -6.331741e-17, z: 0.000000014901161, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightKneeEffector
-      position: {x: .131800994, y: .556843042, z: .0377978981}
-      rotation: {x: -2.35813973e-17, y: -8.67361738e-19, z: -2.04536017e-35, w: 1}
+      parentName: 
+      position: {x: 0.131801, y: 0.55684304, z: 0.037797898}
+      rotation: {x: -2.3581397e-17, y: -8.6736174e-19, z: -2.0453602e-35, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftElbowEffector
-      position: {x: -.600188911, y: 1.58045733, z: -.0466872603}
-      rotation: {x: -1.73472348e-18, y: -9.32629973e-10, z: 3.46944695e-18, w: 1}
+      parentName: 
+      position: {x: -0.6001889, y: 1.5804573, z: -0.04668726}
+      rotation: {x: -1.7347235e-18, y: -9.3263e-10, z: 3.469447e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightElbowEffector
-      position: {x: .600186586, y: 1.58045769, z: -.0466872975}
-      rotation: {x: 3.46944695e-18, y: -6.82105414e-13, z: 3.46944695e-18, w: 1}
+      parentName: 
+      position: {x: 0.6001866, y: 1.5804577, z: -0.046687298}
+      rotation: {x: 3.469447e-18, y: -6.821054e-13, z: 3.469447e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:ChestOriginEffector
-      position: {x: -0, y: .998658955, z: 0}
+      parentName: 
+      position: {x: -0, y: 0.99865896, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:ChestEndEffector
-      position: {x: 9.5367426e-08, y: 1.60095012, z: -.0270688143}
-      rotation: {x: 3.65309665e-33, y: 0, z: -0, w: 1}
+      parentName: 
+      position: {x: 0.000000095367426, y: 1.6009501, z: -0.027068814}
+      rotation: {x: 3.6530967e-33, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftFootEffector
-      position: {x: -.174237594, y: .044290904, z: .033847101}
-      rotation: {x: -2.77555756e-17, y: 1.4464602e-08, z: 9.31322575e-10, w: 1}
+      parentName: 
+      position: {x: -0.1742376, y: 0.044290904, z: 0.0338471}
+      rotation: {x: -2.7755576e-17, y: 0.000000014464602, z: 9.313226e-10, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightFootEffector
-      position: {x: .174237996, y: .0442908369, z: .0338470936}
-      rotation: {x: 6.93889457e-17, y: 3.46944662e-17, z: -1.86264515e-09, w: 1}
+      parentName: 
+      position: {x: 0.174238, y: 0.044290837, z: 0.033847094}
+      rotation: {x: 6.9388946e-17, y: 3.4694466e-17, z: -0.0000000018626451, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftShoulderEffector
-      position: {x: -.16571781, y: 1.60095024, z: -.0270688329}
-      rotation: {x: -1.36078822e-29, y: -1.30740167e-12, z: -1.04083409e-17, w: 1}
+      parentName: 
+      position: {x: -0.16571781, y: 1.6009502, z: -0.027068833}
+      rotation: {x: -1.3607882e-29, y: -1.3074017e-12, z: -1.0408341e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightShoulderEffector
-      position: {x: .165718004, y: 1.60095, z: -.0270687975}
-      rotation: {x: -4.33680869e-19, y: -6.82121352e-13, z: 6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.165718, y: 1.60095, z: -0.027068797}
+      rotation: {x: -4.3368087e-19, y: -6.8212135e-13, z: 6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:HeadEffector
-      position: {x: 1.12333893e-08, y: 1.79944444, z: 1.92963823e-09}
+      parentName: 
+      position: {x: 0.000000011233389, y: 1.7994444, z: 0.0000000019296382}
       rotation: {x: 2.3191666e-33, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHipEffector
-      position: {x: -.111971654, y: .833782017, z: 0}
-      rotation: {x: 4.83032491e-18, y: -2.05079877e-12, z: 2.74303602e-09, w: 1}
+      parentName: 
+      position: {x: -0.111971654, y: 0.833782, z: 0}
+      rotation: {x: 4.830325e-18, y: -2.0507988e-12, z: 0.000000002743036, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHipEffector
-      position: {x: .111971997, y: .833782077, z: 0}
-      rotation: {x: -1.1492543e-17, y: 8.12372392e-12, z: -6.9388939e-18, w: 1}
+      parentName: 
+      position: {x: 0.111972, y: 0.8337821, z: 0}
+      rotation: {x: -1.1492543e-17, y: 8.123724e-12, z: -6.938894e-18, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandThumbEffector
-      position: {x: -.930018187, y: 1.48769569, z: .134522393}
-      rotation: {x: 4.3820114e-16, y: -5.54280455e-10, z: -1.06228981e-08, w: 1}
+      parentName: 
+      position: {x: -0.9300182, y: 1.4876957, z: 0.1345224}
+      rotation: {x: 4.3820114e-16, y: -5.5428045e-10, z: -0.000000010622898, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandIndexEffector
-      position: {x: -1.02079749, y: 1.49668252, z: .125034317}
-      rotation: {x: 1.71299298e-16, y: -6.99800273e-10, z: 6.81029633e-09, w: 1}
+      parentName: 
+      position: {x: -1.0207975, y: 1.4966825, z: 0.12503432}
+      rotation: {x: 1.712993e-16, y: -6.998003e-10, z: 0.0000000068102963, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandMiddleEffector
-      position: {x: -1.04312313, y: 1.48780084, z: .093547523}
-      rotation: {x: -8.32472451e-17, y: 9.3001512e-10, z: 1.49011603e-08, w: 1}
+      parentName: 
+      position: {x: -1.0431231, y: 1.4878008, z: 0.09354752}
+      rotation: {x: -8.3247245e-17, y: 9.300151e-10, z: 0.00000001490116, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandRingEffector
-      position: {x: -1.04157054, y: 1.47369981, z: .0657070056}
-      rotation: {x: 1.59582384e-16, y: -3.7265977e-09, z: -9.31322575e-09, w: 1}
+      parentName: 
+      position: {x: -1.0415705, y: 1.4736998, z: 0.065707006}
+      rotation: {x: 1.5958238e-16, y: -0.0000000037265977, z: -0.000000009313226,
+        w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:LeftHandPinkyEffector
-      position: {x: -1.0146811, y: 1.47018707, z: .0242480878}
-      rotation: {x: -4.25196014e-17, y: 1.86133742e-09, z: -1.44354999e-08, w: 1}
+      parentName: 
+      position: {x: -1.0146811, y: 1.4701871, z: 0.024248088}
+      rotation: {x: -4.25196e-17, y: 0.0000000018613374, z: -0.0000000144355, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandThumbEffector
-      position: {x: .930017769, y: 1.48769569, z: .134522006}
-      rotation: {x: 5.41233725e-16, y: -6.82121026e-13, z: 4.4408921e-16, w: 1}
+      parentName: 
+      position: {x: 0.93001777, y: 1.4876957, z: 0.134522}
+      rotation: {x: 5.412337e-16, y: -6.82121e-13, z: 4.440892e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandIndexEffector
-      position: {x: 1.02079737, y: 1.49668169, z: .125034004}
-      rotation: {x: -1.80411242e-16, y: -6.8216266e-13, z: -7.63278329e-17, w: 1}
+      parentName: 
+      position: {x: 1.0207974, y: 1.4966817, z: 0.125034}
+      rotation: {x: -1.8041124e-16, y: -6.8216266e-13, z: -7.632783e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandMiddleEffector
-      position: {x: 1.04312289, y: 1.48780024, z: .0935475007}
-      rotation: {x: -1.2490009e-16, y: -6.82079393e-13, z: -5.37764278e-17, w: 1}
+      parentName: 
+      position: {x: 1.0431229, y: 1.4878002, z: 0.0935475}
+      rotation: {x: -1.2490009e-16, y: -6.820794e-13, z: -5.3776428e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandRingEffector
-      position: {x: 1.04156983, y: 1.47369945, z: .0657069981}
-      rotation: {x: -1.38777878e-16, y: -6.82107149e-13, z: 5.55111512e-17, w: 1}
+      parentName: 
+      position: {x: 1.0415698, y: 1.4736995, z: 0.065707}
+      rotation: {x: -1.3877788e-16, y: -6.8210715e-13, z: 5.551115e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
     - name: Archer_Ctrl:RightHandPinkyEffector
-      position: {x: 1.0146805, y: 1.47018707, z: .0242481027}
-      rotation: {x: -4.99600361e-16, y: -6.82148782e-13, z: 2.25514052e-17, w: 1}
+      parentName: 
+      position: {x: 1.0146805, y: 1.4701871, z: 0.024248103}
+      rotation: {x: -4.9960036e-16, y: -6.821488e-13, z: 2.2551405e-17, w: 1}
       scale: {x: 1, y: 1, z: 1}
-      transformModified: 1
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
+    globalScale: 0.01
     rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class takePic : MonoBehaviour {
 
@@ -19,15 +20,17 @@ public class takePic : MonoBehaviour {
 	}
 	
 	void LateUpdate() {
-		takeHiResShot |= Input.GetKeyDown("space");
+		// F12, not Space: Space is player 1's jump key.
+		takeHiResShot |= Keyboard.current != null && Keyboard.current.f12Key.wasPressedThisFrame;
 		if (takeHiResShot) {
 			RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
-			camera.targetTexture = rt;
+			Camera cam = GetComponent<Camera>();
+			cam.targetTexture = rt;
 			Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
-			camera.Render();
+			cam.Render();
 			RenderTexture.active = rt;
 			screenShot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
-			camera.targetTexture = null;
+			cam.targetTexture = null;
 			RenderTexture.active = null; // JC: added to avoid errors
 			Destroy(rt);
 			byte[] bytes = screenShot.EncodeToPNG();

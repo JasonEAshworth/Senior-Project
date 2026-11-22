@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Rewired;
 
 public class PlayerManager : MonoBehaviour 
 {
@@ -32,6 +31,12 @@ public class PlayerManager : MonoBehaviour
 		selectedClasses.Add(playerClass.ROGUE);
 		selectedClasses.Add(playerClass.SORCERER);
 		selectedClasses.Add(playerClass.WARRIOR);
+
+		if (GameSetup.classes != null)
+		{
+			selectedClasses = new List<playerClass>(GameSetup.classes);
+			numPlayers = selectedClasses.Count;
+		}
 
 		// set players to 4 at start
 		GameObject newStatBar = GameObject.Find("newStatBar");
@@ -71,7 +76,7 @@ public class PlayerManager : MonoBehaviour
 			player.tag = "Player";
 			pBase = player.GetComponent<PlayerBase>();
 			pBase.playerNum = i;
-			player.AddComponent<rewiredControl>();
+			player.AddComponent<PlayerInputControl>();
 
 			GameObject stats = GameObject.Find("Player" + (i+1));
 			stats.name = pBase.classType.ToString();

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class woodsBullet : MonoBehaviour {
 
@@ -46,9 +45,9 @@ public class woodsBullet : MonoBehaviour {
 
 	void OnTriggerEnter(Collider c)
 	{
-		if (c.collider.GetComponent<Explodable>() != null)
+		if (c.GetComponent<Collider>().GetComponent<Explodable>() != null)
 		{
-			c.collider.SendMessage("Boom");
+			c.GetComponent<Collider>().SendMessage("Boom");
 		}
 		if (c.gameObject.CompareTag("Enemy"))
 		{

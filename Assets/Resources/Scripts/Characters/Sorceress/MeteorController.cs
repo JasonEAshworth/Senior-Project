@@ -1,6 +1,5 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class MeteorController : MonoBehaviour 
 {
@@ -30,7 +29,8 @@ public class MeteorController : MonoBehaviour
 		}
 		// Set up the destruction of this object
 		p = transform.parent.gameObject.GetComponentInChildren<ParticleSystem>();
-		p.loop = false;
+		var main = p.main;
+		main.loop = false;
 		Destroy (gameObject);
 		Destroy (transform.parent.gameObject, 5.0f);
 	}

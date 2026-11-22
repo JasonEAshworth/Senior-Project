@@ -834,7 +834,7 @@ public class MapManager : MonoBehaviour
 				rNorthObj.transform.position = roomNode.obj.transform.Find("N_transition").position;
 				rNorthObj.transform.position -= rNorthObj.transform.Find("S_transition").position - rNorthObj.transform.position;
 				// set up doorway triggers
-				GameObject trigger = roomNode.obj.transform.Find("N_transition").FindChild("trigger").gameObject;
+				GameObject trigger = roomNode.obj.transform.Find("N_transition").Find("trigger").gameObject;
 				trigger.SetActive(true);
 				trigger.GetComponent<Doorway>().sideA = roomNode;
 				trigger.GetComponent<Doorway>().sideB = roomNode.north;
@@ -849,7 +849,7 @@ public class MapManager : MonoBehaviour
 				rSouthObj.transform.position = roomNode.obj.transform.Find("S_transition").position;
 				rSouthObj.transform.position -= rSouthObj.transform.Find("N_transition").position - rSouthObj.transform.position;
 				// set up doorway triggers
-				GameObject trigger = roomNode.obj.transform.Find("S_transition").FindChild("trigger").gameObject;
+				GameObject trigger = roomNode.obj.transform.Find("S_transition").Find("trigger").gameObject;
 				trigger.SetActive(true);
 				trigger.GetComponent<Doorway>().sideA = roomNode;
 				trigger.GetComponent<Doorway>().sideB = roomNode.south;
@@ -864,7 +864,7 @@ public class MapManager : MonoBehaviour
 				rEastObj.transform.position = roomNode.obj.transform.Find("E_transition").position;
 				rEastObj.transform.position -= rEastObj.transform.Find("W_transition").position - rEastObj.transform.position;
 				// set up doorway triggers
-				GameObject trigger = roomNode.obj.transform.Find("E_transition").FindChild("trigger").gameObject;
+				GameObject trigger = roomNode.obj.transform.Find("E_transition").Find("trigger").gameObject;
 				trigger.SetActive(true);
 				trigger.GetComponent<Doorway>().sideA = roomNode;
 				trigger.GetComponent<Doorway>().sideB = roomNode.east;
@@ -879,7 +879,7 @@ public class MapManager : MonoBehaviour
 				rWestObj.transform.position = roomNode.obj.transform.Find("W_transition").position;
 				rWestObj.transform.position -= rWestObj.transform.Find("E_transition").position - rWestObj.transform.position;
 				// set up doorway triggers
-				GameObject trigger = roomNode.obj.transform.Find("W_transition").FindChild("trigger").gameObject;
+				GameObject trigger = roomNode.obj.transform.Find("W_transition").Find("trigger").gameObject;
 				trigger.SetActive(true);
 				trigger.GetComponent<Doorway>().sideA = roomNode;
 				trigger.GetComponent<Doorway>().sideB = roomNode.west;

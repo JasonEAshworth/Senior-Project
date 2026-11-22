@@ -1,0 +1,32 @@
+# Unity writes text assets with LF. Keep them LF on every machine so diffs stay clean.
+* text=auto eol=lf
+
+# Unity YAML: merge with Unity's Smart Merge tool when it is set up as "unityyamlmerge".
+*.unity     text eol=lf merge=unityyamlmerge
+*.prefab    text eol=lf merge=unityyamlmerge
+*.asset     text eol=lf merge=unityyamlmerge
+*.mat       text eol=lf merge=unityyamlmerge
+*.anim      text eol=lf merge=unityyamlmerge
+*.controller text eol=lf merge=unityyamlmerge
+*.meta      text eol=lf
+
+# Binary art and audio
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.tga  binary
+*.tif  binary
+*.tiff binary
+*.psd  binary
+*.fbx  binary
+*.obj  binary
+*.wav  binary
+*.mp3  binary
+*.ogg  binary
+*.flac binary
+*.ttf  binary
+*.dll  binary
+*.zip  binary
+*.bytes binary
+*.cubemap binary
+*.renderTexture binary

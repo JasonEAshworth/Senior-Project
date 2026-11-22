@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class Warrior : PlayerBase
 {
 	private bool blockProjectiles = false;
 	private int count = 0;
 	private int attackType = 1;
-	private float attackStarted = Time.time - 10.0f;
-	private float comboStarted = Time.time - 10.0f;
+	private float attackStarted = -10.0f; // no recent attack (Time.time cannot be read in a field initializer)
+	private float comboStarted = -10.0f;
 	private bool attacking = false;
 	private bool canAttack = true;
 

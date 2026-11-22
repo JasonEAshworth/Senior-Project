@@ -62,7 +62,7 @@ public class KingRestless : EnemyBase
 		base.Start();
 		myAnimator = GetComponent<Animator>();
 		roomCenter = GameObject.Find("Boss Room Center").transform;
-		healthBarObject.transform.FindChild("BossNameText").GetComponent<Text>().text = "King Restless";
+		healthBarObject.transform.Find("BossNameText").GetComponent<Text>().text = "King Restless";
 		healthBarObject.SetActive(true);
 	}
 

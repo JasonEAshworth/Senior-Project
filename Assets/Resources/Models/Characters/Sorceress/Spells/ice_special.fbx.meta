@@ -1,61 +1,149 @@
 fileFormatVersion: 2
 guid: e108e40f554ccc34f83a26698b8dd3a6
 ModelImporter:
-  serializedVersion: 16
-  fileIDToRecycleName:
-    100000: body_jnt
-    100002: body_jnt 1
-    100004: body_jnt 2
-    100006: group1
-    100008: group2
-    100010: group3
-    100012: Ice_Mesh_01
-    100014: Ice_Mesh_02
-    100016: Ice_Mesh_03
-    100018: //RootNode
-    100020: master_con
-    100022: master_group
-    100024: master_jnt
-    100026: master_jnt1
-    100028: master_jnt2
-    400000: body_jnt
-    400002: body_jnt 1
-    400004: body_jnt 2
-    400006: group1
-    400008: group2
-    400010: group3
-    400012: Ice_Mesh_01
-    400014: Ice_Mesh_02
-    400016: Ice_Mesh_03
-    400018: //RootNode
-    400020: master_con
-    400022: master_group
-    400024: master_jnt
-    400026: master_jnt1
-    400028: master_jnt2
-    4300000: Ice_Mesh_02
-    4300002: Ice_Mesh_01
-    4300004: Ice_Mesh_03
-    7400000: Take 001
-    9500000: //RootNode
-    13700000: Ice_Mesh_01
-    13700002: Ice_Mesh_02
-    13700004: Ice_Mesh_03
+  serializedVersion: 24300
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: body_jnt
+  - first:
+      1: 100002
+    second: body_jnt 1
+  - first:
+      1: 100004
+    second: body_jnt 2
+  - first:
+      1: 100006
+    second: group1
+  - first:
+      1: 100008
+    second: group2
+  - first:
+      1: 100010
+    second: group3
+  - first:
+      1: 100012
+    second: Ice_Mesh_01
+  - first:
+      1: 100014
+    second: Ice_Mesh_02
+  - first:
+      1: 100016
+    second: Ice_Mesh_03
+  - first:
+      1: 100018
+    second: //RootNode
+  - first:
+      1: 100020
+    second: master_con
+  - first:
+      1: 100022
+    second: master_group
+  - first:
+      1: 100024
+    second: master_jnt
+  - first:
+      1: 100026
+    second: master_jnt1
+  - first:
+      1: 100028
+    second: master_jnt2
+  - first:
+      4: 400000
+    second: body_jnt
+  - first:
+      4: 400002
+    second: body_jnt 1
+  - first:
+      4: 400004
+    second: body_jnt 2
+  - first:
+      4: 400006
+    second: group1
+  - first:
+      4: 400008
+    second: group2
+  - first:
+      4: 400010
+    second: group3
+  - first:
+      4: 400012
+    second: Ice_Mesh_01
+  - first:
+      4: 400014
+    second: Ice_Mesh_02
+  - first:
+      4: 400016
+    second: Ice_Mesh_03
+  - first:
+      4: 400018
+    second: //RootNode
+  - first:
+      4: 400020
+    second: master_con
+  - first:
+      4: 400022
+    second: master_group
+  - first:
+      4: 400024
+    second: master_jnt
+  - first:
+      4: 400026
+    second: master_jnt1
+  - first:
+      4: 400028
+    second: master_jnt2
+  - first:
+      43: 4300000
+    second: Ice_Mesh_02
+  - first:
+      43: 4300002
+    second: Ice_Mesh_01
+  - first:
+      43: 4300004
+    second: Ice_Mesh_03
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Ice_Mesh_01
+  - first:
+      137: 13700002
+    second: Ice_Mesh_02
+  - first:
+      137: 13700004
+    second: Ice_Mesh_03
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
+    searchTexturesGlobally: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -63,35 +151,75 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
+    useFileScale: 0
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: master_group
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

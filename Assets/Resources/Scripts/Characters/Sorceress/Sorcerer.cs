@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Sorcerer : PlayerBase
 {
 	private int attackType = 1;
-	private float attackStarted = Time.time - 10.0f;
+	private float attackStarted = -10.0f; // no recent attack (Time.time cannot be read in a field initializer)
 	private float timeButtonHeld;
 	private float blizzardDamage = 20.0f;
 

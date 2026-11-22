@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class BasicArrow : ProjectileTrapObj
 {
@@ -16,9 +15,9 @@ public class BasicArrow : ProjectileTrapObj
 	
 	protected override void HitObject (Transform t)
 	{
-		if(t.collider.GetComponent<Explodable>() != null)
+		if(t.GetComponent<Collider>().GetComponent<Explodable>() != null)
 		{
-			t.collider.SendMessage("Boom");
+			t.GetComponent<Collider>().SendMessage("Boom");
 		}
 		if(t.gameObject.CompareTag("Enemy"))
 		{

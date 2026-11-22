@@ -91,7 +91,7 @@ public class CharacterBase : MonoBehaviour
 	{
 		float start = Time.time;
 		float end = start + damageInvulnTime;
-		Material[] modelMats = characterMesh.renderer.materials;
+		Material[] modelMats = characterMesh.GetComponent<Renderer>().materials;
 
 		while (Time.time <= end)
 		{

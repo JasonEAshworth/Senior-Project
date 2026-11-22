@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Exploder;
 
 public class Rogue : PlayerBase
 {
-	private float attackStarted = Time.time - 10.0f;
+	private float attackStarted = -10.0f; // no recent attack (Time.time cannot be read in a field initializer)
 	private bool dash = false;
 	public float dashDur = 0.3f;
 	public float dashSpeed = 30.0f;
@@ -84,7 +83,7 @@ public class Rogue : PlayerBase
 			
 			PlayerBase character = this.GetComponent<PlayerBase>();
 			PlayerManager plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-			int maxDist = 20; //hardcoded value - based on maxDist in the rewiredControl script
+			int maxDist = 20; //hardcoded value - based on maxDist in the PlayerInputControl script
 			moveVec.y = 0.0f;
 			
 			
@@ -114,7 +113,7 @@ public class Rogue : PlayerBase
 
 			PlayerBase character = this.GetComponent<PlayerBase>();
 			PlayerManager plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
-			int maxDist = 20; //hardcoded value - based on maxDist in the rewiredControl script
+			int maxDist = 20; //hardcoded value - based on maxDist in the PlayerInputControl script
 			moveVec.y = 0.0f;
 			
 
