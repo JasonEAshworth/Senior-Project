@@ -30,3 +30,8 @@
 *.bytes binary
 *.cubemap binary
 *.renderTexture binary
+
+# GitHub language stats: the shaders are Shader Forge output and the plugins are third party,
+# so the repo is listed by the team's C#.
+Assets/Shaders/** linguist-generated
+Assets/Plugins/** linguist-vendored
