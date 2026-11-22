@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviour 
+/// Spawns one hero per joined slot of the GameSession, lets players drop in and out during a
+/// chapter, and tracks the party's center, which the camera and the stay-together rule use.
+public class PlayerManager : MonoBehaviour
 {
-	// init variables
-	public int numPlayers;
+	public static PlayerManager Instance { get; private set; }
+
+	public int numPlayers;          // kept for the scene file; the GameSession decides the party now
 	private GameObject[] spawns;
-	public List<GameObject> players;
+	public List<GameObject> players = new List<GameObject>();
 	public List<playerClass> selectedClasses;
 
 	public bool haveKey = false;
@@ -20,90 +22,204 @@ public class PlayerManager : MonoBehaviour
 
 	public Vector3 playersCenter;
 
-	void Start() 
+	readonly GameObject[] hud = new GameObject[GameSession.MaxPlayers];
+	readonly GameObject[] bySlot = new GameObject[GameSession.MaxPlayers];
+	Transform centerMarker;
+
+	static readonly string[] arrowMaterials = { "FacingArrowRedMat", "FacingArrowBlueMat", "FacingArrowGreenMat", "FacingArrowYellowMat" };
+
+	void Awake()
 	{
-		// instantiate players list
+		Instance = this;
+		// The scene file still holds the 2015 list, which can contain empty entries.
 		players = new List<GameObject>();
+		for (int i = 0; i < hud.Length; i++)
+			hud[i] = GameObject.Find("Player" + (i + 1));
+		GameObject c = GameObject.Find("Center");
+		centerMarker = c != null ? c.transform : null;
+	}
 
-		// instantiate selectedClasses and populate it
-		selectedClasses = new List<playerClass>();
-		selectedClasses.Add(playerClass.WOODSMAN);
-		selectedClasses.Add(playerClass.ROGUE);
-		selectedClasses.Add(playerClass.SORCERER);
-		selectedClasses.Add(playerClass.WARRIOR);
-
-		if (GameSetup.classes != null)
+	void Start()
+	{
+		if (GameSession.JoinedCount == 0)
 		{
-			selectedClasses = new List<playerClass>(GameSetup.classes);
-			numPlayers = selectedClasses.Count;
+			// MainScene opened directly in the editor: one player on the keyboard and first gamepad.
+			var pads = UnityEngine.InputSystem.Gamepad.all;
+			GameSession.Join(new InputBinding { keyboardLayout = 0, gamepadId = pads.Count > 0 ? pads[0].deviceId : -1 });
+			GameSession.NewRun();
 		}
 
-		// set players to 4 at start
-		GameObject newStatBar = GameObject.Find("newStatBar");
-		for (int i=0; i<numPlayers; i++) 
+		for (int i = 0; i < hud.Length; i++)
+			SetHud(i, null);
+		int spawnIndex = 0;
+		foreach (PlayerSlot slot in GameSession.Joined)
 		{
-			GameObject player = null;
-			PlayerBase pBase;
-			Texture manaTex = null;
-			Texture profTex = null;
+			if (!slot.outOfLives)
+				SpawnPlayer(slot, SpawnPoint(spawnIndex++));
+		}
+		updateCenterLocation();
+	}
 
-			switch(selectedClasses[i])
-			{
-			case playerClass.WOODSMAN:
-				player = Instantiate(Resources.Load("Prefabs/Character/WoodsMan/Woodsman"), spawns[i].transform.position, Quaternion.identity) as GameObject;
-				manaTex = Resources.Load("Textures/GUI/gui_energy_woods") as Texture;
-				profTex = Resources.Load("Textures/GUI/archer_profile") as Texture;
-				break;
-			case playerClass.SORCERER:
-				player = Instantiate(Resources.Load("Prefabs/Character/Sorceress/Sorceress"), spawns[i].transform.position, Quaternion.identity) as GameObject;
-				manaTex = Resources.Load("Textures/GUI/gui_energy_bar") as Texture;
-				profTex = Resources.Load("Textures/GUI/sorc_profile") as Texture;
-				break;
-			case playerClass.ROGUE:
-				player = Instantiate(Resources.Load("Prefabs/Character/Rogue/Rogue"), spawns[i].transform.position, Quaternion.identity) as GameObject;
-				manaTex = Resources.Load("Textures/GUI/gui_energy_rogue") as Texture;
-				profTex = Resources.Load("Textures/GUI/rogue_profile") as Texture;
-				break;
-			case playerClass.WARRIOR:
-				player = Instantiate(Resources.Load("Prefabs/Character/Warrior/Warrior"), spawns[i].transform.position, Quaternion.identity) as GameObject;
-				manaTex = Resources.Load("Textures/GUI/gui_energy_war") as Texture;
-				profTex = Resources.Load("Textures/GUI/warrior_profile") as Texture;
-				break;
-			}
+	Vector3 SpawnPoint(int i)
+	{
+		if (spawns != null && spawns.Length > 0)
+			return spawns[i % spawns.Length].transform.position;
+		return playersCenter;
+	}
 
-			players.Add(player);
-
-			player.tag = "Player";
-			pBase = player.GetComponent<PlayerBase>();
-			pBase.playerNum = i;
-			player.AddComponent<PlayerInputControl>();
-
-			GameObject stats = GameObject.Find("Player" + (i+1));
-			stats.name = pBase.classType.ToString();
-
-			CharacterStats cStat = stats.GetComponent<CharacterStats>();
-			cStat.player = pBase;
-
-			cStat.healthBar.enabled = true;
-			cStat.manaBar.texture = manaTex;
-			cStat.manaBar.enabled = true;
-			cStat.potion.enabled = true;
-			RawImage prof = stats.transform.Find("Emblem/Character").GetComponent<RawImage>();
-			prof.texture = profTex;
-			prof.enabled = true;
-			cStat.scoreText.enabled = true;
+	static string PrefabFor(playerClass c)
+	{
+		switch (c)
+		{
+			case playerClass.WOODSMAN: return "Prefabs/Character/WoodsMan/Woodsman";
+			case playerClass.SORCERER: return "Prefabs/Character/Sorceress/Sorceress";
+			case playerClass.ROGUE: return "Prefabs/Character/Rogue/Rogue";
+			default: return "Prefabs/Character/Warrior/Warrior";
 		}
 	}
 
-	public void Update() 
+	static void HudTextures(playerClass c, out Texture mana, out Texture profile)
+	{
+		string m, p;
+		switch (c)
+		{
+			case playerClass.WOODSMAN: m = "gui_energy_woods"; p = "archer_profile"; break;
+			case playerClass.SORCERER: m = "gui_energy_bar"; p = "sorc_profile"; break;
+			case playerClass.ROGUE: m = "gui_energy_rogue"; p = "rogue_profile"; break;
+			default: m = "gui_energy_war"; p = "warrior_profile"; break;
+		}
+		mana = Resources.Load("Textures/GUI/" + m) as Texture;
+		profile = Resources.Load("Textures/GUI/" + p) as Texture;
+	}
+
+	public GameObject PlayerFor(int slot)
+	{
+		return bySlot[slot];
+	}
+
+	/// Creates the hero for a slot at a position, with the slot's device, color, and upgrades.
+	public GameObject SpawnPlayer(PlayerSlot slot, Vector3 position)
+	{
+		GameObject player = Instantiate(Resources.Load(PrefabFor(slot.cls)), position, Quaternion.identity) as GameObject;
+		player.tag = "Player";
+		PlayerBase pBase = player.GetComponent<PlayerBase>();
+		pBase.playerNum = slot.index;
+		pBase.slot = slot;
+
+		PlayerInputControl control = player.AddComponent<PlayerInputControl>();
+		control.binding = slot.binding;
+		control.speedFactor = 1.0f + 0.08f * slot.speedLevel;
+		pBase.maxHealth *= 1.0f + 0.2f * slot.healthLevel;
+		pBase.health = pBase.maxHealth;
+		pBase.attackMultiplier *= 1.0f + 0.15f * slot.attackLevel;
+		pBase.score = slot.gold;
+
+		Transform arrow = player.transform.Find("FacingArrow");
+		Material ring = Resources.Load<Material>("Materials/Characters/" + arrowMaterials[slot.index]);
+		if (arrow != null && ring != null)
+			arrow.GetComponent<Renderer>().sharedMaterial = ring;
+
+		// A late joiner starts in the room the rest of the party is in.
+		foreach (GameObject other in players)
+		{
+			RoomNode room = other != null ? other.GetComponent<PlayerBase>().roomIn : null;
+			if (room != null)
+			{
+				pBase.roomIn = room;
+				break;
+			}
+		}
+		if (pBase.roomIn == null && MapManager.Instance != null)
+			pBase.roomIn = MapManager.Instance.StartRoom;
+
+		players.Add(player);
+		bySlot[slot.index] = player;
+		SetHud(slot.index, pBase);
+		return player;
+	}
+
+	public void RemovePlayer(PlayerSlot slot)
+	{
+		GameObject p = bySlot[slot.index];
+		if (p != null)
+		{
+			players.Remove(p);
+			Destroy(p);
+		}
+		bySlot[slot.index] = null;
+		SetHud(slot.index, null);
+	}
+
+	void SetHud(int index, PlayerBase pBase)
+	{
+		GameObject stats = hud[index];
+		if (stats == null)
+			return;
+		CharacterStats cStat = stats.GetComponent<CharacterStats>();
+		bool on = pBase != null;
+		cStat.player = pBase;
+		cStat.healthBar.enabled = on;
+		cStat.manaBar.enabled = on;
+		cStat.potion.enabled = on;
+		cStat.scoreText.enabled = on;
+		RawImage prof = stats.transform.Find("Emblem/Character").GetComponent<RawImage>();
+		prof.enabled = on;
+		if (on)
+		{
+			HudTextures(pBase.classType, out Texture mana, out Texture profile);
+			cStat.manaBar.texture = mana;
+			prof.texture = profile;
+		}
+	}
+
+	/// Players who count for the camera and the stay-together rule: everyone in the scene who
+	/// is not down or dead, or, when nobody is up, everyone in the scene.
+	public List<GameObject> CameraTargets()
+	{
+		var up = new List<GameObject>();
+		var all = new List<GameObject>();
+		foreach (GameObject p in players)
+		{
+			if (p == null || !p.activeInHierarchy)
+				continue;
+			all.Add(p);
+			if (!p.GetComponent<PlayerBase>().dead)
+				up.Add(p);
+		}
+		return up.Count > 0 ? up : all;
+	}
+
+	public void Update()
 	{
 		updateCenterLocation();
+
+		InputBinding joining = PlayerControls.DetectJoin();
+		if (joining != null && Time.timeScale > 0.0f)
+		{
+			PlayerSlot slot = GameSession.Join(joining);
+			if (slot != null)
+			{
+				Vector3 at = playersCenter + new Vector3(1.0f, 0.5f, 1.0f);
+				float best = float.MaxValue;
+				if (spawns != null)
+					foreach (GameObject s in spawns)
+					{
+						if (s == null)
+							continue;
+						float d = (s.transform.position - playersCenter).sqrMagnitude;
+						if (d < best) { best = d; at = s.transform.position; }
+					}
+				SpawnPlayer(slot, at);
+				ArcadeHud.Announce(slot.Label + " JOINS!", slot.Color);
+			}
+		}
 	}
 
 	public Vector3 getRespawnPoint()
 	{
-		int randSpawn = Random.Range (0,4);
-		return spawns[randSpawn].transform.position;
+		if (spawns == null || spawns.Length == 0)
+			return playersCenter;
+		return spawns[Random.Range(0, spawns.Length)].transform.position;
 	}
 
 	public void assignNewSpawnPoints(GameObject[] newSpawns)
@@ -115,21 +231,21 @@ public class PlayerManager : MonoBehaviour
 	{
 		for (int i = 0; i < players.Count; i++)
 		{
-			players[i].transform.position = spawns[i].transform.position;
+			players[i].transform.position = SpawnPoint(i);
 			players[i].GetComponent<PlayerBase>().controllable = true;
 		}
 	}
 
 	public void updateCenterLocation()
 	{
+		List<GameObject> targets = CameraTargets();
+		if (targets.Count == 0)
+			return;
 		Vector3 center = Vector3.zero;
-		for (int i = 0; i <  players.Count; i++) 
-		{
-			center = center + players[i].transform.position;
-		}
-		center = center / players.Count;
-
-		playersCenter = center;
-		GameObject.Find ("Center").transform.position = center;
+		foreach (GameObject p in targets)
+			center += p.transform.position;
+		playersCenter = center / targets.Count;
+		if (centerMarker != null)
+			centerMarker.position = playersCenter;
 	}
 }

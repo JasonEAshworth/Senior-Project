@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cf6f130f6c1e84b9b84242e45048d1, type: 3}
+  m_Name: 3_Cellars
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterDefinition
+  id: cellars
+  sealIndex: 2
+  isFinal: 0
+  title: The Cellars
+  tagline: Something has been eating the stores.
+  starterRoom: Map_00_S_S
+  bossRoom: Map_00_B_W
+  numRooms: 6
+  hordeWeight: 3
+  puzzleWeight: 1
+  reactionWeight: 1
+  ambient: {r: 0.2, g: 0.18, b: 0.1, a: 1}
+  lightTint: {r: 1, g: 0.85, b: 0.5, a: 1}
+  lightIntensity: 1
+  fogColor: {r: 0.08, g: 0.07, b: 0.03, a: 1}
+  fogDensity: 0.008
+  atmosphere: dust
+  variants:
+  - name: Ghoul
+    replaces: 0
+    tint: {r: 0.7, g: 0.9, b: 0.5, a: 1}
+    scale: 1
+    healthMultiplier: 1.1
+    damageMultiplier: 1
+    speedMultiplier: 1.1
+    glowColor: {r: 0, g: 0, b: 0, a: 1}
+    trait: 2
+    points: 120
+  - name: Gnawer
+    replaces: 2
+    tint: {r: 0.6, g: 0.55, b: 0.45, a: 1}
+    scale: 0.6
+    healthMultiplier: 0.35
+    damageMultiplier: 0.5
+    speedMultiplier: 1.7
+    glowColor: {r: 0, g: 0, b: 0, a: 1}
+    trait: 4
+    points: 40
+  - name: Spitter
+    replaces: 1
+    tint: {r: 0.6, g: 1, b: 0.4, a: 1}
+    scale: 1
+    healthMultiplier: 0.9
+    damageMultiplier: 1
+    speedMultiplier: 1
+    glowColor: {r: 0.4, g: 1, b: 0.3, a: 1}
+    trait: 0
+    points: 150
+  miniBoss:
+    name: The Butcher
+    tint: {r: 1, g: 0.7, b: 0.6, a: 1}
+    glowColor: {r: 1, g: 0.6, b: 0.3, a: 1}
+    scale: 2.3
+    health: 1900
+    damage: 22
+    speed: 3.4
+    attacks: 04000000010000000500000000000000
+  enemyHealthScale: 1
+  enemyDamageScale: 1
+  music: Music/cellars
+  bossMusic: Music/boss

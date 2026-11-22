@@ -24,6 +24,7 @@ public class CharacterBase : MonoBehaviour
 	public float attackMultiplier = 1.0f;
 	
 	public GameObject characterMesh;
+	Color[] baseColors;
 	
 	protected virtual void Start()
 	{
@@ -92,16 +93,29 @@ public class CharacterBase : MonoBehaviour
 		float start = Time.time;
 		float end = start + damageInvulnTime;
 		Material[] modelMats = characterMesh.GetComponent<Renderer>().materials;
+		// Flash relative to each material's own color, so tinted enemy variants keep their tint.
+		if (baseColors == null || baseColors.Length != modelMats.Length)
+		{
+			baseColors = new Color[modelMats.Length];
+			for (int i = 0; i < modelMats.Length; i++)
+				baseColors[i] = modelMats[i].HasProperty("_Color") ? modelMats[i].color : Color.white;
+		}
 
 		while (Time.time <= end)
 		{
 			float gbValue = Mathf.SmoothStep(0.0f, 1.0f, (Time.time - start) / (end - Time.time));
-			foreach (Material m in modelMats)
+			for (int i = 0; i < modelMats.Length; i++)
 			{
-				m.color = new Color(1.0f, gbValue, gbValue);
+				if (modelMats[i].HasProperty("_Color"))
+					modelMats[i].color = baseColors[i] * new Color(1.0f, gbValue, gbValue);
 			}
 
 			yield return null;
+		}
+		for (int i = 0; i < modelMats.Length; i++)
+		{
+			if (modelMats[i].HasProperty("_Color"))
+				modelMats[i].color = baseColors[i];
 		}
 	}
 }

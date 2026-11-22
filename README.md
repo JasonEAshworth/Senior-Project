@@ -1,38 +1,50 @@
 # Senior Project 14
 
-My undergraduate senior capstone at Shawnee State University: a top-down co-op dungeon crawler for
-1 to 4 players on one screen. It was a team project, built in Unity 4.6 in 2014 and 2015 (the git
-history lists everyone who worked on it). In 2026 it was upgraded to Unity 6 so it opens, builds,
-and plays in a browser again.
+A top-down co-op arcade dungeon crawler for 1 to 4 players on one screen. It began as my
+undergraduate senior capstone at Shawnee State University: a team project built in Unity 4.6 in
+2014 and 2015 (the git history lists everyone who worked on it). In 2026 it was upgraded to Unity 6
+and finished as a complete arcade game.
 
-**Play it:** https://jasoneashworth.github.io/Senior-Project/ (desktop browser, keyboard or gamepad)
+**Play it:** https://jasoneashworth.github.io/Senior-Project/ (desktop browser, keyboard or gamepads)
 
-## Gameplay
+## The game
 
-- **Four classes**, each with its own attacks and abilities: Warrior, Sorcerer, Rogue, and
-  Woodsman (with a hawk companion).
-- **Rooms** are typed (starter, horde, puzzle, reaction, treasure, boss) and joined as a graph by
-  `MapManager`. The shipped dungeon is a preset run of four rooms: a starter room (find the key
-  to open the door), a reaction room, a horde room, and a boss room.
-- **Enemies:** melee, ranged, and horde types, plus bosses (King Restless and King Firestorm).
-- **Hazards:** spike, flame, and projectile traps, moving platforms, and pits.
-- **Pickups:** gold and coins for score, and health, haste, and attack potions.
-- Players must stay near each other: the camera frames the whole party.
+Clear four chapters, in any order, to earn four seals. The seals open the throne room, where only
+King Restless waits.
+
+| Chapter | Look | Enemies | Mini-boss |
+| --- | --- | --- | --- |
+| The Catacombs | Blue ghostfire and mist | Restless, Crawlers, Bone Archers | The Gravewarden |
+| The Torture Halls | Red light and dust | Charging Jailers, Prisoners, Crossbowmen | The Warden |
+| The Cellars | Lamplight | Ghouls that split in two, Gnawers, Spitters | The Butcher |
+| The Forge Depths | Fire and embers | Exploding Embers, charging Smiths, Cinder Throwers | The Forgemaster |
+| The Throne Room | Violet | His army, in the last phase | King Restless |
+
+- **Four heroes:** Warrior, Sorcerer, Rogue, and Woodsman, each with their own attacks and ability.
+- **Drop in, drop out:** a new player presses jump or start at any time, on the title screen, in
+  the hub, or in the middle of a chapter.
+- **Lives and continues:** 3 lives each and 3 shared continues. A hero at zero health goes down;
+  a teammate who stands close for two seconds revives them.
+- **Score:** points per kill with a combo multiplier, a bonus for clearing a room without taking
+  damage, gold pickups, a rank after each chapter, and a local high-score table with initials.
+- **Upgrades:** spend gold in the hub on health, damage, speed, and extra lives.
+- **Power-ups:** enemies sometimes drop fury, haste, shield, or heal orbs.
+- **Difficulty** grows with the number of players and with every chapter already cleared.
+- Every mini-boss attack (slam, charge, summon, fire ring, hook, volley) shows a warning on the
+  floor before it lands.
 
 ## Controls
 
-Choose the number of players and each player's class on the title screen, then press Enter or
-Start.
-
-| Action | Player 1 | Player 2 | Gamepad |
+| Action | Player 1 keyboard | Player 2 keyboard | Gamepad |
 | --- | --- | --- | --- |
 | Move | W A S D | Arrow keys | Left stick or d-pad |
-| Jump | Space | Right Shift or Numpad 0 | A (south) |
+| Jump, join | Space | Right Shift or Numpad 0 | A (south) |
 | Attack | J | Comma or Numpad 1 | X (west) |
 | Class ability | K | Period or Numpad 2 | B (east) |
-| Use potion | L | Slash or Numpad 3 | Y (north) |
+| Use potion, buy in hub | L | Slash or Numpad 3 | Y (north) |
+| Pause | Esc | Backspace | Start |
 
-Gamepad N belongs to player N, so players 3 and 4 need gamepads.
+Up to four players: two on one keyboard and the rest on gamepads.
 
 ## Open and build
 
@@ -40,45 +52,55 @@ Gamepad N belongs to player N, so players 3 and 4 need gamepads.
 2. Open this folder in Unity Hub. The first import takes several minutes.
 3. Open `Assets/Scenes/Title.unity` and press Play.
 
-To build, use the **Tools > Senior Project** menu (Build WebGL, Build Windows), or run it from the
-command line:
+Builds use the **Tools > Senior Project** menu, or the command line:
 
 ```powershell
 & "C:\Program Files\Unity\Hub\Editor\6000.3.29f1\Editor\Unity.exe" -batchmode -quit -projectPath . -buildTarget WebGL -executeMethod ProjectTools.BuildWebGL
 ```
 
-The WebGL build goes to `Build/WebGL`. The live site is that folder, published on the `gh-pages`
-branch.
+Every build first runs **Prepare Game Content**, which rebuilds the room catalog and creates any
+missing chapter assets and scenes. The WebGL build goes to `Build/WebGL`; the live site is that
+folder, published on the `gh-pages` branch.
+
+**Automated check:** a Windows build run with `-smoketest <folder>` plays the whole game by itself
+(every chapter, drop-in, revive, every boss, the ending, and a game over) and writes `report.txt`
+and screenshots to the folder.
+
+## How it fits together
+
+- `Assets/Resources/Chapters/` holds one `ChapterDefinition` asset per chapter: dungeon length and
+  room mix, starter and boss rooms, lighting, atmosphere, enemy variants, mini-boss, and music.
+  Edit them in the Inspector.
+- `MapManager` (the team's room-graph generator) builds each chapter from the `RoomCatalog`.
+- `GameSession` keeps the players, lives, score, seals, and high scores between scenes.
+- `ChapterDirector` runs a chapter: look, variants, the mini-boss, continues, game over, results.
+- Scenes: `Title` (lobby and attract mode), `Hub`, `MainScene` (every chapter), `Ending`.
+- Music is original, written by `Tools/compose_music.py` (needs numpy and soundfile).
 
 ## What changed in 2026
 
-- **Unity 4.6 to Unity 6.3.** Assets are now text (YAML) instead of binary, so git can diff them.
-  Unity's API updater rewrote the removed Unity 4 shortcuts (`rigidbody`, `renderer`, and so on).
-- **Paid Asset Store packages removed.** Rewired (input) and Exploder (breakable props) were
-  deleted from the whole git history, together with a committed copy of Unity's own
-  `UnityEditor.dll`. Input now uses Unity's Input System. Props now break with a small
-  `Explodable` script written for this upgrade, which keeps the old script's GUID so the props
-  link to it unchanged.
-- **Title screen.** It picks 1 to 4 players and their classes. Before, the scene always spawned
-  four heroes, and since nobody may stray far from the group, one player alone could not move.
-- **Movement follows the screen.** The camera looks along -Z, so the new input is turned to match
-  it.
-- **Bug fixes:** enemies never dropped gold, because the drop count was rolled in a field
-  initializer, which Unity does not allow; the attack timers had the same problem; a camera script
-  wrote to the console every physics tick.
-- **Cleanup:** 319 components that pointed at deleted scripts, four empty prefabs, generated
-  `.csproj` files, and empty folders are gone. `Assets/Map_4_2.unity` was corrupt in its last
-  2015 commit and was removed; older versions are still in the history.
-- **WebGL:** textures use Crunch compression for WebGL only, which brings the download to about
-  80 MB.
+- **Unity 4.6 to Unity 6.3.** Assets are text (YAML). Unity's API updater rewrote the removed
+  Unity 4 calls.
+- **Paid Asset Store packages removed** from the whole git history: Rewired (input) and Exploder
+  (breakable props), plus a committed copy of Unity's `UnityEditor.dll`. Input uses Unity's Input
+  System; props break with a small `Explodable` script that keeps the old script's GUID.
+- **Finished as an arcade game:** lobby, hub, chapters, seals, mini-bosses, the throne room,
+  lives, continues, revives, scoring, high scores, upgrades, power-ups, pause menu, and music.
+- **Bugs fixed from 2015,** among them: enemies never dropped gold (rolled in a field initializer);
+  the ranged zombie threw an exception every physics tick when no player was in range; King
+  Restless's health bar was never assigned, so his setup threw; enemies crashed when no player was
+  alive; the attack potion wiped out other damage bonuses; the camera logged on every physics
+  tick; the dungeon generator listed room files on disk, which only works in the editor.
+- **Cleanup:** 319 components that pointed at deleted scripts, a corrupt scene (`Map_4_2.unity`,
+  still in the history), empty prefabs, generated project files, and empty folders are gone.
+- **WebGL:** textures use Crunch compression for WebGL only, keeping the download under 100 MB.
 
 ## Known gaps from 2015
 
-- The **Rogue** and **Woodsman** textures were never committed. They now use plain placeholder
-  colors (charcoal and green) instead of white.
+- The **Rogue** and **Woodsman** textures were never committed; they use plain placeholder colors.
 - The **potions** are untextured white models; their halo color shows the type.
-- `MapManager`'s procedural mode reads room prefabs from the `Assets` folder on disk, so it works
-  only in the editor. The shipped scene uses the preset dungeon.
+- All enemies share the one zombie model; chapter variants differ by color, size, glow, stats, and
+  behavior.
 
 ## License
 

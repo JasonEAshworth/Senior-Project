@@ -61,9 +61,47 @@ public class KingRestless : EnemyBase
 	{
 		base.Start();
 		myAnimator = GetComponent<Animator>();
-		roomCenter = GameObject.Find("Boss Room Center").transform;
-		healthBarObject.transform.Find("BossNameText").GetComponent<Text>().text = "King Restless";
-		healthBarObject.SetActive(true);
+		bossName = "King Restless";
+		maxHealth *= GameSession.BossHealthScale;
+		health = maxHealth;
+		roomCenter = RoomCenter();
+		// The prefab never had a health bar assigned, so this threw in 2015; ArcadeHud draws one now.
+		if (healthBarObject != null)
+		{
+			healthBarObject.transform.Find("BossNameText").GetComponent<Text>().text = bossName;
+			healthBarObject.SetActive(true);
+		}
+	}
+
+	/// The middle of the boss's room. The 2015 scene used a fixed "Boss Room Center" object,
+	/// which only matched the one hand-placed dungeon.
+	Transform RoomCenter()
+	{
+		Transform room = transform.root;
+		Renderer[] rs = room.GetComponentsInChildren<Renderer>();
+		Vector3 c = room.position;
+		if (rs.Length > 0)
+		{
+			Bounds b = rs[0].bounds;
+			foreach (Renderer r in rs)
+				b.Encapsulate(r.bounds);
+			c = new Vector3(b.center.x, transform.position.y, b.center.z);
+		}
+		var marker = new GameObject("Boss Room Center (computed)");
+		marker.transform.position = c;
+		marker.transform.SetParent(room, true);
+		return marker.transform;
+	}
+
+	float nextSummon;
+
+	void SummonMinions()
+	{
+		// Final phase: the king calls a few of each chapter's monsters.
+		if (Time.time < nextSummon || ChapterDirector.Instance == null)
+			return;
+		nextSummon = Time.time + 14.0f;
+		ChapterDirector.Instance.SummonFinalMinions(transform.position, 4);
 	}
 
 	void OnDestroy()
@@ -77,6 +115,8 @@ public class KingRestless : EnemyBase
 	protected override void FixedUpdate()
 	{
 		base.FixedUpdate();
+		if (health <= maxHealth * 0.3f)
+			SummonMinions();
 
 		if (!attackInProgress)
 		{
@@ -195,6 +235,8 @@ public class KingRestless : EnemyBase
 	private bool find(float attackRange)
 	{
 		closestPlayer = findClosestPlayer();
+		if (closestPlayer == null)
+			return false;
 		moveTowardsPlayer(closestPlayer, Time.deltaTime);
 		rotateTowardsPlayer(closestPlayer, Time.deltaTime);
 		if (Vector3.Magnitude(closestPlayer.transform.position - transform.position) < attackRange)

@@ -59,6 +59,8 @@ public class EnemySpawner : MonoBehaviour
 		}
 		GameObject newEnemy = Instantiate(enemiesToSpawn[index], transform.position, transform.rotation) as GameObject;
 		newEnemy.transform.parent = parentRoom;
+		if (ChapterDirector.Instance != null)
+			ChapterDirector.Instance.OnEnemySpawned(newEnemy);
 
 		// Check to see if we have any enemies left to spawn
 		if (!infiniteSpawn)

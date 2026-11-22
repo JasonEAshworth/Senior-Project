@@ -32,6 +32,9 @@ public class EnemyArchtypeRanged : EnemyBase {
 	{
 		base.FixedUpdate();
 		player = findClosestPlayerInRange (eRange);
+		// Nobody in range: the 2015 code dereferenced null here every physics tick.
+		if (player == null)
+			return;
 		target = player.transform;
 		pDistance = (target.position - mTransform.position).magnitude;
 

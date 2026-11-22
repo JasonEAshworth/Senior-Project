@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69cf6f130f6c1e84b9b84242e45048d1, type: 3}
+  m_Name: 5_ThroneRoom
+  m_EditorClassIdentifier: Assembly-CSharp::ChapterDefinition
+  id: throne
+  sealIndex: -1
+  isFinal: 1
+  title: The Throne Room
+  tagline: Only the king remains.
+  starterRoom: 
+  bossRoom: Map_03_B_E
+  numRooms: 1
+  hordeWeight: 2
+  puzzleWeight: 1
+  reactionWeight: 1
+  ambient: {r: 0.2, g: 0.16, b: 0.22, a: 1}
+  lightTint: {r: 0.9, g: 0.7, b: 1, a: 1}
+  lightIntensity: 1.2
+  fogColor: {r: 0.08, g: 0.04, b: 0.1, a: 1}
+  fogDensity: 0.01
+  atmosphere: embers
+  variants: []
+  miniBoss:
+    name: Mini-boss
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    glowColor: {r: 1, g: 0, b: 0, a: 1}
+    scale: 1.9
+    health: 1200
+    damage: 18
+    speed: 3.2
+    attacks: 00000000
+  enemyHealthScale: 1
+  enemyDamageScale: 1
+  music: Music/final
+  bossMusic: Music/final

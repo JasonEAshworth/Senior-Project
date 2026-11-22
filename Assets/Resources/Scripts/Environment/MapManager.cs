@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -210,9 +209,15 @@ public class MapManager : MonoBehaviour
 	private int goalPuzzleRooms;
 	private int goalReactionRooms;
 
-	private string RoomPrefabFilePath = "Assets/Resources/Prefabs/Environment/Resources/";
-	DirectoryInfo dir;
-	FileInfo[] info;
+	// Room prefab names from the RoomCatalog asset, each with ".prefab" on the end, which the
+	// generator below expects. The 2015 code listed files on disk, which only works in the editor.
+	List<string> roomFiles = new List<string>();
+	string preferStarter, preferBoss;
+	bool presetFallback;
+
+	public static MapManager Instance { get; private set; }
+	public RoomNode StartRoom { get { return map != null && map.rooms.Count > 0 ? map.rooms[0] : null; } }
+	public List<RoomNode> Rooms { get { return map.rooms; } }
 
 	private int playerSpawnRoom = 0;
 
@@ -220,6 +225,8 @@ public class MapManager : MonoBehaviour
 
 	void Awake()
 	{
+		Instance = this;
+		ChapterDirector.Ensure();
 		// Set up the map and the rooms that will be used in the dungeon
 		map = new RoomGraph();
 		generateDungeon();
@@ -227,15 +234,30 @@ public class MapManager : MonoBehaviour
 
 	void Start()
 	{
-		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
+		if (PlayerManager.Instance == null || map.rooms.Count == 0)
+			return;
+		foreach (GameObject player in PlayerManager.Instance.players)
 		{
-			player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
+			if (player != null)
+				player.GetComponent<PlayerBase>().roomIn = map.rooms[0];
 		}
 	}
 
 	// Called on awake. Generates the dungeon and sets the players in the first room
 	private void generateDungeon()
 	{
+		ChapterDefinition chapter = GameSession.Current;
+		if (chapter != null && chapter.isFinal)
+		{
+			generateFinalLevel(chapter);
+			return;
+		}
+		if (chapter != null && !presetFallback)
+		{
+			proceduralGeneration = true;
+			numRooms = chapter.numRooms;
+			noRoomRepeats = true;
+		}
 		if (proceduralGeneration)
 		{
 			// Don't even try to generate the dungeon if we have less than 2 rooms
@@ -248,29 +270,55 @@ public class MapManager : MonoBehaviour
 			// (Half horde rooms, quarter puzzle rooms, quarter reaction rooms, favor puzzle rooms if odd number)
 			if (roomBalance)
 			{
-				goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
-				goalPuzzleRooms = Mathf.CeilToInt((float)(numRooms - 2 - goalHordeRooms) / 2.0f);
-				goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
+				if (chapter != null)
+				{
+					int middle = numRooms - 2;
+					float total = Mathf.Max(1, chapter.hordeWeight + chapter.puzzleWeight + chapter.reactionWeight);
+					goalHordeRooms = Mathf.RoundToInt(middle * chapter.hordeWeight / total);
+					goalPuzzleRooms = Mathf.RoundToInt(middle * chapter.puzzleWeight / total);
+					goalReactionRooms = middle - goalHordeRooms - goalPuzzleRooms;
+				}
+				else
+				{
+					goalHordeRooms = Mathf.CeilToInt((float)(numRooms - 2) / 2.0f);
+					goalPuzzleRooms = Mathf.CeilToInt((float)(numRooms - 2 - goalHordeRooms) / 2.0f);
+					goalReactionRooms = numRooms - 2 - goalHordeRooms - goalPuzzleRooms;
+				}
 			}
 
-			// Get references to all of the room prefab files
-			dir = new DirectoryInfo(RoomPrefabFilePath);
-			info = dir.GetFiles("*.prefab");
+			RoomCatalog catalog = RoomCatalog.Load();
+			roomFiles = new List<string>();
+			if (catalog != null)
+				foreach (string r in catalog.rooms)
+					roomFiles.Add(r + ".prefab");
 
-			// Generate the dungeon with a recursive function that works one room at a time
+			// Generate the dungeon with a recursive function that works one room at a time. Try
+			// the chapter's own starter and boss rooms first; if they cannot connect, loosen up.
 			List<RoomPrefab> roomsToUse = new List<RoomPrefab>();
-			Dictionary<string, int> numRoomTypes = new Dictionary<string, int>(){{"_H_", 0}, {"_P_", 0}, {"_R_", 0}, {"_T_", 0}, {"_S_", 0}, {"_B_", 0}};
-			generateRoom(roomsToUse, numRoomTypes);
+			bool wantBalance = roomBalance;
+			for (int attempt = 0; attempt < 15 && roomsToUse.Count != numRooms; attempt++)
+			{
+				preferStarter = chapter != null && attempt < 6 ? chapter.starterRoom : null;
+				preferBoss = chapter != null && attempt < 6 ? chapter.bossRoom : null;
+				roomBalance = wantBalance && attempt < 10;
+				roomsToUse = new List<RoomPrefab>();
+				Dictionary<string, int> numRoomTypes = new Dictionary<string, int>(){{"_H_", 0}, {"_P_", 0}, {"_R_", 0}, {"_T_", 0}, {"_S_", 0}, {"_B_", 0}};
+				generateRoom(roomsToUse, numRoomTypes);
+			}
+			roomBalance = wantBalance;
 
 			// Log an error message if the generation failed
-			if (roomsToUse.Count == 0)
+			if (roomsToUse.Count != numRooms)
 			{
-				Debug.Log ("Error generating dungeon, could not generate dungeon from given room prefabs");
+				Debug.LogWarning("Could not generate a dungeon from the room catalog; using the preset dungeon");
+				proceduralGeneration = false;
+				presetFallback = true;
+				generateDungeon();
 				return;
 			}
 
-			// Once the main path through the dungeon has been generated, replace a few of the rooms with rooms that can branch
-			List<RoomPrefab> sideRooms = setupSidePaths(roomsToUse);
+			// The 2015 side-path pass swapped a main-path room for one with an extra doorway but
+			// never built the rooms behind it, leaving a doorway into nothing; it stays off.
 
 			// Once all of the rooms have been selected, set up the map and connect the rooms
 			foreach (RoomPrefab rp in roomsToUse)
@@ -288,6 +336,12 @@ public class MapManager : MonoBehaviour
 			for (int i = 0; i < map.rooms.Count; i++)
 			{
 				loadNeighbors(map.rooms[i]);
+			}
+			// Every room is built now so the doorways line up, but only the start room and its
+			// neighbor stay awake; the rest wake as the party reaches them, like the 2015 preset.
+			for (int i = 2; i < map.rooms.Count; i++)
+			{
+				unloadRoom(map.rooms[i]);
 			}
 			// Give the player manager the first room's spawn points
 			pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
@@ -345,15 +399,15 @@ public class MapManager : MonoBehaviour
 			// Look through all room prefabs and select all of the rooms that can connect with the previous one that haven't been used yet
 			int[] nextRoomPos = new int[2];
 			List<string> potentialRooms = new List<string>();
-			foreach (FileInfo f in info)
+			foreach (string f in roomFiles)
 			{
-				if (roomsNotToUse.Contains(f.Name))
+				if (roomsNotToUse.Contains(f))
 				{
 					continue;
 				}
 
-				string fileName = f.Name.Substring(0, f.Name.Length - 7); // remove ".prefab"
-				string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+				string fileName = f.Substring(0, f.Length - 7); // remove ".prefab"
+				string e = fileName.Substring(f.LastIndexOf("_") + 1); // get exit directions string
 
 				// Make sure that this room won't overlap with any existing rooms
 				if (rooms.Count > 0)
@@ -392,7 +446,7 @@ public class MapManager : MonoBehaviour
 					}
 					if (willOverlap)
 					{
-						roomsNotToUse.Add(f.Name);
+						roomsNotToUse.Add(f);
 						continue;
 					}
 				}
@@ -401,7 +455,7 @@ public class MapManager : MonoBehaviour
 				if (rooms.Count == 0)
 				{
 					// first room must be starter type
-					if (fileName.Contains("_S_"))
+					if (fileName.Contains("_S_") && (preferStarter == null || fileName == preferStarter))
 					{
 						potentialRooms.Add(fileName);
 					}
@@ -410,7 +464,7 @@ public class MapManager : MonoBehaviour
 				else if (rooms.Count == numRooms - 1)
 				{
 					// makes sure the final room is a boss room
-					if (fileName.Contains("_B_") && e.Contains(lookingFor))
+					if (fileName.Contains("_B_") && e.Contains(lookingFor) && (preferBoss == null || fileName == preferBoss))
 					{
 						potentialRooms.Add(fileName);
 					}
@@ -427,7 +481,7 @@ public class MapManager : MonoBehaviour
 
 							foreach (RoomPrefab rp in rooms)
 							{
-								if (rp.prefabName == f.Name)
+								if (rp.prefabName == f)
 								{
 									foundRepeat = true;
 									break;
@@ -436,7 +490,7 @@ public class MapManager : MonoBehaviour
 
 							if (foundRepeat)
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 						}
@@ -445,23 +499,23 @@ public class MapManager : MonoBehaviour
 						{
 							if (fileName.Contains(rooms[rooms.Count-1].type))	// don't do the same type of room twice in a row
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 
 							if (fileName.Contains("_H_") && numRoomTypes["_H_"] == goalHordeRooms)
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 							if (fileName.Contains("_P_") && numRoomTypes["_P_"] == goalPuzzleRooms)
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 							if (fileName.Contains("_R_") && numRoomTypes["_R_"] == goalReactionRooms)
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 						}
@@ -472,7 +526,7 @@ public class MapManager : MonoBehaviour
 						{
 							if (e[0].ToString() != lookingFor)
 							{
-								roomsNotToUse.Add(f.Name);
+								roomsNotToUse.Add(f);
 								continue;
 							}
 						}
@@ -564,10 +618,10 @@ public class MapManager : MonoBehaviour
 
 		// Get a list of all rooms that can be used for branching
 		List<string> potentialRooms = new List<string>();
-		foreach (FileInfo f in info)
+		foreach (string f in roomFiles)
 		{
-			string fileName = f.Name.Substring(0, f.Name.Length - 7); 	// remove ".prefab"
-			string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+			string fileName = f.Substring(0, f.Length - 7); 	// remove ".prefab"
+			string e = fileName.Substring(f.LastIndexOf("_") + 1); // get exit directions string
 			
 			if (e.Length >= 3)
 			{
@@ -686,15 +740,15 @@ public class MapManager : MonoBehaviour
 		{
 			// Look through all room prefabs and select all of the rooms that can connect with the previous one that haven't been used yet
 			List<string> potentialRooms = new List<string>();
-			foreach (FileInfo f in info)
+			foreach (string f in roomFiles)
 			{
-				if (roomsNotToUse.Contains(f.Name))
+				if (roomsNotToUse.Contains(f))
 				{
 					continue;
 				}
 				
-				string fileName = f.Name.Substring(0, f.Name.Length - 7); // remove ".prefab"
-				string e = fileName.Substring(f.Name.LastIndexOf("_") + 1); // get exit directions string
+				string fileName = f.Substring(0, f.Length - 7); // remove ".prefab"
+				string e = fileName.Substring(f.LastIndexOf("_") + 1); // get exit directions string
 				
 				bool willOverlap = false;
 				foreach (RoomPrefab rp in mainPath)
@@ -707,18 +761,18 @@ public class MapManager : MonoBehaviour
 				}
 				if (willOverlap)
 				{
-					roomsNotToUse.Add(f.Name);
+					roomsNotToUse.Add(f);
 					continue;
 				}
 
 				if (sidePath.Count == 0 && !fileName.Contains("_H_"))
 				{
-					roomsNotToUse.Add(f.Name);
+					roomsNotToUse.Add(f);
 					continue;
 				}
 				else if (sidePath.Count == 1 && !fileName.Contains("_T_"))
 				{
-					roomsNotToUse.Add(f.Name);
+					roomsNotToUse.Add(f);
 					continue;
 				}
 
@@ -790,6 +844,29 @@ public class MapManager : MonoBehaviour
 		return false;
 	}
 	
+	/// The last level is the boss room alone: King Restless and nothing else.
+	private void generateFinalLevel(ChapterDefinition chapter)
+	{
+		map.addRoom(chapter.bossRoom);
+		loadRoom(map.rooms[0]);
+		// With no neighbor rooms, wall off the doorways so nobody walks out into the void.
+		foreach (string t in new[] { "N_transition", "S_transition", "E_transition", "W_transition" })
+		{
+			Transform door = map.rooms[0].obj.transform.Find(t);
+			if (door == null)
+				continue;
+			var wall = new GameObject("DoorwayBlocker");
+			wall.transform.SetParent(door, false);
+			BoxCollider box = wall.AddComponent<BoxCollider>();
+			box.size = new Vector3(8.0f, 8.0f, 1.0f);
+		}
+		pMan = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+		pMan.assignNewSpawnPoints(map.rooms[0].playerRespawns.ToArray());
+		// The party starts inside the room, so wake its spawner (which brings in the king)
+		// the way walking through the doorway would.
+		notifySpawners(map.rooms[0]);
+	}
+
 	// Loads room and returns true if loading for first time
 	private bool loadRoom(RoomNode roomNode)
 	{
@@ -813,11 +890,15 @@ public class MapManager : MonoBehaviour
 				roomNode.enemySpawners.Add(es[i]);
 			}
 			roomNode.hasBeenLoaded = true;
+			if (ChapterDirector.Instance != null)
+				ChapterDirector.Instance.OnRoomLoaded(roomNode);
 			return true;
 		}
 		else
 		{
 			roomNode.obj.SetActive(true);
+			if (!map.roomsActive.Contains(roomNode))
+				map.roomsActive.Add(roomNode);
 			return false;
 		}
 	}
@@ -942,10 +1023,13 @@ public class MapManager : MonoBehaviour
 	public List<RoomNode> getRoomsPlayersIn()
 	{
 		List<RoomNode> roomsIn = new List<RoomNode>();
-		foreach (GameObject player in GameObject.Find("PlayerManager").GetComponent<PlayerManager>().players)
+		foreach (GameObject player in PlayerManager.Instance.players)
 		{
+			// Heroes who are out of lives are inactive and do not hold rooms open.
+			if (player == null || !player.activeInHierarchy)
+				continue;
 			RoomNode location = player.GetComponent<PlayerBase>().roomIn;
-			if (!roomsIn.Contains(location))
+			if (location != null && !roomsIn.Contains(location))
 			{
 				roomsIn.Add(location);
 			}

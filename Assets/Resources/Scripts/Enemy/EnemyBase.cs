@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum enemyArchtype
 {
@@ -11,8 +12,11 @@ public enum enemyArchtype
 	BOSS
 }
 
-public class EnemyBase : CharacterBase 
+public class EnemyBase : CharacterBase
 {
+	/// Every enemy in the scene, for the HUD's health bars and the bosses' summons.
+	public static readonly List<EnemyBase> All = new List<EnemyBase>();
+
 	// Init Enemy Variables
 	public float respawnTimer = 0.0f;
 	public int enemyNumber = -1;
@@ -28,21 +32,41 @@ public class EnemyBase : CharacterBase
 	// Enemy Control Variables
 	public bool partOfHorde = false;
 
+	/// A boss has a name: it gets the big health bar, and its death ends the chapter.
+	public string bossName = "";
+	public int points = 0;              // 0 uses the archetype's default
+	public string displayName = "";
+	[System.NonSerialized] public float lastHitTime = -100.0f;
+	[System.NonSerialized] public bool scaled;
+
+	public bool IsBoss { get { return !string.IsNullOrEmpty(bossName); } }
+
 	// Manager Code
 	public EnemyManager manager;
 	private MapManager mapManager;
 	protected EnemyArchtypeHorde hordeManager;
 
+	void OnEnable() { All.Add(this); }
+	void OnDisable() { All.Remove(this); }
+
 	protected override void Start()
 	{
 		base.Start();
-		manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
-		mapManager = GameObject.Find("MapManager").GetComponent<MapManager>();
-		//renderer.material.color = Color.blue;
+		GameObject em = GameObject.Find("EnemyManager");
+		if (em != null)
+			manager = em.GetComponent<EnemyManager>();
+		mapManager = MapManager.Instance;
 		if (transform.parent != null)
 		{
 			hordeManager = transform.parent.GetComponent<EnemyArchtypeHorde>();
-			//partOfHorde = true;
+		}
+		if (!scaled && !IsBoss)
+		{
+			// More heroes and more cleared chapters make every enemy tougher.
+			scaled = true;
+			maxHealth *= GameSession.EnemyHealthScale;
+			health = maxHealth;
+			attackDamage *= GameSession.EnemyDamageScale;
 		}
 	}
 
@@ -52,10 +76,34 @@ public class EnemyBase : CharacterBase
 		if (cc.isGrounded)
 		{
 			forces = new Vector3(forces.x, Mathf.Max(0.0f, forces.y), forces.z);
-		}		
-		else 
+		}
+		else
 		{
 			addForce(new Vector3(0.0f, Physics.gravity.y * 2.0f * Time.deltaTime, 0.0f));
+		}
+	}
+
+	public override void takeDamage(float amount)
+	{
+		if (dead)
+			return;
+		lastHitTime = Time.time;
+		ArcadeHud.Damage(transform.position, amount, false);
+		base.takeDamage(amount);
+	}
+
+	public int PointValue
+	{
+		get
+		{
+			if (points > 0) return points;
+			switch (enemyType)
+			{
+				case enemyArchtype.RANGED: return 150;
+				case enemyArchtype.HORDE: return 60;
+				case enemyArchtype.BOSS: return 3000;
+				default: return 100;
+			}
 		}
 	}
 
@@ -69,6 +117,13 @@ public class EnemyBase : CharacterBase
 			{
 				dg.Reward ();
 			}
+			ScoreKeeper.CreditKill(this);
+			VariantBehavior vb = GetComponent<VariantBehavior>();
+			if (vb != null)
+				vb.OnDeath();
+			PowerUp.MaybeDrop(transform.position, IsBoss ? 1.0f : 0.08f);
+			if (IsBoss && ChapterDirector.Instance != null)
+				ChapterDirector.Instance.OnBossDefeated(this);
 		}
 		Destroy(gameObject);
 	}
@@ -86,9 +141,11 @@ public class EnemyBase : CharacterBase
 
 	protected void moveTowardsPlayer(GameObject player, float dt)
 	{
+		if (player == null)
+			return;
 		Vector3 toPlayer = Vector3.Normalize(player.transform.position - transform.position);
 		Vector3 toCenter = Vector3.zero;
-		if (partOfHorde)
+		if (partOfHorde && hordeManager != null)
 		{
 			toCenter = Vector3.Normalize(hordeManager.centerPoint - transform.position);
 		}
@@ -114,55 +171,40 @@ public class EnemyBase : CharacterBase
 
 	protected void rotateTowardsPlayer(GameObject player, float dt)
 	{
+		if (player == null)
+			return;
 		transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation(new Vector3(player.transform.position.x, 0.0f, player.transform.position.z) - new Vector3(transform.position.x, 0.0f, transform.position.z)), rotationSpeed*Time.deltaTime);
 	}
 
+	/// The closest hero who is up and visible, or null when nobody is. The 2015 version
+	/// returned the first player even when everyone was dead, and threw with no players.
 	protected GameObject findClosestPlayer()
 	{
-		// Find the closest player and see if they are in range
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		float shortestRange = float.PositiveInfinity;
-		int closestPlayerIdx = 0;
-		for (int i = 0; i < players.Length; i++)
-		{
-			if (players[i].GetComponent<PlayerBase>().dead || players[i].GetComponent<PlayerBase>().visibility == 0)
-			{
-				continue;
-			}
-			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
-			if (sqrRange < shortestRange)
-			{
-				shortestRange = sqrRange;
-				closestPlayerIdx = i;
-			}
-		}
-		return players[closestPlayerIdx];
+		return findClosestPlayerInRange(float.PositiveInfinity);
 	}
 
 	protected GameObject findClosestPlayerInRange(float range)
 	{
-		// Find the closest player and see if they are in range
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		float shortestRange = float.PositiveInfinity;
-		int closestPlayerIdx = 0;
-		for (int i = 0; i < players.Length; i++)
+		PlayerManager pm = PlayerManager.Instance;
+		if (pm == null)
+			return null;
+		GameObject closest = null;
+		float shortest = range * range;
+		foreach (GameObject p in pm.players)
 		{
-			if (players[i].GetComponent<PlayerBase>().dead || players[i].GetComponent<PlayerBase>().visibility == 0)
-			{
+			if (p == null || !p.activeInHierarchy)
 				continue;
-			}
-			float sqrRange = Vector3.SqrMagnitude(transform.position - players[i].transform.position);	// squared magnitude is faster
-			if (sqrRange < shortestRange)
+			PlayerBase pb = p.GetComponent<PlayerBase>();
+			if (pb.dead || pb.visibility == 0)
+				continue;
+			float sqr = (transform.position - p.transform.position).sqrMagnitude;
+			if (sqr <= shortest)
 			{
-				shortestRange = Mathf.Min(sqrRange, shortestRange);
-				closestPlayerIdx = i;
+				shortest = sqr;
+				closest = p;
 			}
 		}
-		if (shortestRange <= range * range) // squaring range is faster than square rooting every distance
-		{
-			return players[closestPlayerIdx];
-		}
-		return null;
+		return closest;
 	}
 
 	public IEnumerator slow(){

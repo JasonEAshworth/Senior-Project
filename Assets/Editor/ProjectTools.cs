@@ -7,26 +7,7 @@ using UnityEngine.SceneManagement;
 /// Batch-mode helpers. Run with: Unity -batchmode -quit -projectPath . -executeMethod ProjectTools.BuildWebGL
 public static class ProjectTools
 {
-	const string TitleScene = "Assets/Scenes/Title.unity";
-	static readonly string[] Scenes = { TitleScene, "Assets/Scenes/MainScene.unity" };
-
-	/// Makes the title scene (a camera and the TitleMenu) if it does not exist yet, and lists
-	/// the game's scenes in the build settings, so File > Build gives the same result.
-	[MenuItem("Tools/Senior Project/Create Title Scene")]
-	public static void EnsureTitleScene()
-	{
-		if (!System.IO.File.Exists(TitleScene))
-		{
-			Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-			var camera = new GameObject("Main Camera", typeof(Camera)).GetComponent<Camera>();
-			camera.tag = "MainCamera";
-			camera.clearFlags = CameraClearFlags.SolidColor;
-			camera.backgroundColor = new Color(0.08f, 0.07f, 0.06f);
-			new GameObject("TitleMenu", typeof(TitleMenu));
-			EditorSceneManager.SaveScene(scene, TitleScene);
-		}
-		EditorBuildSettings.scenes = System.Array.ConvertAll(Scenes, s => new EditorBuildSettingsScene(s, true));
-	}
+	static string[] Scenes { get { return GameContent.Scenes; } }
 
 	/// Rewrites every asset as YAML text, so git can diff it and asset references can be searched.
 	[MenuItem("Tools/Senior Project/Convert Assets To Text")]
@@ -140,7 +121,7 @@ public static class ProjectTools
 
 	static void Build(BuildTarget target, string path)
 	{
-		EnsureTitleScene();
+		GameContent.Prepare();
 		BuildReport report = BuildPipeline.BuildPlayer(Scenes, path, target, BuildOptions.None);
 		foreach (BuildStep step in report.steps)
 			foreach (BuildStepMessage message in step.messages)

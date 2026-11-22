@@ -1,34 +1,20 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-/// Moves one player character from a keyboard layout (players 1 and 2) and the gamepad with the
-/// same index. Replaces the 2015 Rewired controller, which was a paid package.
+/// Moves one player character from the device the player joined with (a keyboard layout,
+/// a gamepad, or both). Replaces the 2015 Rewired controller, which was a paid package.
 [AddComponentMenu("")]
 [RequireComponent(typeof(CharacterController))]
 public class PlayerInputControl : MonoBehaviour {
 
-	struct KeyLayout {
-		public Key up, down, left, right, jump, attack, ability, item;
-		public Key altJump, altAttack, altAbility, altItem;
-	}
-
-	// Player 2's alternates sit next to the arrow keys for keyboards with no number pad.
-	static readonly KeyLayout[] keyLayouts = {
-		new KeyLayout { up = Key.W, down = Key.S, left = Key.A, right = Key.D,
-			jump = Key.Space, attack = Key.J, ability = Key.K, item = Key.L,
-			altJump = Key.None, altAttack = Key.None, altAbility = Key.None, altItem = Key.None },
-		new KeyLayout { up = Key.UpArrow, down = Key.DownArrow, left = Key.LeftArrow, right = Key.RightArrow,
-			jump = Key.Numpad0, attack = Key.Numpad1, ability = Key.Numpad2, item = Key.Numpad3,
-			altJump = Key.RightShift, altAttack = Key.Comma, altAbility = Key.Period, altItem = Key.Slash },
-	};
-
-	public int playerId = 0;
+	public InputBinding binding = new InputBinding();
 
 	public float moveSpeed = 5.5f;
+	public float speedFactor = 1.0f;     // shop upgrades and the haste power-up
 
 	public int maxDist = 10; // Distance the players can be seperated from one another
 
 	private CharacterController cc;
+	private Animator animator;
 	private Vector3 moveVector;
 
 	// Presses are latched in Update and consumed in FixedUpdate. Read directly in FixedUpdate,
@@ -47,15 +33,17 @@ public class PlayerInputControl : MonoBehaviour {
 
 	void Awake() {
 		cc = GetComponent<CharacterController>();
+		animator = GetComponent<Animator>();
 		character = GetComponent<PlayerBase>();
-		playerId = character.playerNum;
 		if(!plyrMgr)
 		{
-			plyrMgr = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+			plyrMgr = PlayerManager.Instance;
 		}
 	}
 
 	void Update () {
+		if (Time.timeScale == 0.0f)
+			return;
 		GetInput();
 	}
 
@@ -64,46 +52,15 @@ public class PlayerInputControl : MonoBehaviour {
 		fire = fireUp = jump = classAbility = classAbilityUp = utilityDown = false;
 	}
 
-	static float KeyAxis(Keyboard kb, Key negative, Key positive) {
-		return (kb[positive].isPressed ? 1.0f : 0.0f) - (kb[negative].isPressed ? 1.0f : 0.0f);
-	}
-
-	static bool Pressed(Keyboard kb, Key key, Key alt) {
-		return kb[key].wasPressedThisFrame || (alt != Key.None && kb[alt].wasPressedThisFrame);
-	}
-
-	static bool Released(Keyboard kb, Key key, Key alt) {
-		return kb[key].wasReleasedThisFrame || (alt != Key.None && kb[alt].wasReleasedThisFrame);
-	}
-
 	private void GetInput() {
-		Vector2 move = Vector2.zero;
+		Vector2 move = PlayerControls.Move(binding);
+		fire |= PlayerControls.Pressed(binding, PlayerAction.Attack);
+		fireUp |= PlayerControls.Released(binding, PlayerAction.Attack);
+		classAbility |= PlayerControls.Pressed(binding, PlayerAction.Ability);
+		classAbilityUp |= PlayerControls.Released(binding, PlayerAction.Ability);
+		jump |= PlayerControls.Pressed(binding, PlayerAction.Jump);
+		utilityDown |= PlayerControls.Pressed(binding, PlayerAction.Item);
 
-		Keyboard kb = Keyboard.current;
-		if (kb != null && playerId < keyLayouts.Length) {
-			KeyLayout k = keyLayouts[playerId];
-			move += new Vector2(KeyAxis(kb, k.left, k.right), KeyAxis(kb, k.down, k.up));
-			fire |= Pressed(kb, k.attack, k.altAttack);
-			fireUp |= Released(kb, k.attack, k.altAttack);
-			classAbility |= Pressed(kb, k.ability, k.altAbility);
-			classAbilityUp |= Released(kb, k.ability, k.altAbility);
-			jump |= Pressed(kb, k.jump, k.altJump);
-			utilityDown |= Pressed(kb, k.item, k.altItem);
-		}
-
-		var pads = Gamepad.all;
-		if (playerId < pads.Count) {
-			Gamepad pad = pads[playerId];
-			move += pad.leftStick.ReadValue() + pad.dpad.ReadValue();
-			fire |= pad.buttonWest.wasPressedThisFrame;
-			fireUp |= pad.buttonWest.wasReleasedThisFrame;
-			classAbility |= pad.buttonEast.wasPressedThisFrame;
-			classAbilityUp |= pad.buttonEast.wasReleasedThisFrame;
-			jump |= pad.buttonSouth.wasPressedThisFrame;
-			utilityDown |= pad.buttonNorth.wasPressedThisFrame;
-		}
-
-		move = Vector2.ClampMagnitude(move, 1.0f);
 		// Movement follows the screen. The dungeon camera looks along -Z (yaw near 180), so raw
 		// axes would make up walk down the screen and left walk right.
 		Camera cam = Camera.main;
@@ -121,14 +78,14 @@ public class PlayerInputControl : MonoBehaviour {
 		{
 			if(character.canJump)
 			{
-				character.GetComponent<Animator>().SetBool("Jump", true);
+				animator.SetBool("Jump", true);
 				character.canJump = false;
 				character.addForce(new Vector3(0.0f, character.jumpForce, 0.0f));
 			}
 		}
-		else if (cc.isGrounded)
+		else if (cc.enabled && cc.isGrounded)
 		{
-			character.GetComponent<Animator>().SetBool("Jump", false);
+			animator.SetBool("Jump", false);
 			character.canJump = true;
 			character.forces = new Vector3(character.forces.x, Mathf.Max(0.0f, character.forces.y), character.forces.z);
 		}
@@ -170,7 +127,7 @@ public class PlayerInputControl : MonoBehaviour {
 				//if the player's distance from the group's center exceeds maxDist on the x or z
 				//axis, they are stopped from moving on that axis. If they're already too far away,
 				//they are only allowed to move closer to the center.
-				Vector3 movement = moveVector * moveSpeed * Time.deltaTime * character.moveMulti;
+				Vector3 movement = moveVector * moveSpeed * speedFactor * Time.deltaTime * character.moveMulti;
 				Vector3 oldDistVec = character.transform.position - plyrMgr.playersCenter;
 				Vector3 newDistVec = oldDistVec + movement;
 
@@ -189,10 +146,11 @@ public class PlayerInputControl : MonoBehaviour {
 					movement.z = 0.0f;
 				}
 
-				cc.Move(movement);
+				if (cc.enabled)
+					cc.Move(movement);
 			}
 
-			character.GetComponent<Animator>().SetBool("Run", moveVector.magnitude > 0.0f);
+			animator.SetBool("Run", moveVector.magnitude > 0.0f);
 		}
 	}
 }

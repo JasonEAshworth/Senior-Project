@@ -42,8 +42,11 @@ public class cameraControl : MonoBehaviour
 
 	public void FixedUpdate() 
 	{
+		// Follow the heroes who are up; the party changes as players drop in, go down, or leave.
+		if (PlayerManager.Instance != null)
+			targets = PlayerManager.Instance.CameraTargets().ToArray();
 		// If we can't find a player, we return without altering the camera's position
-		if (!GameObject.FindWithTag ("Player")) {
+		if (targets == null || targets.Length == 0) {
 			return;
 		}
 
@@ -113,7 +116,6 @@ public class cameraControl : MonoBehaviour
 		Camera.main.transform.position = newCamPos;
 		//Debug.Log ("Camera.main.transform.position: " + Camera.main.transform.position + " rotation * newCamPos: " + rotation * newCamPos);
 
-		checkForHiddenCharacters ();
 
 		// DEBUG STUFF
 		if (debugBool) 
@@ -228,18 +230,6 @@ public class cameraControl : MonoBehaviour
 		//cube.transform.position = new Vector3 (xMid,1, zMid);
 		//cube.transform.localScale = new Vector3 (xMax, 2, zMax);
 		//Debug.Break();
-	}
-
-	private void checkForHiddenCharacters ()
-	{
-		RaycastHit hit;
-		int onlyWalls = 1 << 14;
-		for (int i = 0; i < targets.Length; i++) 
-		{
-			if (Physics.Linecast(Camera.main.transform.position, targets[i].transform.position, out hit, onlyWalls)) {
-				Debug.Log("Someone's behind a wall!");
-			}
-		}
 	}
 
 }

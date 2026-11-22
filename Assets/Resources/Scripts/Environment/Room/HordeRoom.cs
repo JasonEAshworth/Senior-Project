@@ -12,6 +12,15 @@ public class HordeRoom : MonoBehaviour
 
 	void Start()
 	{
+		Init();
+	}
+
+	// A room that wakes up is told to start spawning in the same frame, before its Start runs,
+	// so the setup also runs on first use.
+	void Init()
+	{
+		if (roomSpawners != null)
+			return;
 		// Get references to all of the enemy spawners in the room
 		roomSpawners = new List<EnemySpawner>();
 		GameObject[] es = GameObject.FindGameObjectsWithTag("EnemySpawn");
@@ -24,12 +33,14 @@ public class HordeRoom : MonoBehaviour
 		}
 
 		// Get a reference to the locked door in the room
-		roomDoor = transform.Find("Door").GetComponentInChildren<DoorController>();
+		// Some horde rooms have no "Door" object; they simply have no door to open.
+		Transform door = transform.Find("Door");
+		roomDoor = door != null ? door.GetComponentInChildren<DoorController>() : null;
 	}
 
 	void Update()
 	{
-		if (!doorOpen)
+		if (!doorOpen && roomSpawners != null)
 		{
 			// Check to see if the enemies are done spawning
 			if (!doneSpawning)
@@ -68,6 +79,7 @@ public class HordeRoom : MonoBehaviour
 
 	public void startSpawning()
 	{
+		Init();
 		foreach (EnemySpawner es in roomSpawners)
 		{
 			es.enableSpawning();
