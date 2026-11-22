@@ -19,7 +19,7 @@ public static class GameContent
 	// Map_02_B_S is an empty boss room: no boss, no spawn points.
 	static readonly string[] excludedRooms = { "Map_02_B_S" };
 
-	[MenuItem("Tools/Senior Project/Prepare Game Content")]
+	[MenuItem("Tools/Rise of the Restless/Prepare Game Content")]
 	public static void Prepare()
 	{
 		BuildRoomCatalog();
@@ -31,7 +31,7 @@ public static class GameContent
 		AssetDatabase.SaveAssets();
 	}
 
-	[MenuItem("Tools/Senior Project/Build Room Catalog")]
+	[MenuItem("Tools/Rise of the Restless/Build Room Catalog")]
 	public static void BuildRoomCatalog()
 	{
 		string[] rooms = Directory.GetFiles(RoomFolder, "Map_*.prefab")

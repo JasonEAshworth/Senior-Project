@@ -58,8 +58,8 @@ public class EndingScreen : MonoBehaviour
 		{
 			float scroll = (Time.unscaledTime - phaseStart) * 40.0f;
 			string credits =
-				"<b>SENIOR PROJECT 14</b>\n\n" +
-				"A team capstone at Shawnee State University\n2014 and 2015\n\n" +
+				"<b>RISE OF THE RESTLESS</b>\n\n" +
+				"Originally Senior Project 14, a team capstone\nat Shawnee State University, 2014 and 2015\n\n" +
 				"Everyone who worked on it is listed in the git history.\n\n\n" +
 				"<b>2026</b>\nUpgraded to Unity 6 and finished as an arcade game\n\n\n" +
 				"Thank you for playing.";

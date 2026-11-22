@@ -1,9 +1,9 @@
-# Senior Project 14
+# Rise of the Restless
 
 A top-down co-op arcade dungeon crawler for 1 to 4 players on one screen. It began as my
-undergraduate senior capstone at Shawnee State University: a team project built in Unity 4.6 in
-2014 and 2015 (the git history lists everyone who worked on it). In 2026 it was upgraded to Unity 6
-and finished as a complete arcade game.
+undergraduate senior capstone at Shawnee State University, "Senior Project 14": a team project
+built in Unity 4.6 in 2014 and 2015 (the git history lists everyone who worked on it). In 2026 it
+was upgraded to Unity 6 and finished as a complete arcade game under its original name.
 
 **Play it:** https://jasoneashworth.github.io/Senior-Project/ (desktop browser, keyboard or gamepads)
 
@@ -33,9 +33,23 @@ King Restless waits.
 - Every mini-boss attack (slam, charge, summon, fire ring, hook, volley) shows a warning on the
   floor before it lands.
 
-## Controls
+## Players and controls
 
-| Action | Player 1 keyboard | Player 2 keyboard | Gamepad |
+Up to four players share one screen. Each player brings their own device and presses **jump** (or
+**start** on a gamepad) to take the next free slot: on the title screen, in the hub, or in the
+middle of a chapter. Two players can share one keyboard; everyone else uses a gamepad.
+
+| Slot | Color | Typical device |
+| --- | --- | --- |
+| P1 | Red | Keyboard, left side (WASD), or the first gamepad |
+| P2 | Blue | Keyboard, right side (arrows), or a gamepad |
+| P3 | Green | Gamepad |
+| P4 | Yellow | Gamepad |
+
+Each player picks a hero with left and right in the lobby. A player can drop out from the pause
+menu, or by holding the ability button in the hub.
+
+| Action | Keyboard, left (WASD) | Keyboard, right (arrows) | Any gamepad |
 | --- | --- | --- | --- |
 | Move | W A S D | Arrow keys | Left stick or d-pad |
 | Jump, join | Space | Right Shift or Numpad 0 | A (south) |
@@ -44,7 +58,7 @@ King Restless waits.
 | Use potion, buy in hub | L | Slash or Numpad 3 | Y (north) |
 | Pause | Esc | Backspace | Start |
 
-Up to four players: two on one keyboard and the rest on gamepads.
+Enter (or start on any joined gamepad) begins the game from the lobby.
 
 ## Open and build
 
@@ -52,7 +66,7 @@ Up to four players: two on one keyboard and the rest on gamepads.
 2. Open this folder in Unity Hub. The first import takes several minutes.
 3. Open `Assets/Scenes/Title.unity` and press Play.
 
-Builds use the **Tools > Senior Project** menu, or the command line:
+Builds use the **Tools > Rise of the Restless** menu, or the command line:
 
 ```powershell
 & "C:\Program Files\Unity\Hub\Editor\6000.3.29f1\Editor\Unity.exe" -batchmode -quit -projectPath . -buildTarget WebGL -executeMethod ProjectTools.BuildWebGL
@@ -62,7 +76,7 @@ Every build first runs **Prepare Game Content**, which rebuilds the room catalog
 missing chapter assets and scenes. The WebGL build goes to `Build/WebGL`; the live site is that
 folder, published on the `gh-pages` branch.
 
-**Automated check:** a Windows build run with `-smoketest <folder>` plays the whole game by itself
+**Automated check:** the Windows build (`Build/Windows/RiseOfTheRestless.exe`) run with `-smoketest <folder>` plays the whole game by itself
 (every chapter, drop-in, revive, every boss, the ending, and a game over) and writes `report.txt`
 and screenshots to the folder.
 

@@ -57,7 +57,7 @@ public class TitleMenu : MonoBehaviour
 		ArcadeUI.Begin();
 		float w = ArcadeUI.Width;
 
-		ArcadeUI.Text(new Rect(0, 40, w, 90), "SENIOR PROJECT 14", 72, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
+		ArcadeUI.Text(new Rect(0, 40, w, 90), "RISE OF THE RESTLESS", 68, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
 		ArcadeUI.Text(new Rect(0, 120, w, 30), "A co-op dungeon crawler for 1 to 4 players", 20, ArcadeUI.Dim, TextAnchor.MiddleCenter);
 
 		float cardW = 270, gap = 18;
@@ -118,9 +118,10 @@ public class TitleMenu : MonoBehaviour
 		{
 			ArcadeUI.Text(new Rect(r.x + 20, r.y + 10, r.width - 40, 30), "CONTROLS", 22, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
 			string text =
-				"<b>Player 1 keyboard:</b> " + PlayerControls.LayoutHelp[0] + "\n" +
-				"<b>Player 2 keyboard:</b> " + PlayerControls.LayoutHelp[1] + "\n" +
-				"<b>Gamepad:</b> stick move, A jump, X attack, B ability, Y potion, Start pause\n\n" +
+				"<b>Up to 4 players.</b> Two can share the keyboard; the rest use gamepads.\n" +
+				"<b>Keyboard, left:</b> " + PlayerControls.LayoutHelp[0] + "\n" +
+				"<b>Keyboard, right:</b> " + PlayerControls.LayoutHelp[1] + "\n" +
+				"<b>Any gamepad:</b> stick move, A jump, X attack, B ability, Y potion, Start pause\n\n" +
 				"Clear all four chapters, in any order, to open the throne room.";
 			ArcadeUI.Text(new Rect(r.x + 24, r.y + 46, r.width - 48, r.height - 56), text, 16, Color.white, TextAnchor.UpperLeft);
 		}
@@ -143,8 +144,8 @@ public class TitleMenu : MonoBehaviour
 		{
 			ArcadeUI.Text(new Rect(r.x + 20, r.y + 10, r.width - 40, 30), "ABOUT", 22, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
 			string text =
-				"Senior Project 14 was a team capstone at Shawnee State University, built in Unity 4.6 " +
-				"in 2014 and 2015. The git history lists everyone who worked on it.\n\n" +
+				"Rise of the Restless began as Senior Project 14, a team capstone at Shawnee State " +
+				"University, built in Unity 4.6 in 2014 and 2015. The git history lists everyone who worked on it.\n\n" +
 				"Upgraded to Unity 6 and finished as an arcade game in 2026.\n" +
 				"Seals cleared: " + GameSession.SealCount + " of " + GameSession.Chapters.Count;
 			ArcadeUI.Text(new Rect(r.x + 24, r.y + 46, r.width - 48, r.height - 56), text, 16, Color.white, TextAnchor.UpperLeft);

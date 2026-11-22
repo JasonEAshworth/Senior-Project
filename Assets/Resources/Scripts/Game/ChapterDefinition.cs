@@ -35,7 +35,7 @@ public class MiniBossConfig
 
 /// One chapter of the run: its dungeon, look, enemies, mini-boss, and music. The final level
 /// is a chapter too, marked isFinal, with a single boss room and King Restless.
-[CreateAssetMenu(menuName = "Senior Project/Chapter")]
+[CreateAssetMenu(menuName = "Rise of the Restless/Chapter")]
 public class ChapterDefinition : ScriptableObject
 {
 	public string id = "chapter";

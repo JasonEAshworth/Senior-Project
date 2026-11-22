@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// The names of the room prefabs the dungeon generator may use. Builds cannot list files in
-/// the Assets folder, so the editor writes this list (Tools > Senior Project > Build Room Catalog,
+/// the Assets folder, so the editor writes this list (Tools > Rise of the Restless > Build Room Catalog,
 /// and before every build).
 public class RoomCatalog : ScriptableObject
 {

@@ -10,7 +10,7 @@ public static class ProjectTools
 	static string[] Scenes { get { return GameContent.Scenes; } }
 
 	/// Rewrites every asset as YAML text, so git can diff it and asset references can be searched.
-	[MenuItem("Tools/Senior Project/Convert Assets To Text")]
+	[MenuItem("Tools/Rise of the Restless/Convert Assets To Text")]
 	public static void ConvertToText()
 	{
 		EditorSettings.serializationMode = SerializationMode.ForceText;
@@ -20,7 +20,7 @@ public static class ProjectTools
 
 	/// Strips components whose script no longer exists (the purged Rewired and Exploder
 	/// packages). Unity refuses to save a prefab that still has one.
-	[MenuItem("Tools/Senior Project/Remove Missing Scripts")]
+	[MenuItem("Tools/Rise of the Restless/Remove Missing Scripts")]
 	public static void RemoveMissingScripts()
 	{
 		int total = 0;
@@ -70,7 +70,7 @@ public static class ProjectTools
 	/// GitHub rejects files over 100 MB, and the WebGL data file is one file. Plain DXT textures
 	/// barely gzip, so the data file passed 128 MB. Crunched DXT at up to 1024 px keeps the detail
 	/// the top-down camera shows and cuts the download several times. Desktop builds are unchanged.
-	[MenuItem("Tools/Senior Project/Crunch WebGL Textures")]
+	[MenuItem("Tools/Rise of the Restless/Crunch WebGL Textures")]
 	public static void CrunchWebGLTextures()
 	{
 		int changed = 0;
@@ -103,7 +103,7 @@ public static class ProjectTools
 		Debug.Log($"[crunch] set WebGL crunch on {changed} textures");
 	}
 
-	[MenuItem("Tools/Senior Project/Build WebGL")]
+	[MenuItem("Tools/Rise of the Restless/Build WebGL")]
 	public static void BuildWebGL()
 	{
 		PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
@@ -113,10 +113,10 @@ public static class ProjectTools
 		Build(BuildTarget.WebGL, "Build/WebGL");
 	}
 
-	[MenuItem("Tools/Senior Project/Build Windows")]
+	[MenuItem("Tools/Rise of the Restless/Build Windows")]
 	public static void BuildWindows()
 	{
-		Build(BuildTarget.StandaloneWindows64, "Build/Windows/SeniorProject.exe");
+		Build(BuildTarget.StandaloneWindows64, "Build/Windows/RiseOfTheRestless.exe");
 	}
 
 	static void Build(BuildTarget target, string path)
