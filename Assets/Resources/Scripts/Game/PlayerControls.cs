@@ -167,11 +167,39 @@ public static class PlayerControls
 
 	// ---- names for menus ----
 
+	/// A short name a player can read: "Comma" rather than ",", "Esc" rather than "Escape".
+	/// Punctuation is named from the key's label on this keyboard layout, not its position.
 	public static string KeyName(Key k)
 	{
+		switch (k)
+		{
+			case Key.Escape: return "Esc";
+			case Key.LeftShift: return "L Shift";
+			case Key.RightShift: return "R Shift";
+			case Key.LeftCtrl: return "L Ctrl";
+			case Key.RightCtrl: return "R Ctrl";
+			case Key.LeftAlt: return "L Alt";
+			case Key.RightAlt: return "R Alt";
+		}
 		Keyboard kb = Keyboard.current;
 		string name = kb != null && kb[k] != null ? kb[k].displayName : k.ToString();
-		return string.IsNullOrEmpty(name) ? k.ToString() : name;
+		if (string.IsNullOrEmpty(name))
+			return k.ToString();
+		switch (name)
+		{
+			case ",": return "Comma";
+			case ".": return "Period";
+			case "/": return "Slash";
+			case "\\": return "Backslash";
+			case ";": return "Semicolon";
+			case "'": return "Quote";
+			case "`": return "Backquote";
+			case "-": return "Minus";
+			case "=": return "Equals";
+			case "[": return "Left Bracket";
+			case "]": return "Right Bracket";
+			default: return name;
+		}
 	}
 
 	public static string KeysName(int layout, BindSlot s)

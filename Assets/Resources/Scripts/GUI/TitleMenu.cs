@@ -85,7 +85,7 @@ public class TitleMenu : MonoBehaviour
 				ArcadeUI.Text(new Rect(0, 640, w, 50), "PRESS JUMP OR START TO JOIN", 30, Color.white, TextAnchor.MiddleCenter, true);
 		}
 
-		DrawAttractPanel(new Rect(w / 2 - 330, 175, 660, 235));
+		DrawAttractPanel(new Rect(w / 2 - 410, 175, 820, 235));
 	}
 
 	void DrawCard(Rect r, PlayerSlot s)
@@ -139,15 +139,17 @@ public class TitleMenu : MonoBehaviour
 		{
 			ArcadeUI.Text(new Rect(r.x + 20, r.y + 10, r.width - 40, 30), "HIGH SCORES", 22, ArcadeUI.Gold, TextAnchor.MiddleCenter, true);
 			var scores = GameSession.HighScores;
+			// The table is laid out for 660 wide; keep it centered in the wider panel.
+			float hx = r.x + (r.width - 660) / 2;
 			if (scores.Count == 0)
 				ArcadeUI.Text(new Rect(r.x, r.y + 90, r.width, 40), "No scores yet. Be the first.", 18, ArcadeUI.Dim, TextAnchor.MiddleCenter);
 			for (int i = 0; i < scores.Count; i++)
 			{
 				float y = r.y + 46 + i * 18;
-				ArcadeUI.Text(new Rect(r.x + 120, y, 60, 18), (i + 1) + ".", 15, ArcadeUI.Dim, TextAnchor.MiddleRight);
-				ArcadeUI.Text(new Rect(r.x + 200, y, 80, 18), scores[i].initials, 15, Color.white);
-				ArcadeUI.Text(new Rect(r.x + 280, y, 120, 18), scores[i].points.ToString("N0"), 15, ArcadeUI.Gold, TextAnchor.MiddleRight);
-				ArcadeUI.Text(new Rect(r.x + 420, y, 200, 18), scores[i].reached, 15, ArcadeUI.Dim);
+				ArcadeUI.Text(new Rect(hx + 120, y, 60, 18), (i + 1) + ".", 15, ArcadeUI.Dim, TextAnchor.MiddleRight);
+				ArcadeUI.Text(new Rect(hx + 200, y, 80, 18), scores[i].initials, 15, Color.white);
+				ArcadeUI.Text(new Rect(hx + 280, y, 120, 18), scores[i].points.ToString("N0"), 15, ArcadeUI.Gold, TextAnchor.MiddleRight);
+				ArcadeUI.Text(new Rect(hx + 420, y, 200, 18), scores[i].reached, 15, ArcadeUI.Dim);
 			}
 		}
 		else
