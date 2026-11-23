@@ -62,7 +62,9 @@ public class SmokeTest : MonoBehaviour
 		// An exception ends the test coroutine; report what was done instead of hanging.
 		if (!finished && lastProgress > 0 && Time.realtimeSinceStartup - lastProgress > 120)
 		{
-			Check(false, "test stalled (an exception probably ended it; see the errors below)");
+			// Game time standing still points at the pause menu or an early results screen instead.
+			Check(false, "test stalled (an exception probably ended it; see the errors below). Scene " + SceneManager.GetActiveScene().name +
+				", time scale " + Time.timeScale + ", paused " + PauseMenu.Paused + ", last step: " + report.LastOrDefault());
 			Finish();
 		}
 	}
@@ -149,6 +151,8 @@ public class SmokeTest : MonoBehaviour
 		if (index == 0)
 			foreach (PlayerSlot s in GameSession.Joined)
 				Check(RingColor(pm.PlayerFor(s.index)) == s.Color, s.Label + "'s facing ring shows the slot color");
+		if (index == 0)
+			yield return HeroSkinTest(pm);
 		if (index == 1 && pm.players.Count >= 2)
 			yield return DownedTest(pm);
 		if (ch.variants.Any(v => !string.IsNullOrEmpty(v.skin)))
@@ -257,6 +261,54 @@ public class SmokeTest : MonoBehaviour
 			e.takeDamage(e.health + 100000);
 			yield return null;
 			Check(body != null && body.transform.parent == null, ch.id + ": " + v.name + " collapses when killed");
+		}
+	}
+
+	/// Player 2 comes back as the Woodsman, then as the Rogue, and stays the Rogue for the rest of
+	/// the run. Each checks the store model that replaces the 2015 mesh: bound to the hero's
+	/// Animator, standing on the floor, animating, attacking, and shown in the HUD portrait.
+	IEnumerator HeroSkinTest(PlayerManager pm)
+	{
+		PlayerSlot slot = GameSession.Joined.FirstOrDefault(s => s.index == 1);
+		if (slot == null)
+			yield break;
+		foreach (playerClass c in new[] { playerClass.WOODSMAN, playerClass.ROGUE })
+		{
+			string name = PlayerManager.HeroName(c);
+			if (HeroSkin.Find(name) == null)
+			{
+				Note(name + " model is not installed; the hero keeps its 2015 mesh");
+				continue;
+			}
+			pm.RemovePlayer(slot);
+			slot.cls = c;
+			GameObject hero = pm.SpawnPlayer(slot, pm.playersCenter + Vector3.right);
+			hero.GetComponent<PlayerBase>().shieldUntil = Time.time + 30;
+			// Facing the close-up camera, which looks from the south.
+			hero.transform.rotation = Quaternion.Euler(0, 180, 0);
+			yield return null;
+			Animator anim = hero.GetComponent<Animator>();
+			Transform hips = anim.GetBoneTransform(HumanBodyBones.Hips);
+			Transform hand = anim.GetBoneTransform(HumanBodyBones.RightHand);
+			Check(hips != null && hand != null && hips.IsChildOf(hero.transform), name + " wears the new model");
+			GameObject old = hero.GetComponent<PlayerBase>().characterMesh;
+			Check(old == null || !old.GetComponent<Renderer>().enabled, name + "'s 2015 mesh is hidden");
+			if (hips == null || hand == null)
+				continue;
+			float hipHeight = hips.position.y - hero.transform.position.y;
+			Check(hipHeight > 0.6f && hipHeight < 1.3f, name + " stands on the floor (hips " + hipHeight.ToString("0.00") + " m up)");
+			Vector3 before = hero.transform.InverseTransformPoint(hand.position);
+			yield return new WaitForSeconds(0.6f);
+			float moved = Vector3.Distance(before, hero.transform.InverseTransformPoint(hand.position));
+			Check(moved > 0.003f, name + "'s model animates (hand moved " + moved.ToString("0.000") + " m)");
+			anim.SetTrigger("Attack");
+			yield return new WaitForSeconds(0.3f);
+			string clip = anim.GetCurrentAnimatorClipInfo(0).Concat(anim.GetNextAnimatorClipInfo(0)).Select(i => i.clip.name).FirstOrDefault(n => n.Contains("Attack") || n.Contains("Shoot"));
+			Check(clip != null, name + " plays an attack clip on the new model (" + (clip ?? "none") + ")");
+			GameObject stats = GameObject.Find("Player" + (slot.index + 1));
+			Texture shown = stats != null ? stats.transform.Find("Emblem/Character").GetComponent<UnityEngine.UI.RawImage>().texture : null;
+			Check(shown != null && shown == HeroSkin.Find(name).portrait, name + "'s HUD shows the new portrait");
+			yield return CloseUp(name.ToLower() + "_model", hero.transform, hero.transform);
 		}
 	}
 

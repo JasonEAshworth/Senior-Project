@@ -104,6 +104,8 @@ public static class SkinContent
 	{
 		foreach (string[] pack in Packs)
 			AdoptPack(pack[0], pack[1]);
+		// Before the crunch, so textures a hero model brings in are crunched in the same build.
+		HeroContent.Build();
 		if (AssetDatabase.IsValidFolder(Store))
 			ProjectTools.CrunchWebGLTextures(Store);
 		AnimatorController baseController = null;
@@ -147,7 +149,7 @@ public static class SkinContent
 			Debug.LogError("[content] could not move " + from + ": " + error);
 	}
 
-	static void EnsureFolder(string path)
+	internal static void EnsureFolder(string path)
 	{
 		if (AssetDatabase.IsValidFolder(path))
 			return;
@@ -404,7 +406,7 @@ public static class SkinContent
 
 	/// The body mesh alone (the one with the most vertices): weapons and helmets would change
 	/// the size the skin is scaled to.
-	static float BodyHeight(GameObject go)
+	internal static float BodyHeight(GameObject go)
 	{
 		SkinnedMeshRenderer body = go.GetComponentsInChildren<SkinnedMeshRenderer>(true)
 			.Where(r => r.sharedMesh != null)

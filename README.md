@@ -83,8 +83,10 @@ folder, published on the `gh-pages` branch.
 
 ### Store art (optional)
 
-Some enemies wear models from the Asset Store. Their license forbids sharing the files, so they
-are not in this repo. Without them, those enemies stay zombies and everything else works.
+Some enemies wear models from the Asset Store, and the Rogue and the Woodsman wear Mixamo
+characters. Their licenses forbid sharing the files, so they are not in this repo. Without them,
+those enemies stay zombies, the two heroes keep their 2015 placeholder look, and everything else
+works.
 
 | Pack | Publisher | Used for |
 | --- | --- | --- |
@@ -95,6 +97,18 @@ are not in this repo. Without them, those enemies stay zombies and everything el
 Get each pack on the Asset Store, download it in **Window > Package Manager > My Assets**, and
 import it. The next build moves it to `Assets/Store` (git-ignored), shrinks its textures for the
 web build, and builds the skins. **Rebuild Enemy Skins** does the same on demand.
+
+| Mixamo character | Used for |
+| --- | --- |
+| Heraklios By A. Dizon | The Rogue |
+| Erika Archer With Bow/Arrow | The Woodsman |
+
+Sign in at [mixamo.com](https://www.mixamo.com), pick each character, and download it with
+**Format: FBX for Unity** and **Pose: T-pose**. Put both files, with their download names, in
+`Assets/Store/Heroes`. The next build sizes them to the party, gives the Rogue the repo's
+daggers, renders their HUD portraits, and builds the hero models. **Rebuild Hero Models** does the
+same on demand, and **Render Hero Previews** draws the old and new heroes side by side in
+`Build/hero_preview.png`.
 
 **Automated check:** the Windows build (`Build/Windows/RiseOfTheRestless.exe`) run with `-smoketest <folder>` plays the whole game by itself
 (every chapter, drop-in, revive, every boss, the ending, and a game over) and writes `report.txt`
@@ -111,6 +125,9 @@ and screenshots to the folder.
 - A variant or mini-boss can name a **skin**. `SkinSwap` hides the zombie and shows that model
   over it; the zombie's AI and attack timing stay in charge, and the skin copies its walk, run,
   attacks, flinches, and death. `SkinContent` (editor) builds the skins from store packs.
+- A hero with an installed model gets it at spawn from `HeroSkin`. The hero's own Animator keeps
+  its 2015 controller, clips, and attack events, and takes the model's humanoid avatar, so the
+  same clips move the new body. `HeroContent` (editor) builds the models from the Mixamo files.
 - Scenes: `Title` (lobby and attract mode), `Hub`, `MainScene` (every chapter), `Ending`.
 - Music is original, written by `Tools/compose_music.py` (needs numpy and soundfile).
 
@@ -134,10 +151,14 @@ and screenshots to the folder.
 - **WebGL:** textures use Crunch compression for WebGL only, keeping the download under 100 MB.
 - **Ranged enemies attack.** In 2015 their shot timer was commented out and their bullet prefab
   was missing, so archers and spitters never fired.
+- **New Rogue and Woodsman models** (optional, see Store art). Their 2015 textures were never
+  committed, and their models were imported with Optimize Game Objects, which hides the skeleton,
+  so a new model only moves after `HeroSkin` restores it.
 
 ## Known gaps from 2015
 
-- The **Rogue** and **Woodsman** textures were never committed; they use plain placeholder colors.
+- The **Rogue** and **Woodsman** textures were never committed. Without the Mixamo characters,
+  they use plain placeholder colors.
 - The **potions** are untextured white models; their halo color shows the type.
 - Without the store art, all enemies share the one zombie model; chapter variants differ by
   color, size, glow, stats, and behavior.

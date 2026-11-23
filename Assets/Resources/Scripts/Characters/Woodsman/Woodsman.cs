@@ -53,6 +53,14 @@ public class Woodsman : PlayerBase
 		hawkScripts = hawk.GetComponent<HawkAI2>();
 	}
 
+	// The hawk lives outside the hero's hierarchy, so a Woodsman who drops out would leave it
+	// following a destroyed owner and throwing every frame.
+	void OnDestroy()
+	{
+		if (hawk != null)
+			Destroy(hawk);
+	}
+
 	protected override void Update()
 	{
 		// call update of parent class

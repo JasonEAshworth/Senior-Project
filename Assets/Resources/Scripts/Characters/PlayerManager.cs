@@ -80,6 +80,18 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
+	/// The name a hero's store model is built under (see HeroSkin).
+	public static string HeroName(playerClass c)
+	{
+		switch (c)
+		{
+			case playerClass.WOODSMAN: return "Woodsman";
+			case playerClass.SORCERER: return "Sorceress";
+			case playerClass.ROGUE: return "Rogue";
+			default: return "Warrior";
+		}
+	}
+
 	static void HudTextures(playerClass c, out Texture mana, out Texture profile)
 	{
 		string m, p;
@@ -91,7 +103,8 @@ public class PlayerManager : MonoBehaviour
 			default: m = "gui_energy_war"; p = "warrior_profile"; break;
 		}
 		mana = Resources.Load("Textures/GUI/" + m) as Texture;
-		profile = Resources.Load("Textures/GUI/" + p) as Texture;
+		HeroSkinInfo skin = HeroSkin.Find(HeroName(c));
+		profile = skin != null && skin.portrait != null ? skin.portrait : Resources.Load("Textures/GUI/" + p) as Texture;
 	}
 
 	public GameObject PlayerFor(int slot)
@@ -115,6 +128,7 @@ public class PlayerManager : MonoBehaviour
 		pBase.health = pBase.maxHealth;
 		pBase.attackMultiplier *= 1.0f + 0.15f * slot.attackLevel;
 		pBase.score = slot.gold;
+		HeroSkin.Apply(player, HeroName(slot.cls));
 
 		// The Rogue names this child FacingArrow and the other heroes ArrowFacing. The 2015
 		// materials draw it as a solid gray square in Unity 6, so it gets an unlit one in the
